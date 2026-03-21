@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Breakout Tracker — System Architecture</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0e1a;
+    color: #e0e4ef;
+    padding: 40px;
+    min-height: 100vh;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #60a5fa, #a78bfa, #34d399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #8892b0;
+    font-size: 0.95rem;
+    margin-bottom: 40px;
+    font-weight: 400;
+  }
+
+  /* ---- GRID LAYOUT ---- */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .span-full { grid-column: 1 / -1; }
+  .span-2    { grid-column: span 2; }
+
+  /* ---- CARDS ---- */
+  .card {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 14px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 14px 14px 0 0;
+  }
+
+  .card.blue::before   { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+  .card.green::before  { background: linear-gradient(90deg, #10b981, #34d399); }
+  .card.purple::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+  .card.orange::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+  .card.pink::before   { background: linear-gradient(90deg, #ec4899, #f472b6); }
+  .card.cyan::before   { background: linear-gradient(90deg, #06b6d4, #22d3ee); }
+  .card.red::before    { background: linear-gradient(90deg, #ef4444, #f87171); }
+
+  .card-icon {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .card h2 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #f1f5f9;
+  }
+
+  .card h3 {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+
+  .card p, .card li {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: #94a3b8;
+  }
+
+  .card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .card li {
+    padding: 3px 0;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .card li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: #475569;
+    font-weight: 700;
+  }
+
+  code, .mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    background: #1e293b;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #a5b4fc;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+
+  .tag.python  { background: #1e3a5f; color: #60a5fa; }
+  .tag.yaml    { background: #3b1f40; color: #c084fc; }
+  .tag.sqlite  { background: #1a3329; color: #4ade80; }
+  .tag.api     { background: #3b2f1a; color: #fbbf24; }
+  .tag.ui      { background: #3b1a2e; color: #f472b6; }
+
+  /* ---- FLOW ARROWS ---- */
+  .flow-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 0;
+    grid-column: 1 / -1;
+  }
+
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #475569;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .flow-arrow .line {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, #1e293b, #475569);
+    position: relative;
+  }
+
+  .flow-arrow .line::after {
+    content: '▸';
+    position: absolute;
+    right: -8px;
+    top: -8px;
+    font-size: 14px;
+  }
+
+  /* ---- INDICATOR TABLE ---- */
+  .indicator-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+  }
+
+  .indicator-table th {
+    text-align: left;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 6px 8px;
+    border-bottom: 1px solid #1e293b;
+  }
+
+  .indicator-table td {
+    font-size: 0.8rem;
+    padding: 5px 8px;
+    color: #94a3b8;
+    border-bottom: 1px solid rgba(30, 41, 59, 0.5);
+  }
+
+  .indicator-table .weight {
+    font-family: 'JetBrains Mono', monospace;
+    color: #34d399;
+    font-weight: 600;
+  }
+
+  .indicator-table .type-gradient {
+    color: #fbbf24;
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+
+  .indicator-table .type-binary {
+    color: #60a5fa;
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+
+  /* ---- STATE MACHINE ---- */
+  .state-machine {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 14px 0 8px;
+    flex-wrap: wrap;
+  }
+
+  .state {
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-align: center;
+    min-width: 90px;
+  }
+
+  .state.quiet     { background: #1e293b; color: #64748b; border: 1px solid #334155; }
+  .state.emerging  { background: #1a2e1a; color: #4ade80; border: 1px solid #166534; }
+  .state.confirmed { background: #1a2e3b; color: #38bdf8; border: 1px solid #0369a1; }
+  .state.fading    { background: #2e1a1a; color: #f87171; border: 1px solid #991b1b; }
+
+  .arrow-right {
+    color: #475569;
+    font-size: 1.2rem;
+  }
+
+  /* ---- SECTOR GRID ---- */
+  .sector-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .sector-chip {
+    padding: 7px 10px;
+    background: #1e293b;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    text-align: center;
+    border: 1px solid #2d3748;
+  }
+
+  .sector-chip .name {
+    color: #cbd5e1;
+    font-weight: 500;
+    display: block;
+  }
+
+  .sector-chip .count {
+    color: #64748b;
+    font-size: 0.68rem;
+    font-weight: 400;
+  }
+
+  /* ---- DASHBOARD PAGES ---- */
+  .page-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .page-chip {
+    padding: 8px 10px;
+    background: #1e293b;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    border: 1px solid #2d3748;
+  }
+
+  .page-chip .page-name {
+    color: #e2e8f0;
+    font-weight: 500;
+  }
+
+  .page-chip .page-desc {
+    color: #64748b;
+    font-size: 0.72rem;
+    margin-top: 2px;
+  }
+
+  /* ---- DB TABLES ---- */
+  .db-table {
+    background: #0d1117;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  .db-table .tbl-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: #4ade80;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .db-table .tbl-cols {
+    font-size: 0.72rem;
+    color: #64748b;
+    line-height: 1.5;
+  }
+
+  /* ---- FLOW CONNECTOR (big arrow between sections) ---- */
+  .section-connector {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 0;
+    gap: 2px;
+  }
+
+  .section-connector .connector-line {
+    width: 2px;
+    height: 20px;
+    background: linear-gradient(180deg, #1e293b, #475569);
+  }
+
+  .section-connector .connector-label {
+    font-size: 0.72rem;
+    color: #475569;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .section-connector .connector-arrow {
+    color: #475569;
+    font-size: 1.1rem;
+  }
+
+  /* ---- FILE MAP ---- */
+  .file-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    margin-top: 8px;
+  }
+
+  .file-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    background: #0d1117;
+    border-radius: 6px;
+    border: 1px solid #1e293b;
+  }
+
+  .file-item .fname {
+    font-family: 'JetBrains Mono', monospace;
+    color: #a5b4fc;
+    font-weight: 500;
+  }
+
+  .file-item .fdesc {
+    color: #64748b;
+    font-size: 0.68rem;
+  }
+
+  /* ---- SECTION HEADER ---- */
+  .section-header {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4px 0;
+  }
+
+  .section-header h2 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  /* ---- LEGEND ---- */
+  .legend {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    padding: 8px 0 0;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: #64748b;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Cross-Asset Breakout Tracker</h1>
+<p class="subtitle">System Architecture & Data Flow — 139 tickers · 9 sectors · 31 subsectors · 7 scored indicators</p>
+
+<div class="grid">
+
+  <!-- ============ LAYER 1: CONFIGURATION ============ -->
+  <div class="section-header"><h2>⎯⎯ Configuration Layer ⎯⎯</h2></div>
+
+  <div class="card purple span-full">
+    <div class="card-icon">⚙️</div>
+    <h2>ticker_config.yaml</h2>
+    <h3>Central Configuration — Single Source of Truth</h3>
+
+    <div class="sector-grid">
+      <div class="sector-chip"><span class="name">AI & Tech Capex</span><span class="count">6 subsectors · 37 tickers</span></div>
+      <div class="sector-chip"><span class="name">Enterprise Software</span><span class="count">4 subsectors · 20 tickers</span></div>
+      <div class="sector-chip"><span class="name">Semiconductors</span><span class="count">3 subsectors · 14 tickers</span></div>
+      <div class="sector-chip"><span class="name">Precious Metals</span><span class="count">3 subsectors · 14 tickers</span></div>
+      <div class="sector-chip"><span class="name">Crypto</span><span class="count">2 subsectors · 10 tickers</span></div>
+      <div class="sector-chip"><span class="name">Robotics & Automation</span><span class="count">3 subsectors · 9 tickers</span></div>
+      <div class="sector-chip"><span class="name">Biotechnology</span><span class="count">2 subsectors · 7 tickers</span></div>
+      <div class="sector-chip"><span class="name">Space & Satellite</span><span class="count">2 subsectors · 7 tickers</span></div>
+      <div class="sector-chip"><span class="name">Quantum Computing</span><span class="count">1 subsector · 4 tickers</span></div>
+      <div class="sector-chip"><span class="name">Nuclear & Uranium</span><span class="count">2 subsectors · 8 tickers</span></div>
+      <div class="sector-chip"><span class="name">eVTOL & Drones</span><span class="count">1 subsector · 3 tickers</span></div>
+    </div>
+
+    <div style="margin-top: 14px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+      <span class="tag yaml">YAML</span>
+      <span style="font-size: 0.78rem; color: #94a3b8;">Also defines: indicator parameters, scoring weights, breakout detection thresholds, benchmark (SPY)</span>
+    </div>
+  </div>
+
+  <!-- ============ CONNECTOR ============ -->
+  <div class="section-connector">
+    <div class="connector-line"></div>
+    <span class="connector-label">parsed by</span>
+    <span class="connector-arrow">▼</span>
+  </div>
+
+  <div class="card blue">
+    <div class="card-icon">📄</div>
+    <h2>config.py</h2>
+    <h3>Config Loader</h3>
+    <p>Parses YAML → Python dict. Provides helper functions:</p>
+    <ul>
+      <li><code>load_config()</code></li>
+      <li><code>get_all_tickers()</code> → 139 symbols</li>
+      <li><code>get_tickers_by_sector()</code></li>
+      <li><code>get_ticker_metadata()</code></li>
+    </ul>
+    <div style="margin-top: 8px;"><span class="tag python">Python</span></div>
+  </div>
+
+  <div class="card blue">
+    <div class="card-icon">📡</div>
+    <h2>data_fetcher.py</h2>
+    <h3>Market Data Source</h3>
+    <p>Fetches OHLCV data from <strong>Yahoo Finance</strong> (yfinance). No API key, no cost.</p>
+    <ul>
+      <li><code>fetch_all()</code> — all 139 + SPY</li>
+      <li><code>fetch_ticker()</code> — single ticker</li>
+      <li><code>fetch_batch()</code> — bulk download</li>
+      <li>Data: Open, High, Low, Close, Volume</li>
+      <li>In-memory only — not persisted to disk</li>
+    </ul>
+    <div style="margin-top: 8px;"><span class="tag python">Python</span><span class="tag api">yfinance</span></div>
+  </div>
+
+  <div class="card blue">
+    <div class="card-icon">🗄️</div>
+    <h2>subsector_store.py</h2>
+    <h3>Database Layer</h3>
+    <p>SQLite persistence for scored results and state machine.</p>
+    <ul>
+      <li><code>init_db()</code> — create tables</li>
+      <li><code>upsert_daily()</code> — subsector metrics</li>
+      <li><code>upsert_ticker_scores()</code> — per-ticker</li>
+      <li><code>get_history()</code> — rolling lookback</li>
+      <li><code>update_breakout_state()</code></li>
+    </ul>
+    <div style="margin-top: 8px;"><span class="tag python">Python</span><span class="tag sqlite">SQLite</span></div>
+  </div>
+
+  <!-- ============ CONNECTOR ============ -->
+  <div class="section-connector">
+    <div class="connector-line"></div>
+    <span class="connector-label">feeds into</span>
+    <span class="connector-arrow">▼</span>
+  </div>
+
+  <!-- ============ LAYER 2: SCORING ENGINE ============ -->
+  <div class="section-header"><h2>⎯⎯ Scoring Engine ⎯⎯</h2></div>
+
+  <div class="card green span-2">
+    <div class="card-icon">🧮</div>
+    <h2>indicators.py</h2>
+    <h3>Breakout Scoring Engine — 7 Indicators → 0-10.0 Scale</h3>
+
+    <table class="indicator-table">
+      <thead>
+        <tr><th>Indicator</th><th>Type</th><th>Max Pts</th><th>What It Measures</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Relative Strength vs SPY</td>
+          <td><span class="type-gradient">GRADIENT</span></td>
+          <td class="weight">3.0</td>
+          <td>63-day outperformance vs S&P 500, scaled by percentile</td>
+        </tr>
+        <tr>
+          <td>Higher Lows</td>
+          <td><span class="type-gradient">GRADIENT</span></td>
+          <td class="weight">1.0</td>
+          <td>4 consecutive weekly higher-low periods, scaled by count</td>
+        </tr>
+        <tr>
+          <td>Ichimoku Cloud</td>
+          <td><span class="type-binary">BINARY</span></td>
+          <td class="weight">2.0</td>
+          <td>Price above cloud, bullish Tenkan/Kijun cross (+11.9% edge)</td>
+        </tr>
+        <tr>
+          <td>Chaikin Money Flow</td>
+          <td><span class="type-binary">BINARY</span></td>
+          <td class="weight">1.5</td>
+          <td>20-day CMF &gt; 0.05 — institutional buying pressure (+8.9% edge)</td>
+        </tr>
+        <tr>
+          <td>Rate of Change</td>
+          <td><span class="type-binary">BINARY</span></td>
+          <td class="weight">1.5</td>
+          <td>21-day ROC &gt; 5% — strong recent momentum (+7.5% edge)</td>
+        </tr>
+        <tr>
+          <td>Dual-TF RS Acceleration</td>
+          <td><span class="type-binary">BINARY</span></td>
+          <td class="weight">0.5</td>
+          <td>Short-term RS accelerating vs long-term trend (+5.2% edge)</td>
+        </tr>
+        <tr>
+          <td>ATR Expansion</td>
+          <td><span class="type-binary">BINARY</span></td>
+          <td class="weight">0.5</td>
+          <td>14-day ATR in top 20% of 50-day range — volatility expanding (+5.2% edge)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 12px; font-size: 0.78rem; color: #64748b; border-top: 1px solid #1e293b; padding-top: 8px;">
+      <strong style="color: #94a3b8;">Scoring thresholds:</strong>
+      <span style="color: #4ade80;">■</span> Strong ≥ 8.0 &nbsp;
+      <span style="color: #60a5fa;">■</span> Moderate 6-8 &nbsp;
+      <span style="color: #fbbf24;">■</span> Weak 3-6 &nbsp;
+      <span style="color: #64748b;">■</span> Minimal &lt; 3 &nbsp;&nbsp;|&nbsp;&nbsp;
+      <strong style="color: #94a3b8;">Dropped:</strong> MA Alignment (−9.3% edge), Near 52w High (−3.3% edge)
+    </div>
+
+    <div style="margin-top: 8px;"><span class="tag python">Python</span></div>
+  </div>
+
+  <div class="card green">
+    <div class="card-icon">📊</div>
+    <h2>Scoring Types</h2>
+    <h3>Gradient vs Binary</h3>
+
+    <div style="background: #0d1117; border-radius: 8px; padding: 12px; margin-bottom: 10px; border: 1px solid #1e293b;">
+      <div style="font-size: 0.78rem; color: #fbbf24; font-weight: 600; margin-bottom: 4px;">GRADIENT (2 indicators)</div>
+      <p style="font-size: 0.78rem;">Proportional scoring — stronger signal = more points. RS at 90th pctl gets more than 76th pctl.</p>
+    </div>
+
+    <div style="background: #0d1117; border-radius: 8px; padding: 12px; margin-bottom: 10px; border: 1px solid #1e293b;">
+      <div style="font-size: 0.78rem; color: #60a5fa; font-weight: 600; margin-bottom: 4px;">BINARY (5 indicators)</div>
+      <p style="font-size: 0.78rem;">All-or-nothing — full weight if condition met, zero if not. Based on 3-year conditional edge analysis.</p>
+    </div>
+
+    <div style="background: #0d1117; border-radius: 8px; padding: 12px; border: 1px solid #1e293b;">
+      <div style="font-size: 0.78rem; color: #94a3b8; font-weight: 600; margin-bottom: 4px;">KEY FUNCTION</div>
+      <p style="font-size: 0.78rem;"><code>score_all(data, cfg)</code> → list of dicts, each with: ticker, name, sector, subsector, score, and per-indicator breakdown.</p>
+    </div>
+  </div>
+
+  <!-- ============ CONNECTOR ============ -->
+  <div class="section-connector">
+    <div class="connector-line"></div>
+    <span class="connector-label">aggregated by</span>
+    <span class="connector-arrow">▼</span>
+  </div>
+
+  <!-- ============ LAYER 3: SUBSECTOR BREAKOUT ============ -->
+  <div class="section-header"><h2>⎯⎯ Subsector Breakout Detection ⎯⎯</h2></div>
+
+  <div class="card orange span-2">
+    <div class="card-icon">🔥</div>
+    <h2>subsector_breakout.py</h2>
+    <h3>Breadth-Based State Machine — Detect Sector Momentum</h3>
+
+    <p style="margin-bottom: 10px;">Aggregates individual ticker scores up to the subsector level, then runs a state machine to detect when an entire subsector is "breaking out."</p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+      <div style="background: #0d1117; border-radius: 8px; padding: 10px; border: 1px solid #1e293b;">
+        <div style="font-size: 0.75rem; color: #fbbf24; font-weight: 600; margin-bottom: 4px;">METRICS COMPUTED</div>
+        <ul style="font-size: 0.78rem;">
+          <li><strong>Breadth %</strong> — % of tickers scoring ≥ 7</li>
+          <li><strong>Avg Score</strong> — subsector mean</li>
+          <li><strong>Z-Score</strong> — vs 60-day rolling history</li>
+          <li><strong>Acceleration</strong> — 2nd derivative of avg score</li>
+          <li><strong>Hot Count</strong> — # tickers above threshold</li>
+        </ul>
+      </div>
+      <div style="background: #0d1117; border-radius: 8px; padding: 10px; border: 1px solid #1e293b;">
+        <div style="font-size: 0.75rem; color: #fbbf24; font-weight: 600; margin-bottom: 4px;">TRANSITION TRIGGERS</div>
+        <ul style="font-size: 0.78rem;">
+          <li><strong>Emerging:</strong> breadth ≥ 50% AND z &gt; 1.0</li>
+          <li><strong>Confirmed:</strong> hot for ≥ 3 consecutive days</li>
+          <li><strong>Fading:</strong> breadth drops OR score declining</li>
+          <li><strong>Back to Quiet:</strong> breadth &lt; 30% OR cool ≥ 5 days</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="state-machine">
+      <div class="state quiet">😴 Quiet</div>
+      <span class="arrow-right">→</span>
+      <div class="state emerging">📡 Emerging</div>
+      <span class="arrow-right">→</span>
+      <div class="state confirmed">✅ Confirmed</div>
+      <span class="arrow-right">→</span>
+      <div class="state fading">📉 Fading</div>
+      <span class="arrow-right">→</span>
+      <div class="state quiet">😴 Quiet</div>
+    </div>
+
+    <div style="margin-top: 8px;"><span class="tag python">Python</span></div>
+  </div>
+
+  <div class="card orange">
+    <div class="card-icon">💾</div>
+    <h2>breakout_tracker.db</h2>
+    <h3>SQLite Database — 3 Tables</h3>
+
+    <div class="db-table">
+      <div class="tbl-name">subsector_daily</div>
+      <div class="tbl-cols">date, subsector, sector, avg_score, max_score, breadth, hot_count, ticker_scores (JSON)</div>
+    </div>
+
+    <div class="db-table">
+      <div class="tbl-name">subsector_breakout_state</div>
+      <div class="tbl-cols">subsector, status, status_since, consecutive_hot, consecutive_cool, peak_avg_score, peak_breadth</div>
+    </div>
+
+    <div class="db-table">
+      <div class="tbl-name">ticker_scores</div>
+      <div class="tbl-cols">date, ticker, name, subsector, sector, score, signals (JSON), signal_weights (JSON)</div>
+    </div>
+
+    <div style="margin-top: 10px; font-size: 0.75rem; color: #64748b;">
+      Browse with <strong>DB Browser for SQLite</strong> (GUI) or Python/pandas
+    </div>
+
+    <div style="margin-top: 8px;"><span class="tag sqlite">SQLite</span></div>
+  </div>
+
+  <!-- ============ CONNECTOR ============ -->
+  <div class="section-connector">
+    <div class="connector-line"></div>
+    <span class="connector-label">displayed by</span>
+    <span class="connector-arrow">▼</span>
+  </div>
+
+  <!-- ============ LAYER 4: PRESENTATION ============ -->
+  <div class="section-header"><h2>⎯⎯ Presentation Layer ⎯⎯</h2></div>
+
+  <div class="card pink span-2">
+    <div class="card-icon">📈</div>
+    <h2>dashboard.py</h2>
+    <h3>Streamlit Dashboard — Interactive Web UI</h3>
+
+    <p style="margin-bottom: 10px;">Runs locally at <code>localhost:8501</code>. Fetches live data, scores on-demand, and renders interactive Plotly charts.</p>
+
+    <div class="page-grid">
+      <div class="page-chip">
+        <div class="page-name">🏠 Scorecard</div>
+        <div class="page-desc">Live scores for all 139 tickers. Sortable table, score distribution chart, sector heatmap.</div>
+      </div>
+      <div class="page-chip">
+        <div class="page-name">🔍 Ticker Detail</div>
+        <div class="page-desc">Deep dive into any ticker — indicator breakdown, signal weights, visual gauge.</div>
+      </div>
+      <div class="page-chip">
+        <div class="page-name">🔥 Subsector Breakouts</div>
+        <div class="page-desc">State machine status for all 31 subsectors. Emerging/confirmed/fading alerts.</div>
+      </div>
+      <div class="page-chip">
+        <div class="page-name">📊 Historical Charts</div>
+        <div class="page-desc">4 chart types: ticker history, breadth trends, score heatmap, distribution over time.</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 10px;"><span class="tag python">Python</span><span class="tag ui">Streamlit</span><span class="tag ui">Plotly</span></div>
+  </div>
+
+  <div class="card pink">
+    <div class="card-icon">⏰</div>
+    <h2>Operational Scripts</h2>
+    <h3>Backfill & Analysis</h3>
+
+    <div style="background: #0d1117; border-radius: 8px; padding: 10px; margin-bottom: 8px; border: 1px solid #1e293b;">
+      <div style="font-size: 0.78rem; color: #f472b6; font-weight: 600;">backfill_subsector.py</div>
+      <p style="font-size: 0.75rem; color: #94a3b8;">Walks 180 days of history at 5-day intervals. At each date: fetch data → score → compute subsector metrics → persist to SQLite → run state machine.</p>
+    </div>
+
+    <div style="background: #0d1117; border-radius: 8px; padding: 10px; margin-bottom: 8px; border: 1px solid #1e293b;">
+      <div style="font-size: 0.78rem; color: #f472b6; font-weight: 600;">minervini_backtest.py</div>
+      <p style="font-size: 0.75rem; color: #94a3b8;">Backtests scoring system: when a ticker hits score ≥ threshold, measure forward returns at 5/10/21/63 days.</p>
+    </div>
+
+    <div style="background: #0d1117; border-radius: 8px; padding: 10px; margin-bottom: 8px; border: 1px solid #1e293b;">
+      <div style="font-size: 0.78rem; color: #f472b6; font-weight: 600;">email_alerts.py</div>
+      <p style="font-size: 0.75rem; color: #94a3b8;">Email notification system for high-score events. (Created, not yet configured.)</p>
+    </div>
+
+    <div style="background: #0d1117; border-radius: 8px; padding: 10px; border: 1px solid #1e293b;">
+      <div style="font-size: 0.78rem; color: #f472b6; font-weight: 600;">indicator_optimizer.py</div>
+      <p style="font-size: 0.75rem; color: #94a3b8;">3-year conditional edge analysis — tests each indicator's incremental value after controlling for RS.</p>
+    </div>
+  </div>
+
+  <!-- ============ TECH STACK SUMMARY ============ -->
+  <div class="section-connector">
+    <div class="connector-line"></div>
+  </div>
+
+  <div class="section-header"><h2>⎯⎯ Technology Stack ⎯⎯</h2></div>
+
+  <div class="card cyan span-full">
+    <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; text-align: center;">
+      <div>
+        <div style="font-size: 1.5rem;">🐍</div>
+        <div style="font-size: 0.82rem; color: #e2e8f0; font-weight: 600;">Python 3</div>
+        <div style="font-size: 0.72rem; color: #64748b;">Core language</div>
+      </div>
+      <div>
+        <div style="font-size: 1.5rem;">📊</div>
+        <div style="font-size: 0.82rem; color: #e2e8f0; font-weight: 600;">pandas / numpy</div>
+        <div style="font-size: 0.72rem; color: #64748b;">Data processing</div>
+      </div>
+      <div>
+        <div style="font-size: 1.5rem;">📈</div>
+        <div style="font-size: 0.82rem; color: #e2e8f0; font-weight: 600;">yfinance</div>
+        <div style="font-size: 0.72rem; color: #64748b;">Market data (free)</div>
+      </div>
+      <div>
+        <div style="font-size: 1.5rem;">🗄️</div>
+        <div style="font-size: 0.82rem; color: #e2e8f0; font-weight: 600;">SQLite</div>
+        <div style="font-size: 0.72rem; color: #64748b;">Local persistence</div>
+      </div>
+      <div>
+        <div style="font-size: 1.5rem;">🌐</div>
+        <div style="font-size: 0.82rem; color: #e2e8f0; font-weight: 600;">Streamlit</div>
+        <div style="font-size: 0.72rem; color: #64748b;">Dashboard UI</div>
+      </div>
+      <div>
+        <div style="font-size: 1.5rem;">📉</div>
+        <div style="font-size: 0.82rem; color: #e2e8f0; font-weight: 600;">Plotly</div>
+        <div style="font-size: 0.72rem; color: #64748b;">Interactive charts</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ DATA FLOW SUMMARY ============ -->
+  <div class="card red span-full">
+    <div class="card-icon">🔄</div>
+    <h2>End-to-End Data Flow</h2>
+    <h3>From Raw Market Data to Actionable Signals</h3>
+
+    <div style="display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; padding: 10px 0;">
+      <div style="background: #1e293b; padding: 10px 16px; border-radius: 10px 0 0 10px; border: 1px solid #334155; text-align: center;">
+        <div style="font-size: 0.7rem; color: #64748b; font-weight: 600;">STEP 1</div>
+        <div style="font-size: 0.82rem; color: #e2e8f0; font-weight: 500;">YAML Config</div>
+        <div style="font-size: 0.7rem; color: #64748b;">139 tickers defined</div>
+      </div>
+      <div style="color: #475569; padding: 0 4px; font-size: 1.2rem;">→</div>
+      <div style="background: #1e293b; padding: 10px 16px; border: 1px solid #334155; text-align: center;">
+        <div style="font-size: 0.7rem; color: #64748b; font-weight: 600;">STEP 2</div>
+        <div style="font-size: 0.82rem; color: #e2e8f0; font-weight: 500;">Fetch OHLCV</div>
+        <div style="font-size: 0.7rem; color: #64748b;">yfinance → pandas</div>
+      </div>
+      <div style="color: #475569; padding: 0 4px; font-size: 1.2rem;">→</div>
+      <div style="background: #1e293b; padding: 10px 16px; border: 1px solid #334155; text-align: center;">
+        <div style="font-size: 0.7rem; color: #64748b; font-weight: 600;">STEP 3</div>
+        <div style="font-size: 0.82rem; color: #e2e8f0; font-weight: 500;">Score Tickers</div>
+        <div style="font-size: 0.7rem; color: #64748b;">7 indicators → 0-10</div>
+      </div>
+      <div style="color: #475569; padding: 0 4px; font-size: 1.2rem;">→</div>
+      <div style="background: #1e293b; padding: 10px 16px; border: 1px solid #334155; text-align: center;">
+        <div style="font-size: 0.7rem; color: #64748b; font-weight: 600;">STEP 4</div>
+        <div style="font-size: 0.82rem; color: #e2e8f0; font-weight: 500;">Aggregate</div>
+        <div style="font-size: 0.7rem; color: #64748b;">Subsector breadth & z-scores</div>
+      </div>
+      <div style="color: #475569; padding: 0 4px; font-size: 1.2rem;">→</div>
+      <div style="background: #1e293b; padding: 10px 16px; border: 1px solid #334155; text-align: center;">
+        <div style="font-size: 0.7rem; color: #64748b; font-weight: 600;">STEP 5</div>
+        <div style="font-size: 0.82rem; color: #e2e8f0; font-weight: 500;">State Machine</div>
+        <div style="font-size: 0.7rem; color: #64748b;">Breakout detection</div>
+      </div>
+      <div style="color: #475569; padding: 0 4px; font-size: 1.2rem;">→</div>
+      <div style="background: #1e293b; padding: 10px 16px; border: 1px solid #334155; text-align: center;">
+        <div style="font-size: 0.7rem; color: #64748b; font-weight: 600;">STEP 6</div>
+        <div style="font-size: 0.82rem; color: #e2e8f0; font-weight: 500;">Persist</div>
+        <div style="font-size: 0.7rem; color: #64748b;">SQLite (3 tables)</div>
+      </div>
+      <div style="color: #475569; padding: 0 4px; font-size: 1.2rem;">→</div>
+      <div style="background: #1e293b; padding: 10px 16px; border-radius: 0 10px 10px 0; border: 1px solid #334155; text-align: center;">
+        <div style="font-size: 0.7rem; color: #64748b; font-weight: 600;">STEP 7</div>
+        <div style="font-size: 0.82rem; color: #e2e8f0; font-weight: 500;">Dashboard</div>
+        <div style="font-size: 0.7rem; color: #64748b;">Streamlit + Plotly</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align: center; margin-top: 30px; color: #334155; font-size: 0.75rem;">
+  Cross-Asset Breakout Tracker v1.0 — Built with Python, yfinance, SQLite, Streamlit & Plotly
+</div>
+
+</body>
+</html>

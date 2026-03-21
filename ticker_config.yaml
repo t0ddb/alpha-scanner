@@ -1,0 +1,460 @@
+# =============================================================
+# Cross-Asset Breakout Tracker — Watchlist Configuration
+# =============================================================
+# Structure: Sector → Subsector → Tickers
+# Add new buckets by following the pattern below.
+# The indicator engine reads this file — no code changes needed.
+# =============================================================
+
+benchmark:
+  ticker: SPY
+  name: S&P 500 ETF
+  description: Used for relative strength calculations
+
+sectors:
+
+  # -----------------------------------------------------------
+  # AI & TECH CAPEX CYCLE
+  # -----------------------------------------------------------
+  ai_tech:
+    name: AI & Tech Capex Cycle
+    subsectors:
+
+      chips_compute:
+        name: Chips — Compute
+        tickers:
+          NVDA: NVIDIA
+          AMD: Advanced Micro Devices
+          AVGO: Broadcom
+          MRVL: Marvell Technology
+          INTC: Intel
+          ARM: Arm Holdings
+
+      chips_memory:
+        name: Chips — Memory
+        tickers:
+          MU: Micron Technology
+          WDC: Western Digital
+          STX: Seagate Technology
+          SSNLF: Samsung Electronics (OTC)
+
+      chips_networking:
+        name: Chips — Networking / Photonics
+        tickers:
+          COHR: Coherent
+          ANET: Arista Networks
+          AAOI: Applied Optoelectronics
+          LITE: Lumentum Holdings
+          GLW: Corning Incorporated
+          CIEN: Ciena Corporation
+          IPGP: IPG Photonics
+          MTSI: MACOM Technology Solutions
+          MKSI: MKS Instruments
+          FN: Fabrinet
+          AXTI: AXT Inc
+          VIAV: Viavi Solutions
+          POET: POET Technologies
+
+      power_energy:
+        name: Power & Energy
+        tickers:
+          VRT: Vertiv Holdings
+          VST: Vistra Energy
+          CEG: Constellation Energy
+          ETN: Eaton Corporation
+          GEV: GE Vernova
+
+      datacenter_infra:
+        name: Data Center Infrastructure
+        tickers:
+          EQIX: Equinix
+          DLR: Digital Realty
+          PWR: Quanta Services
+          IRM: Iron Mountain
+          AMT: American Tower
+          FLNC: Fluence Energy
+
+      alt_ai_compute:
+        name: Alternative AI Compute / GPU Hosts
+        note: Former BTC miners pivoting to AI/GPU workloads
+        tickers:
+          IREN: Iris Energy
+          CORZ: Core Scientific
+          HUT: Hut 8 Mining
+          BTBT: Bit Digital
+          WULF: TeraWulf
+          CIFR: Cipher Mining
+
+      hyperscalers:
+        name: Hyperscalers
+        tickers:
+          MSFT: Microsoft
+          AMZN: Amazon
+          GOOGL: Alphabet
+          META: Meta Platforms
+          ORCL: Oracle
+          AAPL: Apple
+
+      ai_software:
+        name: AI Software / DevTools
+        tickers:
+          SNOW: Snowflake
+          DDOG: Datadog
+          MDB: MongoDB
+          PLTR: Palantir
+          NOW: ServiceNow
+          ESTC: Elastic
+
+      enterprise_ai:
+        name: Enterprise AI Apps
+        tickers:
+          CRM: Salesforce
+          WDAY: Workday
+          PATH: UiPath
+          AI: C3.ai
+          ADBE: Adobe
+          INTU: Intuit
+
+      ai_security:
+        name: AI Security
+        tickers:
+          CRWD: CrowdStrike
+          PANW: Palo Alto Networks
+          S: SentinelOne
+          ZS: Zscaler
+
+      healthcare_ai:
+        name: Healthcare AI
+        tickers:
+          RXRX: Recursion Pharmaceuticals
+          SDGR: Schrödinger
+          GEHC: GE HealthCare
+          ILMN: Illumina
+
+      physical_ai:
+        name: Physical AI / Robotics
+        tickers:
+          TSLA: Tesla
+          MBLY: Mobileye
+          KTOS: Kratos Defense
+          AVAV: AeroVironment
+
+      power_semis:
+        name: Power Semiconductors (GaN/SiC)
+        note: Data center power transistor bottleneck plays
+        tickers:
+          "ON": ON Semiconductor
+          WOLF: Wolfspeed
+          NVTS: Navitas Semiconductor
+          STM: STMicroelectronics
+          IFNNY: Infineon Technologies
+
+      semi_equipment:
+        name: Semiconductor Equipment / Foundry
+        note: Next-gen fab and lithography plays (GAA/2nm)
+        tickers:
+          TSM: Taiwan Semiconductor
+          TSEM: Tower Semiconductor
+          ASML: ASML Holdings
+          LRCX: Lam Research
+          AMAT: Applied Materials
+          KLAC: KLA Corporation
+
+      semi_test:
+        name: Semiconductor Test / Burn-In
+        note: AI chip testing and validation equipment
+        tickers:
+          AEHR: Aehr Test Systems
+          COHU: Cohu
+          TER: Teradyne
+          ONTO: Onto Innovation
+          FORM: FormFactor
+          CAMT: Camtek
+
+  # -----------------------------------------------------------
+  # METALS
+  # -----------------------------------------------------------
+  metals:
+    name: Metals
+    subsectors:
+
+      gold_silver_direct:
+        name: Gold & Silver — Direct Exposure
+        note: ETFs and futures proxies; near-24hr trading
+        tickers:
+          GLD: SPDR Gold Shares ETF
+          SLV: iShares Silver Trust ETF
+          IAU: iShares Gold Trust ETF
+          GC=F: Gold Futures
+          SI=F: Silver Futures
+
+      gold_miners:
+        name: Gold Miners
+        tickers:
+          NEM: Newmont Corporation
+          GOLD: Barrick Gold
+          AEM: Agnico Eagle Mines
+          FNV: Franco-Nevada
+          WPM: Wheaton Precious Metals
+          GDX: VanEck Gold Miners ETF
+
+      silver_miners:
+        name: Silver Miners
+        tickers:
+          AG: First Majestic Silver
+          PAAS: Pan American Silver
+          HL: Hecla Mining
+          EXK: Endeavour Silver
+          SIL: Global X Silver Miners ETF
+
+  # -----------------------------------------------------------
+  # CRYPTO
+  # -----------------------------------------------------------
+  crypto:
+    name: Crypto
+    subsectors:
+
+      crypto_majors:
+        name: Crypto Majors
+        note: 24/7 trading; no daily session close
+        tickers:
+          BTC-USD: Bitcoin
+          ETH-USD: Ethereum
+          SOL-USD: Solana
+          ADA-USD: Cardano
+          AVAX-USD: Avalanche
+
+      crypto_ai:
+        name: Crypto / AI Crossover Tokens
+        note: Speculative; thinner liquidity
+        tickers:
+          FET-USD: Fetch.ai
+          RENDER-USD: Render Network
+          NEAR-USD: NEAR Protocol
+          AKT-USD: Akash Network
+          PURR: Purr
+
+  # -----------------------------------------------------------
+  # ROBOTICS & AUTOMATION
+  # -----------------------------------------------------------
+  robotics:
+    name: Robotics & Automation
+    subsectors:
+
+      surgical_robotics:
+        name: Surgical / Medical Robotics
+        tickers:
+          ISRG: Intuitive Surgical
+          SYK: Stryker Corporation
+          MDT: Medtronic
+          ZBH: Zimmer Biomet Holdings
+          GMED: Globus Medical
+
+      industrial_robotics:
+        name: Industrial Robotics & Automation
+        tickers:
+          FANUY: Fanuc Corporation
+          ROK: Rockwell Automation
+          EMR: Emerson Electric
+          ABBNY: ABB Ltd
+
+      subsea_robotics:
+        name: Subsea / Ocean Robotics
+        tickers:
+          KRKNF: Kraken Robotics
+          MIND: MIND Technology
+          OII: Oceaneering International
+          TDW: Tidewater
+          FTI: TechnipFMC
+
+  # -----------------------------------------------------------
+  # BIOTECHNOLOGY
+  # -----------------------------------------------------------
+  biotech:
+    name: Biotechnology
+    subsectors:
+
+      gene_editing:
+        name: Gene Editing / CRISPR
+        tickers:
+          CRSP: CRISPR Therapeutics
+          NTLA: Intellia Therapeutics
+          BEAM: Beam Therapeutics
+          EDIT: Editas Medicine
+
+      synthetic_bio:
+        name: Synthetic Biology
+        tickers:
+          TWST: Twist Bioscience
+          DNA: Ginkgo Bioworks
+          AZTA: Azenta
+          BIO: Bio-Rad Laboratories
+
+  # -----------------------------------------------------------
+  # SPACE & SATELLITE
+  # -----------------------------------------------------------
+  space:
+    name: Space & Satellite
+    subsectors:
+
+      launch_spacecraft:
+        name: Launch & Spacecraft
+        tickers:
+          RKLB: Rocket Lab USA
+          LUNR: Intuitive Machines
+          LDOS: Leidos Holdings
+          BWXT: BWX Technologies
+          RDW: Redwire Corporation
+
+      satellite_comms:
+        name: Satellite Communications & Data
+        tickers:
+          ASTS: AST SpaceMobile
+          PL: Planet Labs
+          BKSY: BlackSky Technology
+          SPIR: Spire Global
+          IRDM: Iridium Communications
+          GSAT: Globalstar
+
+  # -----------------------------------------------------------
+  # QUANTUM COMPUTING
+  # -----------------------------------------------------------
+  quantum:
+    name: Quantum Computing
+    subsectors:
+
+      quantum_hw:
+        name: Quantum Hardware & Software
+        tickers:
+          IONQ: IonQ
+          RGTI: Rigetti Computing
+          QBTS: D-Wave Quantum
+          QUBT: Quantum Computing Inc
+
+  # -----------------------------------------------------------
+  # NUCLEAR & URANIUM
+  # -----------------------------------------------------------
+  nuclear:
+    name: Nuclear & Uranium
+    subsectors:
+
+      nuclear_reactors:
+        name: Nuclear Reactors / SMR
+        tickers:
+          SMR: NuScale Power
+          OKLO: Oklo Inc
+          NNE: Nano Nuclear Energy
+          LEU: Centrus Energy
+
+      uranium_miners:
+        name: Uranium Miners
+        tickers:
+          CCJ: Cameco Corporation
+          DNN: Denison Mines
+          UEC: Uranium Energy Corp
+          UUUU: Energy Fuels
+          NXE: NexGen Energy
+
+  # -----------------------------------------------------------
+  # eVTOL & DRONES
+  # -----------------------------------------------------------
+  evtol_drones:
+    name: eVTOL & Drones
+    subsectors:
+
+      evtol:
+        name: eVTOL / Urban Air Mobility
+        tickers:
+          JOBY: Joby Aviation
+          ACHR: Archer Aviation
+          RCAT: Red Cat Holdings
+          EH: EHang Holdings
+          EVEX: Eve Air Mobility
+
+
+# =============================================================
+# INDICATOR CONFIGURATION
+# =============================================================
+# Weights derived from backtesting: 94 tickers, 2 years, 4048 obs.
+# Ranked by 63-day forward return predictive edge.
+# =============================================================
+indicators:
+
+  # --- PRIMARY indicators (high weight) ---
+
+  relative_strength:
+    period: 63            # ~3 months
+    benchmark: SPY
+    percentile: 75        # top quartile = flagged
+    weight: 3.0           # +13.31% edge, 77.4% win rate
+
+  ichimoku_cloud:
+    tenkan: 9
+    kijun: 26
+    senkou_b: 52
+    weight: 2.5           # +10.89% edge, 76.9% win rate
+
+  higher_lows:
+    num_periods: 4        # consecutive higher-low periods required
+    period_length: 5      # trading days per period (~1 week)
+    weight: 2.0           # +7.73% edge, 75.9% win rate
+
+  moving_averages:
+    short_period: 50
+    long_period: 200
+    golden_cross_lookback: 20
+    weight: 2.0           # +7.54% edge, 73.8% win rate
+
+  roc:
+    period: 21            # 21-day rate of change
+    threshold: 5.0        # flag if ROC > 5%
+    weight: 1.5           # +6.84% edge, 72.6% win rate
+
+  # --- CONFIRMATION indicators (lower weight) ---
+
+  cmf:
+    period: 20
+    threshold: 0.05       # flag if CMF > 0.05
+    weight: 1.0           # +6.57% edge, 73.2% win rate
+
+  near_52w_high:
+    threshold_pct: 0.02   # flag if within 2% of 52-week high
+    weight: 1.0           # +4.52% edge, 84.5% win rate
+
+  atr_expansion:
+    period: 14
+    lookback: 50
+    threshold_percentile: 80  # flag if ATR in top 20%
+    weight: 0.5           # +4.58% edge, 69.5% win rate
+
+# =============================================================
+# SCORING — Regime-Independent (3yr conditional edge analysis)
+# =============================================================
+# Gradient:  RS 0-3.0, Higher Lows 0-1.0
+# Binary:    Ichimoku 2.0, CMF 1.5, ROC 1.5, Dual-TF RS 0.5, ATR 0.5
+# Max: 10.0
+# Dropped: MA Alignment (-9.3% edge), Near 52w High (-3.3% edge)
+# =============================================================
+scoring:
+  max_score: 10.0
+  email_threshold: 6
+  indicators:
+    - relative_strength
+    - higher_lows
+    - ichimoku_cloud
+    - cmf
+    - roc
+    - dual_tf_rs
+    - atr_expansion
+
+# =============================================================
+# SUBSECTOR BREAKOUT DETECTION
+# =============================================================
+breakout_detection:
+  breadth_threshold: 6          # score threshold for a ticker to count as "hot"
+  breadth_trigger: 0.5          # fraction of tickers that must be hot (50%)
+  z_score_trigger: 1.0          # std devs above 60-day mean for emerging
+  lookback_days: 60             # rolling window for mean/std
+  confirm_days: 3               # consecutive hot readings for confirmation
+  fade_cool_days: 5             # consecutive cool readings to return to quiet
+  history_retention_days: 180   # how long to keep daily records in SQLite
