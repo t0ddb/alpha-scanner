@@ -10,7 +10,7 @@
 Recommended: Full-width screenshot of the Tickers page showing the breakouts table
 Save as: docs/images/dashboard-hero.png
 -->
-![Alpha Scanner Dashboard]((https://alphascanner.streamlit.app/))
+[Alpha Scanner Dashboard](https://alphascanner.streamlit.app/)
 
 ---
 
@@ -141,35 +141,19 @@ Adding new sectors or tickers requires only editing a YAML config file — no co
 
 ## Dashboard
 
+[Alpha Scanner Dashboard](https://alphascanner.streamlit.app/)
+
 The live dashboard is built with Streamlit and provides three views:
 
 ### Tickers — Current Breakout Signals
-
-<!-- 
-📸 SCREENSHOT: Tickers page showing the breakouts table with score badges
-Save as: docs/images/dashboard-tickers.png
--->
-![Tickers Page](docs/images/dashboard-tickers.png)
 
 Shows every stock's current score, which indicators are firing, and a candlestick chart with technical overlays for any selected ticker.
 
 ### Subsectors — Breakout State Tracking
 
-<!-- 
-📸 SCREENSHOT: Subsectors page showing state machine status banners and active signals
-Save as: docs/images/dashboard-subsectors.png
--->
-![Subsectors Page](docs/images/dashboard-subsectors.png)
-
 Monitors all 31 subsectors through the breakout lifecycle. Shows breadth, z-scores, acceleration, and which subsectors are Emerging, Confirmed, or in Revival.
 
 ### Historical Charts — Score Evolution Over Time
-
-<!-- 
-📸 SCREENSHOT: Historical page showing the score heatmap or subsector breadth trends
-Save as: docs/images/dashboard-historical.png
--->
-![Historical Charts](docs/images/dashboard-historical.png)
 
 Tracks how scores and subsector breadth have evolved, with heatmaps, trend lines, and distribution charts pulled from the SQLite database.
 
