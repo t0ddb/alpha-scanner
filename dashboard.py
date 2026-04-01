@@ -709,7 +709,7 @@ def render_dashboard(results: list, cfg: dict, data: dict = None):
             else:
                 return "background-color: rgba(107, 114, 128, 0.75); color: white;"
 
-        styled_all = all_df.style.applymap(
+        styled_all = all_df.style.map(
             color_score_all, subset=["Score"]
         ).format(
             {"Price": "${:,.2f}", "Score": "{:.1f}", "7d Δ": "{:+.1f}%",
@@ -1134,7 +1134,7 @@ def render_subsector_breakouts(results: list, cfg: dict, data: dict = None):
                     else:
                         return "background-color: rgba(107, 114, 128, 0.75); color: white;"
 
-                styled = ticker_df.style.applymap(
+                styled = ticker_df.style.map(
                     color_score, subset=["Score"]
                 ).format(
                     {k: "{:.1f}" for k in ["Score"] + [indicator_short[k] for k in indicator_keys]}
