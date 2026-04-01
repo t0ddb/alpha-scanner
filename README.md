@@ -10,7 +10,7 @@
 Recommended: Full-width screenshot of the Tickers page showing the breakouts table
 Save as: docs/images/dashboard-hero.png
 -->
-![Alpha Scanner Dashboard](docs/images/dashboard-hero.png)
+![Alpha Scanner Dashboard]((https://alphascanner.streamlit.app/))
 
 ---
 
