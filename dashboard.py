@@ -1,20 +1,5 @@
 from __future__ import annotations
 
-"""
-dashboard.py -- Streamlit dashboard for Alpha Scanner.
-
-Usage:
-    streamlit run dashboard.py
-
-Features:
-    - Live scoring: fetches current data and scores all tickers
-    - Sector/subsector drill-down
-    - Individual ticker detail view with indicator breakdown
-    - Sortable, filterable scorecard table
-    - Score distribution and sector heatmap
-
-Scoring: Regime-independent 0-10.0 scale (7 scored indicators + 2 display-only).
-"""
 
 import warnings
 warnings.filterwarnings("ignore", message=".*keyword arguments have been deprecated.*")
