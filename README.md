@@ -33,7 +33,7 @@ Alpha Scanner operates in two layers:
 Save as: docs/images/architecture.png
 Or use the generated architecture-diagram.html file, screenshot it, and save here
 -->
-![System Architecture](docs/images/architecture-diagram.html)
+![System Architecture](docs/images/architecture-diagram.png)
 
 ### Layer 1 — Ticker Scoring
 
@@ -60,7 +60,7 @@ Individual ticker scores are aggregated into subsector-level metrics. A state ma
 Save as: docs/images/state-machine.png
 Or use the generated state-machine-diagram.html file
 -->
-![Subsector State Machine](docs/images/state-machine-diagram.html)
+![Subsector State Machine](docs/images/state-machine-diagram.png)
 
 When 50%+ of the stocks in a subsector are scoring 6 or higher ("hot"), that subsector enters the breakout pipeline. If it sustains that breadth for 3 consecutive readings, it's **Confirmed** — the highest-conviction signal.
 
@@ -80,7 +80,7 @@ The results surprised me:
 📸 SCREENSHOT: Indicator ranking chart or table
 Save as: docs/images/indicator-ranking.png
 -->
-![Indicator Ranking by Predictive Edge](docs/images/indicator-methodology-diagram.html)
+![Indicator Ranking by Predictive Edge](docs/images/indicator-methodology-diagram.png)
 
 **Top performers** — Relative Strength (+13.3% edge), Ichimoku Cloud (+10.9%), Higher Lows (+7.7%). These earned the highest weights.
 
