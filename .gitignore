@@ -1,5 +1,4 @@
-# Database
-breakout_tracker.db
+# Database (WAL/SHM temp files only)
 breakout_tracker.db-wal
 breakout_tracker.db-shm
 
