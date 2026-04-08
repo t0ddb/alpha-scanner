@@ -10,6 +10,9 @@ import numpy as np
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from datetime import datetime
+from zoneinfo import ZoneInfo
+
+LOCAL_TZ = ZoneInfo("America/Los_Angeles")
 
 import sqlite3
 from pathlib import Path
@@ -293,14 +296,13 @@ def render_price_chart(ticker: str, df: pd.DataFrame):
 def load_and_score(period: str = "1y"):
     """Fetch data and score all tickers. Cached for 1 hour."""
     cfg = load_config()
-    t_fetch_start = datetime.now()
     data = fetch_all(cfg, period=period, verbose=False)
-    t_fetch_end = datetime.now()
+    t_fetch_end = datetime.now(LOCAL_TZ)
     results = score_all(data, cfg)
-    t_score_end = datetime.now()
+    t_score_end = datetime.now(LOCAL_TZ)
     timestamps = {
-        "price_data": t_fetch_end.strftime("%m/%d/%y %H:%M"),
-        "scoring": t_score_end.strftime("%m/%d/%y %H:%M"),
+        "price_data": t_fetch_end.strftime("%m/%d/%y %I:%M %p PT"),
+        "scoring": t_score_end.strftime("%m/%d/%y %I:%M %p PT"),
     }
     return cfg, data, results, timestamps
 
