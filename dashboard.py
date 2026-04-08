@@ -293,9 +293,16 @@ def render_price_chart(ticker: str, df: pd.DataFrame):
 def load_and_score(period: str = "1y"):
     """Fetch data and score all tickers. Cached for 1 hour."""
     cfg = load_config()
+    t_fetch_start = datetime.now()
     data = fetch_all(cfg, period=period, verbose=False)
+    t_fetch_end = datetime.now()
     results = score_all(data, cfg)
-    return cfg, data, results
+    t_score_end = datetime.now()
+    timestamps = {
+        "price_data": t_fetch_end.strftime("%b %d, %Y %I:%M %p"),
+        "scoring": t_score_end.strftime("%b %d, %Y %I:%M %p"),
+    }
+    return cfg, data, results, timestamps
 
 
 @st.cache_data(ttl=3600, show_spinner="Fetching sector data...")
@@ -374,7 +381,7 @@ def results_to_dataframe(results: list) -> pd.DataFrame:
 # =============================================================
 # SIDEBAR
 # =============================================================
-def render_sidebar(cfg: dict):
+def render_sidebar(cfg: dict, timestamps: dict = None):
     """Render the sidebar with navigation."""
     st.sidebar.title("🚀 Alpha Scanner")
     st.sidebar.divider()
@@ -385,6 +392,20 @@ def render_sidebar(cfg: dict):
         ["🔥 Subsectors", "📈 Tickers", "📊 Historical Charts"],
         label_visibility="collapsed",
     )
+
+    # Data freshness timestamps
+    if timestamps:
+        st.sidebar.divider()
+        st.sidebar.markdown(
+            f"<div style='font-size:0.75rem;color:#64748b;line-height:1.6'>"
+            f"<strong style='color:#94a3b8'>Data Freshness</strong><br>"
+            f"📊 Prices: {timestamps.get('price_data', '—')}<br>"
+            f"🧮 Scores: {timestamps.get('scoring', '—')}<br>"
+            f"🔥 Breakouts: {timestamps.get('breakout', '—')}<br>"
+            f"🗄️ DB: {timestamps.get('db_last', '—')}"
+            f"</div>",
+            unsafe_allow_html=True,
+        )
 
     return page
 
@@ -1485,8 +1506,24 @@ def render_historical_charts():
 # MAIN
 # =============================================================
 def main():
-    cfg, data, results = load_and_score(period="2y")
-    page = render_sidebar(cfg)
+    cfg, data, results, timestamps = load_and_score(period="2y")
+
+    # Add DB last-updated timestamp
+    try:
+        conn = sqlite3.connect(str(DB_PATH))
+        row = conn.execute("SELECT MAX(date) FROM ticker_scores").fetchone()
+        conn.close()
+        if row and row[0]:
+            timestamps["db_last"] = row[0]
+        else:
+            timestamps["db_last"] = "No data"
+    except Exception:
+        timestamps["db_last"] = "No DB"
+
+    # Breakout detection timestamp gets set after it runs
+    timestamps["breakout"] = timestamps["scoring"]
+
+    page = render_sidebar(cfg, timestamps)
 
     if page == "🔥 Subsectors":
         render_subsector_breakouts(results, cfg, data)
