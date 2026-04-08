@@ -299,8 +299,8 @@ def load_and_score(period: str = "1y"):
     results = score_all(data, cfg)
     t_score_end = datetime.now()
     timestamps = {
-        "price_data": t_fetch_end.strftime("%b %d, %Y %I:%M %p"),
-        "scoring": t_score_end.strftime("%b %d, %Y %I:%M %p"),
+        "price_data": t_fetch_end.strftime("%m/%d/%y %H:%M"),
+        "scoring": t_score_end.strftime("%m/%d/%y %H:%M"),
     }
     return cfg, data, results, timestamps
 
@@ -397,8 +397,8 @@ def render_sidebar(cfg: dict, timestamps: dict = None):
     if timestamps:
         st.sidebar.divider()
         st.sidebar.markdown(
-            f"<div style='font-size:0.75rem;color:#64748b;line-height:1.6'>"
-            f"<strong style='color:#94a3b8'>Data Freshness</strong><br>"
+            f"<div style='font-size:0.9rem;color:#64748b;line-height:1.8'>"
+            f"<strong style='color:#94a3b8;font-size:0.95rem'>Data Freshness</strong><br>"
             f"📊 Prices: {timestamps.get('price_data', '—')}<br>"
             f"🧮 Scores: {timestamps.get('scoring', '—')}<br>"
             f"🔥 Breakouts: {timestamps.get('breakout', '—')}<br>"
@@ -1514,7 +1514,8 @@ def main():
         row = conn.execute("SELECT MAX(date) FROM ticker_scores").fetchone()
         conn.close()
         if row and row[0]:
-            timestamps["db_last"] = row[0]
+            db_date = pd.Timestamp(row[0])
+            timestamps["db_last"] = db_date.strftime("%m/%d/%y")
         else:
             timestamps["db_last"] = "No data"
     except Exception:
