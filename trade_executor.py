@@ -1,0 +1,759 @@
+"""
+trade_executor.py — Daily paper-trade execution against Alpaca.
+
+Runs after market close. Scores all tickers, evaluates exits on open
+positions, and places entry orders on new Fire-tier signals (score ≥ 9.5).
+
+Usage:
+    python3 trade_executor.py              # live paper trading
+    python3 trade_executor.py --dry-run    # show what it WOULD do, no orders
+
+Env vars (store in .env):
+    ALPACA_API_KEY
+    ALPACA_SECRET_KEY
+"""
+
+from __future__ import annotations
+
+import argparse
+import os
+import sys
+from datetime import date, datetime
+from zoneinfo import ZoneInfo
+
+from dotenv import load_dotenv
+
+# Alpaca SDK
+from alpaca.trading.client import TradingClient
+from alpaca.trading.requests import MarketOrderRequest
+from alpaca.trading.enums import OrderSide, TimeInForce
+from alpaca.common.exceptions import APIError
+from alpaca.data.historical import StockHistoricalDataClient
+from alpaca.data.requests import StockLatestTradeRequest
+
+# Alpha Scanner pipeline
+from config import load_config
+from data_fetcher import fetch_all
+from indicators import score_all
+
+# Local trade utilities
+import wash_sale_tracker
+import trade_log
+
+
+# ─────────────────────────────────────────────────────────────
+# Config / Constants (matches backtested strategy)
+# ─────────────────────────────────────────────────────────────
+ENTRY_THRESHOLD = 9.5     # Score ≥ this to open new position
+SCORE_EXIT = 5.0          # Score < this closes the position
+STOP_LOSS_PCT = 0.15      # 15% stop loss from entry
+MAX_POSITION_PCT = 0.20   # Max 20% of equity per position
+MIN_POSITION_SIZE = 500   # Minimum $ size for a new position
+PT_TZ = ZoneInfo("America/Los_Angeles")
+
+# Tickers excluded from Alpaca paper trading
+EXCLUDED_SUFFIXES = ("-USD",)          # crypto
+EXCLUDED_EXACT = {"GC=F", "SI=F"}      # futures
+
+
+# ─────────────────────────────────────────────────────────────
+# Alpaca helpers
+# ─────────────────────────────────────────────────────────────
+
+def connect_alpaca() -> TradingClient:
+    """Initialize and validate the Alpaca paper trading client."""
+    api_key = os.getenv("ALPACA_API_KEY")
+    secret_key = os.getenv("ALPACA_SECRET_KEY")
+    if not api_key or not secret_key:
+        print("  [ERROR] ALPACA_API_KEY and ALPACA_SECRET_KEY must be set in .env")
+        sys.exit(1)
+
+    client = TradingClient(api_key, secret_key, paper=True)
+
+    # Safety check: must be a paper account
+    account = client.get_account()
+    if not str(account.account_number).startswith("PA"):
+        print(f"  [ERROR] NOT A PAPER ACCOUNT ({account.account_number}) — ABORTING")
+        sys.exit(1)
+
+    return client
+
+
+def connect_alpaca_data() -> StockHistoricalDataClient:
+    """Initialize the Alpaca historical data client (stocks)."""
+    api_key = os.getenv("ALPACA_API_KEY")
+    secret_key = os.getenv("ALPACA_SECRET_KEY")
+    return StockHistoricalDataClient(api_key, secret_key)
+
+
+def get_alpaca_latest_price(data_client: StockHistoricalDataClient, ticker: str) -> float:
+    """
+    Fetch the latest trade price from Alpaca's market data API.
+    Returns 0.0 if the request fails or the ticker is unknown.
+    """
+    try:
+        req = StockLatestTradeRequest(symbol_or_symbols=ticker)
+        resp = data_client.get_stock_latest_trade(req)
+        trade = resp.get(ticker) if isinstance(resp, dict) else None
+        if trade is not None and getattr(trade, "price", None):
+            return float(trade.price)
+    except APIError as e:
+        print(f"  [WARN] Alpaca latest-trade fetch failed for {ticker}: {e}")
+    except Exception as e:
+        print(f"  [WARN] Alpaca latest-trade error for {ticker}: {e}")
+    return 0.0
+
+
+def get_account_snapshot(client: TradingClient) -> dict:
+    """Grab equity, cash, and open positions in one call."""
+    account = client.get_account()
+    try:
+        raw_positions = client.get_all_positions()
+    except APIError:
+        raw_positions = []
+
+    positions = {}
+    for p in raw_positions:
+        positions[p.symbol] = {
+            "qty": float(p.qty),
+            "entry_price": float(p.avg_entry_price),
+            "current_price": float(p.current_price) if p.current_price is not None else 0.0,
+            "market_value": float(p.market_value) if p.market_value is not None else 0.0,
+            "unrealized_pnl": float(p.unrealized_pl) if p.unrealized_pl is not None else 0.0,
+            "unrealized_pnl_pct": float(p.unrealized_plpc) * 100 if p.unrealized_plpc is not None else 0.0,
+        }
+
+    return {
+        "equity": float(account.equity),
+        "cash": float(account.cash),
+        "buying_power": float(account.buying_power),
+        "positions": positions,
+    }
+
+
+def is_ticker_excluded(ticker: str) -> bool:
+    """Filter out crypto and futures tickers we can't trade on Alpaca."""
+    if ticker in EXCLUDED_EXACT:
+        return True
+    return any(ticker.endswith(suf) for suf in EXCLUDED_SUFFIXES)
+
+
+def is_tradeable_on_alpaca(client: TradingClient, ticker: str) -> bool:
+    """Verify the symbol is tradeable on Alpaca."""
+    try:
+        asset = client.get_asset(ticker)
+        return bool(asset.tradable)
+    except APIError:
+        return False
+
+
+def submit_market_order(
+    client: TradingClient,
+    ticker: str,
+    qty: float,
+    side: OrderSide,
+    dry_run: bool = False,
+) -> str | None:
+    """Place a market order, returning the order ID (or None on failure/dry-run)."""
+    if dry_run:
+        return None
+
+    try:
+        req = MarketOrderRequest(
+            symbol=ticker,
+            qty=qty,
+            side=side,
+            time_in_force=TimeInForce.DAY,
+        )
+        order = client.submit_order(req)
+        return str(order.id)
+    except APIError as e:
+        print(f"  [ERROR] Order failed for {ticker}: {e}")
+        return None
+
+
+# ─────────────────────────────────────────────────────────────
+# Decision logic
+# ─────────────────────────────────────────────────────────────
+
+def score_lookup(results: list[dict]) -> dict[str, dict]:
+    """Transform the score_all() list into a ticker → record dict."""
+    return {r["ticker"]: r for r in results}
+
+
+def evaluate_exits(
+    snapshot: dict,
+    scores: dict[str, dict],
+) -> list[dict]:
+    """Determine which open positions should be sold today."""
+    exits = []
+    for ticker, pos in snapshot["positions"].items():
+        score_rec = scores.get(ticker)
+        score = score_rec["score"] if score_rec else None
+        entry_price = pos["entry_price"]
+        current_price = pos["current_price"]
+        stop_price = entry_price * (1 - STOP_LOSS_PCT)
+
+        reason = None
+        if score is not None and score < SCORE_EXIT:
+            reason = f"Score exit (score {score:.1f} < {SCORE_EXIT})"
+        elif current_price > 0 and current_price <= stop_price:
+            reason = f"Stop loss hit ({STOP_LOSS_PCT*100:.0f}%)"
+
+        if reason:
+            exits.append({
+                "ticker": ticker,
+                "qty": pos["qty"],
+                "entry_price": entry_price,
+                "current_price": current_price,
+                "score": score if score is not None else 0.0,
+                "unrealized_pnl": pos["unrealized_pnl"],
+                "unrealized_pnl_pct": pos["unrealized_pnl_pct"],
+                "reason": reason,
+            })
+    return exits
+
+
+def evaluate_entries(
+    snapshot: dict,
+    scores: dict[str, dict],
+    exits: list[dict],
+    client: TradingClient,
+    data_client: StockHistoricalDataClient,
+    today: date,
+) -> tuple[list[dict], list[dict]]:
+    """
+    Return (entries, skipped) for today.
+    """
+    held = set(snapshot["positions"].keys())
+    exiting = {e["ticker"] for e in exits}
+    cooldown_map = wash_sale_tracker.get_cooldowns(today)
+
+    # Estimate post-exit cash: current cash + proceeds from sells
+    projected_cash = snapshot["cash"] + sum(
+        e["qty"] * e["current_price"] for e in exits
+    )
+    equity = snapshot["equity"]
+    max_position = equity * MAX_POSITION_PCT
+
+    # Filter candidates
+    candidates = []
+    for ticker, rec in scores.items():
+        score = rec["score"]
+        if score < ENTRY_THRESHOLD:
+            continue
+        if ticker in held and ticker not in exiting:
+            continue  # already own it
+        if is_ticker_excluded(ticker):
+            continue
+        candidates.append(rec)
+
+    candidates.sort(key=lambda r: -r["score"])
+
+    entries = []
+    skipped = []
+
+    for rec in candidates:
+        ticker = rec["ticker"]
+        score = rec["score"]
+
+        # Wash sale check — LOG ONLY, DO NOT BLOCK.
+        # Rationale: backtesting showed re-entries after losses often produce
+        # strong gains (e.g., VIAV -21% -> same-day re-entry -> +42%). Wash
+        # sales defer the tax deduction but don't eliminate it, so we'd
+        # rather capture the alpha and pay the deferral cost.
+        wash_sale_warning = None
+        if ticker in cooldown_map:
+            cd = cooldown_map[ticker]
+            wash_sale_warning = {
+                "loss_exit_date": cd["exit_date"],
+                "loss_amount": cd["loss_amount"],
+                "cooldown_until": cd["cooldown_until"],
+            }
+
+        # Tradeability check
+        if not is_tradeable_on_alpaca(client, ticker):
+            skipped.append({
+                "ticker": ticker,
+                "score": score,
+                "reason": "Not tradeable on Alpaca",
+            })
+            continue
+
+        # Sizing
+        target_size = min(projected_cash, max_position)
+        if target_size < MIN_POSITION_SIZE:
+            skipped.append({
+                "ticker": ticker,
+                "score": score,
+                "reason": f"Insufficient cash (${projected_cash:,.0f} available, need ${MIN_POSITION_SIZE})",
+            })
+            continue
+
+        # Use current score's close price as the estimated share price
+        # (Alpaca will fill at next open; this is just for qty sizing).
+        # Fall back to Alpaca's latest trade price if the indicator dict
+        # doesn't carry one.
+        est_price = _estimated_price(rec)
+        if not est_price or est_price <= 0:
+            est_price = get_alpaca_latest_price(data_client, ticker)
+
+        if not est_price or est_price <= 0:
+            skipped.append({
+                "ticker": ticker,
+                "score": score,
+                "reason": "No price data available (yfinance + Alpaca both failed)",
+            })
+            continue
+
+        qty = int(target_size // est_price)  # whole shares only
+        if qty <= 0:
+            skipped.append({
+                "ticker": ticker,
+                "score": score,
+                "reason": f"Position size ${target_size:,.0f} too small for share price ${est_price:,.2f}",
+            })
+            continue
+
+        cost_basis = qty * est_price
+        entries.append({
+            "ticker": ticker,
+            "qty": qty,
+            "est_price": est_price,
+            "cost_basis": cost_basis,
+            "score": score,
+            "reason": f"Score ≥ {ENTRY_THRESHOLD}",
+            "wash_sale_warning": wash_sale_warning,
+        })
+        projected_cash -= cost_basis
+
+    return entries, skipped
+
+
+def _estimated_price(score_record: dict) -> float:
+    """
+    Pull the most recent close price from the indicator dict.
+    Prices live under moving_averages.current_close and
+    near_52w_high.current_close — try both.
+    """
+    ind = score_record.get("indicators", {})
+
+    # Preferred: nested indicators that carry the current close
+    for sub in ("moving_averages", "near_52w_high"):
+        entry = ind.get(sub)
+        if isinstance(entry, dict):
+            val = entry.get("current_close")
+            if val:
+                try:
+                    return float(val)
+                except (TypeError, ValueError):
+                    pass
+
+    # Last-resort scan: any nested dict with a price-ish field
+    for v in ind.values():
+        if isinstance(v, dict):
+            for key in ("current_close", "last_close", "close", "price"):
+                val = v.get(key)
+                if val:
+                    try:
+                        return float(val)
+                    except (TypeError, ValueError):
+                        continue
+    return 0.0
+
+
+# ─────────────────────────────────────────────────────────────
+# Execution
+# ─────────────────────────────────────────────────────────────
+
+def execute_exits(
+    client: TradingClient,
+    exits: list[dict],
+    today: date,
+    dry_run: bool,
+) -> None:
+    """Submit sell orders and log them."""
+    for e in exits:
+        action = "[DRY RUN] " if dry_run else ""
+        print(f"  {action}SELL  {e['ticker']:<6s} {e['qty']:>6.0f} shares @ ${e['current_price']:>8.2f}  "
+              f"{e['reason']:<35s} P&L: {'+' if e['unrealized_pnl'] >= 0 else ''}${e['unrealized_pnl']:>9,.0f} "
+              f"({e['unrealized_pnl_pct']:+.1f}%)")
+
+        order_id = submit_market_order(
+            client, e["ticker"], e["qty"], OrderSide.SELL, dry_run=dry_run
+        )
+
+        # Record wash sale if losing
+        if e["unrealized_pnl"] < 0:
+            wash_sale_tracker.record_loss_exit(e["ticker"], today, e["unrealized_pnl"])
+            until = (wash_sale_tracker.get_blocked_tickers(today)
+                     .get(e["ticker"], {})
+                     .get("cooldown_until", "?"))
+            print(f"                                         → Wash sale recorded: blocked until {until}")
+
+        # Trade log
+        if not dry_run:
+            buy_date = trade_log.get_last_buy_date(e["ticker"])
+            hold_days = 0
+            if buy_date:
+                hold_days = (today - datetime.strptime(buy_date, "%Y-%m-%d").date()).days
+            trade_log.log_sell(
+                ticker=e["ticker"],
+                trade_date=today,
+                price=e["current_price"],
+                qty=e["qty"],
+                entry_price=e["entry_price"],
+                score_at_exit=e["score"],
+                reason=e["reason"],
+                hold_days=hold_days,
+                alpaca_order_id=order_id,
+            )
+
+
+def execute_entries(
+    client: TradingClient,
+    entries: list[dict],
+    today: date,
+    dry_run: bool,
+) -> None:
+    """Submit buy orders and log them."""
+    for e in entries:
+        action = "[DRY RUN] " if dry_run else ""
+        print(f"  {action}BUY   {e['ticker']:<6s} {e['qty']:>6.0f} shares @ ${e['est_price']:>8.2f}  "
+              f"Score: {e['score']:<5.1f}  Cost: ${e['cost_basis']:>9,.0f}")
+
+        # Wash sale warning (log only — trade proceeds regardless)
+        ws = e.get("wash_sale_warning")
+        if ws:
+            print(f"                                         "
+                  f"WASH SALE: ${abs(ws['loss_amount']):,.0f} loss on "
+                  f"{ws['loss_exit_date']} (cooldown until {ws['cooldown_until']})")
+            print(f"                                         "
+                  f"→ Trade proceeding; loss deferred to replacement cost basis.")
+            # Record the violation for tax awareness
+            wash_sale_tracker.record_violation(e["ticker"], today)
+
+        order_id = submit_market_order(
+            client, e["ticker"], e["qty"], OrderSide.BUY, dry_run=dry_run
+        )
+
+        if not dry_run:
+            trade_log.log_buy(
+                ticker=e["ticker"],
+                trade_date=today,
+                price=e["est_price"],
+                qty=e["qty"],
+                score_at_entry=e["score"],
+                reason=e["reason"],
+                alpaca_order_id=order_id,
+            )
+
+
+# ─────────────────────────────────────────────────────────────
+# Reporting
+# ─────────────────────────────────────────────────────────────
+
+def print_header(dry_run: bool) -> None:
+    now = datetime.now(PT_TZ)
+    mode = "  [DRY RUN MODE — NO ORDERS WILL BE PLACED]\n" if dry_run else ""
+    print("=" * 66)
+    print("  ALPHA SCANNER — DAILY TRADE EXECUTION")
+    print(f"  {now.strftime('%Y-%m-%d %H:%M %Z')}")
+    print("=" * 66)
+    if mode:
+        print(mode)
+
+
+def print_account_status(snapshot: dict) -> None:
+    print("\n  ACCOUNT STATUS")
+    print("  " + "─" * 38)
+    print(f"  Equity:          ${snapshot['equity']:>12,.2f}")
+    print(f"  Cash:            ${snapshot['cash']:>12,.2f}")
+    print(f"  Positions:       {len(snapshot['positions']):>13d}")
+
+
+def print_section(title: str) -> None:
+    print(f"\n  {title}")
+    print("  " + "─" * 38)
+
+
+def print_positions(snapshot: dict, scores: dict[str, dict], today: date) -> None:
+    print_section("PORTFOLIO POSITIONS")
+    if not snapshot["positions"]:
+        print("  (no open positions)")
+        return
+
+    print(f"  {'Ticker':<8s} {'Qty':>6s} {'Entry':>9s} {'Current':>9s} {'P&L':>8s} {'Score':>7s} {'Days':>6s}")
+    for ticker, pos in sorted(snapshot["positions"].items()):
+        score = scores.get(ticker, {}).get("score", 0.0)
+        buy_date = trade_log.get_last_buy_date(ticker)
+        hold_days = 0
+        if buy_date:
+            hold_days = (today - datetime.strptime(buy_date, "%Y-%m-%d").date()).days
+        print(f"  {ticker:<8s} {pos['qty']:>6.0f} ${pos['entry_price']:>7.2f} ${pos['current_price']:>7.2f} "
+              f"{pos['unrealized_pnl_pct']:>+7.1f}% {score:>7.1f} {hold_days:>6d}")
+
+
+def print_wash_sale_status(today: date) -> None:
+    """Print active cooldowns (informational) and recent violations."""
+    cooldowns = wash_sale_tracker.get_cooldowns(today)
+    violations = wash_sale_tracker.get_violations()
+
+    print_section("WASH SALE COOLDOWNS (informational — trades not blocked)")
+    if not cooldowns:
+        print("  (none)")
+    else:
+        for ticker, entry in sorted(cooldowns.items()):
+            print(f"  {ticker:<8s} Cooldown until {entry['cooldown_until']}    "
+                  f"Loss: ${entry['loss_amount']:,.0f}")
+
+    if violations:
+        print_section("WASH SALE VIOLATIONS LOGGED")
+        for v in violations:
+            print(f"  {v['ticker']:<8s} re-entered {v['reentry_date']} "
+                  f"({v['days_between']}d after loss exit)  "
+                  f"Disallowed loss: ${abs(v['loss_amount']):,.0f}")
+        total = wash_sale_tracker.total_disallowed_loss()
+        print(f"\n  Total disallowed losses (deferred): ${total:,.2f}")
+
+
+# ─────────────────────────────────────────────────────────────
+# Email digest
+# ─────────────────────────────────────────────────────────────
+
+def _build_trade_digest_html(
+    snapshot: dict,
+    exits: list[dict],
+    entries: list[dict],
+    skipped: list[dict],
+    scores: dict[str, dict],
+    today: date,
+    dry_run: bool,
+) -> tuple[str, str]:
+    """Build (subject, html) for the daily trade execution digest."""
+    equity = snapshot["equity"]
+    cash = snapshot["cash"]
+    num_pos = len(snapshot["positions"])
+
+    dry_tag = " [DRY RUN]" if dry_run else ""
+    subject = (f"Alpha Scanner Trades {today.isoformat()} — "
+               f"{len(entries)} buy / {len(exits)} sell{dry_tag}")
+
+    def row(cells: list[str]) -> str:
+        return "<tr>" + "".join(f'<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb">{c}</td>' for c in cells) + "</tr>"
+
+    def header_row(cells: list[str]) -> str:
+        return ("<tr>" + "".join(
+            f'<th style="padding:6px 10px;text-align:left;background:#f3f4f6;border-bottom:2px solid #d1d5db">{c}</th>'
+            for c in cells) + "</tr>")
+
+    def table(header: list[str], rows: list[str]) -> str:
+        if not rows:
+            return "<p style='color:#6b7280'>(none)</p>"
+        return ("<table style='border-collapse:collapse;width:100%;font-size:13px'>"
+                + header_row(header)
+                + "".join(rows) + "</table>")
+
+    # Exits
+    exit_rows = []
+    for e in exits:
+        pnl_color = "#10b981" if e["unrealized_pnl"] >= 0 else "#ef4444"
+        exit_rows.append(row([
+            f"<b>{e['ticker']}</b>",
+            f"{e['qty']:.0f}",
+            f"${e['current_price']:.2f}",
+            e["reason"],
+            f"<span style='color:{pnl_color}'>${e['unrealized_pnl']:+,.0f} ({e['unrealized_pnl_pct']:+.1f}%)</span>",
+        ]))
+
+    # Entries
+    entry_rows = []
+    for e in entries:
+        ws_note = ""
+        if e.get("wash_sale_warning"):
+            ws_note = (f" <span style='color:#f59e0b;font-size:11px'>"
+                       f"⚠ wash sale (${abs(e['wash_sale_warning']['loss_amount']):,.0f} deferred)</span>")
+        entry_rows.append(row([
+            f"<b>{e['ticker']}</b>{ws_note}",
+            f"{e['qty']:.0f}",
+            f"${e['est_price']:.2f}",
+            f"{e['score']:.1f}",
+            f"${e['cost_basis']:,.0f}",
+        ]))
+
+    # Skipped
+    skip_rows = [row([f"<b>{s['ticker']}</b>", f"{s['score']:.1f}", s["reason"]]) for s in skipped]
+
+    # Positions
+    pos_rows = []
+    for ticker, pos in sorted(snapshot["positions"].items()):
+        score = scores.get(ticker, {}).get("score", 0.0)
+        pnl_color = "#10b981" if pos["unrealized_pnl"] >= 0 else "#ef4444"
+        pos_rows.append(row([
+            f"<b>{ticker}</b>",
+            f"{pos['qty']:.0f}",
+            f"${pos['entry_price']:.2f}",
+            f"${pos['current_price']:.2f}",
+            f"<span style='color:{pnl_color}'>{pos['unrealized_pnl_pct']:+.1f}%</span>",
+            f"{score:.1f}",
+        ]))
+
+    # Wash sale status
+    cooldowns = wash_sale_tracker.get_cooldowns(today)
+    cooldown_rows = [row([f"<b>{t}</b>", e["cooldown_until"], f"${e['loss_amount']:,.0f}"])
+                     for t, e in sorted(cooldowns.items())]
+
+    html = f"""
+    <div style="font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;max-width:720px;margin:0 auto;color:#111">
+      <h2 style="margin:0 0 8px 0">Alpha Scanner — Daily Trade Execution{dry_tag}</h2>
+      <p style="color:#6b7280;margin:0 0 20px 0">{today.strftime('%A, %B %d, %Y')}</p>
+
+      <div style="background:#f9fafb;padding:14px 18px;border-radius:8px;margin-bottom:20px">
+        <div style="display:flex;gap:24px;flex-wrap:wrap">
+          <div><b>Equity:</b> ${equity:,.2f}</div>
+          <div><b>Cash:</b> ${cash:,.2f}</div>
+          <div><b>Positions:</b> {num_pos}</div>
+        </div>
+      </div>
+
+      <h3 style="margin:24px 0 8px 0">Exits ({len(exits)})</h3>
+      {table(["Ticker", "Qty", "Price", "Reason", "P&L"], exit_rows)}
+
+      <h3 style="margin:24px 0 8px 0">Entries ({len(entries)})</h3>
+      {table(["Ticker", "Qty", "Est Price", "Score", "Cost"], entry_rows)}
+
+      <h3 style="margin:24px 0 8px 0">Skipped Signals ({len(skipped)})</h3>
+      {table(["Ticker", "Score", "Reason"], skip_rows)}
+
+      <h3 style="margin:24px 0 8px 0">Current Positions ({num_pos})</h3>
+      {table(["Ticker", "Qty", "Entry", "Current", "P&L %", "Score"], pos_rows)}
+
+      <h3 style="margin:24px 0 8px 0">Wash Sale Cooldowns (informational — trades not blocked)</h3>
+      {table(["Ticker", "Cooldown Until", "Loss Amount"], cooldown_rows)}
+
+      <p style="color:#9ca3af;font-size:11px;margin-top:30px">
+        Generated by trade_executor.py • Paper trading on Alpaca
+      </p>
+    </div>
+    """.strip()
+
+    return subject, html
+
+
+def send_trade_digest(
+    snapshot: dict,
+    exits: list[dict],
+    entries: list[dict],
+    skipped: list[dict],
+    scores: dict[str, dict],
+    today: date,
+    dry_run: bool,
+) -> None:
+    """Send daily trade digest via Resend if RESEND_API_KEY is configured."""
+    if not os.getenv("RESEND_API_KEY"):
+        print("\n  [email] RESEND_API_KEY not set — skipping digest")
+        return
+    if not os.getenv("ALERT_EMAIL_TO"):
+        print("\n  [email] ALERT_EMAIL_TO not set — skipping digest")
+        return
+
+    try:
+        # Import lazily so non-email runs don't require `requests`
+        import email_alerts
+        # Reload module-level env vars (in case .env was loaded after import)
+        email_alerts.RESEND_API_KEY = os.getenv("RESEND_API_KEY", "")
+        email_alerts.EMAIL_TO = os.getenv("ALERT_EMAIL_TO", "")
+        email_alerts.EMAIL_FROM = os.getenv(
+            "ALERT_EMAIL_FROM", "Alpha Scanner <onboarding@resend.dev>"
+        )
+
+        subject, html = _build_trade_digest_html(
+            snapshot, exits, entries, skipped, scores, today, dry_run
+        )
+        print(f"\n  [email] Sending digest to {email_alerts.EMAIL_TO}...")
+        email_alerts.send_email(
+            to=email_alerts.EMAIL_TO,
+            subject=subject,
+            html=html,
+            text=f"{subject}\n\n(HTML version required)",
+        )
+    except Exception as e:
+        print(f"\n  [email] Failed to send digest: {e}")
+
+
+# ─────────────────────────────────────────────────────────────
+# Main
+# ─────────────────────────────────────────────────────────────
+
+def main():
+    parser = argparse.ArgumentParser(description="Daily Alpaca paper-trade execution")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="Score everything and show what would be done, but don't place orders")
+    parser.add_argument("--email", action="store_true",
+                        help="Send an email digest after running (requires RESEND_API_KEY and ALERT_EMAIL_TO)")
+    args = parser.parse_args()
+
+    load_dotenv()
+
+    print_header(args.dry_run)
+
+    # 1. Connect
+    client = connect_alpaca()
+    data_client = connect_alpaca_data()
+
+    # 2. Snapshot account
+    snapshot = get_account_snapshot(client)
+    print_account_status(snapshot)
+
+    # 3. Cleanup expired wash sale entries
+    today = datetime.now(PT_TZ).date()
+    wash_sale_tracker.cleanup_expired(today)
+
+    # 4. Score all tickers
+    print("\n  Scoring tickers...")
+    cfg = load_config()
+    data = fetch_all(cfg, period="1y", verbose=False)
+    results = score_all(data, cfg)
+    scores = score_lookup(results)
+    print(f"  Scored {len(results)} tickers")
+
+    # 5. Evaluate exits
+    exits = evaluate_exits(snapshot, scores)
+    print_section("EXITS TODAY")
+    if exits:
+        execute_exits(client, exits, today, args.dry_run)
+    else:
+        print("  (none)")
+
+    # 6. Evaluate entries
+    entries, skipped = evaluate_entries(snapshot, scores, exits, client, data_client, today)
+    print_section("ENTRIES TODAY")
+    if entries:
+        execute_entries(client, entries, today, args.dry_run)
+    else:
+        print("  (none)")
+
+    # 7. Skipped
+    print_section("SKIPPED SIGNALS")
+    if skipped:
+        for s in skipped:
+            print(f"  SKIP  {s['ticker']:<6s} Score: {s['score']:<5.1f} Reason: {s['reason']}")
+    else:
+        print("  (none)")
+
+    # 8. Re-fetch snapshot after orders (live mode only) for position display
+    if not args.dry_run and (exits or entries):
+        snapshot = get_account_snapshot(client)
+
+    print_positions(snapshot, scores, today)
+    print_wash_sale_status(today)
+
+    # 9. Optional email digest
+    if args.email:
+        send_trade_digest(snapshot, exits, entries, skipped, scores, today, args.dry_run)
+
+    print("\n" + "=" * 66 + "\n")
+
+
+if __name__ == "__main__":
+    main()

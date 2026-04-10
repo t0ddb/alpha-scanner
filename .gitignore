@@ -20,5 +20,7 @@ backtest_results/
 portfolio_equity_curve.csv
 portfolio_trade_log.csv
 
+# Live trading state — tracked in repo so GitHub Actions can persist updates
+
 # OS
 .DS_Store

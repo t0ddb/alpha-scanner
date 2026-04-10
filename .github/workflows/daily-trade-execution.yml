@@ -1,0 +1,71 @@
+name: Daily Trade Execution
+
+on:
+  schedule:
+    # 5:30 PM ET (21:30 UTC) Monday-Friday.
+    # Runs after market close; orders placed for next open.
+    - cron: '30 21 * * 1-5'
+  workflow_dispatch:
+    # Allow manual trigger from GitHub UI
+    inputs:
+      dry_run:
+        description: 'Dry run (do not place orders)'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+jobs:
+  trade:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    env:
+      ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
+      ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
+      RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+      ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run trade executor
+        run: |
+          ARGS=""
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          if [ -n "$RESEND_API_KEY" ]; then
+            ARGS="$ARGS --email"
+          fi
+          echo "Running: python trade_executor.py $ARGS"
+          python trade_executor.py $ARGS
+
+      - name: Commit and push updated trade state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Stage the two state files only if they exist
+          [ -f trade_history.json ] && git add trade_history.json || true
+          [ -f wash_sale_log.json ] && git add wash_sale_log.json || true
+
+          if git diff --cached --quiet; then
+            echo "No state changes to commit."
+          else
+            git commit -m "Automated trade execution $(date -u +%Y-%m-%d)"
+            git pull --rebase
+            git push
+          fi
