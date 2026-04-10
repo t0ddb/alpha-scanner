@@ -17,6 +17,8 @@ email_preview.html
 
 # Backtest outputs
 backtest_results/
+portfolio_equity_curve.csv
+portfolio_trade_log.csv
 
 # OS
 .DS_Store

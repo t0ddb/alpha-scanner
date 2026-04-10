@@ -102,6 +102,8 @@ def get_backfill_dates(
 def run_backfill(
     backfill_days: int = 180,
     frequency: int = 5,
+    period: str = "2y",
+    target_dates: list[str] = None,
     verbose: bool = True,
 ) -> None:
     """
@@ -110,13 +112,16 @@ def run_backfill(
     cfg = load_config()
 
     print("=" * 80)
-    print(f"  SUBSECTOR BACKFILL — {backfill_days} days, every {frequency} trading days")
+    if target_dates:
+        print(f"  SUBSECTOR BACKFILL — targeted dates: {', '.join(target_dates)}")
+    else:
+        print(f"  SUBSECTOR BACKFILL — {backfill_days} days, every {frequency} trading days")
     print("=" * 80)
 
-    # Step 1: Fetch 2 years of data
-    print("\n  Step 1: Fetching 2 years of data...")
+    # Step 1: Fetch price data
+    print(f"\n  Step 1: Fetching {period} of data...")
     all_tickers = ["SPY"] + get_all_tickers(cfg)
-    data = fetch_batch(all_tickers, period="2y", verbose=verbose)
+    data = fetch_batch(all_tickers, period=period, verbose=verbose)
 
     if not data or "SPY" not in data:
         print("  [ERROR] Failed to fetch data (SPY missing).")
@@ -125,7 +130,26 @@ def run_backfill(
     print(f"  Fetched {len(data)} tickers successfully.")
 
     # Step 2: Determine backfill dates
-    dates = get_backfill_dates(data, backfill_days=backfill_days, frequency=frequency)
+    if target_dates:
+        # Use explicit list of dates; match them against the SPY index
+        ref_df = data.get("SPY")
+        ref_dates = set(ref_df.index.normalize())
+        dates = []
+        for d_str in target_dates:
+            ts = pd.Timestamp(d_str)
+            # Normalize to match index (strip tz if present)
+            if ts.tz is None and ref_df.index.tz is not None:
+                ts = ts.tz_localize(ref_df.index.tz)
+            ts_norm = ts.normalize()
+            if ts_norm in ref_dates:
+                # Find the exact timestamp in the index
+                matches = ref_df.index[ref_df.index.normalize() == ts_norm]
+                if len(matches) > 0:
+                    dates.append(matches[0])
+            else:
+                print(f"  [WARN] {d_str} not found in price data (likely not a trading day)")
+    else:
+        dates = get_backfill_dates(data, backfill_days=backfill_days, frequency=frequency)
     print(f"\n  Step 2: Will backfill {len(dates)} dates")
     if dates:
         print(f"  Range: {dates[0].strftime('%Y-%m-%d')} → {dates[-1].strftime('%Y-%m-%d')}")
@@ -247,11 +271,19 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Backfill subsector breakout history")
     parser.add_argument("--days", type=int, default=180, help="Days to backfill (default: 180)")
     parser.add_argument("--frequency", type=int, default=5, help="Sample every N trading days (default: 5)")
+    parser.add_argument("--period", type=str, default="2y", help="yfinance data period (default: 2y, use 5y for longer)")
+    parser.add_argument("--dates", type=str, default=None, help="Comma-separated list of specific dates to backfill (YYYY-MM-DD)")
     parser.add_argument("--quiet", action="store_true", help="Suppress verbose output")
     args = parser.parse_args()
+
+    target_dates = None
+    if args.dates:
+        target_dates = [d.strip() for d in args.dates.split(",") if d.strip()]
 
     run_backfill(
         backfill_days=args.days,
         frequency=args.frequency,
+        period=args.period,
+        target_dates=target_dates,
         verbose=not args.quiet,
     )
