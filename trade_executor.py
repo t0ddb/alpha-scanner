@@ -9,16 +9,22 @@ Usage:
     python3 trade_executor.py --dry-run    # show what it WOULD do, no orders
 
 Env vars (store in .env):
-    ALPACA_API_KEY
-    ALPACA_SECRET_KEY
+    ALPACA_API_KEY       — Alpaca paper trading API key (required)
+    ALPACA_SECRET_KEY    — Alpaca paper trading secret (required)
+    GMAIL_ADDRESS        — Gmail sender address        (optional, for --email)
+    GMAIL_APP_PASSWORD   — Gmail app password          (optional, for --email)
+    ALERT_EMAIL_TO       — Recipient (defaults to sender if unset)
 """
 
 from __future__ import annotations
 
 import argparse
 import os
+import smtplib
 import sys
 from datetime import date, datetime
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from zoneinfo import ZoneInfo
 
 from dotenv import load_dotenv
@@ -640,6 +646,33 @@ def _build_trade_digest_html(
     return subject, html
 
 
+def _send_gmail(
+    gmail_address: str,
+    gmail_app_password: str,
+    recipient: str,
+    subject: str,
+    html_body: str,
+    text_body: str = "",
+) -> None:
+    """
+    Send a multipart HTML email via Gmail SMTP (smtp.gmail.com:587, STARTTLS).
+    Raises on failure.
+    """
+    msg = MIMEMultipart("alternative")
+    msg["From"] = gmail_address
+    msg["To"] = recipient
+    msg["Subject"] = subject
+
+    if text_body:
+        msg.attach(MIMEText(text_body, "plain"))
+    msg.attach(MIMEText(html_body, "html"))
+
+    with smtplib.SMTP("smtp.gmail.com", 587) as server:
+        server.starttls()
+        server.login(gmail_address, gmail_app_password)
+        server.sendmail(gmail_address, [recipient], msg.as_string())
+
+
 def send_trade_digest(
     snapshot: dict,
     exits: list[dict],
@@ -649,34 +682,34 @@ def send_trade_digest(
     today: date,
     dry_run: bool,
 ) -> None:
-    """Send daily trade digest via Resend if RESEND_API_KEY is configured."""
-    if not os.getenv("RESEND_API_KEY"):
-        print("\n  [email] RESEND_API_KEY not set — skipping digest")
+    """Send daily trade digest via Gmail SMTP if credentials are configured."""
+    gmail_address = os.getenv("GMAIL_ADDRESS", "")
+    gmail_app_password = os.getenv("GMAIL_APP_PASSWORD", "")
+
+    if not gmail_address:
+        print("\n  [email] GMAIL_ADDRESS not set — skipping digest")
         return
-    if not os.getenv("ALERT_EMAIL_TO"):
-        print("\n  [email] ALERT_EMAIL_TO not set — skipping digest")
+    if not gmail_app_password:
+        print("\n  [email] GMAIL_APP_PASSWORD not set — skipping digest")
         return
+
+    # Default recipient is the sender; override with ALERT_EMAIL_TO if set
+    recipient = os.getenv("ALERT_EMAIL_TO", gmail_address)
 
     try:
-        # Import lazily so non-email runs don't require `requests`
-        import email_alerts
-        # Reload module-level env vars (in case .env was loaded after import)
-        email_alerts.RESEND_API_KEY = os.getenv("RESEND_API_KEY", "")
-        email_alerts.EMAIL_TO = os.getenv("ALERT_EMAIL_TO", "")
-        email_alerts.EMAIL_FROM = os.getenv(
-            "ALERT_EMAIL_FROM", "Alpha Scanner <onboarding@resend.dev>"
-        )
-
         subject, html = _build_trade_digest_html(
             snapshot, exits, entries, skipped, scores, today, dry_run
         )
-        print(f"\n  [email] Sending digest to {email_alerts.EMAIL_TO}...")
-        email_alerts.send_email(
-            to=email_alerts.EMAIL_TO,
+        print(f"\n  [email] Sending digest to {recipient}...")
+        _send_gmail(
+            gmail_address=gmail_address,
+            gmail_app_password=gmail_app_password,
+            recipient=recipient,
             subject=subject,
-            html=html,
-            text=f"{subject}\n\n(HTML version required)",
+            html_body=html,
+            text_body=f"{subject}\n\n(HTML version required to view full digest)",
         )
+        print(f"  [email] Sent.")
     except Exception as e:
         print(f"\n  [email] Failed to send digest: {e}")
 
@@ -690,7 +723,7 @@ def main():
     parser.add_argument("--dry-run", action="store_true",
                         help="Score everything and show what would be done, but don't place orders")
     parser.add_argument("--email", action="store_true",
-                        help="Send an email digest after running (requires RESEND_API_KEY and ALERT_EMAIL_TO)")
+                        help="Send an email digest after running (requires GMAIL_ADDRESS and GMAIL_APP_PASSWORD)")
     args = parser.parse_args()
 
     load_dotenv()
