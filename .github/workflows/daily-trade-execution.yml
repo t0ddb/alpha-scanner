@@ -24,6 +24,10 @@ jobs:
       contents: write
 
     env:
+      # Opt into Node 24 now to avoid the deprecation warning on Node 20
+      # actions (checkout@v4, setup-python@v5). Node 24 becomes the default
+      # on 2026-06-02 per GitHub's deprecation schedule.
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
       ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
       ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
       GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}

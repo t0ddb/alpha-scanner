@@ -12,6 +12,10 @@ jobs:
     permissions:
       contents: write
 
+    env:
+      # Opt into Node 24 now (see daily-trade-execution.yml for rationale)
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
