@@ -12,28 +12,6 @@
       "alpaca_order_id": "132208f8-2100-473b-9b7b-1f8f3a45fd19"
     },
     {
-      "ticker": "FORM",
-      "side": "buy",
-      "date": "2026-04-10",
-      "price": 123.8,
-      "qty": 161.0,
-      "cost_basis": 19931.8,
-      "score_at_entry": 9.8,
-      "reason": "Score \u2265 9.5",
-      "alpaca_order_id": "34017652-0600-4589-b7b1-11bec20460aa"
-    },
-    {
-      "ticker": "IRDM",
-      "side": "buy",
-      "date": "2026-04-10",
-      "price": 34.2,
-      "qty": 584.0,
-      "cost_basis": 19972.8,
-      "score_at_entry": 9.8,
-      "reason": "Score \u2265 9.5",
-      "alpaca_order_id": "8da70ba4-4fa7-48b7-8b5e-376f7a6b9319"
-    },
-    {
       "ticker": "IRDM",
       "side": "buy",
       "date": "2026-04-10",
@@ -43,17 +21,6 @@
       "score_at_entry": 9.8,
       "reason": "Score \u2265 9.5",
       "alpaca_order_id": "95273f95-62b4-4c98-9eca-1af83ec6a38b"
-    },
-    {
-      "ticker": "VIAV",
-      "side": "buy",
-      "date": "2026-04-10",
-      "price": 41.79,
-      "qty": 478.0,
-      "cost_basis": 19975.62,
-      "score_at_entry": 9.8,
-      "reason": "Score \u2265 9.5",
-      "alpaca_order_id": "724dc695-9abe-4fd6-bb9c-db31587980de"
     },
     {
       "ticker": "VIAV",
