@@ -141,6 +141,17 @@ def fetch_batch(
         if failed:
             print(f"Failed: {', '.join(failed)}")
 
+    # Fail loud on catastrophic fetch failure (e.g., yfinance blocked,
+    # network down, dependency incompatibility silently breaking parsing).
+    # Without this, callers get an empty dict and downstream code shows
+    # zero scores / empty tables with no indication of what went wrong.
+    if total > 0 and len(results) == 0:
+        raise RuntimeError(
+            f"Data fetch failed: 0 of {total} tickers returned data. "
+            f"yfinance may be blocked, rate-limited, or incompatible with "
+            f"the current pandas/numpy versions. Check logs for per-ticker errors."
+        )
+
     return results
 
 

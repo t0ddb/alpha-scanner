@@ -586,8 +586,14 @@ def score_all(data: dict[str, pd.DataFrame], cfg: dict) -> list[dict]:
     ind_cfg = get_indicator_config(cfg)
 
     if benchmark_df is None:
-        print(f"  [ERROR] Benchmark {benchmark_ticker} not found in data. Cannot compute relative strength.")
-        return []
+        # Surface as an exception rather than returning [] silently —
+        # an empty results list cascades into empty subsector metrics,
+        # empty dashboard, and zero observable failure mode.
+        raise RuntimeError(
+            f"Benchmark {benchmark_ticker} not found in fetched data. "
+            f"Cannot compute relative strength. This usually means the "
+            f"benchmark fetch failed; check yfinance connectivity."
+        )
 
     # ---- Pass 1: Compute raw RS values at multiple timeframes ----
     rs_period = ind_cfg["relative_strength"]["period"]

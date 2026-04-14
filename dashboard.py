@@ -1510,7 +1510,19 @@ def render_historical_charts():
 def main():
     cfg, data, results, timestamps = load_and_score(period="2y")
 
-    # Add DB last-updated timestamp
+    # Health guard #1: catch silent empty-results cases. fetch_batch and
+    # score_all both raise on total failure now, but defense-in-depth in
+    # case any other path returns an empty list.
+    if not results:
+        st.error(
+            "⚠️ No ticker data available. The scoring pipeline returned 0 "
+            "results. This usually means yfinance fetch failed or the "
+            "benchmark was missing. Check the Streamlit Cloud logs."
+        )
+        st.stop()
+
+    # Add DB last-updated timestamp + staleness warning
+    db_date = None
     try:
         conn = sqlite3.connect(str(DB_PATH))
         row = conn.execute("SELECT MAX(date) FROM ticker_scores").fetchone()
@@ -1522,6 +1534,20 @@ def main():
             timestamps["db_last"] = "No data"
     except Exception:
         timestamps["db_last"] = "No DB"
+
+    # Health guard #2: warn when the DB hasn't been updated recently.
+    # Threshold is 4 calendar days to allow for a long weekend (Fri close
+    # → Tue is 4 days). If we're past that, nightly CI likely failed.
+    if db_date is not None:
+        today = pd.Timestamp(datetime.now(LOCAL_TZ).date())
+        age_days = (today - db_date).days
+        if age_days > 4:
+            st.warning(
+                f"⚠️ Database last updated {age_days} days ago "
+                f"({db_date.strftime('%Y-%m-%d')}). The nightly trade "
+                f"executor or backfill workflow may have failed — check "
+                f"GitHub Actions."
+            )
 
     # Breakout detection timestamp gets set after it runs
     timestamps["breakout"] = timestamps["scoring"]
