@@ -94,3 +94,26 @@ jobs:
             git pull --rebase -X ours || git rebase --abort
             git push
           fi
+
+      - name: Verify DB advanced to today
+        # Catches the failure mode where the job "succeeds" but didn't
+        # actually write today's ticker_scores (e.g., score_all silently
+        # failing pre-hardening, commit step skipped, etc.). Runs after
+        # commit so partial state is preserved; failure here triggers a
+        # GitHub Actions notification email.
+        run: |
+          python3 -c "
+          import sqlite3, sys
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          today = datetime.now(ZoneInfo('America/Los_Angeles')).date().isoformat()
+          conn = sqlite3.connect('breakout_tracker.db')
+          row = conn.execute('SELECT MAX(date) FROM ticker_scores').fetchone()
+          db_max = row[0] if row else None
+          conn.close()
+          if db_max == today:
+              print(f'[OK] ticker_scores max date = {db_max} (today)')
+          else:
+              print(f'[FAIL] ticker_scores max date = {db_max}, expected {today}')
+              sys.exit(1)
+          "

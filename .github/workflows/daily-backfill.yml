@@ -2,8 +2,10 @@ name: Daily Database Backfill
 
 on:
   schedule:
-    # 5:30 PM ET (21:30 UTC) Monday-Friday
-    - cron: '30 21 * * 1-5'
+    # 5:00 PM ET (21:00 UTC) Monday-Friday — runs 30 min before the
+    # trade executor (21:30 UTC) so the daily backfill can complete
+    # and push first, avoiding DB rebase contention.
+    - cron: '0 21 * * 1-5'
   workflow_dispatch: # Allow manual trigger from GitHub UI
 
 jobs:
@@ -29,12 +31,25 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run backfill
-        run: python backfill_subsector.py
+        # --frequency 1 fills every trading day (vs. default sampling
+        # every 5). This makes backfill a self-healing safety net for
+        # the trade executor: if trade-exec ever fails to commit the DB,
+        # the next backfill closes the gap within a day instead of us
+        # discovering it days later.
+        run: python backfill_subsector.py --frequency 1
 
       - name: Commit and push updated database
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add breakout_tracker.db
-          git diff --cached --quiet || git commit -m "Automated daily DB backfill $(date +%Y-%m-%d)"
-          git push
+          if git diff --cached --quiet; then
+            echo "No DB changes to commit."
+          else
+            git commit -m "Automated daily DB backfill $(date +%Y-%m-%d)"
+            # Defensive rebase: if trade executor pushed first (shouldn't
+            # happen with the 21:00/21:30 stagger, but covers manual runs),
+            # prefer the backfill's broader history.
+            git pull --rebase -X ours || git rebase --abort
+            git push
+          fi
