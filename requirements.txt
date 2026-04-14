@@ -1,10 +1,16 @@
-yfinance>=0.2.36
-pandas>=2.0
+# Upper bounds on infra-critical deps prevent silent breakage from
+# major-version auto-upgrades on Streamlit Cloud. pandas 3.0 + numpy 2.4
+# + Python 3.14 broke yfinance parsing in April 2026 with no error
+# surface — every fetch returned None, dashboard showed empty data.
+yfinance>=1.0,<2.0
+pandas>=2.0,<3.0
+numpy>=1.24,<3.0
+streamlit>=1.30,<2.0
+
+# Less critical — wide ranges OK
 pyyaml>=6.0
-numpy>=1.24
 scipy>=1.10
 matplotlib>=3.7
-streamlit>=1.30
 plotly>=5.0
 scikit-learn>=1.3
 alpaca-py>=0.13
