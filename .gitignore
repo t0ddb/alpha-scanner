@@ -25,3 +25,7 @@ portfolio_trade_log.csv
 
 # OS
 .DS_Store
+
+# Conversation/context handoffs from prior Claude threads — kept locally
+# for reference but not part of repo history (HANDOFF.md is canonical).
+.handoffs/
