@@ -2,15 +2,25 @@
 trade_executor.py — Daily paper-trade execution against Alpaca.
 
 Runs after market close. Scores all tickers, evaluates exits on open
-positions, and places entry orders on new Fire-tier signals (score ≥ 9.5).
+positions, and places entry orders on new breakout signals.
+
+Entry config comes from `trade_execution:` in ticker_config.yaml and can
+be overridden by environment variables. The current default is
+threshold ≥ 8.5 with a 3-day persistence filter (score must have been
+at/above the threshold for the prior 3 trading days), exit < 5, and a
+15% stop loss — the winning 3yr backtest config.
 
 Usage:
     python3 trade_executor.py              # live paper trading
     python3 trade_executor.py --dry-run    # show what it WOULD do, no orders
 
-Env vars (store in .env):
+Env vars (store in .env or CI secrets):
     ALPACA_API_KEY       — Alpaca paper trading API key (required)
     ALPACA_SECRET_KEY    — Alpaca paper trading secret (required)
+    ENTRY_THRESHOLD      — override config entry score (e.g. "8.5")
+    EXIT_THRESHOLD       — override config exit score  (e.g. "5.0")
+    PERSISTENCE_DAYS     — override config prior-day persistence (e.g. "3")
+    STOP_LOSS_PCT        — override config stop loss   (e.g. "0.15")
     GMAIL_ADDRESS        — Gmail sender address        (optional, for --email)
     GMAIL_APP_PASSWORD   — Gmail app password          (optional, for --email)
     ALERT_EMAIL_TO       — Recipient (defaults to sender if unset)
@@ -45,17 +55,70 @@ from indicators import score_all
 # Local trade utilities
 import wash_sale_tracker
 import trade_log
+import subsector_store
 
 
 # ─────────────────────────────────────────────────────────────
-# Config / Constants (matches backtested strategy)
+# Config loading (config file → env var override → default)
 # ─────────────────────────────────────────────────────────────
-ENTRY_THRESHOLD = 9.5     # Score ≥ this to open new position
-SCORE_EXIT = 5.0          # Score < this closes the position
-STOP_LOSS_PCT = 0.15      # 15% stop loss from entry
-MAX_POSITION_PCT = 0.20   # Max 20% of equity per position
-MIN_POSITION_SIZE = 500   # Minimum $ size for a new position
 PT_TZ = ZoneInfo("America/Los_Angeles")
+
+# Defaults if neither config nor env var is set
+_DEFAULTS = {
+    "entry_threshold": 8.5,
+    "exit_threshold": 5.0,
+    "persistence_days": 3,
+    "stop_loss_pct": 0.15,
+    "max_position_pct": 0.20,
+    "min_position_size": 500,
+}
+
+
+def _env_float(name: str) -> float | None:
+    val = os.getenv(name)
+    if val is None or val == "":
+        return None
+    try:
+        return float(val)
+    except ValueError:
+        print(f"  [WARN] Env var {name}={val!r} is not a number — ignoring")
+        return None
+
+
+def _env_int(name: str) -> int | None:
+    val = os.getenv(name)
+    if val is None or val == "":
+        return None
+    try:
+        return int(val)
+    except ValueError:
+        print(f"  [WARN] Env var {name}={val!r} is not an int — ignoring")
+        return None
+
+
+def load_trade_config(cfg: dict) -> dict:
+    """
+    Build the effective trade-execution config. Precedence:
+      env var > ticker_config.yaml > hardcoded default
+    """
+    yaml_cfg = cfg.get("trade_execution", {}) or {}
+
+    def pick(key, caster, env_name):
+        env_val = _env_float(env_name) if caster is float else _env_int(env_name)
+        if env_val is not None:
+            return caster(env_val)
+        if key in yaml_cfg and yaml_cfg[key] is not None:
+            return caster(yaml_cfg[key])
+        return caster(_DEFAULTS[key])
+
+    return {
+        "entry_threshold": pick("entry_threshold", float, "ENTRY_THRESHOLD"),
+        "exit_threshold": pick("exit_threshold", float, "EXIT_THRESHOLD"),
+        "persistence_days": pick("persistence_days", int, "PERSISTENCE_DAYS"),
+        "stop_loss_pct": pick("stop_loss_pct", float, "STOP_LOSS_PCT"),
+        "max_position_pct": pick("max_position_pct", float, "MAX_POSITION_PCT"),
+        "min_position_size": pick("min_position_size", int, "MIN_POSITION_SIZE"),
+    }
 
 # Tickers excluded from Alpaca paper trading
 EXCLUDED_SUFFIXES = ("-USD",)          # crypto
@@ -190,21 +253,25 @@ def score_lookup(results: list[dict]) -> dict[str, dict]:
 def evaluate_exits(
     snapshot: dict,
     scores: dict[str, dict],
+    trade_cfg: dict,
 ) -> list[dict]:
     """Determine which open positions should be sold today."""
+    exit_threshold = trade_cfg["exit_threshold"]
+    stop_loss_pct = trade_cfg["stop_loss_pct"]
+
     exits = []
     for ticker, pos in snapshot["positions"].items():
         score_rec = scores.get(ticker)
         score = score_rec["score"] if score_rec else None
         entry_price = pos["entry_price"]
         current_price = pos["current_price"]
-        stop_price = entry_price * (1 - STOP_LOSS_PCT)
+        stop_price = entry_price * (1 - stop_loss_pct)
 
         reason = None
-        if score is not None and score < SCORE_EXIT:
-            reason = f"Score exit (score {score:.1f} < {SCORE_EXIT})"
+        if score is not None and score < exit_threshold:
+            reason = f"Score exit (score {score:.1f} < {exit_threshold})"
         elif current_price > 0 and current_price <= stop_price:
-            reason = f"Stop loss hit ({STOP_LOSS_PCT*100:.0f}%)"
+            reason = f"Stop loss hit ({stop_loss_pct*100:.0f}%)"
 
         if reason:
             exits.append({
@@ -220,6 +287,53 @@ def evaluate_exits(
     return exits
 
 
+def check_persistence(
+    db_conn,
+    ticker: str,
+    threshold: float,
+    persistence_days: int,
+    today: date,
+) -> tuple[bool, str]:
+    """
+    Verify the ticker's score was at/above `threshold` for each of the
+    `persistence_days` most recent trading days strictly before `today`.
+
+    Reads from `ticker_scores` in breakout_tracker.db, which is populated
+    by (a) this executor at the end of every run and (b) the nightly
+    backfill workflow as a safety net.
+
+    Returns (passes, reason_if_not).
+    """
+    if persistence_days <= 0:
+        return True, ""
+
+    cur = db_conn.cursor()
+    today_str = today.strftime("%Y-%m-%d")
+    cur.execute(
+        """SELECT date, score FROM ticker_scores
+           WHERE ticker = ? AND date < ?
+           ORDER BY date DESC
+           LIMIT ?""",
+        (ticker, today_str, persistence_days),
+    )
+    rows = cur.fetchall()
+
+    if len(rows) < persistence_days:
+        return False, (
+            f"Persistence filter: only {len(rows)} prior scores in DB "
+            f"(need {persistence_days})"
+        )
+
+    for date_str, prior_score in rows:
+        if prior_score is None or prior_score < threshold:
+            return False, (
+                f"Persistence filter: {date_str} score "
+                f"{prior_score:.1f} < {threshold}"
+            )
+
+    return True, ""
+
+
 def evaluate_entries(
     snapshot: dict,
     scores: dict[str, dict],
@@ -227,10 +341,17 @@ def evaluate_entries(
     client: TradingClient,
     data_client: StockHistoricalDataClient,
     today: date,
+    trade_cfg: dict,
+    db_conn,
 ) -> tuple[list[dict], list[dict]]:
     """
     Return (entries, skipped) for today.
     """
+    entry_threshold = trade_cfg["entry_threshold"]
+    persistence_days = trade_cfg["persistence_days"]
+    max_position_pct = trade_cfg["max_position_pct"]
+    min_position_size = trade_cfg["min_position_size"]
+
     held = set(snapshot["positions"].keys())
     exiting = {e["ticker"] for e in exits}
     cooldown_map = wash_sale_tracker.get_cooldowns(today)
@@ -240,13 +361,13 @@ def evaluate_entries(
         e["qty"] * e["current_price"] for e in exits
     )
     equity = snapshot["equity"]
-    max_position = equity * MAX_POSITION_PCT
+    max_position = equity * max_position_pct
 
     # Filter candidates
     candidates = []
     for ticker, rec in scores.items():
         score = rec["score"]
-        if score < ENTRY_THRESHOLD:
+        if score < entry_threshold:
             continue
         if ticker in held and ticker not in exiting:
             continue  # already own it
@@ -262,6 +383,19 @@ def evaluate_entries(
     for rec in candidates:
         ticker = rec["ticker"]
         score = rec["score"]
+
+        # N-day persistence filter — score must have been ≥ threshold
+        # on each of the prior `persistence_days` trading days
+        passes, reason = check_persistence(
+            db_conn, ticker, entry_threshold, persistence_days, today
+        )
+        if not passes:
+            skipped.append({
+                "ticker": ticker,
+                "score": score,
+                "reason": reason,
+            })
+            continue
 
         # Wash sale check — LOG ONLY, DO NOT BLOCK.
         # Rationale: backtesting showed re-entries after losses often produce
@@ -288,11 +422,11 @@ def evaluate_entries(
 
         # Sizing
         target_size = min(projected_cash, max_position)
-        if target_size < MIN_POSITION_SIZE:
+        if target_size < min_position_size:
             skipped.append({
                 "ticker": ticker,
                 "score": score,
-                "reason": f"Insufficient cash (${projected_cash:,.0f} available, need ${MIN_POSITION_SIZE})",
+                "reason": f"Insufficient cash (${projected_cash:,.0f} available, need ${min_position_size})",
             })
             continue
 
@@ -322,13 +456,17 @@ def evaluate_entries(
             continue
 
         cost_basis = qty * est_price
+        persistence_tag = (
+            f" + {persistence_days}d persist"
+            if persistence_days > 0 else ""
+        )
         entries.append({
             "ticker": ticker,
             "qty": qty,
             "est_price": est_price,
             "cost_basis": cost_basis,
             "score": score,
-            "reason": f"Score ≥ {ENTRY_THRESHOLD}",
+            "reason": f"Score ≥ {entry_threshold}{persistence_tag}",
             "wash_sale_warning": wash_sale_warning,
         })
         projected_cash -= cost_basis
@@ -468,6 +606,16 @@ def print_header(dry_run: bool) -> None:
     print("=" * 66)
     if mode:
         print(mode)
+
+
+def print_trade_config(trade_cfg: dict) -> None:
+    print("\n  TRADE CONFIG")
+    print("  " + "─" * 38)
+    print(f"  Entry threshold:   ≥ {trade_cfg['entry_threshold']}")
+    print(f"  Persistence:       {trade_cfg['persistence_days']} prior day(s)")
+    print(f"  Exit threshold:    < {trade_cfg['exit_threshold']}")
+    print(f"  Stop loss:         {trade_cfg['stop_loss_pct']*100:.0f}%")
+    print(f"  Max position:      {trade_cfg['max_position_pct']*100:.0f}% of equity")
 
 
 def print_account_status(snapshot: dict) -> None:
@@ -730,36 +878,53 @@ def main():
 
     print_header(args.dry_run)
 
-    # 1. Connect
+    # 1. Load config (file + env var overrides)
+    cfg = load_config()
+    trade_cfg = load_trade_config(cfg)
+    print_trade_config(trade_cfg)
+
+    # 2. Connect
     client = connect_alpaca()
     data_client = connect_alpaca_data()
 
-    # 2. Snapshot account
+    # 3. Snapshot account
     snapshot = get_account_snapshot(client)
     print_account_status(snapshot)
 
-    # 3. Cleanup expired wash sale entries
+    # 4. Cleanup expired wash sale entries
     today = datetime.now(PT_TZ).date()
     wash_sale_tracker.cleanup_expired(today)
 
-    # 4. Score all tickers
+    # 5. Open DB (used for persistence filter + writing today's scores)
+    db_conn = subsector_store.init_db()
+
+    # 6. Score all tickers
     print("\n  Scoring tickers...")
-    cfg = load_config()
     data = fetch_all(cfg, period="1y", verbose=False)
     results = score_all(data, cfg)
     scores = score_lookup(results)
     print(f"  Scored {len(results)} tickers")
 
-    # 5. Evaluate exits
-    exits = evaluate_exits(snapshot, scores)
+    # 7. Persist today's scores so tomorrow's persistence check has them
+    #    (safe to call every run — upsert replaces existing rows)
+    today_str = today.strftime("%Y-%m-%d")
+    try:
+        subsector_store.upsert_ticker_scores(db_conn, today_str, results)
+    except Exception as e:
+        print(f"  [WARN] Could not persist today's scores to DB: {e}")
+
+    # 8. Evaluate exits
+    exits = evaluate_exits(snapshot, scores, trade_cfg)
     print_section("EXITS TODAY")
     if exits:
         execute_exits(client, exits, today, args.dry_run)
     else:
         print("  (none)")
 
-    # 6. Evaluate entries
-    entries, skipped = evaluate_entries(snapshot, scores, exits, client, data_client, today)
+    # 9. Evaluate entries
+    entries, skipped = evaluate_entries(
+        snapshot, scores, exits, client, data_client, today, trade_cfg, db_conn,
+    )
     print_section("ENTRIES TODAY")
     if entries:
         execute_entries(client, entries, today, args.dry_run)

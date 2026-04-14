@@ -1,0 +1,208 @@
+================================================================================
+  ALPHA SCANNER — QUARTERLY SYSTEM REVIEW
+  Label: 2026-Q2
+  Run date: 2026-04-11 12:14
+  Lookback: 12 months
+================================================================================
+
+  Loading config and fetching price data...
+  165 tickers fetched
+
+  Collecting indicator events (Section 1)...
+  44 test dates, ~164 tickers
+  Window: 2025-02-27 -> 2026-01-09
+    [10/44] 2025-05-02
+    [20/44] 2025-07-16
+    [30/44] 2025-09-25
+    [40/44] 2025-12-05
+
+================================================================================
+  SECTION 1: INDICATOR EDGE VALIDATION
+  (63-day forward return, SPY-adjusted, fired vs not-fired)
+================================================================================
+
+  7,128 ticker-date observations
+
+  Indicator                 Original     Current       Delta     Fired            Status
+  --------------------------------------------------------------------------------------
+  Relative Strength          +13.31%     +14.46%      +1.15%      1792         [HEALTHY]
+  Ichimoku Cloud             +10.89%     +10.77%      -0.12%      2702         [HEALTHY]
+  Higher Lows                 +7.73%      +5.59%      -2.14%       918         [HEALTHY]
+  Rate of Change              +6.84%      +7.66%      +0.82%      3124         [HEALTHY]
+  Chaikin Money Flow          +6.57%      +4.61%      -1.96%      3312         [HEALTHY]
+  Dual-TF RS                  +5.20%         N/A         N/A         0            [SKIP]
+  ATR Expansion               +4.58%      +3.34%      -1.24%      2116         [HEALTHY]
+
+  DROPPED INDICATORS — should they be reconsidered?
+  --------------------------------------------------------------------------------------
+  MA Alignment                -9.30%      +7.76%     +17.06%      3448          [ACTION]
+  Near 52w High               -3.30%      -0.60%      +2.70%       521         [HEALTHY]
+  Volume Spike                +0.72%      +3.14%      +2.42%       214         [HEALTHY]
+  BB Squeeze                  +0.38%      +4.79%      +4.41%      5533           [WATCH]
+  MACD Crossover              +0.95%      +1.18%      +0.23%      3794         [HEALTHY]
+  ADX Trend                   +2.66%      +3.80%      +1.14%      3043         [HEALTHY]
+
+  NOTES:
+    - MA Alignment (currently dropped): edge is now +7.76% — candidate for re-inclusion if persists
+
+  STATUS: [ACTION]
+
+================================================================================
+  SECTION 2: WEIGHT CALIBRATION
+================================================================================
+
+  Indicator               Current Wt        Edge   Edge Rank   Wt Rank    Aligned?
+  --------------------------------------------------------------------------------
+  Relative Strength           3.00 pt     +14.46%          1#        1#   [HEALTHY]
+  Ichimoku Cloud              2.50 pt     +10.77%          2#        2#   [HEALTHY]
+  Higher Lows                 2.00 pt      +5.59%          4#        3#   [HEALTHY]
+  Rate of Change              1.50 pt      +7.66%          3#        4#   [HEALTHY]
+  Chaikin Money Flow          1.00 pt      +4.61%          6#        5#   [HEALTHY]
+  Dual-TF RS                  0.00 pt      +5.20%          5#        7#     [WATCH]
+  ATR Expansion               0.50 pt      +3.34%          7#        6#   [HEALTHY]
+
+  SUGGESTED WEIGHTS (proportional to current edges — informational only):
+  ------------------------------------------------------------
+  Indicator                  Current     Suggested       Delta
+  ------------------------------------------------------------
+  Relative Strength           3.00 pt        2.94 pt      -0.06
+  Ichimoku Cloud              2.50 pt        2.19 pt      -0.31
+  Higher Lows                 2.00 pt        1.14 pt      -0.86
+  Rate of Change              1.50 pt        1.56 pt      +0.06
+  Chaikin Money Flow          1.00 pt        0.94 pt      -0.06
+  Dual-TF RS                  0.00 pt        1.06 pt      +1.06
+  ATR Expansion               0.50 pt        0.68 pt      +0.18
+
+  NOTE: fell back to original baselines for: Dual-TF RS
+
+  STATUS: [WATCH]
+
+================================================================================
+  SECTION 3: ENTRY/EXIT THRESHOLD GRID (last 12 months)
+================================================================================
+
+    >=9.5 / <5: +612.9% return, 41 trades, 73.2% WR, -28.9% DD
+    >=9.5 / <6: +179.5% return, 60 trades, 56.7% WR, -24.4% DD
+    >=9.5 / <7: +114.5% return, 70 trades, 50.0% WR, -24.5% DD
+    >=9.0 / <5: +274.2% return, 66 trades, 57.6% WR, -24.4% DD
+    >=9.0 / <6: +183.9% return, 87 trades, 60.9% WR, -21.0% DD
+    >=9.0 / <7: +145.7% return, 106 trades, 50.0% WR, -25.8% DD
+    >=8.5 / <5: +319.3% return, 78 trades, 57.7% WR, -21.9% DD
+    >=8.5 / <6: +220.1% return, 108 trades, 59.3% WR, -25.9% DD
+    >=8.5 / <7: +193.5% return, 125 trades, 50.4% WR, -21.6% DD
+
+  Entry   Exit        Return     Alpha    Max DD     Win %    Trades    Ret/DD
+  ----------------------------------------------------------------------------
+  >=9.5   <5         +612.9%   +578.6%    -28.9%     73.2%        41    21.17x
+  >=9.5   <6         +179.5%   +145.2%    -24.4%     56.7%        60     7.37x
+  >=9.5   <7         +114.5%    +80.1%    -24.5%     50.0%        70     4.67x
+  >=9.0   <5         +274.2%   +239.8%    -24.4%     57.6%        66    11.23x
+  >=9.0   <6         +183.9%   +149.5%    -21.0%     60.9%        87     8.74x
+  >=9.0   <7         +145.7%   +111.3%    -25.8%     50.0%       106     5.64x
+  >=8.5   <5         +319.3%   +285.0%    -21.9%     57.7%        78    14.57x
+  >=8.5   <6         +220.1%   +185.7%    -25.9%     59.3%       108     8.49x
+  >=8.5   <7         +193.5%   +159.1%    -21.6%     50.4%       125     8.96x
+
+  CURRENT CONFIG:     Entry >=9.5 / Exit <5
+  BEST THIS QUARTER:  Entry >=9.5 / Exit <5 (+612.9% return)
+  Current config rank: #1 of 9
+
+  STATUS: [HEALTHY]
+
+================================================================================
+  SECTION 4: LIVE vs BACKTEST COMPARISON
+================================================================================
+
+  Total orders recorded: 3
+    Buys:  3
+    Sells: 0
+  Period: 2026-04-10 -> 2026-04-10
+
+  No sells yet — realized P&L unavailable.
+  This section becomes meaningful once exit trades accumulate.
+
+  STATUS: [SKIP]
+
+================================================================================
+  SECTION 5: UNIVERSE REVIEW
+================================================================================
+
+  Total tickers in config:   164
+  Successfully fetched data: 164
+  Failed to fetch:           0  (0.0%)
+
+  NEVER-SCORED TICKERS (avg <= 2.0, max < 6.0 over 12mo):
+  ----------------------------------------------------------------------
+  Ticker    Subsector                            Avg     Max     >=6
+  ----------------------------------------------------------------------
+  SSNLF     Chips — Memory                      0.6     2.0       0
+  ADBE      Enterprise AI Apps                  0.7     4.3       0
+  RXRX      Healthcare AI                       0.9     4.8       0
+  S         AI Security                         0.9     4.2       0
+  MASI      ?                                   1.0     5.0       0
+  WDAY      Enterprise AI Apps                  1.1     5.5       0
+  CRM       Enterprise AI Apps                  1.3     5.8       0
+  ZBH       Surgical / Medical Robotics         1.5     5.8       0
+  PANW      AI Security                         1.7     5.8       0
+  META      Hyperscalers                        1.8     5.6       0
+  AMZN      Hyperscalers                        2.0     5.8       0
+
+  All subsectors have >=4 tickers.
+
+  STATUS: [HEALTHY]
+
+================================================================================
+  SECTION 6: STATE MACHINE HEALTH (last 12 months)
+================================================================================
+
+  State Transitions Summary:
+  ------------------------------------------------------------
+    Total transitions:              520
+    Quiet -> Emerging:               109
+    Emerging -> Confirmed:           68
+    Emerging -> Quiet (failed):      41
+    Confirmed -> Fading:             151
+    Fading -> Confirmed (revival):   87
+    Fading -> Quiet:                 64
+    Emerging confirmation rate:      62.4%
+
+  Forward Returns by State (63-day, SPY-adjusted):
+  ------------------------------------------------------------
+    NOTE: state-based forward returns require per-date ticker replays.
+    Current baseline run logs the transition counts only.
+    Next quarter will compare transition counts and confirm rates to baseline.
+
+  Parameter Check:
+  ------------------------------------------------------------
+    Breadth trigger (0.5):     configured — OK
+    Confirm days (3):           configured — OK
+    Fade cool days (5):       configured — OK
+
+  STATUS: [HEALTHY]
+
+================================================================================
+  QUARTERLY REVIEW — EXECUTIVE SUMMARY
+  Period: 2025-04-10 -> 2026-04-10
+================================================================================
+
+  Section                     Status          Notes
+  ----------------------------------------------------------------------
+  1. Indicator Edge           [ACTION]        10/13 healthy
+  2. Weight Calibration       [WATCH]         Rank alignment with current edges
+  3. Entry/Exit Thresholds    [HEALTHY]       Current config rank #1
+  4. Live vs Backtest         [SKIP]          3 orders recorded
+  5. Universe Health          [HEALTHY]       0 fetch failures, 11 dormant tickers
+  6. State Machine            [HEALTHY]       520 transitions
+
+  OVERALL SYSTEM HEALTH: [ACTION]
+
+  RECOMMENDED ACTIONS:
+  ----------------------------------------------------------------------
+    - 1. Indicator Edge: investigate and prepare a change
+    - 2. Weight Calibration: monitor next quarter
+
+  NEXT REVIEW DATE: 2026-07-01
+================================================================================
+
+  Saved review to: /Users/toddbruschwein/Claude-Workspace/breakout-tracker/quarterly_reviews/review_2026_Q2.txt
+  History log:     /Users/toddbruschwein/Claude-Workspace/breakout-tracker/quarterly_reviews/review_history.json

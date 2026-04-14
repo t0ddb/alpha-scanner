@@ -448,6 +448,23 @@ scoring:
     - atr_expansion
 
 # =============================================================
+# TRADE EXECUTION (Alpaca paper trading)
+# =============================================================
+# Thresholds from 3yr backtest: 8.5 entry with 3-day persistence
+# beats the prior 9.5 baseline on return, DD, and win rate while
+# filtering out false-start tickers (IREN, AAOI, BTBT, RCAT, RGTI).
+# Env vars override these: ENTRY_THRESHOLD, EXIT_THRESHOLD,
+# PERSISTENCE_DAYS, STOP_LOSS_PCT.
+# =============================================================
+trade_execution:
+  entry_threshold: 8.5       # Score ≥ this to open new position
+  exit_threshold: 5.0        # Score < this closes the position
+  persistence_days: 3        # Require N prior trading days at/above entry_threshold
+  stop_loss_pct: 0.15        # 15% stop loss from entry
+  max_position_pct: 0.20     # Max 20% of equity per position
+  min_position_size: 500     # Minimum $ size for a new position
+
+# =============================================================
 # SUBSECTOR BREAKOUT DETECTION
 # =============================================================
 breakout_detection:

@@ -13,8 +13,8 @@ Schema (trade_history.json):
             "price": 45.20,
             "qty": 442,
             "cost_basis": 19978.40,
-            "score_at_entry": 9.8,
-            "reason": "Score ≥ 9.5",
+            "score_at_entry": 8.7,
+            "reason": "Score ≥ 8.5 + 3d persist",
             "alpaca_order_id": "abc-123"
         },
         {
@@ -26,6 +26,7 @@ Schema (trade_history.json):
             "proceeds": 16981.64,
             "pnl": -2996.76,
             "pnl_pct": -15.0,
+            "score_at_entry": 8.7,         # carried over from the matching buy
             "score_at_exit": 6.2,
             "reason": "Stop loss (15%)",
             "hold_days": 35,
@@ -33,6 +34,10 @@ Schema (trade_history.json):
         }
     ]
 }
+
+Sell records always carry the original `score_at_entry` so we can
+bucket realized P&L by entry tier (8.5-9.0, 9.0-9.5, 9.5+) without
+re-walking the log.
 """
 
 from __future__ import annotations
@@ -79,7 +84,7 @@ def log_buy(
     price: float,
     qty: float,
     score_at_entry: float,
-    reason: str = "Score ≥ 9.5",
+    reason: str = "Score ≥ 8.5 + 3d persist",
     alpaca_order_id: str | None = None,
 ) -> dict:
     """Append a buy trade to the log."""
@@ -113,7 +118,12 @@ def log_sell(
     hold_days: int,
     alpaca_order_id: str | None = None,
 ) -> dict:
-    """Append a sell trade to the log, computing proceeds and P&L."""
+    """Append a sell trade to the log, computing proceeds and P&L.
+
+    Auto-populates `score_at_entry` on the sell by looking up the most
+    recent buy of the same ticker, so downstream analysis can bucket
+    realized P&L by entry score tier without cross-referencing records.
+    """
     price = float(price)
     qty = float(qty)
     entry_price = float(entry_price)
@@ -122,6 +132,10 @@ def log_sell(
     cost = entry_price * qty
     pnl = proceeds - cost
     pnl_pct = ((price / entry_price) - 1.0) * 100.0 if entry_price else 0.0
+
+    # Carry the entry score from the matching buy so this sell record
+    # is self-contained for bucket analysis.
+    score_at_entry = get_last_entry_score(ticker)
 
     entry = {
         "ticker": ticker,
@@ -136,6 +150,8 @@ def log_sell(
         "reason": reason,
         "hold_days": int(hold_days),
     }
+    if score_at_entry is not None:
+        entry["score_at_entry"] = round(float(score_at_entry), 2)
     if alpaca_order_id:
         entry["alpaca_order_id"] = alpaca_order_id
 
@@ -159,6 +175,15 @@ def get_last_buy_date(ticker: str) -> str | None:
     """Most recent buy date for a ticker (used to compute hold days)."""
     trades = [t for t in get_trades_for_ticker(ticker) if t["side"] == "buy"]
     return trades[-1]["date"] if trades else None
+
+
+def get_last_entry_score(ticker: str) -> float | None:
+    """Entry score from the most recent buy of this ticker, or None."""
+    buys = [t for t in get_trades_for_ticker(ticker) if t["side"] == "buy"]
+    if not buys:
+        return None
+    val = buys[-1].get("score_at_entry")
+    return float(val) if val is not None else None
 
 
 def summary_stats() -> dict:
@@ -191,6 +216,46 @@ def summary_stats() -> dict:
     }
 
 
+def bucket_stats() -> list[dict]:
+    """
+    Group realized sells by entry-score bucket so we can validate that
+    lower tiers (8.5-9.0, 9.0-9.5) earn their keep against the 9.5+
+    baseline, as the 3yr backtest predicted.
+    """
+    buckets = [
+        ("8.5-9.0", 8.5, 9.0),
+        ("9.0-9.5", 9.0, 9.5),
+        ("9.5+",    9.5, float("inf")),
+    ]
+
+    sells = [t for t in get_all_trades() if t["side"] == "sell"]
+    rows = []
+    for label, lo, hi in buckets:
+        in_bucket = [
+            t for t in sells
+            if t.get("score_at_entry") is not None
+            and lo <= float(t["score_at_entry"]) < hi
+        ]
+        if not in_bucket:
+            rows.append({
+                "bucket": label, "trades": 0, "wins": 0, "win_rate": 0.0,
+                "total_pnl": 0.0, "avg_pnl_pct": 0.0,
+            })
+            continue
+        wins = [t for t in in_bucket if t["pnl"] > 0]
+        total_pnl = sum(t["pnl"] for t in in_bucket)
+        avg_pct = sum(t["pnl_pct"] for t in in_bucket) / len(in_bucket)
+        rows.append({
+            "bucket": label,
+            "trades": len(in_bucket),
+            "wins": len(wins),
+            "win_rate": round(len(wins) / len(in_bucket) * 100, 1),
+            "total_pnl": round(total_pnl, 2),
+            "avg_pnl_pct": round(avg_pct, 2),
+        })
+    return rows
+
+
 if __name__ == "__main__":
     # Quick CLI summary
     stats = summary_stats()
@@ -198,3 +263,16 @@ if __name__ == "__main__":
     print("─" * 40)
     for k, v in stats.items():
         print(f"  {k:<18s}  {v}")
+
+    print("\nRealized P&L by Entry Score Bucket")
+    print("─" * 60)
+    print(f"  {'Bucket':<10s}{'Trades':>8s}{'Wins':>6s}{'Win%':>8s}{'Total P&L':>14s}{'Avg %':>10s}")
+    for r in bucket_stats():
+        print(
+            f"  {r['bucket']:<10s}"
+            f"{r['trades']:>8d}"
+            f"{r['wins']:>6d}"
+            f"{r['win_rate']:>7.1f}%"
+            f"${r['total_pnl']:>+12,.0f}"
+            f"{r['avg_pnl_pct']:>+9.1f}%"
+        )

@@ -1,0 +1,14 @@
+{
+  "2026-Q2": {
+    "date": "2026-04-11",
+    "indicator_edge": "action_needed",
+    "live_vs_backtest": "skip",
+    "overall": "action_needed",
+    "period_end": "2026-04-10",
+    "period_start": "2025-04-10",
+    "state_machine": "healthy",
+    "thresholds": "healthy",
+    "universe": "healthy",
+    "weight_calibration": "watch"
+  }
+}

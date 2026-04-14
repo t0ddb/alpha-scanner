@@ -168,6 +168,7 @@ def run_simulation(
     trading_days: list,
     threshold: float = 9.0,
     persistence_filter: bool = False,
+    persistence_days: int = 0,  # 0 = no filter; N = require score >= threshold for N prior trading days
     rotation_strategy: str = "none",  # "none", "trim_weakest", "trim_worst_pnl"
     starting_capital: float = 100_000,
     max_position_pct: float = 0.20,
@@ -264,15 +265,29 @@ def run_simulation(
         new_signals = []
         for ticker, score in today_scores.items():
             if score >= threshold and ticker not in positions:
-                # Persistence filter: require score above threshold on previous snapshot too
-                if persistence_filter:
-                    signals_generated += 1
+                signals_generated += 1
+
+                # N-day persistence filter: require score >= threshold for N prior trading days
+                if persistence_days > 0:
+                    ok = True
+                    if i < persistence_days:
+                        ok = False
+                    else:
+                        for back in range(1, persistence_days + 1):
+                            prior_day_str = filtered_days[i - back].strftime("%Y-%m-%d")
+                            prior_scores = daily_scores.get(prior_day_str, {})
+                            if prior_scores.get(ticker, 0) < threshold:
+                                ok = False
+                                break
+                    if not ok:
+                        signals_filtered += 1
+                        continue
+                # Legacy 1-day boolean filter (retained for back-compat)
+                elif persistence_filter:
                     prev_score = prev_scores.get(ticker, 0)
                     if prev_score < threshold:
                         signals_filtered += 1
                         continue
-                else:
-                    signals_generated += 1
 
                 new_signals.append((ticker, score))
 

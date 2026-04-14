@@ -16,6 +16,14 @@ on:
         options:
           - 'false'
           - 'true'
+      entry_threshold:
+        description: 'Override entry score threshold (blank = use ticker_config.yaml)'
+        required: false
+        default: ''
+      persistence_days:
+        description: 'Override N-day persistence filter (blank = use ticker_config.yaml)'
+        required: false
+        default: ''
 
 jobs:
   trade:
@@ -33,6 +41,11 @@ jobs:
       GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
       GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
       ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+      # Manual overrides from workflow_dispatch inputs. Empty strings
+      # are ignored by load_trade_config() so the scheduled run still
+      # reads entry_threshold / persistence_days from ticker_config.yaml.
+      ENTRY_THRESHOLD: ${{ inputs.entry_threshold }}
+      PERSISTENCE_DAYS: ${{ inputs.persistence_days }}
 
     steps:
       - name: Checkout repo
@@ -63,14 +76,21 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Stage the two state files only if they exist
+          # Stage state files only if they exist.
+          # breakout_tracker.db carries today's per-ticker scores, which
+          # tomorrow's run reads for the N-day persistence filter.
           [ -f trade_history.json ] && git add trade_history.json || true
           [ -f wash_sale_log.json ] && git add wash_sale_log.json || true
+          [ -f breakout_tracker.db ] && git add breakout_tracker.db || true
 
           if git diff --cached --quiet; then
             echo "No state changes to commit."
           else
             git commit -m "Automated trade execution $(date -u +%Y-%m-%d)"
-            git pull --rebase
+            # Rebase in case the daily-backfill workflow pushed the DB
+            # around the same time. If rebase hits a conflict on the
+            # binary DB, prefer our fresh write (this run scored live
+            # EOD data that backfill won't yet have).
+            git pull --rebase -X ours || git rebase --abort
             git push
           fi
