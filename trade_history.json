@@ -32,6 +32,28 @@
       "score_at_entry": 9.8,
       "reason": "Score \u2265 9.5",
       "alpaca_order_id": "cc19ff91-fa49-4c6e-9234-40b211611978"
+    },
+    {
+      "ticker": "AEHR",
+      "side": "buy",
+      "date": "2026-04-15",
+      "price": 73.22,
+      "qty": 278.0,
+      "cost_basis": 20355.16,
+      "score_at_entry": 9.2,
+      "reason": "Score \u2265 8.5 + 3d persist",
+      "alpaca_order_id": "bb2434e0-1054-4dc1-a131-206f8da60cdd"
+    },
+    {
+      "ticker": "WDC",
+      "side": "buy",
+      "date": "2026-04-15",
+      "price": 365.0,
+      "qty": 53.0,
+      "cost_basis": 19345.0,
+      "score_at_entry": 8.8,
+      "reason": "Score \u2265 8.5 + 3d persist",
+      "alpaca_order_id": "2c4cf2db-408b-4ca7-aad6-54623b66f58d"
     }
   ]
 }
