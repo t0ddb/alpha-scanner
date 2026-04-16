@@ -8,7 +8,8 @@ Entry config comes from `trade_execution:` in ticker_config.yaml and can
 be overridden by environment variables. The current default is
 threshold ≥ 8.5 with a 3-day persistence filter (score must have been
 at/above the threshold for the prior 3 trading days), exit < 5, and a
-15% stop loss — the winning 3yr backtest config.
+20% stop loss (real Alpaca GTC stop orders) — validated by the sizing
+comparison backtest (2026-04-16).
 
 Usage:
     python3 trade_executor.py              # live paper trading
@@ -20,7 +21,7 @@ Env vars (store in .env or CI secrets):
     ENTRY_THRESHOLD      — override config entry score (e.g. "8.5")
     EXIT_THRESHOLD       — override config exit score  (e.g. "5.0")
     PERSISTENCE_DAYS     — override config prior-day persistence (e.g. "3")
-    STOP_LOSS_PCT        — override config stop loss   (e.g. "0.15")
+    STOP_LOSS_PCT        — override config stop loss   (e.g. "0.20")
     GMAIL_ADDRESS        — Gmail sender address        (optional, for --email)
     GMAIL_APP_PASSWORD   — Gmail app password          (optional, for --email)
     ALERT_EMAIL_TO       — Recipient (defaults to sender if unset)
@@ -41,8 +42,8 @@ from dotenv import load_dotenv
 
 # Alpaca SDK
 from alpaca.trading.client import TradingClient
-from alpaca.trading.requests import MarketOrderRequest
-from alpaca.trading.enums import OrderSide, TimeInForce
+from alpaca.trading.requests import MarketOrderRequest, StopOrderRequest, GetOrdersRequest
+from alpaca.trading.enums import OrderSide, TimeInForce, QueryOrderStatus, OrderType
 from alpaca.common.exceptions import APIError
 from alpaca.data.historical import StockHistoricalDataClient
 from alpaca.data.requests import StockLatestTradeRequest
@@ -68,8 +69,9 @@ _DEFAULTS = {
     "entry_threshold": 8.5,
     "exit_threshold": 5.0,
     "persistence_days": 3,
-    "stop_loss_pct": 0.15,
-    "max_position_pct": 0.20,
+    "stop_loss_pct": 0.20,
+    "max_positions": 12,
+    "max_position_pct": 0.083,
     "min_position_size": 500,
 }
 
@@ -116,6 +118,7 @@ def load_trade_config(cfg: dict) -> dict:
         "exit_threshold": pick("exit_threshold", float, "EXIT_THRESHOLD"),
         "persistence_days": pick("persistence_days", int, "PERSISTENCE_DAYS"),
         "stop_loss_pct": pick("stop_loss_pct", float, "STOP_LOSS_PCT"),
+        "max_positions": pick("max_positions", int, "MAX_POSITIONS"),
         "max_position_pct": pick("max_position_pct", float, "MAX_POSITION_PCT"),
         "min_position_size": pick("min_position_size", int, "MIN_POSITION_SIZE"),
     }
@@ -249,6 +252,124 @@ def submit_market_order(
         return None
 
 
+def submit_stop_order(
+    client: TradingClient,
+    ticker: str,
+    qty: float,
+    stop_price: float,
+    dry_run: bool = False,
+) -> str | None:
+    """Place a GTC stop-loss sell order. Returns the order ID or None."""
+    if dry_run:
+        print(f"  [DRY RUN] Would place stop order: {ticker} sell {qty:.0f} shares at ${stop_price:.2f}")
+        return None
+
+    try:
+        req = StopOrderRequest(
+            symbol=ticker,
+            qty=qty,
+            side=OrderSide.SELL,
+            time_in_force=TimeInForce.GTC,
+            stop_price=round(stop_price, 2),
+        )
+        order = client.submit_order(req)
+        print(f"  [stop] Placed GTC stop for {ticker}: {qty:.0f} shares @ ${stop_price:.2f} "
+              f"(order {order.id})")
+        return str(order.id)
+    except APIError as e:
+        print(f"  [ERROR] Stop order failed for {ticker}: {e}")
+        return None
+
+
+def cancel_stop_orders_for_ticker(
+    client: TradingClient,
+    ticker: str,
+    dry_run: bool = False,
+) -> int:
+    """Cancel all open stop orders for a ticker. Returns count canceled."""
+    try:
+        req = GetOrdersRequest(
+            status=QueryOrderStatus.OPEN,
+            symbols=[ticker],
+        )
+        open_orders = client.get_orders(req)
+        canceled = 0
+        for order in open_orders:
+            if order.type == OrderType.STOP and order.side == OrderSide.SELL:
+                if dry_run:
+                    print(f"  [DRY RUN] Would cancel stop order {order.id} for {ticker}")
+                else:
+                    client.cancel_order_by_id(order.id)
+                    print(f"  [stop] Canceled stop order {order.id} for {ticker}")
+                canceled += 1
+        return canceled
+    except APIError as e:
+        print(f"  [WARN] Failed to query/cancel stop orders for {ticker}: {e}")
+        return 0
+
+
+def detect_filled_stops(
+    client: TradingClient,
+    snapshot: dict,
+    today: date,
+    dry_run: bool = False,
+) -> list[dict]:
+    """
+    Check for stop orders that have filled since the last run.
+    These are positions that Alpaca auto-sold via the GTC stop order.
+
+    Returns a list of filled-stop dicts suitable for logging as exits.
+    """
+    filled_stops = []
+    try:
+        # Get recently closed orders (filled stops will be in here)
+        req = GetOrdersRequest(
+            status=QueryOrderStatus.CLOSED,
+            limit=100,
+        )
+        closed_orders = client.get_orders(req)
+
+        # Tickers currently tracked in trade_history as held
+        held_tickers = set()
+        trades = trade_log.get_all_trades()
+        for t in trades:
+            if t["side"] == "buy":
+                held_tickers.add(t["ticker"])
+            elif t["side"] == "sell":
+                held_tickers.discard(t["ticker"])
+
+        for order in closed_orders:
+            if (order.type == OrderType.STOP
+                    and order.side == OrderSide.SELL
+                    and str(order.status).upper() == "FILLED"
+                    and order.symbol in held_tickers
+                    and order.symbol not in snapshot["positions"]):
+                # This stop filled and the position is no longer in Alpaca
+                # but we haven't logged the sell yet
+                fill_price = float(order.filled_avg_price) if order.filled_avg_price else 0.0
+                fill_qty = float(order.filled_qty) if order.filled_qty else 0.0
+
+                # Look up entry price from trade log
+                buys = [t for t in trades if t["ticker"] == order.symbol and t["side"] == "buy"]
+                entry_price = buys[-1]["price"] if buys else 0.0
+                entry_score = buys[-1].get("score_at_entry", 0.0) if buys else 0.0
+
+                filled_stops.append({
+                    "ticker": order.symbol,
+                    "qty": fill_qty,
+                    "fill_price": fill_price,
+                    "entry_price": entry_price,
+                    "entry_score": entry_score,
+                    "order_id": str(order.id),
+                    "filled_at": str(order.filled_at) if order.filled_at else today.isoformat(),
+                })
+
+    except APIError as e:
+        print(f"  [WARN] Failed to check for filled stops: {e}")
+
+    return filled_stops
+
+
 # ─────────────────────────────────────────────────────────────
 # Decision logic
 # ─────────────────────────────────────────────────────────────
@@ -351,39 +472,52 @@ def evaluate_entries(
     today: date,
     trade_cfg: dict,
     db_conn,
+    force_entry: list[str] | None = None,
 ) -> tuple[list[dict], list[dict]]:
     """
     Return (entries, skipped) for today.
+
+    force_entry: list of tickers that bypass the entry threshold and
+    persistence filter (cold-start catch-up). All other rules (sizing,
+    tradeability, wash sale logging) still apply.
     """
     entry_threshold = trade_cfg["entry_threshold"]
     persistence_days = trade_cfg["persistence_days"]
+    max_positions = trade_cfg["max_positions"]
     max_position_pct = trade_cfg["max_position_pct"]
     min_position_size = trade_cfg["min_position_size"]
+    force_set = set(force_entry or [])
 
     held = set(snapshot["positions"].keys())
     exiting = {e["ticker"] for e in exits}
     cooldown_map = wash_sale_tracker.get_cooldowns(today)
+
+    # Post-exit position count (for cap check)
+    current_position_count = len(held - exiting)
 
     # Estimate post-exit cash: current cash + proceeds from sells
     projected_cash = snapshot["cash"] + sum(
         e["qty"] * e["current_price"] for e in exits
     )
     equity = snapshot["equity"]
-    max_position = equity * max_position_pct
 
-    # Filter candidates
+    # Filter candidates: normal threshold-based + forced tickers
     candidates = []
     for ticker, rec in scores.items():
         score = rec["score"]
-        if score < entry_threshold:
+        is_forced = ticker in force_set
+        if not is_forced and score < entry_threshold:
             continue
         if ticker in held and ticker not in exiting:
+            if is_forced:
+                print(f"  [force-entry] {ticker} already held — skipping")
             continue  # already own it
         if is_ticker_excluded(ticker):
             continue
         candidates.append(rec)
 
-    candidates.sort(key=lambda r: -r["score"])
+    # Process forced tickers first (highest priority), then by score
+    candidates.sort(key=lambda r: (0 if r["ticker"] in force_set else 1, -r["score"]))
 
     entries = []
     skipped = []
@@ -391,25 +525,31 @@ def evaluate_entries(
     for rec in candidates:
         ticker = rec["ticker"]
         score = rec["score"]
+        is_forced = ticker in force_set
 
-        # N-day persistence filter — score must have been ≥ threshold
-        # on each of the prior `persistence_days` trading days
-        passes, reason = check_persistence(
-            db_conn, ticker, entry_threshold, persistence_days, today
-        )
-        if not passes:
+        # N-day persistence filter — bypassed for forced entries
+        if not is_forced:
+            passes, reason = check_persistence(
+                db_conn, ticker, entry_threshold, persistence_days, today
+            )
+            if not passes:
+                skipped.append({
+                    "ticker": ticker,
+                    "score": score,
+                    "reason": reason,
+                })
+                continue
+
+        # Position cap check
+        if current_position_count >= max_positions:
             skipped.append({
                 "ticker": ticker,
                 "score": score,
-                "reason": reason,
+                "reason": f"Position cap ({max_positions})",
             })
             continue
 
         # Wash sale check — LOG ONLY, DO NOT BLOCK.
-        # Rationale: backtesting showed re-entries after losses often produce
-        # strong gains (e.g., VIAV -21% -> same-day re-entry -> +42%). Wash
-        # sales defer the tax deduction but don't eliminate it, so we'd
-        # rather capture the alpha and pay the deferral cost.
         wash_sale_warning = None
         if ticker in cooldown_map:
             cd = cooldown_map[ticker]
@@ -428,7 +568,8 @@ def evaluate_entries(
             })
             continue
 
-        # Sizing
+        # Dynamic sizing: % of current equity (fresh per entry)
+        max_position = equity * max_position_pct
         target_size = min(projected_cash, max_position)
         if target_size < min_position_size:
             skipped.append({
@@ -464,20 +605,26 @@ def evaluate_entries(
             continue
 
         cost_basis = qty * est_price
-        persistence_tag = (
-            f" + {persistence_days}d persist"
-            if persistence_days > 0 else ""
-        )
+        if is_forced:
+            reason_str = f"Force entry (cold-start catch-up)"
+        else:
+            persistence_tag = (
+                f" + {persistence_days}d persist"
+                if persistence_days > 0 else ""
+            )
+            reason_str = f"Score ≥ {entry_threshold}{persistence_tag}"
+
         entries.append({
             "ticker": ticker,
             "qty": qty,
             "est_price": est_price,
             "cost_basis": cost_basis,
             "score": score,
-            "reason": f"Score ≥ {entry_threshold}{persistence_tag}",
+            "reason": reason_str,
             "wash_sale_warning": wash_sale_warning,
         })
         projected_cash -= cost_basis
+        current_position_count += 1
 
     return entries, skipped
 
@@ -535,6 +682,9 @@ def execute_exits(
             client, e["ticker"], e["qty"], OrderSide.SELL, dry_run=dry_run
         )
 
+        # Cancel the GTC stop order (no longer needed — we're selling via score exit)
+        cancel_stop_orders_for_ticker(client, e["ticker"], dry_run=dry_run)
+
         # Record wash sale if losing
         if e["unrealized_pnl"] < 0:
             wash_sale_tracker.record_loss_exit(e["ticker"], today, e["unrealized_pnl"])
@@ -566,9 +716,12 @@ def execute_entries(
     client: TradingClient,
     entries: list[dict],
     today: date,
+    trade_cfg: dict,
     dry_run: bool,
 ) -> None:
-    """Submit buy orders and log them."""
+    """Submit buy orders, place GTC stop-loss orders, and log them."""
+    stop_loss_pct = trade_cfg["stop_loss_pct"]
+
     for e in entries:
         action = "[DRY RUN] " if dry_run else ""
         print(f"  {action}BUY   {e['ticker']:<6s} {e['qty']:>6.0f} shares @ ${e['est_price']:>8.2f}  "
@@ -589,6 +742,12 @@ def execute_entries(
             client, e["ticker"], e["qty"], OrderSide.BUY, dry_run=dry_run
         )
 
+        # Place GTC stop-loss order immediately after buy
+        stop_price = e["est_price"] * (1 - stop_loss_pct)
+        stop_order_id = submit_stop_order(
+            client, e["ticker"], e["qty"], stop_price, dry_run=dry_run,
+        )
+
         if not dry_run:
             trade_log.log_buy(
                 ticker=e["ticker"],
@@ -598,6 +757,8 @@ def execute_entries(
                 score_at_entry=e["score"],
                 reason=e["reason"],
                 alpaca_order_id=order_id,
+                stop_order_id=stop_order_id,
+                stop_price=round(stop_price, 2),
             )
 
 
@@ -622,16 +783,18 @@ def print_trade_config(trade_cfg: dict) -> None:
     print(f"  Entry threshold:   ≥ {trade_cfg['entry_threshold']}")
     print(f"  Persistence:       {trade_cfg['persistence_days']} prior day(s)")
     print(f"  Exit threshold:    < {trade_cfg['exit_threshold']}")
-    print(f"  Stop loss:         {trade_cfg['stop_loss_pct']*100:.0f}%")
-    print(f"  Max position:      {trade_cfg['max_position_pct']*100:.0f}% of equity")
+    print(f"  Stop loss:         {trade_cfg['stop_loss_pct']*100:.0f}% (GTC stop orders)")
+    print(f"  Max positions:     {trade_cfg['max_positions']}")
+    print(f"  Position size:     {trade_cfg['max_position_pct']*100:.1f}% of equity")
 
 
-def print_account_status(snapshot: dict) -> None:
+def print_account_status(snapshot: dict, trade_cfg: dict | None = None) -> None:
+    max_pos = trade_cfg["max_positions"] if trade_cfg else "?"
     print("\n  ACCOUNT STATUS")
     print("  " + "─" * 38)
     print(f"  Equity:          ${snapshot['equity']:>12,.2f}")
     print(f"  Cash:            ${snapshot['cash']:>12,.2f}")
-    print(f"  Positions:       {len(snapshot['positions']):>13d}")
+    print(f"  Positions:       {len(snapshot['positions']):>7d} / {max_pos}")
 
 
 def print_section(title: str) -> None:
@@ -883,7 +1046,8 @@ def _build_trade_digest_html(
         ]))
 
     # ── Current Positions (restructured) ──
-    stop_loss_pct = trade_cfg.get("stop_loss_pct", 0.15)
+    stop_loss_pct = trade_cfg.get("stop_loss_pct", 0.20)
+    max_positions = trade_cfg.get("max_positions", 12)
     pos_rows = []
     exit_watch_rows = []
 
@@ -904,6 +1068,9 @@ def _build_trade_digest_html(
         pnl_pct = pos["unrealized_pnl_pct"]
         pnl_dollar = pos["unrealized_pnl"]
 
+        # Stop price
+        stop_px = pos["entry_price"] * (1 - stop_loss_pct)
+
         pos_rows.append(row([
             f"<b>{ticker}</b>",
             f"{hold_days}",
@@ -912,16 +1079,18 @@ def _build_trade_digest_html(
             _colored(f"{pnl_pct:+.1f}%", _pnl_color(pnl_pct)),
             _colored(f"${pnl_dollar:+,.0f}", _pnl_color(pnl_dollar)),
             _colored(f"{score_val:.1f}", _score_color(score_val)),
+            f"${stop_px:.2f}",
         ]))
 
-        # ── Exit Watch: score < 7.0 OR P&L% worse than -12% ──
-        if score_val < 7.0 or pnl_pct < -12.0:
+        # ── Exit Watch: score < 7.0 OR P&L% worse than -(stop_loss_pct*100 - 5)% ──
+        stop_watch_pct = -(stop_loss_pct * 100 - 5)  # e.g. -15% for a 20% stop
+        if score_val < 7.0 or pnl_pct < stop_watch_pct:
             days_below_7 = _count_consecutive_days_below(
                 db_conn, ticker, 7.0, today_str, today_score=score_val,
             )
             distance_to_exit = score_val - 5.0
-            stop_loss_buffer_pct = pnl_pct  # how close to -15%
-            buffer_color = "#dc2626" if stop_loss_buffer_pct < -10.0 else _pnl_color(stop_loss_buffer_pct)
+            stop_loss_buffer_pct = pnl_pct
+            buffer_color = "#dc2626" if stop_loss_buffer_pct < stop_watch_pct else _pnl_color(stop_loss_buffer_pct)
 
             exit_watch_rows.append(row([
                 f"<b>{ticker}</b>",
@@ -959,7 +1128,7 @@ def _build_trade_digest_html(
     exit_table_html = table(["Ticker", "Qty", "Price", "Reason", "P&amp;L"], exit_rows)
     entry_table_html = table(["Ticker", "Qty", "Est Price", "Score", "Cost"], entry_rows)
     pos_table_html = table(
-        ["Ticker", "Days Elapsed", "Current", "Day %", "P&amp;L %", "P&amp;L $", "Score"],
+        ["Ticker", "Days Elapsed", "Current", "Day %", "P&amp;L %", "P&amp;L $", "Score", "Stop"],
         pos_rows,
     )
     cooldown_table_html = table(["Ticker", "Cooldown Until", "Loss Amount"], cooldown_rows)
@@ -973,7 +1142,7 @@ def _build_trade_digest_html(
         <table style="border-collapse:collapse;font-size:14px">
           <tr><td style="padding:3px 24px 3px 0;color:#6b7280">Equity:</td><td style="text-align:right"><b>${equity:,.2f}</b></td></tr>
           <tr><td style="padding:3px 24px 3px 0;color:#6b7280">Cash:</td><td style="text-align:right">${cash:,.2f}</td></tr>
-          <tr><td style="padding:3px 24px 3px 0;color:#6b7280">Positions:</td><td style="text-align:right">{num_pos}</td></tr>
+          <tr><td style="padding:3px 24px 3px 0;color:#6b7280">Positions:</td><td style="text-align:right">{num_pos} / {max_positions}</td></tr>
           <tr><td style="padding:3px 24px 3px 0;color:#6b7280">Unrealized P&amp;L:</td><td style="text-align:right">{upnl_html}</td></tr>
         </table>
       </div>
@@ -1086,7 +1255,13 @@ def main():
                         help="Score everything and show what would be done, but don't place orders")
     parser.add_argument("--email", action="store_true",
                         help="Send an email digest after running (requires GMAIL_ADDRESS and GMAIL_APP_PASSWORD)")
+    parser.add_argument("--force-entry", action="append", default=[], metavar="TICKER",
+                        help="Force entry for TICKER (bypasses entry threshold + persistence filter). "
+                             "Can be specified multiple times. All other rules (sizing, tradeability, "
+                             "wash sale logging) still apply.")
     args = parser.parse_args()
+    # Normalize force-entry tickers to uppercase
+    args.force_entry = [t.upper() for t in args.force_entry]
 
     load_dotenv()
 
@@ -1103,23 +1278,61 @@ def main():
 
     # 3. Snapshot account
     snapshot = get_account_snapshot(client)
-    print_account_status(snapshot)
+    print_account_status(snapshot, trade_cfg)
 
     # 4. Cleanup expired wash sale entries
     today = datetime.now(PT_TZ).date()
     wash_sale_tracker.cleanup_expired(today)
 
-    # 5. Open DB (used for persistence filter + writing today's scores)
+    # 5. Detect stop orders that filled since last run
+    print_section("STOP ORDER FILLS (since last run)")
+    filled_stops = detect_filled_stops(client, snapshot, today, args.dry_run)
+    if filled_stops:
+        for fs in filled_stops:
+            pnl = (fs["fill_price"] - fs["entry_price"]) * fs["qty"]
+            pnl_pct = ((fs["fill_price"] / fs["entry_price"]) - 1.0) * 100.0 if fs["entry_price"] else 0.0
+            print(f"  STOP FILLED  {fs['ticker']:<6s} {fs['qty']:>6.0f} shares @ ${fs['fill_price']:>8.2f}  "
+                  f"P&L: ${pnl:+,.0f} ({pnl_pct:+.1f}%)")
+
+            # Log the exit
+            if not args.dry_run:
+                buy_date = trade_log.get_last_buy_date(fs["ticker"])
+                hold_days = 0
+                if buy_date:
+                    hold_days = (today - datetime.strptime(buy_date, "%Y-%m-%d").date()).days
+                trade_log.log_sell(
+                    ticker=fs["ticker"],
+                    trade_date=today,
+                    price=fs["fill_price"],
+                    qty=fs["qty"],
+                    entry_price=fs["entry_price"],
+                    score_at_exit=0.0,  # score unknown at time of stop fill
+                    reason=f"Stop loss hit ({trade_cfg['stop_loss_pct']*100:.0f}%)",
+                    hold_days=hold_days,
+                    alpaca_order_id=fs["order_id"],
+                )
+
+            # Record wash sale if losing
+            if pnl < 0:
+                wash_sale_tracker.record_loss_exit(fs["ticker"], today, pnl)
+    else:
+        print("  (none)")
+
+    # Re-snapshot after processing stop fills (positions may have changed)
+    if filled_stops and not args.dry_run:
+        snapshot = get_account_snapshot(client)
+
+    # 6. Open DB (used for persistence filter + writing today's scores)
     db_conn = subsector_store.init_db()
 
-    # 6. Score all tickers
+    # 7. Score all tickers
     print("\n  Scoring tickers...")
     data = fetch_all(cfg, period="1y", verbose=False)
     results = score_all(data, cfg)
     scores = score_lookup(results)
     print(f"  Scored {len(results)} tickers")
 
-    # 7. Persist today's scores so tomorrow's persistence check has them
+    # 8. Persist today's scores so tomorrow's persistence check has them
     #    (safe to call every run — upsert replaces existing rows)
     today_str = today.strftime("%Y-%m-%d")
     try:
@@ -1127,7 +1340,7 @@ def main():
     except Exception as e:
         print(f"  [WARN] Could not persist today's scores to DB: {e}")
 
-    # 8. Evaluate exits
+    # 9. Evaluate exits (score-based)
     exits = evaluate_exits(snapshot, scores, trade_cfg)
     print_section("EXITS TODAY")
     if exits:
@@ -1135,17 +1348,20 @@ def main():
     else:
         print("  (none)")
 
-    # 9. Evaluate entries
+    # 10. Evaluate entries
+    if args.force_entry:
+        print(f"\n  [force-entry] Forcing entry for: {', '.join(args.force_entry)}")
     entries, skipped = evaluate_entries(
         snapshot, scores, exits, client, data_client, today, trade_cfg, db_conn,
+        force_entry=args.force_entry,
     )
     print_section("ENTRIES TODAY")
     if entries:
-        execute_entries(client, entries, today, args.dry_run)
+        execute_entries(client, entries, today, trade_cfg, args.dry_run)
     else:
         print("  (none)")
 
-    # 7. Skipped
+    # 11. Skipped
     print_section("SKIPPED SIGNALS")
     if skipped:
         for s in skipped:
@@ -1153,14 +1369,14 @@ def main():
     else:
         print("  (none)")
 
-    # 8. Re-fetch snapshot after orders (live mode only) for position display
+    # 12. Re-fetch snapshot after orders (live mode only) for position display
     if not args.dry_run and (exits or entries):
         snapshot = get_account_snapshot(client)
 
     print_positions(snapshot, scores, today)
     print_wash_sale_status(today)
 
-    # 9. Optional email digest
+    # 13. Optional email digest
     if args.email:
         send_trade_digest(
             snapshot, exits, entries, skipped, scores, today,

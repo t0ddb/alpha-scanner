@@ -460,8 +460,9 @@ trade_execution:
   entry_threshold: 8.5       # Score ≥ this to open new position
   exit_threshold: 5.0        # Score < this closes the position
   persistence_days: 3        # Require N prior trading days at/above entry_threshold
-  stop_loss_pct: 0.15        # 15% stop loss from entry
-  max_position_pct: 0.20     # Max 20% of equity per position
+  stop_loss_pct: 0.20        # 20% stop loss from entry (was 0.15; backtested 2026-04-16)
+  max_positions: 12          # Hard cap on concurrent positions (backtested 2026-04-16)
+  max_position_pct: 0.083    # 1/12 of current equity per position (= 1/max_positions)
   min_position_size: 500     # Minimum $ size for a new position
 
 # =============================================================

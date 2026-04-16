@@ -86,6 +86,8 @@ def log_buy(
     score_at_entry: float,
     reason: str = "Score ≥ 8.5 + 3d persist",
     alpaca_order_id: str | None = None,
+    stop_order_id: str | None = None,
+    stop_price: float | None = None,
 ) -> dict:
     """Append a buy trade to the log."""
     entry = {
@@ -100,6 +102,10 @@ def log_buy(
     }
     if alpaca_order_id:
         entry["alpaca_order_id"] = alpaca_order_id
+    if stop_order_id:
+        entry["stop_order_id"] = stop_order_id
+    if stop_price is not None:
+        entry["stop_price"] = round(float(stop_price), 2)
 
     data = _load()
     data["trades"].append(entry)

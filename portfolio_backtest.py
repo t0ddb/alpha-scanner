@@ -477,6 +477,17 @@ def run_simulation(
 
     positions.clear()
 
+    # === DIAGNOSTIC: concurrency + capacity stats ===
+    concurrent_counts = [h["num_positions"] for h in history]
+    max_concurrent = max(concurrent_counts) if concurrent_counts else 0
+    avg_concurrent = np.mean(concurrent_counts) if concurrent_counts else 0.0
+    days_at_capacity = sum(1 for h in history if h["cash"] < min_buy)
+
+    print(f"\n  [DIAGNOSTIC] Max concurrent positions: {max_concurrent}")
+    print(f"  [DIAGNOSTIC] Avg concurrent positions: {avg_concurrent:.1f}")
+    print(f"  [DIAGNOSTIC] Days at max capacity (cash < ${min_buy:,.0f}): {days_at_capacity}")
+    print(f"  [DIAGNOSTIC] Signals skipped due to insufficient cash: {signals_missed}")
+
     # === COMPUTE METRICS ===
     final_value = history[-1]["total_value"] if history else starting_capital
     total_return = (final_value - starting_capital) / starting_capital
