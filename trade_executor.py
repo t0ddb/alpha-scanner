@@ -183,6 +183,8 @@ def get_account_snapshot(client: TradingClient) -> dict:
 
     positions = {}
     for p in raw_positions:
+        lastday_price = float(p.lastday_price) if getattr(p, "lastday_price", None) is not None else 0.0
+        change_today = float(p.change_today) * 100 if getattr(p, "change_today", None) is not None else 0.0
         positions[p.symbol] = {
             "qty": float(p.qty),
             "entry_price": float(p.avg_entry_price),
@@ -190,12 +192,18 @@ def get_account_snapshot(client: TradingClient) -> dict:
             "market_value": float(p.market_value) if p.market_value is not None else 0.0,
             "unrealized_pnl": float(p.unrealized_pl) if p.unrealized_pl is not None else 0.0,
             "unrealized_pnl_pct": float(p.unrealized_plpc) * 100 if p.unrealized_plpc is not None else 0.0,
+            "lastday_price": lastday_price,
+            "change_today_pct": change_today,
         }
+
+    # last_equity = previous day's closing equity (for day-over-day change)
+    last_equity = float(account.last_equity) if getattr(account, "last_equity", None) is not None else None
 
     return {
         "equity": float(account.equity),
         "cash": float(account.cash),
         "buying_power": float(account.buying_power),
+        "last_equity": last_equity,
         "positions": positions,
     }
 
@@ -675,6 +683,102 @@ def print_wash_sale_status(today: date) -> None:
 # Email digest
 # ─────────────────────────────────────────────────────────────
 
+def _score_color(score: float) -> str:
+    """Return the hex color for a score value per the tier palette."""
+    if score >= 9.5:
+        return "#15803d"   # dark green
+    if score >= 8.5:
+        return "#22c55e"   # green
+    if score >= 7.0:
+        return "#ca8a04"   # amber
+    if score >= 5.0:
+        return "#ea580c"   # orange
+    return "#dc2626"       # red
+
+
+def _pnl_color(value: float) -> str:
+    """Return green/red/default for a P&L value."""
+    if value > 0:
+        return "#22c55e"
+    if value < 0:
+        return "#dc2626"
+    return "inherit"
+
+
+def _colored(value_str: str, color: str) -> str:
+    """Wrap text in a color span (skip if 'inherit')."""
+    if color == "inherit":
+        return value_str
+    return f"<span style='color:{color}'>{value_str}</span>"
+
+
+def _count_consecutive_days_above(
+    db_conn,
+    ticker: str,
+    threshold: float,
+    today_str: str,
+    today_score: float | None = None,
+) -> int:
+    """
+    Count consecutive most-recent trading days (up to and including today)
+    where the ticker's score was >= threshold.
+    """
+    # Start with today's score if available
+    count = 0
+    if today_score is not None and today_score >= threshold:
+        count = 1
+    else:
+        return 0  # today doesn't meet threshold, streak is 0
+
+    cur = db_conn.cursor()
+    cur.execute(
+        """SELECT score FROM ticker_scores
+           WHERE ticker = ? AND date < ?
+           ORDER BY date DESC
+           LIMIT 10""",
+        (ticker, today_str),
+    )
+    for (score,) in cur.fetchall():
+        if score is not None and score >= threshold:
+            count += 1
+        else:
+            break
+    return count
+
+
+def _count_consecutive_days_below(
+    db_conn,
+    ticker: str,
+    threshold: float,
+    today_str: str,
+    today_score: float | None = None,
+) -> int:
+    """
+    Count consecutive most-recent trading days (up to and including today)
+    where the ticker's score was < threshold.
+    """
+    count = 0
+    if today_score is not None and today_score < threshold:
+        count = 1
+    else:
+        return 0
+
+    cur = db_conn.cursor()
+    cur.execute(
+        """SELECT score FROM ticker_scores
+           WHERE ticker = ? AND date < ?
+           ORDER BY date DESC
+           LIMIT 30""",
+        (ticker, today_str),
+    )
+    for (score,) in cur.fetchall():
+        if score is not None and score < threshold:
+            count += 1
+        else:
+            break
+    return count
+
+
 def _build_trade_digest_html(
     snapshot: dict,
     exits: list[dict],
@@ -683,23 +787,50 @@ def _build_trade_digest_html(
     scores: dict[str, dict],
     today: date,
     dry_run: bool,
+    trade_cfg: dict,
+    db_conn,
 ) -> tuple[str, str]:
     """Build (subject, html) for the daily trade execution digest."""
     equity = snapshot["equity"]
     cash = snapshot["cash"]
+    last_equity = snapshot.get("last_equity")
     num_pos = len(snapshot["positions"])
+    today_str = today.strftime("%Y-%m-%d")
+
+    # ── Day-over-day equity change for subject line ──
+    if last_equity and last_equity > 0:
+        equity_change_pct = (equity - last_equity) / last_equity * 100
+        equity_change_str = f"{equity_change_pct:+.2f}%"
+    else:
+        equity_change_pct = 0.0
+        equity_change_str = "N/A"
 
     dry_tag = " [DRY RUN]" if dry_run else ""
-    subject = (f"Alpha Scanner Trades {today.isoformat()} — "
+    subject = (f"Alpha Scanner {today.isoformat()}: "
+               f"{equity_change_str} / "
                f"{len(entries)} buy / {len(exits)} sell{dry_tag}")
 
+    # ── Unrealized P&L across all positions ──
+    total_unrealized_pnl = sum(
+        pos["unrealized_pnl"] for pos in snapshot["positions"].values()
+    )
+    total_cost_basis = sum(
+        pos["entry_price"] * pos["qty"] for pos in snapshot["positions"].values()
+    )
+    total_unrealized_pnl_pct = (
+        (total_unrealized_pnl / total_cost_basis * 100)
+        if total_cost_basis > 0 else 0.0
+    )
+
+    # ── HTML helpers ──
+    td_style = "padding:6px 10px;border-bottom:1px solid #e5e7eb"
+    th_style = "padding:6px 10px;text-align:left;background:#f3f4f6;border-bottom:2px solid #d1d5db"
+
     def row(cells: list[str]) -> str:
-        return "<tr>" + "".join(f'<td style="padding:6px 10px;border-bottom:1px solid #e5e7eb">{c}</td>' for c in cells) + "</tr>"
+        return "<tr>" + "".join(f'<td style="{td_style}">{c}</td>' for c in cells) + "</tr>"
 
     def header_row(cells: list[str]) -> str:
-        return ("<tr>" + "".join(
-            f'<th style="padding:6px 10px;text-align:left;background:#f3f4f6;border-bottom:2px solid #d1d5db">{c}</th>'
-            for c in cells) + "</tr>")
+        return "<tr>" + "".join(f'<th style="{th_style}">{c}</th>' for c in cells) + "</tr>"
 
     def table(header: list[str], rows: list[str]) -> str:
         if not rows:
@@ -708,19 +839,19 @@ def _build_trade_digest_html(
                 + header_row(header)
                 + "".join(rows) + "</table>")
 
-    # Exits
+    # ── Exits ──
     exit_rows = []
     for e in exits:
-        pnl_color = "#10b981" if e["unrealized_pnl"] >= 0 else "#ef4444"
+        color = _pnl_color(e["unrealized_pnl"])
         exit_rows.append(row([
             f"<b>{e['ticker']}</b>",
             f"{e['qty']:.0f}",
             f"${e['current_price']:.2f}",
             e["reason"],
-            f"<span style='color:{pnl_color}'>${e['unrealized_pnl']:+,.0f} ({e['unrealized_pnl_pct']:+.1f}%)</span>",
+            _colored(f"${e['unrealized_pnl']:+,.0f} ({e['unrealized_pnl_pct']:+.1f}%)", color),
         ]))
 
-    # Entries
+    # ── Entries (score color-coded) ──
     entry_rows = []
     for e in entries:
         ws_note = ""
@@ -731,31 +862,107 @@ def _build_trade_digest_html(
             f"<b>{e['ticker']}</b>{ws_note}",
             f"{e['qty']:.0f}",
             f"${e['est_price']:.2f}",
-            f"{e['score']:.1f}",
+            _colored(f"{e['score']:.1f}", _score_color(e['score'])),
             f"${e['cost_basis']:,.0f}",
         ]))
 
-    # Skipped
-    skip_rows = [row([f"<b>{s['ticker']}</b>", f"{s['score']:.1f}", s["reason"]]) for s in skipped]
-
-    # Positions
-    pos_rows = []
-    for ticker, pos in sorted(snapshot["positions"].items()):
-        score = scores.get(ticker, {}).get("score", 0.0)
-        pnl_color = "#10b981" if pos["unrealized_pnl"] >= 0 else "#ef4444"
-        pos_rows.append(row([
+    # ── Skipped Signals (simplified: Days >= 8.5 instead of verbose reason) ──
+    entry_threshold = trade_cfg.get("entry_threshold", 8.5)
+    persistence_days = trade_cfg.get("persistence_days", 3)
+    skip_rows = []
+    for s in skipped:
+        ticker = s["ticker"]
+        score = s["score"]
+        days_above = _count_consecutive_days_above(
+            db_conn, ticker, entry_threshold, today_str, today_score=score,
+        )
+        skip_rows.append(row([
             f"<b>{ticker}</b>",
-            f"{pos['qty']:.0f}",
-            f"${pos['entry_price']:.2f}",
-            f"${pos['current_price']:.2f}",
-            f"<span style='color:{pnl_color}'>{pos['unrealized_pnl_pct']:+.1f}%</span>",
-            f"{score:.1f}",
+            _colored(f"{score:.1f}", _score_color(score)),
+            f"{days_above}/{persistence_days}",
         ]))
 
-    # Wash sale status
+    # ── Current Positions (restructured) ──
+    stop_loss_pct = trade_cfg.get("stop_loss_pct", 0.15)
+    pos_rows = []
+    exit_watch_rows = []
+
+    for ticker, pos in sorted(snapshot["positions"].items()):
+        score_val = scores.get(ticker, {}).get("score", 0.0)
+
+        # Days elapsed (calendar days since entry)
+        buy_date = trade_log.get_last_buy_date(ticker)
+        if buy_date:
+            hold_days = (today - datetime.strptime(buy_date, "%Y-%m-%d").date()).days
+        else:
+            hold_days = 0
+
+        # Day % from Alpaca
+        day_pct = pos.get("change_today_pct", 0.0)
+
+        # P&L
+        pnl_pct = pos["unrealized_pnl_pct"]
+        pnl_dollar = pos["unrealized_pnl"]
+
+        pos_rows.append(row([
+            f"<b>{ticker}</b>",
+            f"{hold_days}",
+            f"${pos['current_price']:.2f}",
+            _colored(f"{day_pct:+.1f}%", _pnl_color(day_pct)),
+            _colored(f"{pnl_pct:+.1f}%", _pnl_color(pnl_pct)),
+            _colored(f"${pnl_dollar:+,.0f}", _pnl_color(pnl_dollar)),
+            _colored(f"{score_val:.1f}", _score_color(score_val)),
+        ]))
+
+        # ── Exit Watch: score < 7.0 OR P&L% worse than -12% ──
+        if score_val < 7.0 or pnl_pct < -12.0:
+            days_below_7 = _count_consecutive_days_below(
+                db_conn, ticker, 7.0, today_str, today_score=score_val,
+            )
+            distance_to_exit = score_val - 5.0
+            stop_loss_buffer_pct = pnl_pct  # how close to -15%
+            buffer_color = "#dc2626" if stop_loss_buffer_pct < -10.0 else _pnl_color(stop_loss_buffer_pct)
+
+            exit_watch_rows.append(row([
+                f"<b>{ticker}</b>",
+                _colored(f"{score_val:.1f}", _score_color(score_val)),
+                f"{days_below_7}",
+                f"{distance_to_exit:+.1f}",
+                _colored(f"{stop_loss_buffer_pct:+.1f}%", buffer_color),
+            ]))
+
+    exit_watch_html = (
+        table(
+            ["Ticker", "Current Score", "Days Score &lt; 7", "Distance to Exit", "Stop Loss Buffer"],
+            exit_watch_rows,
+        )
+        if exit_watch_rows
+        else "<p style='color:#6b7280'>(none — all positions healthy)</p>"
+    )
+
+    # ── Wash Sale Cooldowns ──
     cooldowns = wash_sale_tracker.get_cooldowns(today)
     cooldown_rows = [row([f"<b>{t}</b>", e["cooldown_until"], f"${e['loss_amount']:,.0f}"])
                      for t, e in sorted(cooldowns.items())]
+
+    # ── Header summary: Unrealized P&L styling ──
+    upnl_color = _pnl_color(total_unrealized_pnl)
+    upnl_html = _colored(
+        f"${total_unrealized_pnl:+,.2f} ({total_unrealized_pnl_pct:+.1f}%)",
+        upnl_color,
+    )
+
+    # Pre-build tables that have dynamic column headers (avoid nested
+    # braces inside the main f-string which breaks on Python <3.12).
+    skip_col = f"Days &ge; {entry_threshold:.1f}" if entry_threshold % 1 else f"Days &ge; {entry_threshold:.0f}"
+    skip_table_html = table(["Ticker", "Score", skip_col], skip_rows)
+    exit_table_html = table(["Ticker", "Qty", "Price", "Reason", "P&amp;L"], exit_rows)
+    entry_table_html = table(["Ticker", "Qty", "Est Price", "Score", "Cost"], entry_rows)
+    pos_table_html = table(
+        ["Ticker", "Days Elapsed", "Current", "Day %", "P&amp;L %", "P&amp;L $", "Score"],
+        pos_rows,
+    )
+    cooldown_table_html = table(["Ticker", "Cooldown Until", "Loss Amount"], cooldown_rows)
 
     html = f"""
     <div style="font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;max-width:720px;margin:0 auto;color:#111">
@@ -763,30 +970,34 @@ def _build_trade_digest_html(
       <p style="color:#6b7280;margin:0 0 20px 0">{today.strftime('%A, %B %d, %Y')}</p>
 
       <div style="background:#f9fafb;padding:14px 18px;border-radius:8px;margin-bottom:20px">
-        <div style="display:flex;gap:24px;flex-wrap:wrap">
-          <div><b>Equity:</b> ${equity:,.2f}</div>
-          <div><b>Cash:</b> ${cash:,.2f}</div>
-          <div><b>Positions:</b> {num_pos}</div>
-        </div>
+        <table style="border-collapse:collapse;font-size:14px">
+          <tr><td style="padding:3px 24px 3px 0;color:#6b7280">Equity:</td><td style="text-align:right"><b>${equity:,.2f}</b></td></tr>
+          <tr><td style="padding:3px 24px 3px 0;color:#6b7280">Cash:</td><td style="text-align:right">${cash:,.2f}</td></tr>
+          <tr><td style="padding:3px 24px 3px 0;color:#6b7280">Positions:</td><td style="text-align:right">{num_pos}</td></tr>
+          <tr><td style="padding:3px 24px 3px 0;color:#6b7280">Unrealized P&amp;L:</td><td style="text-align:right">{upnl_html}</td></tr>
+        </table>
       </div>
 
       <h3 style="margin:24px 0 8px 0">Exits ({len(exits)})</h3>
-      {table(["Ticker", "Qty", "Price", "Reason", "P&L"], exit_rows)}
+      {exit_table_html}
 
       <h3 style="margin:24px 0 8px 0">Entries ({len(entries)})</h3>
-      {table(["Ticker", "Qty", "Est Price", "Score", "Cost"], entry_rows)}
+      {entry_table_html}
 
       <h3 style="margin:24px 0 8px 0">Skipped Signals ({len(skipped)})</h3>
-      {table(["Ticker", "Score", "Reason"], skip_rows)}
+      {skip_table_html}
 
       <h3 style="margin:24px 0 8px 0">Current Positions ({num_pos})</h3>
-      {table(["Ticker", "Qty", "Entry", "Current", "P&L %", "Score"], pos_rows)}
+      {pos_table_html}
+
+      <h3 style="margin:24px 0 8px 0">Exit Watch</h3>
+      {exit_watch_html}
 
       <h3 style="margin:24px 0 8px 0">Wash Sale Cooldowns (informational — trades not blocked)</h3>
-      {table(["Ticker", "Cooldown Until", "Loss Amount"], cooldown_rows)}
+      {cooldown_table_html}
 
       <p style="color:#9ca3af;font-size:11px;margin-top:30px">
-        Generated by trade_executor.py • Paper trading on Alpaca
+        Generated by trade_executor.py &bull; Paper trading on Alpaca
       </p>
     </div>
     """.strip()
@@ -829,6 +1040,8 @@ def send_trade_digest(
     scores: dict[str, dict],
     today: date,
     dry_run: bool,
+    trade_cfg: dict,
+    db_conn,
 ) -> None:
     """Send daily trade digest via Gmail SMTP if credentials are configured."""
     gmail_address = os.getenv("GMAIL_ADDRESS", "")
@@ -846,7 +1059,8 @@ def send_trade_digest(
 
     try:
         subject, html = _build_trade_digest_html(
-            snapshot, exits, entries, skipped, scores, today, dry_run
+            snapshot, exits, entries, skipped, scores, today, dry_run,
+            trade_cfg, db_conn,
         )
         print(f"\n  [email] Sending digest to {recipient}...")
         _send_gmail(
@@ -948,7 +1162,10 @@ def main():
 
     # 9. Optional email digest
     if args.email:
-        send_trade_digest(snapshot, exits, entries, skipped, scores, today, args.dry_run)
+        send_trade_digest(
+            snapshot, exits, entries, skipped, scores, today,
+            args.dry_run, trade_cfg, db_conn,
+        )
 
     print("\n" + "=" * 66 + "\n")
 
