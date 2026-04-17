@@ -463,6 +463,14 @@ def check_persistence(
     return True, ""
 
 
+# Skip-reason categories used by the email digest (keep in sync with
+# the allowed values in _build_trade_digest_html).
+SKIP_CATEGORY_INSUFFICIENT_CASH = "insufficient cash"
+SKIP_CATEGORY_POSITION_CAP = "position cap reached"
+SKIP_CATEGORY_WASH_SALE = "wash sale cooldown"
+SKIP_CATEGORY_OTHER = "other"
+
+
 def evaluate_entries(
     snapshot: dict,
     scores: dict[str, dict],
@@ -480,6 +488,9 @@ def evaluate_entries(
     force_entry: list of tickers that bypass the entry threshold and
     persistence filter (cold-start catch-up). All other rules (sizing,
     tradeability, wash sale logging) still apply.
+
+    Each skip dict carries both a verbose ``reason`` (for console) and a
+    normalized ``skip_category`` used by the email's Skip Reason column.
     """
     entry_threshold = trade_cfg["entry_threshold"]
     persistence_days = trade_cfg["persistence_days"]
@@ -537,6 +548,7 @@ def evaluate_entries(
                     "ticker": ticker,
                     "score": score,
                     "reason": reason,
+                    "skip_category": SKIP_CATEGORY_OTHER,
                 })
                 continue
 
@@ -546,6 +558,7 @@ def evaluate_entries(
                 "ticker": ticker,
                 "score": score,
                 "reason": f"Position cap ({max_positions})",
+                "skip_category": SKIP_CATEGORY_POSITION_CAP,
             })
             continue
 
@@ -565,10 +578,17 @@ def evaluate_entries(
                 "ticker": ticker,
                 "score": score,
                 "reason": "Not tradeable on Alpaca",
+                "skip_category": SKIP_CATEGORY_OTHER,
             })
             continue
 
         # Dynamic sizing: % of current equity (fresh per entry)
+        # TODO(sizing-bug): cap target_size at min(max_position, available_cash).
+        # Current code uses projected_cash, but as equity grows unrealized each
+        # position gets sized off a larger number. Cumulative $ outlay can
+        # exceed available cash → negative cash balance (observed 2026-04-16:
+        # cash -$2,625.73, 5/12 positions, 8 qualifying skipped). See spec
+        # section 5 — investigate in a separate pass.
         max_position = equity * max_position_pct
         target_size = min(projected_cash, max_position)
         if target_size < min_position_size:
@@ -576,6 +596,7 @@ def evaluate_entries(
                 "ticker": ticker,
                 "score": score,
                 "reason": f"Insufficient cash (${projected_cash:,.0f} available, need ${min_position_size})",
+                "skip_category": SKIP_CATEGORY_INSUFFICIENT_CASH,
             })
             continue
 
@@ -592,6 +613,7 @@ def evaluate_entries(
                 "ticker": ticker,
                 "score": score,
                 "reason": "No price data available (yfinance + Alpaca both failed)",
+                "skip_category": SKIP_CATEGORY_OTHER,
             })
             continue
 
@@ -601,6 +623,7 @@ def evaluate_entries(
                 "ticker": ticker,
                 "score": score,
                 "reason": f"Position size ${target_size:,.0f} too small for share price ${est_price:,.2f}",
+                "skip_category": SKIP_CATEGORY_INSUFFICIENT_CASH,
             })
             continue
 
@@ -868,6 +891,73 @@ def _pnl_color(value: float) -> str:
     return "inherit"
 
 
+def _fmt_signed_pct(value: float, decimals: int = 2) -> str:
+    """Format a percentage with '-' only for negatives (no '+' prefix)."""
+    return f"{value:.{decimals}f}%"
+
+
+def _fmt_signed_dollar(value: float) -> str:
+    """Format a dollar amount with '-' only for negatives (no '+' prefix)."""
+    if value < 0:
+        return f"-${abs(value):,.0f}"
+    return f"${value:,.0f}"
+
+
+def _get_spy_return_since(
+    price_data: dict,
+    start_date: date,
+) -> float | None:
+    """
+    Compute SPY total return % from ``start_date`` to the most recent
+    price available in ``price_data``. Returns None if SPY data isn't
+    available or doesn't cover the range.
+    """
+    import pandas as pd
+
+    spy = price_data.get("SPY") if price_data else None
+    if spy is None or spy.empty:
+        return None
+
+    # Work in a naive index for comparison but use positional access on
+    # the original DataFrame (which may carry a tz-aware index).
+    idx_naive = spy.index.tz_localize(None) if spy.index.tz else spy.index
+    target = pd.Timestamp(start_date)
+
+    mask = idx_naive >= target
+    if not mask.any():
+        return None
+
+    pos_start = int(mask.argmax())  # first True position
+    pos_end = len(spy) - 1
+
+    try:
+        start_price = float(spy.iloc[pos_start]["Close"])
+        end_price = float(spy.iloc[pos_end]["Close"])
+    except (KeyError, ValueError, IndexError):
+        return None
+
+    if start_price <= 0:
+        return None
+    return (end_price / start_price - 1.0) * 100.0
+
+
+def _categorize_skip_reason(skip: dict) -> str:
+    """Normalize a skip entry's reason into one of the email categories."""
+    # Explicit skip_category wins (set by evaluate_entries)
+    cat = skip.get("skip_category")
+    if cat:
+        return cat
+    # Fallback text-match for older skip dicts (e.g. from other call sites)
+    reason = (skip.get("reason") or "").lower()
+    if "insufficient cash" in reason or "too small" in reason:
+        return SKIP_CATEGORY_INSUFFICIENT_CASH
+    if "position cap" in reason:
+        return SKIP_CATEGORY_POSITION_CAP
+    if "wash sale" in reason:
+        return SKIP_CATEGORY_WASH_SALE
+    return SKIP_CATEGORY_OTHER
+
+
 def _colored(value_str: str, color: str) -> str:
     """Wrap text in a color span (skip if 'inherit')."""
     if color == "inherit":
@@ -942,6 +1032,9 @@ def _count_consecutive_days_below(
     return count
 
 
+STARTING_EQUITY = 100_000.0  # Paper account baseline (see Alpaca ph.base_value)
+
+
 def _build_trade_digest_html(
     snapshot: dict,
     exits: list[dict],
@@ -952,6 +1045,8 @@ def _build_trade_digest_html(
     dry_run: bool,
     trade_cfg: dict,
     db_conn,
+    price_data: dict | None = None,
+    account_created: date | None = None,
 ) -> tuple[str, str]:
     """Build (subject, html) for the daily trade execution digest."""
     equity = snapshot["equity"]
@@ -960,40 +1055,90 @@ def _build_trade_digest_html(
     num_pos = len(snapshot["positions"])
     today_str = today.strftime("%Y-%m-%d")
 
-    # ── Day-over-day equity change for subject line ──
+    # ── Today's P&L (equity delta from yesterday's close) ─────────
+    # This single metric covers both unrealized changes and realized
+    # P&L from today's fills, so it stays correct once exits begin.
     if last_equity and last_equity > 0:
-        equity_change_pct = (equity - last_equity) / last_equity * 100
-        equity_change_str = f"{equity_change_pct:+.2f}%"
+        today_pnl_dollar = equity - last_equity
+        today_pnl_pct = today_pnl_dollar / last_equity * 100
+        today_pct_str = _fmt_signed_pct(today_pnl_pct, decimals=2)
     else:
-        equity_change_pct = 0.0
-        equity_change_str = "N/A"
+        today_pnl_dollar = 0.0
+        today_pnl_pct = 0.0
+        today_pct_str = "N/A"
+
+    # ── All-Time P&L (vs starting $100k equity) ───────────────────
+    alltime_pnl_dollar = equity - STARTING_EQUITY
+    alltime_pnl_pct = alltime_pnl_dollar / STARTING_EQUITY * 100
+
+    # ── vs SPY total (portfolio all-time return − SPY return) ────
+    spy_ret_pct = None
+    if price_data and account_created:
+        spy_ret_pct = _get_spy_return_since(price_data, account_created)
+    if spy_ret_pct is not None:
+        vs_spy_pct = alltime_pnl_pct - spy_ret_pct
+        vs_spy_dollar = vs_spy_pct / 100 * STARTING_EQUITY
+    else:
+        vs_spy_pct = None
+        vs_spy_dollar = None
 
     dry_tag = " [DRY RUN]" if dry_run else ""
     subject = (f"Alpha Scanner {today.isoformat()}: "
-               f"{equity_change_str} / "
+               f"Today {today_pct_str} | "
                f"{len(entries)} buy / {len(exits)} sell{dry_tag}")
 
-    # ── Unrealized P&L across all positions ──
-    total_unrealized_pnl = sum(
-        pos["unrealized_pnl"] for pos in snapshot["positions"].values()
-    )
-    total_cost_basis = sum(
-        pos["entry_price"] * pos["qty"] for pos in snapshot["positions"].values()
-    )
-    total_unrealized_pnl_pct = (
-        (total_unrealized_pnl / total_cost_basis * 100)
-        if total_cost_basis > 0 else 0.0
-    )
+    # ── HTML helpers ─────────────────────────────────────────────
+    td_left = "padding:6px 10px;border-bottom:1px solid #e5e7eb;text-align:left"
+    td_center = "padding:6px 10px;border-bottom:1px solid #e5e7eb;text-align:center"
+    th_left = ("padding:6px 10px;text-align:left;background:#f3f4f6;"
+               "border-bottom:2px solid #d1d5db")
+    th_center = ("padding:6px 10px;text-align:center;background:#f3f4f6;"
+                 "border-bottom:2px solid #d1d5db")
 
-    # ── HTML helpers ──
-    td_style = "padding:6px 10px;border-bottom:1px solid #e5e7eb"
-    th_style = "padding:6px 10px;text-align:left;background:#f3f4f6;border-bottom:2px solid #d1d5db"
+    def row_mixed(cells: list[str], aligns: list[str]) -> str:
+        """Row where first cell is left-aligned, rest are center-aligned."""
+        parts = []
+        for c, a in zip(cells, aligns):
+            style = td_left if a == "left" else td_center
+            parts.append(f'<td style="{style}">{c}</td>')
+        return "<tr>" + "".join(parts) + "</tr>"
 
+    def header_mixed(cells: list[str], aligns: list[str]) -> str:
+        parts = []
+        for c, a in zip(cells, aligns):
+            style = th_left if a == "left" else th_center
+            parts.append(f'<th style="{style}">{c}</th>')
+        return "<tr>" + "".join(parts) + "</tr>"
+
+    def table_mixed(header: list[str], rows: list[str], aligns: list[str]) -> str:
+        """Table with configurable per-column alignment and uniform non-first widths."""
+        if not rows:
+            return "<p style='color:#6b7280'>(none)</p>"
+        # Uniform widths for all non-first (non-Ticker) columns
+        n_other = len(aligns) - 1
+        col_widths = ""
+        if n_other > 0:
+            other_pct = round(80 / n_other, 2)
+            col_widths = ('<col style="width:20%"/>'
+                          + f'<col style="width:{other_pct}%"/>' * n_other)
+        return (
+            "<table style='border-collapse:collapse;width:100%;"
+            "font-size:13px;table-layout:fixed'>"
+            + col_widths
+            + header_mixed(header, aligns)
+            + "".join(rows) + "</table>"
+        )
+
+    # Back-compat helpers for unchanged tables (Exits, Entries, Cooldowns)
     def row(cells: list[str]) -> str:
-        return "<tr>" + "".join(f'<td style="{td_style}">{c}</td>' for c in cells) + "</tr>"
+        return "<tr>" + "".join(
+            f'<td style="{td_left}">{c}</td>' for c in cells
+        ) + "</tr>"
 
     def header_row(cells: list[str]) -> str:
-        return "<tr>" + "".join(f'<th style="{th_style}">{c}</th>' for c in cells) + "</tr>"
+        return "<tr>" + "".join(
+            f'<th style="{th_left}">{c}</th>' for c in cells
+        ) + "</tr>"
 
     def table(header: list[str], rows: list[str]) -> str:
         if not rows:
@@ -1002,16 +1147,22 @@ def _build_trade_digest_html(
                 + header_row(header)
                 + "".join(rows) + "</table>")
 
+    def subsector_for(ticker: str) -> str:
+        sub = scores.get(ticker, {}).get("subsector", "")
+        return sub if sub else "—"
+
     # ── Exits ──
     exit_rows = []
     for e in exits:
         color = _pnl_color(e["unrealized_pnl"])
+        pnl_str = (f"{_fmt_signed_dollar(e['unrealized_pnl'])} "
+                   f"({_fmt_signed_pct(e['unrealized_pnl_pct'], 1)})")
         exit_rows.append(row([
             f"<b>{e['ticker']}</b>",
             f"{e['qty']:.0f}",
             f"${e['current_price']:.2f}",
             e["reason"],
-            _colored(f"${e['unrealized_pnl']:+,.0f} ({e['unrealized_pnl_pct']:+.1f}%)", color),
+            _colored(pnl_str, color),
         ]))
 
     # ── Entries (score color-coded) ──
@@ -1029,76 +1180,98 @@ def _build_trade_digest_html(
             f"${e['cost_basis']:,.0f}",
         ]))
 
-    # ── Skipped Signals (simplified: Days >= 8.5 instead of verbose reason) ──
+    # ── Skipped Signals ──
+    # Columns: Ticker | Subsector | Score | Days ≥ threshold | Skip Reason
+    # Sorted by days_above DESC (most persistent at top — most likely to enter tomorrow).
     entry_threshold = trade_cfg.get("entry_threshold", 8.5)
     persistence_days = trade_cfg.get("persistence_days", 3)
-    skip_rows = []
+    skip_records = []
     for s in skipped:
         ticker = s["ticker"]
         score = s["score"]
         days_above = _count_consecutive_days_above(
             db_conn, ticker, entry_threshold, today_str, today_score=score,
         )
-        skip_rows.append(row([
-            f"<b>{ticker}</b>",
-            _colored(f"{score:.1f}", _score_color(score)),
-            f"{days_above}/{persistence_days}",
-        ]))
+        skip_records.append({
+            "ticker": ticker,
+            "subsector": subsector_for(ticker),
+            "score": score,
+            "days_above": days_above,
+            "category": _categorize_skip_reason(s),
+        })
+    skip_records.sort(key=lambda r: (-r["days_above"], -r["score"]))
 
-    # ── Current Positions (restructured) ──
-    stop_loss_pct = trade_cfg.get("stop_loss_pct", 0.20)
+    skip_aligns = ["left", "center", "center", "center", "center"]
+    skip_rows = [
+        row_mixed([
+            f"<b>{r['ticker']}</b>",
+            r["subsector"],
+            _colored(f"{r['score']:.1f}", _score_color(r["score"])),
+            f"{r['days_above']}/{persistence_days}",
+            r["category"],
+        ], skip_aligns)
+        for r in skip_records
+    ]
+
+    # ── Current Positions ──
+    # Columns: Ticker | Subsector | Days | Current | Day % | P&L % | P&L $ | Score
+    # Sorted by P&L % DESC (biggest winners at top).
     max_positions = trade_cfg.get("max_positions", 12)
-    pos_rows = []
+    pos_records = []
     exit_watch_rows = []
+    stop_loss_pct = trade_cfg.get("stop_loss_pct", 0.20)
 
-    for ticker, pos in sorted(snapshot["positions"].items()):
+    for ticker, pos in snapshot["positions"].items():
         score_val = scores.get(ticker, {}).get("score", 0.0)
-
-        # Days elapsed (calendar days since entry)
         buy_date = trade_log.get_last_buy_date(ticker)
-        if buy_date:
-            hold_days = (today - datetime.strptime(buy_date, "%Y-%m-%d").date()).days
-        else:
-            hold_days = 0
-
-        # Day % from Alpaca
-        day_pct = pos.get("change_today_pct", 0.0)
-
-        # P&L
-        pnl_pct = pos["unrealized_pnl_pct"]
-        pnl_dollar = pos["unrealized_pnl"]
-
-        # Stop price
-        stop_px = pos["entry_price"] * (1 - stop_loss_pct)
-
-        pos_rows.append(row([
-            f"<b>{ticker}</b>",
-            f"{hold_days}",
-            f"${pos['current_price']:.2f}",
-            _colored(f"{day_pct:+.1f}%", _pnl_color(day_pct)),
-            _colored(f"{pnl_pct:+.1f}%", _pnl_color(pnl_pct)),
-            _colored(f"${pnl_dollar:+,.0f}", _pnl_color(pnl_dollar)),
-            _colored(f"{score_val:.1f}", _score_color(score_val)),
-            f"${stop_px:.2f}",
-        ]))
+        hold_days = (
+            (today - datetime.strptime(buy_date, "%Y-%m-%d").date()).days
+            if buy_date else 0
+        )
+        pos_records.append({
+            "ticker": ticker,
+            "subsector": subsector_for(ticker),
+            "hold_days": hold_days,
+            "current_price": pos["current_price"],
+            "day_pct": pos.get("change_today_pct", 0.0),
+            "pnl_pct": pos["unrealized_pnl_pct"],
+            "pnl_dollar": pos["unrealized_pnl"],
+            "score": score_val,
+        })
 
         # ── Exit Watch: score < 7.0 OR P&L% worse than -(stop_loss_pct*100 - 5)% ──
-        stop_watch_pct = -(stop_loss_pct * 100 - 5)  # e.g. -15% for a 20% stop
-        if score_val < 7.0 or pnl_pct < stop_watch_pct:
+        stop_watch_pct = -(stop_loss_pct * 100 - 5)
+        if score_val < 7.0 or pos["unrealized_pnl_pct"] < stop_watch_pct:
             days_below_7 = _count_consecutive_days_below(
                 db_conn, ticker, 7.0, today_str, today_score=score_val,
             )
             distance_to_exit = score_val - 5.0
-            stop_loss_buffer_pct = pnl_pct
-            buffer_color = "#dc2626" if stop_loss_buffer_pct < stop_watch_pct else _pnl_color(stop_loss_buffer_pct)
-
+            pnl_pct_v = pos["unrealized_pnl_pct"]
+            buffer_color = "#dc2626" if pnl_pct_v < stop_watch_pct else _pnl_color(pnl_pct_v)
             exit_watch_rows.append(row([
                 f"<b>{ticker}</b>",
                 _colored(f"{score_val:.1f}", _score_color(score_val)),
                 f"{days_below_7}",
-                f"{distance_to_exit:+.1f}",
-                _colored(f"{stop_loss_buffer_pct:+.1f}%", buffer_color),
+                f"{distance_to_exit:.1f}",
+                _colored(_fmt_signed_pct(pnl_pct_v, 1), buffer_color),
             ]))
+
+    pos_records.sort(key=lambda r: -r["pnl_pct"])
+
+    pos_aligns = ["left", "center", "center", "center", "center", "center", "center", "center"]
+    pos_rows = [
+        row_mixed([
+            f"<b>{r['ticker']}</b>",
+            r["subsector"],
+            f"{r['hold_days']}",
+            f"${r['current_price']:.2f}",
+            _colored(_fmt_signed_pct(r["day_pct"], 1), _pnl_color(r["day_pct"])),
+            _colored(_fmt_signed_pct(r["pnl_pct"], 1), _pnl_color(r["pnl_pct"])),
+            _colored(_fmt_signed_dollar(r["pnl_dollar"]), _pnl_color(r["pnl_dollar"])),
+            _colored(f"{r['score']:.1f}", _score_color(r["score"])),
+        ], pos_aligns)
+        for r in pos_records
+    ]
 
     exit_watch_html = (
         table(
@@ -1111,41 +1284,115 @@ def _build_trade_digest_html(
 
     # ── Wash Sale Cooldowns ──
     cooldowns = wash_sale_tracker.get_cooldowns(today)
-    cooldown_rows = [row([f"<b>{t}</b>", e["cooldown_until"], f"${e['loss_amount']:,.0f}"])
-                     for t, e in sorted(cooldowns.items())]
+    cooldown_rows = [
+        row([f"<b>{t}</b>", e["cooldown_until"], f"${e['loss_amount']:,.0f}"])
+        for t, e in sorted(cooldowns.items())
+    ]
 
-    # ── Header summary: Unrealized P&L styling ──
-    upnl_color = _pnl_color(total_unrealized_pnl)
-    upnl_html = _colored(
-        f"${total_unrealized_pnl:+,.2f} ({total_unrealized_pnl_pct:+.1f}%)",
-        upnl_color,
+    # Pre-build tables with headers
+    skip_col = (f"Days &ge; {entry_threshold:.1f}" if entry_threshold % 1
+                else f"Days &ge; {entry_threshold:.0f}")
+    skip_table_html = table_mixed(
+        ["Ticker", "Subsector", "Score", skip_col, "Skip Reason"],
+        skip_rows,
+        skip_aligns,
     )
-
-    # Pre-build tables that have dynamic column headers (avoid nested
-    # braces inside the main f-string which breaks on Python <3.12).
-    skip_col = f"Days &ge; {entry_threshold:.1f}" if entry_threshold % 1 else f"Days &ge; {entry_threshold:.0f}"
-    skip_table_html = table(["Ticker", "Score", skip_col], skip_rows)
-    exit_table_html = table(["Ticker", "Qty", "Price", "Reason", "P&amp;L"], exit_rows)
-    entry_table_html = table(["Ticker", "Qty", "Est Price", "Score", "Cost"], entry_rows)
-    pos_table_html = table(
-        ["Ticker", "Days Elapsed", "Current", "Day %", "P&amp;L %", "P&amp;L $", "Score", "Stop"],
+    exit_table_html = table(
+        ["Ticker", "Qty", "Price", "Reason", "P&amp;L"], exit_rows,
+    )
+    entry_table_html = table(
+        ["Ticker", "Qty", "Est Price", "Score", "Cost"], entry_rows,
+    )
+    pos_table_html = table_mixed(
+        ["Ticker", "Subsector", "Days", "Current", "Day %",
+         "P&amp;L %", "P&amp;L $", "Score"],
         pos_rows,
+        pos_aligns,
     )
-    cooldown_table_html = table(["Ticker", "Cooldown Until", "Loss Amount"], cooldown_rows)
+    cooldown_table_html = table(
+        ["Ticker", "Cooldown Until", "Loss Amount"], cooldown_rows,
+    )
+
+    # ── Summary cards (two columns) ──
+    today_color = _pnl_color(today_pnl_dollar)
+    alltime_color = _pnl_color(alltime_pnl_dollar)
+    cash_color = "#dc2626" if cash < 0 else "inherit"
+
+    today_pct_cell = _colored(_fmt_signed_pct(today_pnl_pct, 2), today_color)
+    today_dol_cell = _colored(_fmt_signed_dollar(today_pnl_dollar), today_color)
+    alltime_pct_cell = _colored(_fmt_signed_pct(alltime_pnl_pct, 2), alltime_color)
+    alltime_dol_cell = _colored(_fmt_signed_dollar(alltime_pnl_dollar), alltime_color)
+
+    if vs_spy_pct is not None:
+        vs_spy_color = _pnl_color(vs_spy_pct)
+        vs_spy_pct_cell = _colored(_fmt_signed_pct(vs_spy_pct, 2), vs_spy_color)
+        vs_spy_dol_cell = _colored(_fmt_signed_dollar(vs_spy_dollar), vs_spy_color)
+    else:
+        vs_spy_pct_cell = "<span style='color:#9ca3af'>n/a</span>"
+        vs_spy_dol_cell = "<span style='color:#9ca3af'>—</span>"
+
+    card_base = ("background:#f9fafb;padding:14px 18px;border-radius:8px;"
+                 "vertical-align:top")
+    kv_label = "padding:3px 12px 3px 0;color:#6b7280"
+    kv_num_pct = "padding:3px 10px 3px 0;text-align:right;font-variant-numeric:tabular-nums"
+    kv_num_dol = "padding:3px 0;text-align:right;font-variant-numeric:tabular-nums"
+
+    pl_card = f"""
+      <td style="{card_base};width:50%">
+        <div style="font-weight:600;color:#111;margin-bottom:8px">P&amp;L</div>
+        <table style="border-collapse:collapse;font-size:14px;width:100%">
+          <tr>
+            <td style="{kv_label}">Today</td>
+            <td style="{kv_num_pct}">{today_pct_cell}</td>
+            <td style="{kv_num_dol}">{today_dol_cell}</td>
+          </tr>
+          <tr>
+            <td style="{kv_label}">All-Time</td>
+            <td style="{kv_num_pct}">{alltime_pct_cell}</td>
+            <td style="{kv_num_dol}">{alltime_dol_cell}</td>
+          </tr>
+          <tr><td colspan="3" style="padding:6px 0 0 0;border-top:1px solid #e5e7eb"></td></tr>
+          <tr>
+            <td style="{kv_label}">vs SPY total</td>
+            <td style="{kv_num_pct}">{vs_spy_pct_cell}</td>
+            <td style="{kv_num_dol}">{vs_spy_dol_cell}</td>
+          </tr>
+        </table>
+      </td>
+    """.strip()
+
+    account_card = f"""
+      <td style="{card_base};width:50%">
+        <div style="font-weight:600;color:#111;margin-bottom:8px">Account</div>
+        <table style="border-collapse:collapse;font-size:14px;width:100%">
+          <tr>
+            <td style="{kv_label}">Equity</td>
+            <td style="{kv_num_dol}"><b>${equity:,.2f}</b></td>
+          </tr>
+          <tr>
+            <td style="{kv_label}">Cash</td>
+            <td style="{kv_num_dol}">{_colored(f"${cash:,.2f}", cash_color)}</td>
+          </tr>
+          <tr>
+            <td style="{kv_label}">Positions</td>
+            <td style="{kv_num_dol}">{num_pos} / {max_positions}</td>
+          </tr>
+        </table>
+      </td>
+    """.strip()
+
+    summary_block = f"""
+      <table style="border-collapse:separate;border-spacing:12px 0;width:100%;margin-bottom:20px">
+        <tr>{pl_card}{account_card}</tr>
+      </table>
+    """.strip()
 
     html = f"""
     <div style="font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;max-width:720px;margin:0 auto;color:#111">
       <h2 style="margin:0 0 8px 0">Alpha Scanner — Daily Trade Execution{dry_tag}</h2>
       <p style="color:#6b7280;margin:0 0 20px 0">{today.strftime('%A, %B %d, %Y')}</p>
 
-      <div style="background:#f9fafb;padding:14px 18px;border-radius:8px;margin-bottom:20px">
-        <table style="border-collapse:collapse;font-size:14px">
-          <tr><td style="padding:3px 24px 3px 0;color:#6b7280">Equity:</td><td style="text-align:right"><b>${equity:,.2f}</b></td></tr>
-          <tr><td style="padding:3px 24px 3px 0;color:#6b7280">Cash:</td><td style="text-align:right">${cash:,.2f}</td></tr>
-          <tr><td style="padding:3px 24px 3px 0;color:#6b7280">Positions:</td><td style="text-align:right">{num_pos} / {max_positions}</td></tr>
-          <tr><td style="padding:3px 24px 3px 0;color:#6b7280">Unrealized P&amp;L:</td><td style="text-align:right">{upnl_html}</td></tr>
-        </table>
-      </div>
+      {summary_block}
 
       <h3 style="margin:24px 0 8px 0">Exits ({len(exits)})</h3>
       {exit_table_html}
@@ -1211,6 +1458,8 @@ def send_trade_digest(
     dry_run: bool,
     trade_cfg: dict,
     db_conn,
+    price_data: dict | None = None,
+    account_created: date | None = None,
 ) -> None:
     """Send daily trade digest via Gmail SMTP if credentials are configured."""
     gmail_address = os.getenv("GMAIL_ADDRESS", "")
@@ -1230,6 +1479,8 @@ def send_trade_digest(
         subject, html = _build_trade_digest_html(
             snapshot, exits, entries, skipped, scores, today, dry_run,
             trade_cfg, db_conn,
+            price_data=price_data,
+            account_created=account_created,
         )
         print(f"\n  [email] Sending digest to {recipient}...")
         _send_gmail(
@@ -1275,6 +1526,14 @@ def main():
     # 2. Connect
     client = connect_alpaca()
     data_client = connect_alpaca_data()
+
+    # 2b. Account inception (used for SPY comparison in email digest)
+    try:
+        _acct = client.get_account()
+        account_created = (_acct.created_at.date()
+                           if getattr(_acct, "created_at", None) else None)
+    except APIError:
+        account_created = None
 
     # 3. Snapshot account
     snapshot = get_account_snapshot(client)
@@ -1327,8 +1586,8 @@ def main():
 
     # 7. Score all tickers
     print("\n  Scoring tickers...")
-    data = fetch_all(cfg, period="1y", verbose=False)
-    results = score_all(data, cfg)
+    price_data = fetch_all(cfg, period="1y", verbose=False)
+    results = score_all(price_data, cfg)
     scores = score_lookup(results)
     print(f"  Scored {len(results)} tickers")
 
@@ -1381,6 +1640,8 @@ def main():
         send_trade_digest(
             snapshot, exits, entries, skipped, scores, today,
             args.dry_run, trade_cfg, db_conn,
+            price_data=price_data,
+            account_created=account_created,
         )
 
     print("\n" + "=" * 66 + "\n")
