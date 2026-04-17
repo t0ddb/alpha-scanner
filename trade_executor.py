@@ -42,7 +42,9 @@ from dotenv import load_dotenv
 
 # Alpaca SDK
 from alpaca.trading.client import TradingClient
-from alpaca.trading.requests import MarketOrderRequest, StopOrderRequest, GetOrdersRequest
+from alpaca.trading.requests import (
+    MarketOrderRequest, LimitOrderRequest, StopOrderRequest, GetOrdersRequest,
+)
 from alpaca.trading.enums import OrderSide, TimeInForce, QueryOrderStatus, OrderType
 from alpaca.common.exceptions import APIError
 from alpaca.data.historical import StockHistoricalDataClient
@@ -250,6 +252,125 @@ def submit_market_order(
     except APIError as e:
         print(f"  [ERROR] Order failed for {ticker}: {e}")
         return None
+
+
+def submit_limit_order(
+    client: TradingClient,
+    ticker: str,
+    qty: float,
+    limit_price: float,
+    dry_run: bool = False,
+) -> str | None:
+    """Place a DAY-TIF buy limit order. Returns the order ID or None.
+
+    DAY TIF means the order auto-cancels at market close on the next
+    trading day if it hasn't filled. Deferred re-qualification is
+    handled naturally by the daily re-scan — no state to track.
+    """
+    rounded = round(limit_price, 2)
+    if dry_run:
+        print(f"  [DRY RUN] Would place limit BUY: {ticker} {qty:.0f} @ ${rounded:.2f} (DAY)")
+        return None
+    try:
+        req = LimitOrderRequest(
+            symbol=ticker,
+            qty=qty,
+            side=OrderSide.BUY,
+            time_in_force=TimeInForce.DAY,
+            limit_price=rounded,
+        )
+        order = client.submit_order(req)
+        print(f"  [limit] Placed BUY limit for {ticker}: {qty:.0f} @ ${rounded:.2f} "
+              f"(order {order.id})")
+        return str(order.id)
+    except APIError as e:
+        print(f"  [ERROR] Limit order failed for {ticker}: {e}")
+        return None
+
+
+def ensure_stops_for_positions(
+    client: TradingClient,
+    snapshot: dict,
+    trade_cfg: dict,
+    dry_run: bool = False,
+) -> int:
+    """
+    Place GTC stop orders for any held position that doesn't already
+    have one. Idempotent — safe to call every run. This is how stops
+    land on positions opened via limit orders (we can't place the stop
+    at submission time because we don't know if/when the limit fills).
+    """
+    stop_loss_pct = trade_cfg["stop_loss_pct"]
+
+    try:
+        req = GetOrdersRequest(status=QueryOrderStatus.OPEN)
+        open_orders = client.get_orders(req)
+    except APIError as e:
+        print(f"  [WARN] Failed to query open orders for stop backfill: {e}")
+        return 0
+
+    tickers_with_stops = {
+        o.symbol for o in open_orders
+        if o.type == OrderType.STOP and o.side == OrderSide.SELL
+    }
+
+    placed = 0
+    for ticker, pos in sorted(snapshot["positions"].items()):
+        if ticker in tickers_with_stops:
+            continue
+        qty = pos["qty"]
+        entry_price = pos["entry_price"]
+        if qty <= 0 or entry_price <= 0:
+            continue
+        stop_price = round(entry_price * (1 - stop_loss_pct), 2)
+        order_id = submit_stop_order(client, ticker, qty, stop_price, dry_run=dry_run)
+        if order_id is not None or dry_run:
+            placed += 1
+    return placed
+
+
+def detect_unfilled_limits_since(
+    client: TradingClient,
+    cutoff_dt,
+) -> list[dict]:
+    """
+    Return BUY limit orders that were submitted after cutoff_dt and
+    expired/canceled without filling. Used to surface "limit unfilled"
+    context in the email digest on the next run.
+    """
+    try:
+        req = GetOrdersRequest(status=QueryOrderStatus.CLOSED, limit=200)
+        orders = client.get_orders(req)
+    except APIError as e:
+        print(f"  [WARN] Failed to query closed orders for unfilled-limit check: {e}")
+        return []
+
+    out = []
+    for o in orders:
+        try:
+            is_buy_limit = (
+                o.side == OrderSide.BUY
+                and o.type == OrderType.LIMIT
+                and str(o.status).lower() in ("expired", "canceled")
+            )
+        except Exception:
+            continue
+        if not is_buy_limit:
+            continue
+        submitted = getattr(o, "submitted_at", None)
+        if submitted is None or submitted < cutoff_dt:
+            continue
+        limit_px = float(o.limit_price) if o.limit_price else 0.0
+        filled_qty = float(o.filled_qty) if o.filled_qty else 0.0
+        if filled_qty >= float(o.qty):
+            continue  # fully filled (even if later canceled — shouldn't happen for buys)
+        out.append({
+            "ticker": o.symbol,
+            "submitted_date": submitted.strftime("%Y-%m-%d"),
+            "limit_price": limit_px,
+            "status": str(o.status),
+        })
+    return out
 
 
 def submit_stop_order(
@@ -463,11 +584,20 @@ def check_persistence(
     return True, ""
 
 
+# Entry execution parameters (validated by entry_mode_backtest.py on
+# 2026-04-16: Limit-3% + 5% cash floor + Alpaca-first pricing). Changing
+# these without re-running the backtest is risky.
+CASH_FLOOR_PCT = 0.05          # reserve 5% of equity uncommitted
+LIMIT_ORDER_BUFFER = 0.03      # limit price = sizing_price × 1.03
+
+
 # Skip-reason categories used by the email digest (keep in sync with
 # the allowed values in _build_trade_digest_html).
 SKIP_CATEGORY_INSUFFICIENT_CASH = "insufficient cash"
 SKIP_CATEGORY_POSITION_CAP = "position cap reached"
 SKIP_CATEGORY_WASH_SALE = "wash sale cooldown"
+SKIP_CATEGORY_CASH_FLOOR = "cash floor cap"
+SKIP_CATEGORY_LIMIT_UNFILLED = "limit unfilled"
 SKIP_CATEGORY_OTHER = "other"
 
 
@@ -511,6 +641,11 @@ def evaluate_entries(
         e["qty"] * e["current_price"] for e in exits
     )
     equity = snapshot["equity"]
+
+    # Estimated committed dollars (market value locked in existing positions).
+    # Used by the 5% cash-floor formula to bound total commitment at 95% of
+    # equity. Updated in the loop as each new entry is accepted.
+    projected_committed = max(0.0, equity - projected_cash)
 
     # Filter candidates: normal threshold-based + forced tickers
     candidates = []
@@ -582,37 +717,56 @@ def evaluate_entries(
             })
             continue
 
-        # Dynamic sizing: % of current equity (fresh per entry)
-        # TODO(sizing-bug): cap target_size at min(max_position, available_cash).
-        # Current code uses projected_cash, but as equity grows unrealized each
-        # position gets sized off a larger number. Cumulative $ outlay can
-        # exceed available cash → negative cash balance (observed 2026-04-16:
-        # cash -$2,625.73, 5/12 positions, 8 qualifying skipped). See spec
-        # section 5 — investigate in a separate pass.
-        max_position = equity * max_position_pct
+        # ── Sizing (8.3% of equity per slot, bounded by 5% cash floor) ──
+        # Validated by entry_mode_backtest.py on 2026-04-16: Limit-3% +
+        # 5% cash floor is the recommended config (+433.7% return, 3.16
+        # Sharpe, zero neg-cash days vs baseline's 70).
+        #
+        # Formula: per_slot_cap = (equity × 0.95 − committed) / remaining_slots
+        # This guarantees total commitment ≤ 95% of equity even when
+        # individual fills gap up and cost more than estimated.
+        raw_max_position = equity * max_position_pct
+        remaining_slots = max(1, max_positions - current_position_count)
+        floor_budget = equity * (1 - CASH_FLOOR_PCT) - projected_committed
+        per_slot_cap = floor_budget / remaining_slots if floor_budget > 0 else 0.0
+        max_position = max(0.0, min(raw_max_position, per_slot_cap))
         target_size = min(projected_cash, max_position)
+
         if target_size < min_position_size:
-            skipped.append({
-                "ticker": ticker,
-                "score": score,
-                "reason": f"Insufficient cash (${projected_cash:,.0f} available, need ${min_position_size})",
-                "skip_category": SKIP_CATEGORY_INSUFFICIENT_CASH,
-            })
+            # Distinguish cash-floor cap (commit budget depleted) from raw
+            # cash shortage — matters for the email Skip Reason column.
+            if per_slot_cap < raw_max_position - 1e-9:
+                skipped.append({
+                    "ticker": ticker,
+                    "score": score,
+                    "reason": (f"Cash floor cap: only ${max_position:,.0f} of 95% "
+                               f"equity budget remains across {remaining_slots} slot(s)"),
+                    "skip_category": SKIP_CATEGORY_CASH_FLOOR,
+                })
+            else:
+                skipped.append({
+                    "ticker": ticker,
+                    "score": score,
+                    "reason": f"Insufficient cash (${projected_cash:,.0f} available, need ${min_position_size})",
+                    "skip_category": SKIP_CATEGORY_INSUFFICIENT_CASH,
+                })
             continue
 
-        # Use current score's close price as the estimated share price
-        # (Alpaca will fill at next open; this is just for qty sizing).
-        # Fall back to Alpaca's latest trade price if the indicator dict
-        # doesn't carry one.
-        est_price = _estimated_price(rec)
+        # ── Pricing: prefer Alpaca's latest trade, fall back to yfinance ──
+        # Alpaca's latest reflects extended-hours trading (e.g. pre-market
+        # moves after news), which is what will drive the next-day open
+        # price. yfinance close is a regular-session-only snapshot — the
+        # AEHR 2026-04-16 bug (yfinance $73.22 → actual fill $84.58 on a
+        # +15.5% overnight gap) slipped through because yfinance was
+        # consulted first. Alpaca-first catches this class of slippage.
+        est_price = get_alpaca_latest_price(data_client, ticker)
         if not est_price or est_price <= 0:
-            est_price = get_alpaca_latest_price(data_client, ticker)
-
+            est_price = _estimated_price(rec) or 0.0
         if not est_price or est_price <= 0:
             skipped.append({
                 "ticker": ticker,
                 "score": score,
-                "reason": "No price data available (yfinance + Alpaca both failed)",
+                "reason": "No price data available (Alpaca + yfinance both failed)",
                 "skip_category": SKIP_CATEGORY_OTHER,
             })
             continue
@@ -647,6 +801,7 @@ def evaluate_entries(
             "wash_sale_warning": wash_sale_warning,
         })
         projected_cash -= cost_basis
+        projected_committed += cost_basis
         current_position_count += 1
 
     return entries, skipped
@@ -742,13 +897,21 @@ def execute_entries(
     trade_cfg: dict,
     dry_run: bool,
 ) -> None:
-    """Submit buy orders, place GTC stop-loss orders, and log them."""
-    stop_loss_pct = trade_cfg["stop_loss_pct"]
-
+    """
+    Submit DAY-TIF buy limit orders (limit = sizing_price × 1.03) and
+    log them. Stops are NOT placed here — they get attached on the next
+    run via ``ensure_stops_for_positions`` after Alpaca confirms the
+    limit filled. Orders that don't fill by market close on the next
+    trading day auto-cancel (DAY TIF); the ticker naturally re-qualifies
+    on subsequent runs if its score stays ≥ entry_threshold.
+    """
     for e in entries:
         action = "[DRY RUN] " if dry_run else ""
-        print(f"  {action}BUY   {e['ticker']:<6s} {e['qty']:>6.0f} shares @ ${e['est_price']:>8.2f}  "
-              f"Score: {e['score']:<5.1f}  Cost: ${e['cost_basis']:>9,.0f}")
+        sizing_price = e["est_price"]
+        limit_price = round(sizing_price * (1 + LIMIT_ORDER_BUFFER), 2)
+        print(f"  {action}BUY   {e['ticker']:<6s} {e['qty']:>6.0f} shares  "
+              f"sizing ${sizing_price:>8.2f}  limit ${limit_price:>8.2f}  "
+              f"Score: {e['score']:<5.1f}  Est Cost: ${e['cost_basis']:>9,.0f}")
 
         # Wash sale warning (log only — trade proceeds regardless)
         ws = e.get("wash_sale_warning")
@@ -761,27 +924,20 @@ def execute_entries(
             # Record the violation for tax awareness
             wash_sale_tracker.record_violation(e["ticker"], today)
 
-        order_id = submit_market_order(
-            client, e["ticker"], e["qty"], OrderSide.BUY, dry_run=dry_run
-        )
-
-        # Place GTC stop-loss order immediately after buy
-        stop_price = e["est_price"] * (1 - stop_loss_pct)
-        stop_order_id = submit_stop_order(
-            client, e["ticker"], e["qty"], stop_price, dry_run=dry_run,
+        order_id = submit_limit_order(
+            client, e["ticker"], e["qty"], limit_price, dry_run=dry_run,
         )
 
         if not dry_run:
             trade_log.log_buy(
                 ticker=e["ticker"],
                 trade_date=today,
-                price=e["est_price"],
+                price=sizing_price,  # sizing ref; actual fill recorded separately
                 qty=e["qty"],
                 score_at_entry=e["score"],
                 reason=e["reason"],
                 alpaca_order_id=order_id,
-                stop_order_id=stop_order_id,
-                stop_price=round(stop_price, 2),
+                # stop will be attached on next run via ensure_stops_for_positions
             )
 
 
@@ -809,6 +965,9 @@ def print_trade_config(trade_cfg: dict) -> None:
     print(f"  Stop loss:         {trade_cfg['stop_loss_pct']*100:.0f}% (GTC stop orders)")
     print(f"  Max positions:     {trade_cfg['max_positions']}")
     print(f"  Position size:     {trade_cfg['max_position_pct']*100:.1f}% of equity")
+    print(f"  Cash floor:        {CASH_FLOOR_PCT*100:.0f}% of equity (max commit {(1-CASH_FLOOR_PCT)*100:.0f}%)")
+    print(f"  Entry order:       LIMIT @ sizing × (1 + {LIMIT_ORDER_BUFFER*100:.0f}%) — DAY TIF")
+    print(f"  Pricing source:    Alpaca latest-trade (yfinance fallback)")
 
 
 def print_account_status(snapshot: dict, trade_cfg: dict | None = None) -> None:
@@ -949,6 +1108,10 @@ def _categorize_skip_reason(skip: dict) -> str:
         return cat
     # Fallback text-match for older skip dicts (e.g. from other call sites)
     reason = (skip.get("reason") or "").lower()
+    if "cash floor" in reason:
+        return SKIP_CATEGORY_CASH_FLOOR
+    if "limit unfilled" in reason or "prior limit" in reason:
+        return SKIP_CATEGORY_LIMIT_UNFILLED
     if "insufficient cash" in reason or "too small" in reason:
         return SKIP_CATEGORY_INSUFFICIENT_CASH
     if "position cap" in reason:
@@ -1581,6 +1744,28 @@ def main():
     if filled_stops and not args.dry_run:
         snapshot = get_account_snapshot(client)
 
+    # 5b. Ensure every held position has a GTC stop order. Needed because
+    #     entries now use DAY-TIF limit orders — stops are attached here
+    #     after Alpaca confirms the limit filled (i.e. the position shows
+    #     up in the snapshot), not at submission time.
+    print_section("STOP ORDER BACKFILL")
+    placed_stops = ensure_stops_for_positions(client, snapshot, trade_cfg, args.dry_run)
+    if placed_stops:
+        print(f"  Placed stops for {placed_stops} position(s) missing one")
+    else:
+        print("  (all held positions already have stops)")
+
+    # 5c. Detect limit orders that didn't fill since last run (for email
+    #     context). A 24-48h cutoff captures yesterday's submissions.
+    from datetime import timedelta, timezone as _tz
+    cutoff_dt = datetime.now(_tz.utc) - timedelta(hours=36)
+    unfilled_limits = detect_unfilled_limits_since(client, cutoff_dt)
+    if unfilled_limits:
+        print_section("UNFILLED LIMIT ORDERS (prior run)")
+        for u in unfilled_limits:
+            print(f"  {u['ticker']:<6s} submitted {u['submitted_date']}  "
+                  f"limit ${u['limit_price']:.2f}  status {u['status']}")
+
     # 6. Open DB (used for persistence filter + writing today's scores)
     db_conn = subsector_store.init_db()
 
@@ -1619,6 +1804,30 @@ def main():
         execute_entries(client, entries, today, trade_cfg, args.dry_run)
     else:
         print("  (none)")
+
+    # 10b. Surface unfilled prior-day limits whose score has now dropped
+    #      (i.e. they won't be retried). If the score is still ≥ threshold
+    #      they appear naturally in today's entries/skipped, so no need to
+    #      add them — only dropped ones get an explicit row.
+    entry_threshold = trade_cfg["entry_threshold"]
+    entered_or_skipped = (
+        {e["ticker"] for e in entries} | {s["ticker"] for s in skipped}
+    )
+    for u in unfilled_limits:
+        tk = u["ticker"]
+        if tk in entered_or_skipped:
+            continue
+        score_rec = scores.get(tk)
+        today_score = float(score_rec["score"]) if score_rec else 0.0
+        if today_score >= entry_threshold:
+            continue  # still eligible — a retry will cover it
+        skipped.append({
+            "ticker": tk,
+            "score": today_score,
+            "reason": (f"Prior limit unfilled ({u['submitted_date']} @ ${u['limit_price']:.2f}) "
+                       f"and score {today_score:.1f} < {entry_threshold}"),
+            "skip_category": SKIP_CATEGORY_LIMIT_UNFILLED,
+        })
 
     # 11. Skipped
     print_section("SKIPPED SIGNALS")
