@@ -1572,6 +1572,47 @@ def print_cap_sweep(sweep_results: list[dict]):
     print()
 
 
+def print_entry_threshold_sweep(sweep_results: list[dict]):
+    """Output: Entry threshold sweep summary table."""
+    print("\n" + "=" * 140)
+    print("  ENTRY THRESHOLD SWEEP (Fixed/12-Max, 8.3% sizing, -20% stop)")
+    print("=" * 140)
+
+    header = (
+        f"\n  {'Threshold':>9s} | {'Return':>9s} | {'Max DD':>8s} | "
+        f"{'Sharpe':>6s} | {'Sortino':>7s} | {'Win Rate':>8s} | "
+        f"{'Trades':>6s} | {'Signals Skip':>12s} | {'Path Std Dev':>12s} | "
+        f"{'Path Range':>10s}"
+    )
+    print(header)
+    print("  " + "-" * 138)
+
+    best_sharpe_idx = max(range(len(sweep_results)),
+                          key=lambda i: sweep_results[i]["sharpe"])
+
+    for i, r in enumerate(sweep_results):
+        marker = "  ◀ BEST" if i == best_sharpe_idx else ""
+        current = " *" if r.get("is_current") else ""
+        label = f"{r['threshold']:.1f}{current}"
+
+        print(
+            f"  {label:>9s} | {r['return']:>+8.1f}% | {r['max_dd']:>+7.1f}% | "
+            f"{r['sharpe']:>6.2f} | {r['sortino']:>7.2f} | {r['win_rate']:>7.1f}% | "
+            f"{r['total_trades']:>6d} | {r['signals_skipped']:>12,d} | "
+            f"{r['path_std']:>11.1f}% | {r['path_range']:>9.1f}%{marker}"
+        )
+
+    print()
+    best = sweep_results[best_sharpe_idx]
+    print(f"  Peak Sharpe: {best['sharpe']:.2f} at threshold={best['threshold']:.1f} "
+          f"(return={best['return']:+.1f}%, DD={best['max_dd']:+.1f}%, "
+          f"trades={best['total_trades']}, path std={best['path_std']:.1f}%)")
+    print()
+    print("  * = current live configuration")
+    print("  All runs use 3-day persistence filter, 12-pos cap, 8.3% sizing, -20% fixed stop")
+    print()
+
+
 # ============================================================
 # MAIN
 # ============================================================
@@ -1592,6 +1633,9 @@ def main():
     parser.add_argument("--sweep-stop-loss", type=str, default=None,
                         help="Comma-separated stop loss configs for stop loss sweep "
                              "(e.g. none,fixed-10,fixed-15,trail-15,ATR-3x)")
+    parser.add_argument("--sweep-entry-threshold", type=str, default=None,
+                        help="Comma-separated entry thresholds for threshold sweep "
+                             "(e.g. 7.5,8.0,8.5,9.0,9.5). Uses current live config as base.")
     args = parser.parse_args()
 
     print("\n" + "=" * 80)
@@ -1882,6 +1926,93 @@ def main():
         print_stop_loss_sweep(sl_sweep_results)
         print_whipsaw_analysis(sl_sweep_results)
         print_exit_type_breakdown(sl_sweep_results)
+
+    # ── Entry threshold sweep ──
+    if args.sweep_entry_threshold:
+        thresholds = [float(v.strip()) for v in args.sweep_entry_threshold.split(",")]
+        thresholds.sort()
+
+        print("\n" + "=" * 140)
+        print(f"  RUNNING ENTRY THRESHOLD SWEEP: {thresholds}")
+        print("=" * 140)
+
+        # Compute path dependency start dates
+        et_start_candidates = compute_path_start_dates(
+            score_df, daily_scores, args.path_starts,
+            persistence_days=3,
+        )
+
+        et_sweep_results: list[dict] = []
+
+        for threshold in thresholds:
+            is_current = abs(threshold - 8.5) < 0.01
+
+            strat = StrategyConfig(
+                name=f"Entry-{threshold:.1f}",
+                max_positions=12,
+                sizing_mode="fixed_pct",
+                fixed_position_pct=0.083,
+                min_entry_pct=0.05,
+                trim_enabled=False,
+                entry_protection_days=7,
+                entry_threshold=threshold,
+                exit_threshold=5.0,
+                stop_loss=StopLossConfig(type="fixed", value=0.20),
+                persistence_days=3,
+            )
+
+            print(f"    threshold={threshold:.1f}...", end="", flush=True)
+
+            # Primary run
+            sim = PortfolioSimulator(
+                config=strat,
+                daily_scores=daily_scores,
+                price_data=price_data,
+                trading_days=trading_days,
+                start_date=args.start,
+                end_date=args.end,
+            )
+            result = sim.run()
+            metrics = compute_metrics(result)
+            print(f" {metrics['total_return']:+.1f}%", end="", flush=True)
+
+            # Path dependency runs
+            path_returns: list[float] = []
+            if not args.no_path_test and et_start_candidates:
+                for start in et_start_candidates:
+                    psim = PortfolioSimulator(
+                        config=strat,
+                        daily_scores=daily_scores,
+                        price_data=price_data,
+                        trading_days=trading_days,
+                        start_date=start,
+                        end_date=args.end,
+                    )
+                    presult = psim.run()
+                    pmetrics = compute_metrics(presult)
+                    path_returns.append(pmetrics["total_return"])
+
+            path_std = float(np.std(path_returns)) if len(path_returns) > 1 else 0.0
+            path_range = float(np.ptp(path_returns)) if path_returns else 0.0
+
+            et_sweep_results.append({
+                "threshold": threshold,
+                "is_current": is_current,
+                "return": metrics["total_return"],
+                "max_dd": metrics["max_drawdown"],
+                "sharpe": metrics["sharpe"],
+                "sortino": metrics["sortino"],
+                "win_rate": metrics["win_rate"],
+                "total_trades": metrics["total_trades"],
+                "signals_skipped": metrics["signals_skipped"],
+                "path_std": path_std,
+                "path_range": path_range,
+            })
+
+            print(f", trades={metrics['total_trades']}, "
+                  f"path std={path_std:.1f}%, done", flush=True)
+
+        print_entry_threshold_sweep(et_sweep_results)
 
     # ── Done ──
     print("\n" + "=" * 80)
