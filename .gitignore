@@ -16,6 +16,9 @@ venv/
 # Preview files
 email_preview.html
 
+# Signal diagnostics output (charts/CSVs regenerated on each run)
+signal_diagnostics_out/
+
 # Backtest outputs
 backtest_results/
 portfolio_equity_curve.csv
