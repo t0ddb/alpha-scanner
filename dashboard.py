@@ -461,30 +461,31 @@ def render_dashboard(results: list, cfg: dict, data: dict = None):
     tepid = sum(1 for r in results if 5 <= r["score"] < 7)
     cold = sum(1 for r in results if r["score"] < 5)
 
+    _label_style = "font-size:1.1rem;color:#cbd5e1;font-weight:600"
     st.markdown(
-        f"<div style='background-color:#2d3348;padding:20px 16px;border-radius:10px;display:flex;justify-content:space-around;gap:8px'>"
+        f"<div style='background-color:#3d4560;padding:20px 16px;border-radius:10px;display:flex;justify-content:space-around;gap:8px'>"
         f"<div style='text-align:center;flex:1'>"
-        f"<div style='font-size:1.1rem;color:#94a3b8'>Total Tickers</div>"
+        f"<div style='{_label_style}'>Total Tickers</div>"
         f"<div style='font-size:2.2rem;font-weight:700;color:white'>{len(results)}</div>"
         f"</div>"
         f"<div style='text-align:center;flex:1'>"
-        f"<div style='font-size:1.1rem;color:#94a3b8'>Fire (9.5+)</div>"
+        f"<div style='{_label_style}'>Fire (9.5+)</div>"
         f"<div style='font-size:2.2rem;font-weight:700;color:#E15759'>{fire}</div>"
         f"</div>"
         f"<div style='text-align:center;flex:1'>"
-        f"<div style='font-size:1.1rem;color:#94a3b8'>Hot (8.5-9.5)</div>"
+        f"<div style='{_label_style}'>Hot (8.5-9.5)</div>"
         f"<div style='font-size:2.2rem;font-weight:700;color:#F28E2B'>{hot}</div>"
         f"</div>"
         f"<div style='text-align:center;flex:1'>"
-        f"<div style='font-size:1.1rem;color:#94a3b8'>Warm (7-8.5)</div>"
+        f"<div style='{_label_style}'>Warm (7-8.5)</div>"
         f"<div style='font-size:2.2rem;font-weight:700;color:#F1CE63'>{warm}</div>"
         f"</div>"
         f"<div style='text-align:center;flex:1'>"
-        f"<div style='font-size:1.1rem;color:#94a3b8'>Tepid (5-7)</div>"
+        f"<div style='{_label_style}'>Tepid (5-7)</div>"
         f"<div style='font-size:2.2rem;font-weight:700;color:#A0CBE8'>{tepid}</div>"
         f"</div>"
         f"<div style='text-align:center;flex:1'>"
-        f"<div style='font-size:1.1rem;color:#94a3b8'>Cold (&lt;5)</div>"
+        f"<div style='{_label_style}'>Cold (&lt;5)</div>"
         f"<div style='font-size:2.2rem;font-weight:700;color:#4E79A7'>{cold}</div>"
         f"</div>"
         f"</div>",
@@ -932,7 +933,7 @@ def render_subsector_breakouts(results: list, cfg: dict, data: dict = None):
     ]
 
     # Build all cards as one HTML block with background
-    cards_html = "<div style='background-color:#2d3348;padding:20px 16px;border-radius:10px;display:flex;justify-content:space-around;gap:8px'>"
+    cards_html = "<div style='background-color:#3d4560;padding:20px 16px;border-radius:10px;display:flex;justify-content:space-around;gap:8px'>"
     for key, emoji, label, definition, color in status_cards:
         count = len(reaccel_keys) if key == "reaccel" else display_counts.get(key, 0)
         cards_html += (
