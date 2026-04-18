@@ -37,6 +37,7 @@ sectors:
           WDC: Western Digital
           STX: Seagate Technology
           SSNLF: Samsung Electronics (OTC)
+          SNDK: SanDisk
 
       chips_networking:
         name: Chips — Networking / Photonics
@@ -64,6 +65,11 @@ sectors:
           ETN: Eaton Corporation
           GEV: GE Vernova
           BE: Bloom Energy
+          EQT: EQT Corporation
+          SEI: Solaris Energy Infrastructure
+          PSIX: Power Solutions International
+          LBRT: Liberty Energy
+          PUMP: ProPetro Holding
 
       datacenter_infra:
         name: Data Center Infrastructure
@@ -77,7 +83,7 @@ sectors:
 
       alt_ai_compute:
         name: Alternative AI Compute / GPU Hosts
-        note: Former BTC miners pivoting to AI/GPU workloads
+        note: AI-native GPU clouds, HPC data-center operators, and former BTC miners pivoting to AI/GPU workloads
         tickers:
           IREN: Iris Energy
           CORZ: Core Scientific
@@ -85,6 +91,13 @@ sectors:
           BTBT: Bit Digital
           WULF: TeraWulf
           CIFR: Cipher Mining
+          CRWV: CoreWeave
+          APLD: Applied Digital
+          BTDR: Bitdeer Technologies
+          RIOT: Riot Platforms
+          CLSK: CleanSpark
+          WYFI: Whitefiber
+          KEEL: Keel Infrastructure
 
       hyperscalers:
         name: Hyperscalers
@@ -217,13 +230,14 @@ sectors:
 
       crypto_majors:
         name: Crypto Majors
-        note: 24/7 trading; no daily session close
+        note: 24/7 trading; no daily session close (GLXY is an equity and trades during regular US hours)
         tickers:
           BTC-USD: Bitcoin
           ETH-USD: Ethereum
           SOL-USD: Solana
           ADA-USD: Cardano
           AVAX-USD: Avalanche
+          GLXY: Galaxy Digital
 
       crypto_ai:
         name: Crypto / AI Crossover Tokens
@@ -346,6 +360,7 @@ sectors:
           OKLO: Oklo Inc
           NNE: Nano Nuclear Energy
           LEU: Centrus Energy
+          BW: Babcock & Wilcox Enterprises
 
       uranium_miners:
         name: Uranium Miners
