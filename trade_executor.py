@@ -1080,13 +1080,13 @@ SUBSECTOR_CODES: dict[str, str] = {
     "Hyperscalers":                         "HY",
     "AI Software / DevTools":               "AS",
     "Enterprise AI Apps":                   "EA",
-    "AI Security":                          "AI",
+    "AI Security":                          "AX",
     "Healthcare AI":                        "HA",
     "Physical AI / Robotics":               "PR",
     # Robotics & Automation
     "Industrial Robotics & Automation":     "IR",
     "Surgical / Medical Robotics":          "SR",
-    "Subsea / Ocean Robotics":              "OR",
+    "Subsea / Ocean Robotics":              "SO",
     # Space & Satellite
     "Satellite Communications & Data":      "SC",
     "Launch & Spacecraft":                  "LS",
