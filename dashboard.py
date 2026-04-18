@@ -101,35 +101,40 @@ st.set_page_config(
 
 
 # =============================================================
-# SCORE THRESHOLDS (for the 0-10.0 scale)
+# SCORE THRESHOLDS (for the 0-10.0 scale) — "heat" metaphor
 # =============================================================
-# Fire:     9+   (top breakout setup)
-# Strong:   7-9  (strong signal)
-# Moderate: 5-7  (moderate signal)
-# Weak:     <5   (minimal signals)
+# Fire:  9.5+      — red
+# Hot:   8.5-9.5   — orange
+# Warm:  7-8.5     — yellow
+# Tepid: 5-7       — light blue
+# Cold:  <5        — medium blue
 
 def score_color(score: float) -> str:
     """Return a hex color for the score."""
-    if score >= 9:
-        return "#ef4444"  # red (fire)
+    if score >= 9.5:
+        return "#dc2626"  # red (fire)
+    elif score >= 8.5:
+        return "#ea580c"  # orange (hot)
     elif score >= 7:
-        return "#10b981"  # green
+        return "#ca8a04"  # yellow (warm)
     elif score >= 5:
-        return "#eab308"  # yellow
+        return "#60a5fa"  # light blue (tepid)
     else:
-        return "#6b7280"  # gray
+        return "#3b82f6"  # medium blue (cold)
 
 
 def score_tier(score: float) -> str:
     """Return a tier label for the score."""
-    if score >= 9:
+    if score >= 9.5:
         return "fire"
+    elif score >= 8.5:
+        return "hot"
     elif score >= 7:
-        return "strong"
+        return "warm"
     elif score >= 5:
-        return "moderate"
+        return "tepid"
     else:
-        return "weak"
+        return "cold"
 
 
 # =============================================================
@@ -140,11 +145,12 @@ st.markdown("""
     /* Tighten up spacing */
     .block-container { padding-top: 1rem; }
 
-    /* Score badge styling — tier-based */
-    .score-fire { background-color: rgba(239, 68, 68, 0.75); color: white; padding: 4px 12px; border-radius: 12px; font-weight: 700; }
-    .score-strong { background-color: rgba(16, 185, 129, 0.75); color: white; padding: 4px 12px; border-radius: 12px; font-weight: 700; }
-    .score-moderate { background-color: rgba(234, 179, 8, 0.75); color: black; padding: 4px 12px; border-radius: 12px; font-weight: 700; }
-    .score-weak { background-color: rgba(107, 114, 128, 0.75); color: white; padding: 4px 12px; border-radius: 12px; font-weight: 700; }
+    /* Score badge styling — tier-based (heat metaphor: red → blue) */
+    .score-fire  { background-color: rgba(220, 38, 38, 0.85);  color: white; padding: 4px 12px; border-radius: 12px; font-weight: 700; }
+    .score-hot   { background-color: rgba(234, 88, 12, 0.85);  color: white; padding: 4px 12px; border-radius: 12px; font-weight: 700; }
+    .score-warm  { background-color: rgba(202, 138, 4, 0.80);  color: white; padding: 4px 12px; border-radius: 12px; font-weight: 700; }
+    .score-tepid { background-color: rgba(96, 165, 250, 0.85); color: white; padding: 4px 12px; border-radius: 12px; font-weight: 700; }
+    .score-cold  { background-color: rgba(59, 130, 246, 0.85); color: white; padding: 4px 12px; border-radius: 12px; font-weight: 700; }
 
     /* Signal pill styling */
     .signal-pill {
@@ -424,10 +430,11 @@ def render_dashboard(results: list, cfg: dict, data: dict = None):
     st.title("📈 Tickers")
     st.caption(f"Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M')} · {len(results)} tickers scored · Max score: {MAX_SCORE}")
 
-    fire = sum(1 for r in results if r["score"] >= 9)
-    strong = sum(1 for r in results if 7 <= r["score"] < 9)
-    moderate = sum(1 for r in results if 5 <= r["score"] < 7)
-    weak = sum(1 for r in results if r["score"] < 5)
+    fire = sum(1 for r in results if r["score"] >= 9.5)
+    hot = sum(1 for r in results if 8.5 <= r["score"] < 9.5)
+    warm = sum(1 for r in results if 7 <= r["score"] < 8.5)
+    tepid = sum(1 for r in results if 5 <= r["score"] < 7)
+    cold = sum(1 for r in results if r["score"] < 5)
 
     st.markdown(
         f"<div style='background-color:#2d3348;padding:20px 16px;border-radius:10px;display:flex;justify-content:space-around;gap:8px'>"
@@ -436,20 +443,24 @@ def render_dashboard(results: list, cfg: dict, data: dict = None):
         f"<div style='font-size:2.2rem;font-weight:700;color:white'>{len(results)}</div>"
         f"</div>"
         f"<div style='text-align:center;flex:1'>"
-        f"<div style='font-size:1.1rem;color:#94a3b8'>Fire (9+)</div>"
-        f"<div style='font-size:2.2rem;font-weight:700;color:#ef4444'>{fire}</div>"
+        f"<div style='font-size:1.1rem;color:#94a3b8'>Fire (9.5+)</div>"
+        f"<div style='font-size:2.2rem;font-weight:700;color:#dc2626'>{fire}</div>"
         f"</div>"
         f"<div style='text-align:center;flex:1'>"
-        f"<div style='font-size:1.1rem;color:#94a3b8'>Strong (7-9)</div>"
-        f"<div style='font-size:2.2rem;font-weight:700;color:#10b981'>{strong}</div>"
+        f"<div style='font-size:1.1rem;color:#94a3b8'>Hot (8.5-9.5)</div>"
+        f"<div style='font-size:2.2rem;font-weight:700;color:#ea580c'>{hot}</div>"
         f"</div>"
         f"<div style='text-align:center;flex:1'>"
-        f"<div style='font-size:1.1rem;color:#94a3b8'>Moderate (5-7)</div>"
-        f"<div style='font-size:2.2rem;font-weight:700;color:#eab308'>{moderate}</div>"
+        f"<div style='font-size:1.1rem;color:#94a3b8'>Warm (7-8.5)</div>"
+        f"<div style='font-size:2.2rem;font-weight:700;color:#ca8a04'>{warm}</div>"
         f"</div>"
         f"<div style='text-align:center;flex:1'>"
-        f"<div style='font-size:1.1rem;color:#94a3b8'>Weak (&lt;5)</div>"
-        f"<div style='font-size:2.2rem;font-weight:700;color:#6b7280'>{weak}</div>"
+        f"<div style='font-size:1.1rem;color:#94a3b8'>Tepid (5-7)</div>"
+        f"<div style='font-size:2.2rem;font-weight:700;color:#60a5fa'>{tepid}</div>"
+        f"</div>"
+        f"<div style='text-align:center;flex:1'>"
+        f"<div style='font-size:1.1rem;color:#94a3b8'>Cold (&lt;5)</div>"
+        f"<div style='font-size:2.2rem;font-weight:700;color:#3b82f6'>{cold}</div>"
         f"</div>"
         f"</div>",
         unsafe_allow_html=True,
@@ -645,7 +656,7 @@ def render_dashboard(results: list, cfg: dict, data: dict = None):
     # Filters
     all_sectors = sorted(set(r["sector"] for r in results))
     all_subsectors = sorted(set(r["subsector"] for r in results))
-    score_options = ["All", "Fire (9+)", "Strong (7+)", "Moderate (5+)", "Weak (<5)"]
+    score_options = ["All", "Fire (9.5+)", "Hot (8.5+)", "Warm (7+)", "Tepid (5+)", "Cold (<5)"]
 
     fcol1, fcol2, fcol3 = st.columns(3)
     with fcol1:
@@ -666,13 +677,15 @@ def render_dashboard(results: list, cfg: dict, data: dict = None):
         filtered_all = [r for r in filtered_all if r["sector"] == sel_sector]
     if sel_subsector != "All":
         filtered_all = [r for r in filtered_all if r["subsector"] == sel_subsector]
-    if sel_score == "Fire (9+)":
-        filtered_all = [r for r in filtered_all if r["score"] >= 9]
-    elif sel_score == "Strong (7+)":
+    if sel_score == "Fire (9.5+)":
+        filtered_all = [r for r in filtered_all if r["score"] >= 9.5]
+    elif sel_score == "Hot (8.5+)":
+        filtered_all = [r for r in filtered_all if r["score"] >= 8.5]
+    elif sel_score == "Warm (7+)":
         filtered_all = [r for r in filtered_all if r["score"] >= 7]
-    elif sel_score == "Moderate (5+)":
+    elif sel_score == "Tepid (5+)":
         filtered_all = [r for r in filtered_all if r["score"] >= 5]
-    elif sel_score == "Weak (<5)":
+    elif sel_score == "Cold (<5)":
         filtered_all = [r for r in filtered_all if r["score"] < 5]
 
     filtered_all = sorted(filtered_all, key=lambda r: -r["score"])
@@ -1273,15 +1286,19 @@ def render_historical_charts():
             marker=dict(size=6),
         ))
 
-        # Threshold lines
-        fig.add_hline(y=8, line_dash="dash", line_color="#10b981", opacity=0.5,
-                      annotation_text="Strong (8+)", annotation_position="top left")
-        fig.add_hline(y=6, line_dash="dot", line_color="#fbbf24", opacity=0.4,
-                      annotation_text="Moderate (6+)", annotation_position="top left")
+        # Threshold lines — aligned with tier system (Fire/Hot/Warm/Tepid/Cold)
+        fig.add_hline(y=9.5, line_dash="dash", line_color="#dc2626", opacity=0.6,
+                      annotation_text="Fire (9.5+)", annotation_position="top left")
+        fig.add_hline(y=8.5, line_dash="dash", line_color="#ea580c", opacity=0.5,
+                      annotation_text="Hot (8.5+)", annotation_position="top left")
+        fig.add_hline(y=7, line_dash="dot", line_color="#ca8a04", opacity=0.4,
+                      annotation_text="Warm (7+)", annotation_position="top left")
 
-        # Color zones
-        fig.add_hrect(y0=8, y1=10, fillcolor="#10b981", opacity=0.06)
-        fig.add_hrect(y0=6, y1=8, fillcolor="#34d399", opacity=0.04)
+        # Color zones — tier bands
+        fig.add_hrect(y0=9.5, y1=10,  fillcolor="#dc2626", opacity=0.08)
+        fig.add_hrect(y0=8.5, y1=9.5, fillcolor="#ea580c", opacity=0.06)
+        fig.add_hrect(y0=7,   y1=8.5, fillcolor="#ca8a04", opacity=0.05)
+        fig.add_hrect(y0=5,   y1=7,   fillcolor="#60a5fa", opacity=0.04)
 
         fig.update_layout(
             title=f"{selected_ticker} — Score History",
@@ -1303,17 +1320,17 @@ def render_historical_charts():
     st.divider()
 
     # ─────────────────────────────────────────────
-    # CHART 2: Subsector Breadth Trends
+    # CHART 2: Subsector Avg Score Trends
     # ─────────────────────────────────────────────
-    st.subheader("2️⃣ Subsector Breadth Trends")
-    st.caption("How hot is each subsector over time? (breadth = % of tickers scoring 7+)")
+    st.subheader("2️⃣ Subsector Avg Score Trends")
+    st.caption("Average score trajectory by subsector over time")
 
     if not subsector_df.empty:
         all_subsectors = sorted(subsector_df["subsector_name"].unique())
 
-        # Default to top 5 by latest breadth
+        # Default to top 5 by latest avg score
         latest_date = subsector_df["date"].max()
-        latest = subsector_df[subsector_df["date"] == latest_date].sort_values("breadth", ascending=False)
+        latest = subsector_df[subsector_df["date"] == latest_date].sort_values("avg_score", ascending=False)
         default_subs = latest["subsector_name"].head(5).tolist()
 
         selected_subs = st.multiselect(
@@ -1324,39 +1341,12 @@ def render_historical_charts():
         )
 
         if selected_subs:
-            fig = go.Figure()
-
             colors = ["#3b82f6", "#ef4444", "#10b981", "#f59e0b", "#8b5cf6", "#ec4899", "#06b6d4", "#84cc16"]
 
+            fig = go.Figure()
             for i, sub_name in enumerate(selected_subs):
                 sub_data = subsector_df[subsector_df["subsector_name"] == sub_name].sort_values("date")
                 fig.add_trace(go.Scatter(
-                    x=sub_data["date"],
-                    y=sub_data["breadth"] * 100,
-                    mode="lines+markers",
-                    name=sub_name,
-                    line=dict(color=colors[i % len(colors)], width=2),
-                    marker=dict(size=5),
-                ))
-
-            fig.add_hline(y=50, line_dash="dash", line_color="gray", opacity=0.4,
-                          annotation_text="50% breadth trigger")
-
-            fig.update_layout(
-                title="Subsector Breadth Over Time",
-                yaxis_title="Breadth (%)",
-                yaxis=dict(range=[0, 105]),
-                height=450,
-                margin=dict(l=0, r=0, t=40, b=0),
-                legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02),
-            )
-            st.plotly_chart(fig, use_container_width=True)
-
-            # Also show avg score trends
-            fig2 = go.Figure()
-            for i, sub_name in enumerate(selected_subs):
-                sub_data = subsector_df[subsector_df["subsector_name"] == sub_name].sort_values("date")
-                fig2.add_trace(go.Scatter(
                     x=sub_data["date"],
                     y=sub_data["avg_score"],
                     mode="lines+markers",
@@ -1365,15 +1355,15 @@ def render_historical_charts():
                     marker=dict(size=5),
                 ))
 
-            fig2.update_layout(
+            fig.update_layout(
                 title="Subsector Avg Score Over Time",
                 yaxis_title="Average Score",
                 yaxis=dict(range=[0, 10]),
-                height=400,
+                height=450,
                 margin=dict(l=0, r=0, t=40, b=0),
                 legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02),
             )
-            st.plotly_chart(fig2, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True)
 
     st.divider()
 
@@ -1396,8 +1386,8 @@ def render_historical_charts():
         heat_data = ticker_df[ticker_df["subsector"] == selected_sub]
 
     if not heat_data.empty:
-        # Filter to last 3 months
-        cutoff_date = heat_data["date"].max() - pd.Timedelta(days=90)
+        # Filter to last 2 months
+        cutoff_date = heat_data["date"].max() - pd.Timedelta(days=60)
         heat_data = heat_data[heat_data["date"] >= cutoff_date]
         pivot = heat_data.pivot_table(index="ticker", columns="date", values="score", aggfunc="first")
         pivot = pivot.sort_values(pivot.columns[-1], ascending=False)
@@ -1407,13 +1397,16 @@ def render_historical_charts():
             z=pivot.values,
             x=pivot.columns,
             y=pivot.index,
+            # Colorscale aligned with tier system:
+            # Cold <5 → medium blue; Tepid 5-7 → light blue; Warm 7-8.5 → yellow;
+            # Hot 8.5-9.5 → orange; Fire 9.5+ → red.
             colorscale=[
-                [0, "#ffffff"],       # 0 — white
-                [0.3, "#dcfce7"],     # 3 — very light green
-                [0.5, "#86efac"],     # 5 — light green
-                [0.7, "#22c55e"],     # 7 — green
-                [0.9, "#16a34a"],     # 9 — darker green
-                [1.0, "#047857"],     # 10 — dark green
+                [0.00, "#3b82f6"],   # 0   — medium blue (cold)
+                [0.50, "#60a5fa"],   # 5   — light blue (tepid boundary)
+                [0.70, "#ca8a04"],   # 7   — yellow (warm boundary)
+                [0.85, "#ea580c"],   # 8.5 — orange (hot boundary)
+                [0.95, "#dc2626"],   # 9.5 — red (fire boundary)
+                [1.00, "#991b1b"],   # 10  — dark red
             ],
             zmin=0, zmax=10,
             text=pivot.values.round(1),
@@ -1445,21 +1438,27 @@ def render_historical_charts():
         day_scores = ticker_df[ticker_df["date"] == d]["score"]
         dist_data.append({
             "date": d,
-            "Fire (9+)": (day_scores >= 9).sum(),
-            "Strong (7-9)": ((day_scores >= 7) & (day_scores < 9)).sum(),
-            "Moderate (5-7)": ((day_scores >= 5) & (day_scores < 7)).sum(),
-            "Weak (<5)": (day_scores < 5).sum(),
+            "Fire (9.5+)": (day_scores >= 9.5).sum(),
+            "Hot (8.5-9.5)": ((day_scores >= 8.5) & (day_scores < 9.5)).sum(),
+            "Warm (7-8.5)": ((day_scores >= 7) & (day_scores < 8.5)).sum(),
+            "Tepid (5-7)": ((day_scores >= 5) & (day_scores < 7)).sum(),
+            "Cold (<5)": (day_scores < 5).sum(),
             "Mean Score": day_scores.mean(),
             "Median Score": day_scores.median(),
         })
 
     dist_df = pd.DataFrame(dist_data)
 
-    # Stacked area chart of score buckets
+    # Stacked area chart of score buckets (heat metaphor: red → blue)
     fig = go.Figure()
 
-    bucket_colors = {"Fire (9+)": "#dc2626", "Strong (7-9)": "#16a34a",
-                     "Moderate (5-7)": "#eab308", "Weak (<5)": "#d1d5db"}
+    bucket_colors = {
+        "Fire (9.5+)":   "#dc2626",  # red
+        "Hot (8.5-9.5)": "#ea580c",  # orange
+        "Warm (7-8.5)":  "#ca8a04",  # yellow
+        "Tepid (5-7)":   "#60a5fa",  # light blue
+        "Cold (<5)":     "#3b82f6",  # medium blue
+    }
 
     for bucket, color in bucket_colors.items():
         fig.add_trace(go.Scatter(
