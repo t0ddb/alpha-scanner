@@ -1062,6 +1062,61 @@ def _fmt_signed_dollar(value: float) -> str:
     return f"${value:,.0f}"
 
 
+# Two-letter subsector codes used in the email digest (compact columns).
+# Key = full subsector display name as stored on each score record;
+# value = 2-letter code. Any subsector not in this dict falls back to
+# its full name (see _subsector_code()).
+SUBSECTOR_CODES: dict[str, str] = {
+    # AI & Tech Capex Cycle
+    "Chips — Compute":                      "CC",
+    "Chips — Memory":                       "CM",
+    "Chips — Networking / Photonics":       "CN",
+    "Semiconductor Equipment / Foundry":    "SE",
+    "Semiconductor Test / Burn-In":         "ST",
+    "Power Semiconductors (GaN/SiC)":       "PS",
+    "Power & Energy":                       "PE",
+    "Data Center Infrastructure":           "DC",
+    "Alternative AI Compute / GPU Hosts":   "AC",
+    "Hyperscalers":                         "HY",
+    "AI Software / DevTools":               "AS",
+    "Enterprise AI Apps":                   "EA",
+    "AI Security":                          "AI",
+    "Healthcare AI":                        "HA",
+    "Physical AI / Robotics":               "PR",
+    # Robotics & Automation
+    "Industrial Robotics & Automation":     "IR",
+    "Surgical / Medical Robotics":          "SR",
+    "Subsea / Ocean Robotics":              "OR",
+    # Space & Satellite
+    "Satellite Communications & Data":      "SC",
+    "Launch & Spacecraft":                  "LS",
+    # Nuclear & Uranium
+    "Nuclear Reactors / SMR":               "NR",
+    "Uranium Miners":                       "UM",
+    # Metals
+    "Gold Miners":                          "GM",
+    "Silver Miners":                        "SM",
+    "Gold & Silver — Direct Exposure":      "GS",
+    # eVTOL & Drones
+    "eVTOL / Urban Air Mobility":           "EV",
+    # Quantum
+    "Quantum Hardware & Software":          "QC",
+    # Crypto
+    "Crypto Majors":                        "CX",
+    "Crypto / AI Crossover Tokens":         "CY",
+    # Biotech
+    "Gene Editing / CRISPR":                "GE",
+    "Synthetic Biology":                    "SB",
+}
+
+
+def _subsector_code(full_name: str) -> str:
+    """2-letter code for a subsector. Falls back to full name if missing."""
+    if not full_name:
+        return "—"
+    return SUBSECTOR_CODES.get(full_name, full_name)
+
+
 def _get_spy_return_since(
     price_data: dict,
     start_date: date,
@@ -1246,8 +1301,8 @@ def _build_trade_digest_html(
         vs_spy_dollar = None
 
     dry_tag = " [DRY RUN]" if dry_run else ""
-    subject = (f"Alpha Scanner {today.isoformat()}: "
-               f"Today {today_pct_str} | "
+    subject = (f"Alpha Scanner {today.strftime('%m/%d')}: "
+               f"{today_pct_str} | "
                f"{len(entries)} buy / {len(exits)} sell{dry_tag}")
 
     # ── HTML helpers ─────────────────────────────────────────────
@@ -1310,9 +1365,18 @@ def _build_trade_digest_html(
                 + header_row(header)
                 + "".join(rows) + "</table>")
 
+    # Subsector column uses 2-letter codes; any code we render gets
+    # added to used_subsectors so the legend at the bottom only lists
+    # codes actually referenced in today's email.
+    used_subsectors: dict[str, str] = {}   # code → full name
+
     def subsector_for(ticker: str) -> str:
-        sub = scores.get(ticker, {}).get("subsector", "")
-        return sub if sub else "—"
+        full = scores.get(ticker, {}).get("subsector", "") or ""
+        if not full:
+            return "—"
+        code = _subsector_code(full)
+        used_subsectors[code] = full
+        return code
 
     # ── Exits ──
     exit_rows = []
@@ -1550,9 +1614,24 @@ def _build_trade_digest_html(
       </table>
     """.strip()
 
+    # ── Subsector legend (only codes that appeared in the email today) ──
+    if used_subsectors:
+        legend_rows = "".join(
+            f"<div style='font-size:12px;color:#374151;margin:2px 0'>"
+            f"<b style='display:inline-block;min-width:32px'>{code}</b> — {name}"
+            f"</div>"
+            for code, name in sorted(used_subsectors.items())
+        )
+        legend_html = (
+            "<h3 style='margin:24px 0 8px 0'>Subsectors referenced</h3>"
+            f"<div style='padding:6px 0'>{legend_rows}</div>"
+        )
+    else:
+        legend_html = ""
+
     html = f"""
     <div style="font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;max-width:720px;margin:0 auto;color:#111">
-      <h2 style="margin:0 0 8px 0">Alpha Scanner — Daily Trade Execution{dry_tag}</h2>
+      <h2 style="margin:0 0 8px 0">Alpha Scanner — Daily Summary{dry_tag}</h2>
       <p style="color:#6b7280;margin:0 0 20px 0">{today.strftime('%A, %B %d, %Y')}</p>
 
       {summary_block}
@@ -1574,6 +1653,8 @@ def _build_trade_digest_html(
 
       <h3 style="margin:24px 0 8px 0">Wash Sale Cooldowns (informational — trades not blocked)</h3>
       {cooldown_table_html}
+
+      {legend_html}
 
       <p style="color:#9ca3af;font-size:11px;margin-top:30px">
         Generated by trade_executor.py &bull; Paper trading on Alpaca
