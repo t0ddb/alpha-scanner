@@ -63,6 +63,7 @@ sectors:
           CEG: Constellation Energy
           ETN: Eaton Corporation
           GEV: GE Vernova
+          BE: Bloom Energy
 
       datacenter_infra:
         name: Data Center Infrastructure
