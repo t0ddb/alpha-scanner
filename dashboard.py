@@ -137,6 +137,30 @@ def score_tier(score: float) -> str:
         return "cold"
 
 
+def score_cell_style(score: float) -> str:
+    """
+    Inline CSS for dataframe Styler.map() on a Score cell.
+    Uses the 5-tier heat palette: Fire/Hot/Warm/Tepid/Cold.
+    """
+    if score is None:
+        return ""
+    try:
+        v = float(score)
+    except (TypeError, ValueError):
+        return ""
+    base = "color: white; font-weight: bold;"
+    if v >= 9.5:
+        return f"background-color: rgba(220, 38, 38, 0.85); {base}"   # red (fire)
+    elif v >= 8.5:
+        return f"background-color: rgba(234, 88, 12, 0.85); {base}"   # orange (hot)
+    elif v >= 7:
+        return f"background-color: rgba(202, 138, 4, 0.80); {base}"   # yellow (warm)
+    elif v >= 5:
+        return f"background-color: rgba(96, 165, 250, 0.85); {base}"  # light blue (tepid)
+    else:
+        return f"background-color: rgba(59, 130, 246, 0.85); {base}"  # medium blue (cold)
+
+
 # =============================================================
 # CUSTOM STYLING
 # =============================================================
@@ -720,18 +744,8 @@ def render_dashboard(results: list, cfg: dict, data: dict = None):
 
         all_df = pd.DataFrame(all_rows)
 
-        def color_score_all(val):
-            if val >= 9:
-                return "background-color: rgba(220, 38, 38, 0.75); color: white; font-weight: bold;"
-            elif val >= 7:
-                return "background-color: rgba(22, 163, 74, 0.75); color: white; font-weight: bold;"
-            elif val >= 5:
-                return "background-color: rgba(234, 179, 8, 0.75); color: white; font-weight: bold;"
-            else:
-                return "background-color: rgba(107, 114, 128, 0.75); color: white;"
-
         styled_all = all_df.style.map(
-            color_score_all, subset=["Score"]
+            score_cell_style, subset=["Score"]
         ).format(
             {"Price": "${:,.2f}", "Score": "{:.1f}", "7d Δ": "{:+.1f}%",
              **{indicator_short[k]: "{:.1f}" for k in indicator_keys}},
@@ -1145,18 +1159,8 @@ def render_subsector_breakouts(results: list, cfg: dict, data: dict = None):
 
                 ticker_df = pd.DataFrame(ticker_rows)
 
-                def color_score(val):
-                    if val >= 9:
-                        return "background-color: rgba(220, 38, 38, 0.75); color: white; font-weight: bold;"
-                    elif val >= 7:
-                        return "background-color: rgba(22, 163, 74, 0.75); color: white; font-weight: bold;"
-                    elif val >= 5:
-                        return "background-color: rgba(234, 179, 8, 0.75); color: white; font-weight: bold;"
-                    else:
-                        return "background-color: rgba(107, 114, 128, 0.75); color: white;"
-
                 styled = ticker_df.style.map(
-                    color_score, subset=["Score"]
+                    score_cell_style, subset=["Score"]
                 ).format(
                     {k: "{:.1f}" for k in ["Score"] + [indicator_short[k] for k in indicator_keys]}
                 )
