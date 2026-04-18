@@ -114,13 +114,13 @@ def score_color(score: float) -> str:
     if score >= 9.5:
         return "#dc2626"  # red (fire)
     elif score >= 8.5:
-        return "#ea580c"  # orange (hot)
+        return "#f97316"  # orange (hot)
     elif score >= 7:
-        return "#ca8a04"  # yellow (warm)
+        return "#eab308"  # yellow (warm)
     elif score >= 5:
-        return "#60a5fa"  # light blue (tepid)
+        return "#93c5fd"  # light blue (tepid)
     else:
-        return "#3b82f6"  # medium blue (cold)
+        return "#2563eb"  # medium/dark blue (cold)
 
 
 def score_tier(score: float) -> str:
@@ -141,6 +141,8 @@ def score_cell_style(score: float) -> str:
     """
     Inline CSS for dataframe Styler.map() on a Score cell.
     Uses the 5-tier heat palette: Fire/Hot/Warm/Tepid/Cold.
+    Text color flips between white (dark backgrounds) and black
+    (bright/pale backgrounds) for contrast.
     """
     if score is None:
         return ""
@@ -148,17 +150,17 @@ def score_cell_style(score: float) -> str:
         v = float(score)
     except (TypeError, ValueError):
         return ""
-    base = "color: white; font-weight: bold;"
+    weight = "font-weight: bold;"
     if v >= 9.5:
-        return f"background-color: rgba(220, 38, 38, 0.85); {base}"   # red (fire)
+        return f"background-color: rgba(220, 38, 38, 0.90); color: white; {weight}"    # red (fire)
     elif v >= 8.5:
-        return f"background-color: rgba(234, 88, 12, 0.85); {base}"   # orange (hot)
+        return f"background-color: rgba(249, 115, 22, 0.90); color: white; {weight}"   # orange (hot)
     elif v >= 7:
-        return f"background-color: rgba(202, 138, 4, 0.80); {base}"   # yellow (warm)
+        return f"background-color: rgba(234, 179, 8, 0.90); color: black; {weight}"    # yellow (warm)
     elif v >= 5:
-        return f"background-color: rgba(96, 165, 250, 0.85); {base}"  # light blue (tepid)
+        return f"background-color: rgba(147, 197, 253, 0.95); color: black; {weight}"  # light blue (tepid)
     else:
-        return f"background-color: rgba(59, 130, 246, 0.85); {base}"  # medium blue (cold)
+        return f"background-color: rgba(37, 99, 235, 0.90); color: white; {weight}"    # darker blue (cold)
 
 
 # =============================================================
@@ -170,11 +172,11 @@ st.markdown("""
     .block-container { padding-top: 1rem; }
 
     /* Score badge styling — tier-based (heat metaphor: red → blue) */
-    .score-fire  { background-color: rgba(220, 38, 38, 0.85);  color: white; padding: 4px 12px; border-radius: 12px; font-weight: 700; }
-    .score-hot   { background-color: rgba(234, 88, 12, 0.85);  color: white; padding: 4px 12px; border-radius: 12px; font-weight: 700; }
-    .score-warm  { background-color: rgba(202, 138, 4, 0.80);  color: white; padding: 4px 12px; border-radius: 12px; font-weight: 700; }
-    .score-tepid { background-color: rgba(96, 165, 250, 0.85); color: white; padding: 4px 12px; border-radius: 12px; font-weight: 700; }
-    .score-cold  { background-color: rgba(59, 130, 246, 0.85); color: white; padding: 4px 12px; border-radius: 12px; font-weight: 700; }
+    .score-fire  { background-color: rgba(220, 38, 38, 0.90);  color: white; padding: 4px 12px; border-radius: 12px; font-weight: 700; }
+    .score-hot   { background-color: rgba(249, 115, 22, 0.90); color: white; padding: 4px 12px; border-radius: 12px; font-weight: 700; }
+    .score-warm  { background-color: rgba(234, 179, 8, 0.90);  color: black; padding: 4px 12px; border-radius: 12px; font-weight: 700; }
+    .score-tepid { background-color: rgba(147, 197, 253, 0.95); color: black; padding: 4px 12px; border-radius: 12px; font-weight: 700; }
+    .score-cold  { background-color: rgba(37, 99, 235, 0.90);  color: white; padding: 4px 12px; border-radius: 12px; font-weight: 700; }
 
     /* Signal pill styling */
     .signal-pill {
@@ -472,19 +474,19 @@ def render_dashboard(results: list, cfg: dict, data: dict = None):
         f"</div>"
         f"<div style='text-align:center;flex:1'>"
         f"<div style='font-size:1.1rem;color:#94a3b8'>Hot (8.5-9.5)</div>"
-        f"<div style='font-size:2.2rem;font-weight:700;color:#ea580c'>{hot}</div>"
+        f"<div style='font-size:2.2rem;font-weight:700;color:#f97316'>{hot}</div>"
         f"</div>"
         f"<div style='text-align:center;flex:1'>"
         f"<div style='font-size:1.1rem;color:#94a3b8'>Warm (7-8.5)</div>"
-        f"<div style='font-size:2.2rem;font-weight:700;color:#ca8a04'>{warm}</div>"
+        f"<div style='font-size:2.2rem;font-weight:700;color:#eab308'>{warm}</div>"
         f"</div>"
         f"<div style='text-align:center;flex:1'>"
         f"<div style='font-size:1.1rem;color:#94a3b8'>Tepid (5-7)</div>"
-        f"<div style='font-size:2.2rem;font-weight:700;color:#60a5fa'>{tepid}</div>"
+        f"<div style='font-size:2.2rem;font-weight:700;color:#93c5fd'>{tepid}</div>"
         f"</div>"
         f"<div style='text-align:center;flex:1'>"
         f"<div style='font-size:1.1rem;color:#94a3b8'>Cold (&lt;5)</div>"
-        f"<div style='font-size:2.2rem;font-weight:700;color:#3b82f6'>{cold}</div>"
+        f"<div style='font-size:2.2rem;font-weight:700;color:#2563eb'>{cold}</div>"
         f"</div>"
         f"</div>",
         unsafe_allow_html=True,
@@ -1293,16 +1295,16 @@ def render_historical_charts():
         # Threshold lines — aligned with tier system (Fire/Hot/Warm/Tepid/Cold)
         fig.add_hline(y=9.5, line_dash="dash", line_color="#dc2626", opacity=0.6,
                       annotation_text="Fire (9.5+)", annotation_position="top left")
-        fig.add_hline(y=8.5, line_dash="dash", line_color="#ea580c", opacity=0.5,
+        fig.add_hline(y=8.5, line_dash="dash", line_color="#f97316", opacity=0.5,
                       annotation_text="Hot (8.5+)", annotation_position="top left")
-        fig.add_hline(y=7, line_dash="dot", line_color="#ca8a04", opacity=0.4,
+        fig.add_hline(y=7, line_dash="dot", line_color="#eab308", opacity=0.4,
                       annotation_text="Warm (7+)", annotation_position="top left")
 
         # Color zones — tier bands
         fig.add_hrect(y0=9.5, y1=10,  fillcolor="#dc2626", opacity=0.08)
-        fig.add_hrect(y0=8.5, y1=9.5, fillcolor="#ea580c", opacity=0.06)
-        fig.add_hrect(y0=7,   y1=8.5, fillcolor="#ca8a04", opacity=0.05)
-        fig.add_hrect(y0=5,   y1=7,   fillcolor="#60a5fa", opacity=0.04)
+        fig.add_hrect(y0=8.5, y1=9.5, fillcolor="#f97316", opacity=0.06)
+        fig.add_hrect(y0=7,   y1=8.5, fillcolor="#eab308", opacity=0.05)
+        fig.add_hrect(y0=5,   y1=7,   fillcolor="#93c5fd", opacity=0.05)
 
         fig.update_layout(
             title=f"{selected_ticker} — Score History",
@@ -1402,13 +1404,13 @@ def render_historical_charts():
             x=pivot.columns,
             y=pivot.index,
             # Colorscale aligned with tier system:
-            # Cold <5 → medium blue; Tepid 5-7 → light blue; Warm 7-8.5 → yellow;
+            # Cold <5 → darker blue; Tepid 5-7 → light blue; Warm 7-8.5 → yellow;
             # Hot 8.5-9.5 → orange; Fire 9.5+ → red.
             colorscale=[
-                [0.00, "#3b82f6"],   # 0   — medium blue (cold)
-                [0.50, "#60a5fa"],   # 5   — light blue (tepid boundary)
-                [0.70, "#ca8a04"],   # 7   — yellow (warm boundary)
-                [0.85, "#ea580c"],   # 8.5 — orange (hot boundary)
+                [0.00, "#2563eb"],   # 0   — darker blue (cold)
+                [0.50, "#93c5fd"],   # 5   — light blue (tepid boundary)
+                [0.70, "#eab308"],   # 7   — yellow (warm boundary)
+                [0.85, "#f97316"],   # 8.5 — orange (hot boundary)
                 [0.95, "#dc2626"],   # 9.5 — red (fire boundary)
                 [1.00, "#991b1b"],   # 10  — dark red
             ],
@@ -1458,10 +1460,10 @@ def render_historical_charts():
 
     bucket_colors = {
         "Fire (9.5+)":   "#dc2626",  # red
-        "Hot (8.5-9.5)": "#ea580c",  # orange
-        "Warm (7-8.5)":  "#ca8a04",  # yellow
-        "Tepid (5-7)":   "#60a5fa",  # light blue
-        "Cold (<5)":     "#3b82f6",  # medium blue
+        "Hot (8.5-9.5)": "#f97316",  # orange
+        "Warm (7-8.5)":  "#eab308",  # yellow
+        "Tepid (5-7)":   "#93c5fd",  # light blue
+        "Cold (<5)":     "#2563eb",  # darker blue
     }
 
     for bucket, color in bucket_colors.items():
