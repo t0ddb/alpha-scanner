@@ -1306,12 +1306,14 @@ def _build_trade_digest_html(
                f"{len(entries)} buy / {len(exits)} sell{dry_tag}")
 
     # ── HTML helpers ─────────────────────────────────────────────
+    # white-space:nowrap on every <th> prevents mobile clients from
+    # breaking single-word headers mid-word (e.g. "Current" → "Cur rent").
     td_left = "padding:6px 10px;border-bottom:1px solid #e5e7eb;text-align:left"
     td_center = "padding:6px 10px;border-bottom:1px solid #e5e7eb;text-align:center"
     th_left = ("padding:6px 10px;text-align:left;background:#f3f4f6;"
-               "border-bottom:2px solid #d1d5db")
+               "border-bottom:2px solid #d1d5db;white-space:nowrap")
     th_center = ("padding:6px 10px;text-align:center;background:#f3f4f6;"
-                 "border-bottom:2px solid #d1d5db")
+                 "border-bottom:2px solid #d1d5db;white-space:nowrap")
 
     def row_mixed(cells: list[str], aligns: list[str]) -> str:
         """Row where first cell is left-aligned, rest are center-aligned."""
@@ -1332,12 +1334,14 @@ def _build_trade_digest_html(
         """Table with configurable per-column alignment and uniform non-first widths."""
         if not rows:
             return "<p style='color:#6b7280'>(none)</p>"
-        # Uniform widths for all non-first (non-Ticker) columns
+        # Ticker column tightened to 14% (from 20%) — symbols are 2-5 chars
+        # so ~100px on desktop / ~52px on mobile is plenty. Frees 6% for
+        # the data columns to breathe.
         n_other = len(aligns) - 1
         col_widths = ""
         if n_other > 0:
-            other_pct = round(80 / n_other, 2)
-            col_widths = ('<col style="width:20%"/>'
+            other_pct = round(86 / n_other, 2)
+            col_widths = ('<col style="width:14%"/>'
                           + f'<col style="width:{other_pct}%"/>' * n_other)
         return (
             "<table style='border-collapse:collapse;width:100%;"
@@ -1441,8 +1445,10 @@ def _build_trade_digest_html(
     ]
 
     # ── Current Positions ──
-    # Columns: Ticker | Subsector | Days | Current | Day % | P&L % | P&L $ | Score
-    # Sorted by P&L % DESC (biggest winners at top).
+    # Columns: Ticker | Sub Sector | Days | Day % | P&L % | P&L $ | Score
+    # Sorted by P&L % DESC (biggest winners at top). The "Current" price
+    # column was intentionally dropped — it added little signal beyond
+    # P&L % / P&L $ and ate horizontal space on mobile.
     max_positions = trade_cfg.get("max_positions", 12)
     pos_records = []
     exit_watch_rows = []
@@ -1485,13 +1491,12 @@ def _build_trade_digest_html(
 
     pos_records.sort(key=lambda r: -r["pnl_pct"])
 
-    pos_aligns = ["left", "center", "center", "center", "center", "center", "center", "center"]
+    pos_aligns = ["left", "center", "center", "center", "center", "center", "center"]
     pos_rows = [
         row_mixed([
             f"<b>{r['ticker']}</b>",
             r["subsector"],
             f"{r['hold_days']}",
-            f"${r['current_price']:.2f}",
             _colored(_fmt_signed_pct(r["day_pct"], 1), _pnl_color(r["day_pct"])),
             _colored(_fmt_signed_pct(r["pnl_pct"], 1), _pnl_color(r["pnl_pct"])),
             _colored(_fmt_signed_dollar(r["pnl_dollar"]), _pnl_color(r["pnl_dollar"])),
@@ -1520,7 +1525,7 @@ def _build_trade_digest_html(
     skip_col = (f"Days &ge; {entry_threshold:.1f}" if entry_threshold % 1
                 else f"Days &ge; {entry_threshold:.0f}")
     skip_table_html = table_mixed(
-        ["Ticker", "Subsector", "Score", skip_col, "Skip Reason"],
+        ["Ticker", "Sub Sector", "Score", skip_col, "Skip Reason"],
         skip_rows,
         skip_aligns,
     )
@@ -1531,7 +1536,7 @@ def _build_trade_digest_html(
         ["Ticker", "Qty", "Est Price", "Score", "Cost"], entry_rows,
     )
     pos_table_html = table_mixed(
-        ["Ticker", "Subsector", "Days", "Current", "Day %",
+        ["Ticker", "Sub Sector", "Days", "Day %",
          "P&amp;L %", "P&amp;L $", "Score"],
         pos_rows,
         pos_aligns,
