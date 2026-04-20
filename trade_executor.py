@@ -1529,10 +1529,8 @@ def _build_trade_digest_html(
     ]
 
     # Pre-build tables with headers
-    skip_col = (f"Days &ge; {entry_threshold:.1f}" if entry_threshold % 1
-                else f"Days &ge; {entry_threshold:.0f}")
     skip_table_html = table_mixed(
-        ["Ticker", "Sub Sector", "Score", skip_col, "Skip Reason"],
+        ["Ticker", "Sub Sector", "Score", "Streak", "Skip Reason"],
         skip_rows,
         skip_aligns,
     )
