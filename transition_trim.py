@@ -199,7 +199,11 @@ def wait_for_fill(
         except APIError as e:
             return {"filled": False, "error": f"get_order failed: {e}",
                     "status": "unknown", "fill_price": None, "filled_qty": None}
-        status = str(order.status).lower()
+        # Alpaca returns an OrderStatus enum. str() yields "OrderStatus.FILLED"
+        # (enum-qualified) — use .value ("filled") when available, falling
+        # back to the last-dotted token of str() for safety.
+        status = getattr(order.status, "value", None) or str(order.status).split(".")[-1]
+        status = status.lower()
         if status != last_status:
             print(f"    [trim] order {order_id} status: {status}")
             last_status = status
