@@ -1755,6 +1755,10 @@ def main():
                         help="Score everything and show what would be done, but don't place orders")
     parser.add_argument("--email", action="store_true",
                         help="Send an email digest after running (requires GMAIL_ADDRESS and GMAIL_APP_PASSWORD)")
+    parser.add_argument("--preview-email", nargs="?", const="email_preview.html", default=None,
+                        metavar="PATH",
+                        help="Render the email digest to an HTML file (default: email_preview.html) "
+                             "without sending — open in a browser to preview layout.")
     parser.add_argument("--force-entry", action="append", default=[], metavar="TICKER",
                         help="Force entry for TICKER (bypasses entry threshold + persistence filter). "
                              "Can be specified multiple times. All other rules (sizing, tradeability, "
@@ -1930,7 +1934,7 @@ def main():
     print_positions(snapshot, scores, today)
     print_wash_sale_status(today)
 
-    # 13. Optional email digest
+    # 13. Optional email digest — send via Gmail
     if args.email:
         send_trade_digest(
             snapshot, exits, entries, skipped, scores, today,
@@ -1938,6 +1942,21 @@ def main():
             price_data=price_data,
             account_created=account_created,
         )
+
+    # 14. Optional email preview — render HTML to file without sending
+    if args.preview_email:
+        preview_path = args.preview_email
+        subject, html = _build_trade_digest_html(
+            snapshot, exits, entries, skipped, scores, today,
+            args.dry_run, trade_cfg, db_conn,
+            price_data=price_data,
+            account_created=account_created,
+        )
+        with open(preview_path, "w") as f:
+            f.write(html)
+        print(f"\n  [preview] Subject: {subject}")
+        print(f"  [preview] Wrote email HTML to {preview_path}")
+        print(f"  [preview] Open it in a browser: open {preview_path}")
 
     print("\n" + "=" * 66 + "\n")
 
