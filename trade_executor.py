@@ -598,6 +598,7 @@ SKIP_CATEGORY_POSITION_CAP = "position cap reached"
 SKIP_CATEGORY_WASH_SALE = "wash sale cooldown"
 SKIP_CATEGORY_CASH_FLOOR = "cash floor cap"
 SKIP_CATEGORY_LIMIT_UNFILLED = "limit unfilled"
+SKIP_CATEGORY_PERSISTENCE = "persistence"
 SKIP_CATEGORY_OTHER = "other"
 
 
@@ -683,7 +684,7 @@ def evaluate_entries(
                     "ticker": ticker,
                     "score": score,
                     "reason": reason,
-                    "skip_category": SKIP_CATEGORY_OTHER,
+                    "skip_category": SKIP_CATEGORY_PERSISTENCE,
                 })
                 continue
 
@@ -1173,6 +1174,8 @@ def _categorize_skip_reason(skip: dict) -> str:
         return SKIP_CATEGORY_POSITION_CAP
     if "wash sale" in reason:
         return SKIP_CATEGORY_WASH_SALE
+    if "persistence" in reason:
+        return SKIP_CATEGORY_PERSISTENCE
     return SKIP_CATEGORY_OTHER
 
 
@@ -1436,12 +1439,15 @@ def _build_trade_digest_html(
     skip_records.sort(key=lambda r: (-r["days_above"], -r["score"]))
 
     skip_aligns = ["left", "center", "center", "center", "center"]
+    # Denominator is persistence_days + 1 so a full pass (today + N prior
+    # days all ≥ threshold) displays as e.g. "4/4" with persistence_days=3.
+    streak_denom = persistence_days + 1
     skip_rows = [
         row_mixed([
             f"<b>{r['ticker']}</b>",
             r["subsector"],
             _colored(f"{r['score']:.1f}", _score_color(r["score"])),
-            f"{r['days_above']}/{persistence_days}",
+            f"{r['days_above']}/{streak_denom}",
             r["category"],
         ], skip_aligns)
         for r in skip_records
