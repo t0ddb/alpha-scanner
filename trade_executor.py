@@ -1331,18 +1331,20 @@ def _build_trade_digest_html(
         return "<tr>" + "".join(parts) + "</tr>"
 
     def table_mixed(header: list[str], rows: list[str], aligns: list[str]) -> str:
-        """Table with configurable per-column alignment and uniform non-first widths."""
+        """
+        Fixed-layout table with per-column alignment. All columns get
+        equal width (100% / n_cols). This ensures two same-column-count
+        tables stack aligned — e.g. Entries (5 cols) and Skipped (5 cols)
+        share the same horizontal grid. Ticker column gets the same
+        width as the others; it just uses left alignment.
+        """
         if not rows:
             return "<p style='color:#6b7280'>(none)</p>"
-        # Ticker column tightened to 14% (from 20%) — symbols are 2-5 chars
-        # so ~100px on desktop / ~52px on mobile is plenty. Frees 6% for
-        # the data columns to breathe.
-        n_other = len(aligns) - 1
+        n_cols = len(aligns)
         col_widths = ""
-        if n_other > 0:
-            other_pct = round(86 / n_other, 2)
-            col_widths = ('<col style="width:14%"/>'
-                          + f'<col style="width:{other_pct}%"/>' * n_other)
+        if n_cols > 0:
+            col_pct = round(100 / n_cols, 2)
+            col_widths = f'<col style="width:{col_pct}%"/>' * n_cols
         return (
             "<table style='border-collapse:collapse;width:100%;"
             "font-size:13px;table-layout:fixed'>"
@@ -1397,19 +1399,20 @@ def _build_trade_digest_html(
         ]))
 
     # ── Entries (score color-coded) ──
+    entry_aligns = ["left", "center", "center", "center", "center"]
     entry_rows = []
     for e in entries:
         ws_note = ""
         if e.get("wash_sale_warning"):
             ws_note = (f" <span style='color:#f59e0b;font-size:11px'>"
                        f"⚠ wash sale (${abs(e['wash_sale_warning']['loss_amount']):,.0f} deferred)</span>")
-        entry_rows.append(row([
+        entry_rows.append(row_mixed([
             f"<b>{e['ticker']}</b>{ws_note}",
             f"{e['qty']:.0f}",
             f"${e['est_price']:.2f}",
             _colored(f"{e['score']:.1f}", _score_color(e['score'])),
             f"${e['cost_basis']:,.0f}",
-        ]))
+        ], entry_aligns))
 
     # ── Skipped Signals ──
     # Columns: Ticker | Subsector | Score | Days ≥ threshold | Skip Reason
@@ -1445,10 +1448,10 @@ def _build_trade_digest_html(
     ]
 
     # ── Current Positions ──
-    # Columns: Ticker | Sub Sector | Days | Day % | P&L % | P&L $ | Score
-    # Sorted by P&L % DESC (biggest winners at top). The "Current" price
-    # column was intentionally dropped — it added little signal beyond
-    # P&L % / P&L $ and ate horizontal space on mobile.
+    # Columns: Ticker | Days | Day % | P&L % | P&L $ | Score
+    # Sorted by P&L % DESC. Sub Sector column was dropped to free mobile
+    # horizontal space (subsector info is still visible in the Skipped
+    # Signals table's Sub Sector column, which drives the legend).
     max_positions = trade_cfg.get("max_positions", 12)
     pos_records = []
     exit_watch_rows = []
@@ -1463,7 +1466,6 @@ def _build_trade_digest_html(
         )
         pos_records.append({
             "ticker": ticker,
-            "subsector": subsector_for(ticker),
             "hold_days": hold_days,
             "current_price": pos["current_price"],
             "day_pct": pos.get("change_today_pct", 0.0),
@@ -1491,11 +1493,10 @@ def _build_trade_digest_html(
 
     pos_records.sort(key=lambda r: -r["pnl_pct"])
 
-    pos_aligns = ["left", "center", "center", "center", "center", "center", "center"]
+    pos_aligns = ["left", "center", "center", "center", "center", "center"]
     pos_rows = [
         row_mixed([
             f"<b>{r['ticker']}</b>",
-            r["subsector"],
             f"{r['hold_days']}",
             _colored(_fmt_signed_pct(r["day_pct"], 1), _pnl_color(r["day_pct"])),
             _colored(_fmt_signed_pct(r["pnl_pct"], 1), _pnl_color(r["pnl_pct"])),
@@ -1532,12 +1533,12 @@ def _build_trade_digest_html(
     exit_table_html = table(
         ["Ticker", "Qty", "Price", "Reason", "P&amp;L"], exit_rows,
     )
-    entry_table_html = table(
+    entry_table_html = table_mixed(
         ["Ticker", "Qty", "Est Price", "Score", "Cost"], entry_rows,
+        entry_aligns,
     )
     pos_table_html = table_mixed(
-        ["Ticker", "Sub Sector", "Days", "Day %",
-         "P&amp;L %", "P&amp;L $", "Score"],
+        ["Ticker", "Days", "Day %", "P&amp;L %", "P&amp;L $", "Score"],
         pos_rows,
         pos_aligns,
     )
