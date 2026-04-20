@@ -139,6 +139,61 @@
       "reason": "Transition trim: 5 \u00d7 20% \u2192 12 \u00d7 8.33% sizing rule",
       "sell_order_id": "78e82ed7-7c8e-458e-8a9d-da208c94bc7d",
       "stop_order_id": "24e1351c-afe0-42c8-9a47-4ecdda832c15"
+    },
+    {
+      "ticker": "AXTI",
+      "side": "buy",
+      "date": "2026-04-20",
+      "price": 78.76,
+      "qty": 108.0,
+      "cost_basis": 8506.08,
+      "score_at_entry": 9.2,
+      "reason": "Score \u2265 8.5 + 3d persist",
+      "alpaca_order_id": "25514b03-2dd2-4b1a-8c02-8b29ee785341"
+    },
+    {
+      "ticker": "EDIT",
+      "side": "buy",
+      "date": "2026-04-20",
+      "price": 3.57,
+      "qty": 2394.0,
+      "cost_basis": 8546.58,
+      "score_at_entry": 9.2,
+      "reason": "Score \u2265 8.5 + 3d persist",
+      "alpaca_order_id": "2b8edc11-9363-4b13-9f44-8ff4cd80a746"
+    },
+    {
+      "ticker": "MRVL",
+      "side": "buy",
+      "date": "2026-04-20",
+      "price": 147.88,
+      "qty": 57.0,
+      "cost_basis": 8429.16,
+      "score_at_entry": 9.2,
+      "reason": "Score \u2265 8.5 + 3d persist",
+      "alpaca_order_id": "69a7e597-dcbb-4ee8-8fa4-e4ba6db2365a"
+    },
+    {
+      "ticker": "AAOI",
+      "side": "buy",
+      "date": "2026-04-20",
+      "price": 163.505,
+      "qty": 52.0,
+      "cost_basis": 8502.26,
+      "score_at_entry": 8.8,
+      "reason": "Score \u2265 8.5 + 3d persist",
+      "alpaca_order_id": "2d882805-1ba2-446c-964f-e6e29c57b9e8"
+    },
+    {
+      "ticker": "GLW",
+      "side": "buy",
+      "date": "2026-04-20",
+      "price": 165.375,
+      "qty": 52.0,
+      "cost_basis": 8599.5,
+      "score_at_entry": 8.8,
+      "reason": "Score \u2265 8.5 + 3d persist",
+      "alpaca_order_id": "d96dd312-0553-494b-9dab-ac59e7f1ae39"
     }
   ]
 }
