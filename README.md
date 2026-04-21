@@ -188,7 +188,7 @@ python3 signal_diagnostics_significance.py
 
 Stored in `.env` (local) or GitHub Actions secrets (production):
 
-- `ALPACA_API_KEY`, `ALPACA_SECRET_KEY` — Alpaca credentials. Runtime enforces a paper-account safety check (account number prefix `PA`) during the current validation phase; that check gets relaxed / rewired when the account is switched to live
+- `ALPACA_API_KEY`, `ALPACA_SECRET_KEY` — Alpaca credentials for the live trading account. Paper-trading keys can be substituted for local experimentation — the code paths are identical; Alpaca routes orders based on which keys it receives. The codebase also includes a `PA`-prefix account check that can be toggled on as a dev-mode safety rail when forking or testing
 - `GMAIL_ADDRESS`, `GMAIL_APP_PASSWORD`, `ALERT_EMAIL_TO` — email digest (optional)
 - `ENTRY_THRESHOLD`, `EXIT_THRESHOLD`, `PERSISTENCE_DAYS`, `STOP_LOSS_PCT`, `MAX_POSITIONS`, `MAX_POSITION_PCT` — override `ticker_config.yaml` for manual test runs
 
@@ -233,6 +233,6 @@ alpha-scanner/
 
 ## About
 
-Built by [Todd Bruschwein](https://linkedin.com/in/toddbruschwein). Started as a research tool for tracking the AI infrastructure investment cycle; evolved into a full automated momentum trading system designed to run against real capital. Built with Python and [Claude](https://claude.ai). Ongoing.
+Built by [Todd Bruschwein](https://linkedin.com/in/toddbruschwein). Started as a research tool for tracking the AI infrastructure investment cycle; evolved into a fully automated momentum trading system running real capital on Alpaca. Built with Python and [Claude](https://claude.ai). Ongoing.
 
-The system currently runs on an Alpaca paper-trading account for live-market validation before the live-capital switchover. Nothing on this page constitutes financial advice.
+Nothing on this page constitutes financial advice.
