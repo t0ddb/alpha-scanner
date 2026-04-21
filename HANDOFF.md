@@ -1,353 +1,263 @@
 # Alpha Scanner — Session Handoff
 
-Last updated: 2026-04-19
+Last updated: 2026-04-21
 
-This document exists so a fresh Claude Code thread can pick up where we
-left off without re-deriving context. Read this first, then read the
-code. Anything a careful code-reader could figure out is **not** here;
-only non-obvious state, decisions, and reasoning.
-
----
-
-## What this project is
-
-**Alpha Scanner** (formerly "Breakout Tracker") — a subsector momentum
-breakout detection system that runs nightly, scores 180 tickers across
-31 subsectors using 7 scored indicators, tracks subsector-level
-"breakout waves" via a state machine, and executes paper trades on
-Alpaca against the resulting signals with real GTC stop orders for
-downside protection.
-
-The thesis: individual stock return prediction is noisy, but when a
-cluster of stocks in the same theme (Photonics, Memory, etc.) all break
-out simultaneously, that's a high-signal event worth trading.
-
-Repo: `/Users/toddbruschwein/Claude-Workspace/breakout-tracker` (the
-checked-in `.git` directory is authoritative).
-
-GitHub: `github.com/t0ddb/alpha-scanner`. Dashboard:
-`alphascanner.streamlit.app`.
+This doc exists so a fresh Claude Code thread can pick up where the
+last one left off. Read it first, then read the code. Anything a
+careful code reader could figure out is **not** here — only
+non-obvious state, decisions, and reasoning.
 
 ---
 
-## Current live strategy (deployed 2026-04-17)
+## What Alpha Scanner is (1 paragraph)
 
-**Config** (`ticker_config.yaml` → `trade_execution:`):
+**Alpha Scanner is an automated paper-trading system.** Every trading
+day at 4:30 PM ET (30 min after market close), a GitHub Actions
+workflow runs `trade_executor.py`, which scores 180 tickers with a
+7-indicator momentum signal, evaluates exits on held positions,
+evaluates entries on candidates that pass a 3-day persistence filter,
+and places 3% limit orders on Alpaca paper trading for the next
+session's open. Real GTC stop orders at Alpaca protect each position
+at entry × 0.80. A daily email summary lands in inbox ~5 min after
+the run. Everything else in this repo — the subsector state machine,
+the Streamlit dashboard, the backtest scripts, the signal
+diagnostics — exists to feed or observe or validate this one pipeline.
+
+Repo: `/Users/toddbruschwein/Claude-Workspace/breakout-tracker`
+GitHub: `github.com/t0ddb/alpha-scanner`
+Dashboard: `alphascanner.streamlit.app`
+
+---
+
+## Current live config (deployed 2026-04-17)
+
+All values below are in `ticker_config.yaml` under `trade_execution:`.
+Env vars override YAML (precedence: env > yaml > hardcoded default in
+`trade_executor.py:_DEFAULTS`).
 
 | Parameter | Value | Source |
 |---|---|---|
-| Entry threshold | **8.5** | 3yr backtest + entry-threshold sweep on corrected simulator |
-| Persistence filter | **3 prior trading days ≥ 8.5** | Backtest |
-| Exit threshold | **< 5.0** | Unchanged from original |
-| Stop loss | **20%** | `sizing_comparison_backtest.py` stop-loss sweep (2026-04-16) |
-| Max positions | **12** | Position-cap sweep optimum |
-| Position size | **8.3% of equity** (= 1/12) | Dynamic per-entry sizing |
-| **Cash floor** | **5% of equity reserved** | `entry_mode_backtest.py` (2026-04-17) |
-| Min position | $500 | Unchanged |
-| **Entry order type** | **3% LIMIT @ DAY TIF** | `entry_mode_backtest.py` — Limit-3% best-performing config |
-| **Sizing price source** | **Alpaca latest-trade** (yfinance fallback) | Post-AEHR-gap bug |
+| Entry threshold | **8.5** | `--sweep-entry-threshold` optimum (Sharpe 1.98) |
+| Persistence | **3 prior days ≥ 8.5** | 3yr backtest + Pareto vs 9.5 baseline |
+| Exit threshold | **< 5.0** | Fixed since project start |
+| Stop loss | **20%** | `--sweep-stop-loss` winner (fixed beats trailing) |
+| Max positions | **12** | `--sweep-max-positions` plateau optimum |
+| Position size | **8.3% of equity** | = 1/12 per slot |
+| **Cash floor** | **5% of equity reserved** | `entry_mode_backtest.py` validated |
+| **Entry order** | **3% LIMIT @ DAY TIF** | `entry_mode_backtest.py` — Limit-3% won |
+| **Sizing price** | **Alpaca latest-trade** (yfinance fallback) | Post-AEHR-gap fix |
+| Min position | $500 | Never hit in practice |
 
-Env vars override config: `ENTRY_THRESHOLD`, `EXIT_THRESHOLD`,
-`PERSISTENCE_DAYS`, `STOP_LOSS_PCT`, `MAX_POSITIONS`,
-`MAX_POSITION_PCT`, `MIN_POSITION_SIZE`. Precedence: env > yaml >
-hardcoded default.
-
-**`CASH_FLOOR_PCT` and `LIMIT_ORDER_BUFFER`** are module constants in
-`trade_executor.py` (not YAML-configurable — tightly validated).
-
-**Key evolution vs original config** (see `trade_executor.py` git
-history for details):
-
-1. **Limit orders replaced market orders** on 2026-04-17 after a
-   15.5% overnight gap on AEHR caused a +$3,049 fill-price overrun on
-   a single entry, pushing cash to -$2,626 on a 5-position book. The
-   `entry_mode_backtest.py` study confirmed Limit-3% as the right fix.
-2. **5% cash floor** enforced via
-   `max_position = min(8.3% × equity, (0.95 × equity − committed) / remaining_slots)`.
-   Mathematically guarantees total commitment ≤ 95% of equity.
-3. **Alpaca-first pricing**: sizing now uses Alpaca's latest-trade
-   (which reflects extended-hours moves) before falling back to
-   yfinance close.
-4. **Stops deferred to post-fill**: `execute_entries` no longer places
-   the stop immediately. `ensure_stops_for_positions()` runs at the
-   top of each daily cycle and idempotently backfills a GTC stop for
-   any held position without one — including limit orders that filled
-   overnight.
-
-**Still-open follow-up**: as of 2026-04-19 the account holds 5
-positions from the OLD 20%-sizing regime (~$20k each, cost basis
-~$100k). Cash is -$2,626. `transition_trim.py` exists to migrate
-these positions to the new 8.33% sizing basis proportional to accrued
-P&L. **It has been dry-run-verified but NOT executed.** User plans to
-run `python transition_trim.py --execute` Monday 2026-04-20 before
-the 5:30 PM scoring run. Until that happens, the cash floor blocks
-all new entries (over-committed state).
+**Constants not in YAML** (hardcoded in `trade_executor.py`, too
+tightly validated to expose):
+- `CASH_FLOOR_PCT = 0.05`
+- `LIMIT_ORDER_BUFFER = 0.03`
 
 ---
 
-## Architecture at a glance
+## Daily execution pipeline (what happens in the 4:30 PM ET run)
+
+Inside `trade_executor.main()`:
 
 ```
-Data sources
-  └─ data_fetcher.fetch_all(cfg, period='Xy')       yfinance batch
-  └─ alpaca.StockHistoricalDataClient               live prices (preferred for sizing)
-  └─ alpaca.TradingClient                           orders + positions
-
-Scoring pipeline
-  └─ indicators.compute_all_indicators(df, bench, cfg, all_rs_values, multi_tf_rs)
-        └─ RS (gradient 0-3.0), Ichimoku (2.0), Higher Lows (1.0),
-           CMF (1.5), ROC (1.5), Dual-TF RS (0.5), ATR (0.5)
-        └─ Max score 10.0. MA Alignment + Near 52w High computed
-           for display but NOT scored.
-  └─ indicators.score_all(data, cfg)                returns sorted list[dict]
-  └─ indicators.score_ticker(indicators)            applies weights
-
-Subsector state machine
-  └─ subsector_breakout.run_breakout_detection(results, cfg)
-        └─ quiet → warming → emerging → confirmed → fading → quiet/revival
-        └─ Params in ticker_config.yaml → breakout_detection:
-
-Persistence (SQLite: breakout_tracker.db)
-  └─ subsector_store.py — 3 tables:
-      - subsector_daily         per-date per-subsector metrics + ticker_scores JSON
-      - subsector_breakout_state current state per subsector
-      - ticker_scores            per-date per-ticker score row
-
-Live trading
-  └─ trade_executor.py                              runs nightly via CI
-        └─ load_trade_config(cfg)                   env > yaml > defaults
-        └─ detect_filled_stops()                    close positions that hit the GTC stop
-        └─ ensure_stops_for_positions()             idempotent GTC stop backfill
-        └─ detect_unfilled_limits_since()           previous-day limit orders that didn't fill
-        └─ score_all() + upsert_ticker_scores()     persist today's scores
-        └─ evaluate_exits()                         score<5 or stop-loss
-        └─ check_persistence()                      3 prior DB rows ≥ threshold
-        └─ evaluate_entries()                       cash-floor + Alpaca-first pricing
-        └─ execute_entries()                        submit LIMIT orders @ sizing × 1.03
-  └─ trade_log.py                                   JSON history of buys/sells/trims
-  └─ wash_sale_tracker.py                           log-only, never blocks
-
-Backtesting framework
-  └─ sizing_comparison_backtest.py                  4-strategy comparison + sweeps:
-        --sweep-max-positions 3,5,8,10,12,15,20
-        --sweep-stop-loss fixed-10,fixed-15,fixed-20,trail-10,atr-2x,...
-        --sweep-entry-threshold 7.5,8.0,8.5,9.0,9.5
-  └─ entry_mode_backtest.py                         4-config market-vs-limit comparison
-        baseline / defensive / limit-2% / limit-3%
-
-Diagnostics
-  └─ signal_diagnostics.py                          bucket tables, rank corr, autocorr
-  └─ signal_diagnostics_subsector.py                same stratified by all 31 subsectors
-  └─ signal_diagnostics_significance.py             bootstrap 95% CIs on ρ
-
-Review
-  └─ quarterly_review.py                            7-section automated review
-        └─ Runs quarterly on GitHub Actions
-        └─ Outputs saved to quarterly_reviews/review_YYYY_QN.txt
-
-Dashboard
-  └─ dashboard.py                                   Streamlit; 3 pages:
-        Tickers · Subsectors · Historical Charts
-        5-tier Tableau 20 palette (Fire/Hot/Warm/Tepid/Cold)
+1. connect_alpaca()                  # paper-account check (acct # starts with "PA")
+2. get_account_snapshot()            # equity, cash, last_equity, all positions
+3. detect_filled_stops()             # find GTC stops that fired → log as sells
+4. ensure_stops_for_positions()      # idempotent: backfill GTC stops for any held
+                                       position lacking one (covers limit orders
+                                       that filled overnight)
+5. detect_unfilled_limits_since()    # prior-day limit orders that canceled (for email)
+6. score_all() + upsert_ticker_scores()   # compute + persist today's scores
+7. evaluate_exits()                  # positions where score < 5 → market sell next open
+8. evaluate_entries()                # candidates: score ≥ 8.5 + persistence + cash floor
+9. execute_entries()                 # submit LIMIT BUY at sizing_price × 1.03, DAY TIF
+10. send_trade_digest()              # email summary via Gmail SMTP
 ```
+
+**Key sequencing note**: limit orders submitted at 4:30 PM ET today
+fill (or don't) at the NEXT morning's open. When they fill, the
+position appears in Alpaca at 9:30 AM ET. Tomorrow's `trade_executor`
+run at 4:30 PM ET is the first one that sees the position — that's
+when `ensure_stops_for_positions()` attaches the GTC stop. So for
+~24 hours after a limit fills, the position is technically
+unstopped. Acceptable because the fill is bounded to ≤ sizing × 1.03
+(max 3% above sizing), and Alpaca's market-session risk is small
+relative to overnight risk.
 
 ---
 
 ## GitHub Actions workflows
 
-Three scheduled workflows, all runs commit state back to the repo:
+Three cron-scheduled workflows. All three commit state back to the
+repo on completion.
 
-| Workflow | Cron | What it does |
+| Workflow | Cron (UTC, DST) | What it does |
 |---|---|---|
-| `daily-backfill.yml` | `0 21 * * 1-5` (21:00 UTC Mon-Fri) | `backfill_subsector.py` (default freq=5, 180d) — maintains historical state machine + subsector metrics, commits `breakout_tracker.db` |
-| `daily-trade-execution.yml` | `30 21 * * 1-5` (21:30 UTC Mon-Fri) | `trade_executor.py` — scores, exits, enters, commits `trade_history.json`, `wash_sale_log.json`, `breakout_tracker.db` |
-| `quarterly-review.yml` | `0 14 1 1,4,7,10 *` | `quarterly_review.py --months 12` — writes `quarterly_reviews/review_YYYY_QN.txt` + updates `review_history.json` |
+| `daily-backfill.yml` | `0 20 * * 1-5` (4:00 PM ET) | `backfill_subsector.py` fills any missing historical DB rows |
+| `daily-trade-execution.yml` | `30 20 * * 1-5` (4:30 PM ET) | `trade_executor.py` scores + trades |
+| `quarterly-review.yml` | `0 14 1 1,4,7,10 *` | `quarterly_review.py --months 12` writes 7-section health report |
 
-**Workflow race resolved**: crons were staggered on an earlier update
-(backfill 21:00, trade-exec 21:30) so trade-exec checks out the
-backfill's DB commit before running. No `-X ours` hack needed in
-current workflow.
+**⚠️ DST note**: GitHub Actions cron is UTC-only. Current UTC values
+are tuned for US Eastern DAYLIGHT TIME (March–November). When the US
+returns to Standard Time (~Nov 2026), both daily crons need to shift
++1 hour:
+- backfill: `0 21 * * 1-5`
+- trade-exec: `30 21 * * 1-5`
 
-**Manual overrides** on `daily-trade-execution.yml`: `entry_threshold`
-and `persistence_days` as workflow_dispatch inputs, exported as env
-vars that `load_trade_config()` reads.
+YAML comments in both workflow files document this.
+
+**Crons are staggered** (backfill 4:00, trade-exec 4:30) so backfill's
+DB commit lands before trade-exec checks out the repo. Eliminated the
+original race condition that needed a `-X ours` merge strategy.
+
+**Manual override**: `workflow_dispatch` on `daily-trade-execution.yml`
+exposes `entry_threshold` and `persistence_days` as inputs → env vars
+that `load_trade_config()` picks up.
 
 ---
 
 ## Key non-obvious decisions
 
-### Persistence filter uses "N most recent DB rows," not strict trading days
+### Persistence filter uses N most recent DB rows, not strict trading days
 
-`trade_executor.check_persistence()` runs:
-
+`trade_executor.check_persistence()`:
 ```sql
 SELECT date, score FROM ticker_scores
 WHERE ticker = ? AND date < ?
 ORDER BY date DESC LIMIT ?
 ```
 
-This is **intentional**. It does NOT walk a trading calendar to require
-exactly the last N trading days. If the DB has a genuine gap (holiday,
-CI glitch), we'd rather let a legit signal through than block it.
+**Intentional.** If the DB has a gap (holiday, CI glitch, DB rebase
+conflict), we'd rather let a legit signal through than block it. Good
+Friday 2026 (4/3) would have broken a strict-trading-day interpretation
+for any VIAV-like ticker that qualified on 4/7. User confirmed this
+design; don't tighten it.
 
-**Example:** VIAV on 2026-04-07 has rows 4/6, 4/2, 4/1 as its last 3 —
-4/3 is missing from the DB because **Good Friday 2026 was 4/3, not a
-trading day**. So those 3 DB rows *are* the 3 most recent trading days.
-The loose interpretation matches strict interpretation for this case,
-and degrades gracefully when they differ.
+### Entries use live-scored "today" + DB rows for "prior N"
 
-User confirmed this design (feedback memory:
-`feedback_persistence_filter_semantics.md`). Don't tighten it.
-
-### Live trading uses live-scored values for "today" + DB rows for "prior N"
-
-Sequence inside `trade_executor.main()`:
-1. `score_all()` computes today's scores in-memory
+Inside the same main() call:
+1. `score_all()` computes today's scores in memory
 2. `upsert_ticker_scores(db, today, results)` writes them to DB
-3. `evaluate_entries` queries the DB for prior N days per candidate
+3. `evaluate_entries` queries the DB for the prior N days per candidate
 
-The same run's live scores become "prior" data for the next day. This
-is why the executor must commit the DB at the end (see workflow note
-above).
+Today's live scores become "prior" data for tomorrow's run. This is
+why the workflow must commit the DB at the end — otherwise the next
+run's persistence check would have a missing row.
 
-### Limit orders land *tomorrow* — today's run submits, tomorrow's run verifies
+### The subsector state machine does NOT drive trades
 
-Because `trade_executor.py` runs at 21:30 UTC (5:30 PM ET, after close),
-any limit order it submits is for **the next session's open** with
-`TimeInForce.DAY`. If the limit fills overnight, the position appears
-in Alpaca the next day. `ensure_stops_for_positions()` at the top of
-tomorrow's run is what finally attaches the GTC stop.
+Entries are purely score-based on the individual ticker. The
+subsector state machine (`subsector_breakout.py`) is an observability
+layer for the Streamlit dashboard. It tracks when a cluster of
+tickers in the same subsector all score high simultaneously
+(quiet → warming → emerging → confirmed → fading → revival), which is
+useful context for humans but never gates an entry. If you ever want
+to wire it into execution (e.g., "only enter if subsector is
+Confirmed"), that would be a material strategy change requiring its
+own backtest.
 
-**Consequence**: on the day a limit order is submitted, we don't know
-if it filled. The trade_log entry is written with `price=sizing_price`
-(not fill_price) as a sizing reference. The actual fill price lives
-in Alpaca's order history and is not currently auto-reconciled back
-into `trade_history.json`. Left as a future enhancement.
+### The email digest palette is intentionally NOT the dashboard palette
 
-### Zero-score rows are scoring-pipeline output, not data failures
+Dashboard uses a 5-tier **heat** palette (Tableau 20:
+`#E15759`/`#F28E2B`/`#F1CE63`/`#A0CBE8`/`#4E79A7`) for the
+Fire/Hot/Warm/Tepid/Cold tiers.
 
-A row like `NVDA 2026-04-06 score=0.0 signals=[]` means the scorer ran
-successfully but no indicator fired. It is NOT a fetch failure. Fetch
-failures don't write rows at all. Zero-score counts across the
-universe are a **breadth signal** — universe-wide deterioration shows
-up as rising zero-score share.
+Email digest uses a **semantic** palette (green/amber/orange/red —
+"good/bad" scale) for P&L-style coloring.
 
-### Dashboard uses a 5-tier heat metaphor, not 4 tiers
+Do NOT unify them. The dashboard tells you where signals are; the
+email tells you what's winning/losing.
 
-`dashboard.score_tier()` returns `fire` (≥9.5), `hot` (≥8.5),
-`warm` (≥7), `tepid` (≥5), or `cold` (<5). Colors come from the
-Tableau 20 palette (#E15759 / #F28E2B / #F1CE63 / #A0CBE8 / #4E79A7).
-Text is white on Fire+Cold, black on Hot/Warm/Tepid for contrast.
+### Limit orders over market orders — why
 
-The same tier system is used in:
-- Tickers-page summary card (counts per tier)
-- Score column cells on All Tickers table + Subsector drill-downs
-  (`score_cell_style()` helper)
-- Score History line chart (tier bands via `add_hrect`)
-- Score heatmap colorscale (2-month window, was 3-month)
-- Universe distribution stacked area (5 buckets)
+Market orders at next-open fill at whatever price opens, gap or not.
+99th-percentile overnight gap in the 1y backtest window is +8.5%. One
+AEHR trade gapped +15.5% overnight and turned an estimated $20.4k
+entry into an actual $23,513 cost — a $3,158 overrun on a single
+trade that pushed account cash to -$2,626.
 
-The email digest from `trade_executor.py` uses a DIFFERENT palette
-(green/amber/orange/red — semantic "good/bad" scale, not heat). Don't
-accidentally unify them.
+`entry_mode_backtest.py` compared 4 configs. Limit-3% + 5% floor
+produced the best Sharpe (3.16), Sortino (4.88), and zero negative-cash
+days (vs 70 for the market-order baseline). 87% of signals still fill;
+83% of missed signals re-qualify within 5 trading days.
 
-### Dual-TF RS fix in quarterly_review.py
+### Zero-score rows are valid output, not data failures
 
-`quarterly_review.py:collect_indicator_events()` was passing
-`multi_tf_rs=None` to `compute_all_indicators`, causing dual_tf_rs to
-always report `triggered=False` → 0 events collected → Section 2 fell
-back to the hardcoded baseline (+5.20%). Fix: replicate `score_all()`'s
-multi-timeframe percentile computation inside the event loop, at 126d,
-63d, 21d windows. Next quarterly review will have a real dual_tf_rs
-edge value.
-
-### Trade log schema carries score_at_entry on sells + supports trims
-
-`trade_log.log_sell()` auto-populates `score_at_entry` on the sell
-record by walking back to the last matching buy. This lets
-`trade_log.bucket_stats()` group realized P&L by entry bucket
-(8.5-9.0, 9.0-9.5, 9.5+) without cross-referencing records.
-
-`transition_trim.py` writes records with `side: "trim"` and
-`action: "transition_trim"` to preserve audit trail for the one-time
-sizing migration (not a recurring operation).
-
-Run `python trade_log.py` for a quick bucket table.
+A row like `NVDA 2026-04-06 score=0.0 signals=[]` means the scorer
+ran but no indicator fired. It is NOT a fetch failure — fetch
+failures don't write rows at all. A rising share of zero-score rows
+across the universe is a **breadth signal** (universe-wide
+deterioration), not a data bug.
 
 ---
 
-## Universe-wide signal diagnostics (2026-04-17/18)
+## Current live state (2026-04-21)
 
-Three diagnostic scripts were added to answer "where does the score
-actually work?" before considering any signal-based sizing/pyramiding.
+**trade_history.json:**
+- 5 original buys (2026-04-10 → 04-15) under OLD 20%-of-equity sizing
+- 5 transition trims executed 2026-04-20 via `transition_trim.py`
+  (one-time migration to new 8.33% basis — AEHR/FORM/IRDM/VIAV/WDC
+  all trimmed, stops preserved at original entry × 0.80)
+- Any entries that filled overnight from tonight's automated run
+  will appear in tomorrow's snapshot
 
-**`signal_diagnostics.py`** — aggregate-level: forward return by score
-bucket across raw/sm3/sm5/sm10/sm20 smoothing × 7/21/63-day horizons.
-Key finding: smoothing consistently improves predictive rank
-correlation (sm20 ρ=+0.353 vs raw ρ=+0.277 at h=63d). Signal is
-concentrated in AI/Tech — ρ=+0.407 at 63d sm10 for AI/Tech vs +0.239
-for Other.
-
-**`signal_diagnostics_subsector.py`** — decomposed by all 31 subsectors.
-Revealed that "AI/Tech aggregate works" is driven by ~4 subsectors
-(Chips — Networking/Photonics, Chips — Memory, Alt AI Compute,
-Hyperscalers), and "Other fails" is also not uniform (Nuclear Reactors
-ρ=+0.487 is the single best subsector).
-
-**`signal_diagnostics_significance.py`** — bootstrap 95% CIs on ρ.
-26 of 31 subsectors are statistically significant (15 positive,
-11 negative, 5 inconclusive). Chips — Networking/Photonics is the
-highest-confidence positive signal (tightest CI, N=1824, ρ=+0.264).
-Industrial Robotics & Automation is the strongest negative signal
-(ρ=-0.507).
-
-User has **not yet acted on these findings**. They're documented for
-future revisit. No pyramiding, no sector-weighted scoring, no universe
-pruning has been implemented.
+**Account state after transition trim:**
+- 5 positions at new 8.33% × (1 + P&L) sizing totaling ~$37k
+- ~$49k cash available (after trim proceeds)
+- 7 open position slots out of 12
+- All stops in place at original entry × 0.80
 
 ---
 
-## Trade history so far
+## Universe (180 tickers, 31 subsectors)
 
-`trade_history.json` at time of writing:
+Committed to `ticker_config.yaml`. Summary:
 
-- **5 buy entries** under OLD 20%-of-equity sizing (2026-04-10
-  through 2026-04-15): FORM, IRDM, VIAV (all $19.9k cost), AEHR
-  ($20.4k), WDC ($19.3k)
-- **0 sells** yet (stops in place, all positions alive)
-- Total cost basis ≈ $99,580; total market value ≈ $108,028;
-  unrealized P&L ≈ +$8,448 (+8.5%)
-- Cash: **-$2,626** (negative due to AEHR gap-up slippage — see AEHR
-  note below)
+- **AI & Tech Capex** — 101 tickers, 15 subsectors (semis, data center, AI-native clouds, hyperscalers, software)
+- **Metals** — 16 tickers, 3 subsectors (gold/silver direct, miners)
+- **Crypto** — 11 tickers, 2 subsectors (majors incl. GLXY equity, crossover tokens)
+- **Robotics** — 14 tickers, 3 subsectors
+- **Space & Satellite** — 11 tickers, 2 subsectors
+- **Nuclear & Uranium** — 10 tickers, 2 subsectors
+- **Biotech** — 8 tickers, 2 subsectors
+- **eVTOL** — 5 tickers, 1 subsector
+- **Quantum** — 4 tickers, 1 subsector
 
-**AEHR incident (2026-04-16)**: AEHR gapped up +15.5% overnight (yfinance
-close 4/15 = $73.22, Alpaca fill 4/16 = $84.58). Our sizing math
-assumed $73.22, bought 278 shares @ target $20.4k, actual cost
-$23,513. Single-trade overrun of $3,158 turned a small cash buffer
-into a negative balance. This triggered the limit-order / cash-floor
-redesign.
+Recent additions (April 2026): BE, CRWV, APLD, BTDR, RIOT, CLSK,
+WYFI, KEEL, SNDK, EQT, SEI, LBRT, PUMP, PSIX, BW, GLXY.
 
-**Transition trim plan** (pending Monday 2026-04-20 execution):
-resize all 5 positions from old 20%-of-$100k basis to new
-8.33%-of-$100k × (1 + pnl_pct) basis. Expected outcome:
-~$65k cash freed, 5 positions at P&L-weighted new sizes totaling
-~$45k, 7 open slots. Script: `transition_trim.py --execute`. Stops
-preserved at `original_entry × 0.80` (unchanged — same thesis).
+Adding a ticker: edit `ticker_config.yaml`, commit. No code change.
+
+If you add a new subsector, also add its 2-letter code to
+`SUBSECTOR_CODES` in `trade_executor.py` (email display uses it). The
+code `_subsector_code()` falls back to full name if a code is
+missing, so forgetting won't crash — just looks ugly.
 
 ---
 
-## Memory files
+## Universe-wide signal diagnostics (2026-04-17/18, documented not acted on)
 
-At `~/.claude/projects/-Users-toddbruschwein-Claude-Workspace/memory/`:
+Three scripts, run once to characterize signal quality:
 
-- `MEMORY.md` — index
-- `feedback_persistence_filter_semantics.md` — "N most recent DB rows,
-  not strict trading days. Holidays aren't gaps."
+- `signal_diagnostics.py` — aggregate forward return by score bucket
+  at 7/21/63d horizons across raw + sm3/5/10/20 smoothing. **Finding**:
+  smoothing consistently improves rank correlation (sm20 ρ=+0.353 vs
+  raw ρ=+0.277 at h=63d).
+- `signal_diagnostics_subsector.py` — per-subsector decomposition.
+  **Finding**: the AI/Tech aggregate result is driven by ~4
+  subsectors (Chips — Networking/Photonics, Memory, Alt AI Compute,
+  Hyperscalers). "Other" aggregate is not uniform — Nuclear Reactors
+  (ρ=+0.487) is the single strongest subsector.
+- `signal_diagnostics_significance.py` — bootstrap 95% CIs.
+  **Finding**: 26 of 31 subsectors statistically significant (15
+  positive, 11 negative, 5 inconclusive). Chips — Networking/Photonics
+  has the highest-confidence positive signal (tight CI, N=1824,
+  ρ=+0.264). Industrial Robotics is the strongest negative (ρ=−0.507).
 
-Also note the `CLAUDE.md` project memory:
-- Read `HANDOFF.md` first before any work
-- Terse style, no preamble
-- Investigation > delegation (query DB, don't theorize)
+**No strategy changes made based on these findings.** The universe
+has not been pruned or reweighted. Signal-conditional sizing has
+not been implemented. User has the data for future decisions but
+intentionally held.
 
 ---
 
@@ -355,153 +265,146 @@ Also note the `CLAUDE.md` project memory:
 
 Priority roughly top-down:
 
-1. **Execute `transition_trim.py` Monday 2026-04-20 at market open.**
-   Dry-run was verified 2026-04-18 (5 trims, ~$65k freed, stops
-   preserved). Must complete before the 5:30 PM scoring run or cash
-   floor keeps blocking new entries. Script halts loudly on any
-   failure — manual intervention only if that happens.
+1. **Monitor the new limit-order + cash-floor regime.** First few
+   weeks of entries will tell us if fill rates and slippage match the
+   `entry_mode_backtest.py` predictions (87% fill, ≤3% slippage). If
+   reality diverges meaningfully (e.g. fill rate < 70%, slippage > 5%
+   regularly), that's a signal the market is behaving differently
+   than the backtest window and needs re-tuning.
 
-2. **Monitor the new limit-order + cash-floor regime.** First few
-   entries under the new rules will tell us if Alpaca-first pricing
-   + 3% limit + 5% floor behaves as modeled. Specifically: fill rate
-   on limits, slippage on actual fills, cash utilization. Compare
-   against `entry_mode_backtest.py` predictions.
+2. **Reconcile actual fill prices back into `trade_history.json`.**
+   `log_buy()` currently records `price = sizing_price` (Alpaca
+   latest at submit time), not the actual fill price. For accurate
+   per-position cost basis, a next-day reconciliation step could look
+   up `filled_avg_price` from Alpaca's order history and update the
+   trade log entry. Not shipped.
 
-3. **Reconcile actual limit-fill prices back into trade_history.json.**
-   Currently `log_buy()` records `price=sizing_price` (Alpaca latest
-   at submit time), not the actual fill price. For accurate
-   per-position basis tracking, a next-day reconciliation step could
-   look up the filled_avg_price from Alpaca's order history and
-   update the trade log entry.
+3. **MA Alignment re-inclusion watch.** Its 12-month edge flipped to
+   +7.76% in the 2026-Q2 quarterly review (was −9.3% in the 3yr
+   window). Do NOT re-add yet — wait for 2026-Q3 review to confirm
+   it's not a one-window fluke. If Q3 also shows positive edge, add
+   back at weight ~1.5 and rerun `--sweep-entry-threshold`.
 
-4. **MA Alignment re-inclusion watch.** Its edge flipped +17% in the
-   last year (Q2 quarterly review). Do NOT re-add yet — wait one more
-   quarterly review (2026-Q3) to confirm it's not a one-window fluke.
-   If Q3 also shows positive MA Alignment edge, add it back with
-   weight ~1.5 and rerun the threshold sweep.
+4. **Daily-backfill frequency.** Currently `frequency=5` (samples
+   every 5 trading days, 180-day window). The persistence filter
+   works fine because the executor fills in the per-day rows, but
+   `frequency=1` would give a robust fallback if trade-exec commits
+   fail. Tradeoff: runtime goes 10-20 min → ~50+ min. CI budget
+   permitting.
 
-5. **Daily-backfill frequency.** Currently `frequency=5` (samples every
-   5 trading days, 180-day window). The persistence filter works fine
-   because the trade executor fills in the per-day rows, but backfill
-   at freq=1 would give us a robust fallback if trade-exec commits
-   fail. Tradeoff: runtime goes from 10-20 min to ~50+ min per day.
+5. **Quarterly review Section 4 completion.** Needs live sells to be
+   meaningful. Wire up bucket-grouped realized P&L comparison vs
+   backtest expectations once 20+ sells accumulate.
 
-6. **Signal-diagnostics-driven strategy.** We have 26 subsectors with
-   statistically significant signal direction, but haven't acted on
-   the findings. Plausible next steps if/when user wants to:
-   - Sector-conditional entry rules (tighter threshold in
-     anti-predictive subsectors like Industrial Robotics / Power Semis
-     / Gene Editing)
-   - Explicit weighting of positions by subsector ρ (advanced; needs
-     its own backtest)
-   - Pyramiding on confirmed-signal subsectors only (ρ-filtered)
-
-7. **Quarterly review Section 4 & 6 completion.**
-   - Section 4: becomes meaningful once live sells exist. Wire up
-     bucket-grouped realized P&L comparison against backtest
-     expectations.
-   - Section 6: implement per-state 63-day forward returns via per-date
-     ticker replay. Expensive — consider sampling.
+6. **DST cron shift**. Both daily workflows need `+1` hour around
+   Nov 2, 2026. YAML comments document the replacement values.
 
 ---
 
 ## Files to know
 
-### Production code
+### THE one script
 
-- `indicators.py` — all indicator functions + `score_all` + `score_ticker`
-- `trade_executor.py` — live execution: Alpaca-first pricing, 5% cash
-  floor, 3% limit orders, DAY TIF, GTC stops via `ensure_stops_for_positions`
-- `trade_log.py` — `log_buy`, `log_sell` (auto-carries score_at_entry),
-  `bucket_stats()` for per-tier analysis. Supports `side: "trim"` records.
-- `subsector_store.py` — SQLite CRUD for `ticker_scores`,
-  `subsector_daily`, `subsector_breakout_state`
-- `subsector_breakout.py` — state machine
-- `backfill_subsector.py` — historical DB population
+- `trade_executor.py` — the daily pipeline. 5:30 PM ET entry point.
+  Contains: connection helpers, order helpers (market/limit/stop),
+  `evaluate_exits()`, `evaluate_entries()` with cash-floor sizing +
+  Alpaca-first pricing, `execute_entries()` (submits LIMIT orders),
+  email digest builder, skip-reason categorizer, SUBSECTOR_CODES map.
+
+### Pipeline components
+
+- `indicators.py` — 7-indicator scoring engine + `score_all()` +
+  `score_ticker()`. Gradient + binary weighting.
+- `config.py` — YAML loader
 - `data_fetcher.py` — yfinance batch fetch
-- `config.py` — yaml loader + `get_all_tickers`, `get_indicator_config`
-- `wash_sale_tracker.py` — logs violations but never blocks entries
-- `quarterly_review.py` — 7-section quarterly review runner
-- `dashboard.py` — Streamlit UI; 5-tier Tableau 20 palette
+- `subsector_store.py` — SQLite CRUD (3 tables: `subsector_daily`,
+  `subsector_breakout_state`, `ticker_scores`)
+- `subsector_breakout.py` — state machine (dashboard-only — does not
+  gate trades)
+- `trade_log.py` — JSON audit log. `log_buy` / `log_sell` /
+  `log_trim` (transition_trim records). Auto-carries
+  `score_at_entry` onto sells for bucket analysis.
+- `wash_sale_tracker.py` — logs loss-exit cooldowns. Never blocks.
 
-### Backtesting & diagnostics
+### Dashboard + review
 
-- `sizing_comparison_backtest.py` — portfolio-construction framework;
-  sweeps over `--sweep-max-positions`, `--sweep-stop-loss`,
-  `--sweep-entry-threshold`
+- `dashboard.py` — Streamlit, 3 pages, 5-tier Tableau 20 palette
+- `quarterly_review.py` — 7-section quarterly health report
+
+### Backtesting (validates live config)
+
+- `sizing_comparison_backtest.py` — 4-strategy comparison + sweep
+  flags (`--sweep-max-positions`, `--sweep-stop-loss`,
+  `--sweep-entry-threshold`)
 - `entry_mode_backtest.py` — 4-way market vs limit comparison (the
-  backtest that validated the current Limit-3% + cash-floor config)
-- `signal_diagnostics.py` — aggregate score→forward-return analysis
-- `signal_diagnostics_subsector.py` — per-subsector decomposition
-- `signal_diagnostics_significance.py` — bootstrap CIs on ρ
+  backtest that chose Limit-3% + 5% floor)
+- `backtester.py` — shared backtest primitives
+- `portfolio_backtest.py` — legacy, superseded by
+  `sizing_comparison_backtest.py`; kept for reference
 
-### One-time / utility scripts
+### Diagnostics
 
-- `backfill_stop_orders.py` — places GTC stops for any held position
-  lacking one (ran once in April to attach stops to pre-existing
-  positions)
-- `transition_trim.py` — one-time sizing migration script (dry-run
-  verified, execute pending Monday)
+- `signal_diagnostics.py`
+- `signal_diagnostics_subsector.py`
+- `signal_diagnostics_significance.py`
 
-### Config
+### Utility / one-time
 
-- `ticker_config.yaml` — 180 tickers across 31 subsectors, indicator
-  weights, `trade_execution:` section (entry_threshold=8.5,
-  persistence_days=3, stop_loss_pct=0.20, max_positions=12,
-  max_position_pct=0.083), `breakout_detection:` section,
-  `scoring:` section (max_score: 10.0)
+- `backfill_subsector.py` — historical DB fill (runs daily from CI)
+- `backfill_stop_orders.py` — one-time GTC stop attachment for any
+  position without one (ran once in April; now idempotently covered
+  by `ensure_stops_for_positions()` in the daily pipeline)
+- `transition_trim.py` — one-time sizing migration (ran 2026-04-20)
 
-### CI
+### Config + CI
 
-- `.github/workflows/daily-backfill.yml` — cron `0 21 * * 1-5`
-- `.github/workflows/daily-trade-execution.yml` — cron `30 21 * * 1-5`,
-  env-var overrides via `workflow_dispatch`
-- `.github/workflows/quarterly-review.yml` — cron `0 14 1 1,4,7,10 *`
+- `ticker_config.yaml` — 180 tickers, indicator weights,
+  `trade_execution:`, `breakout_detection:`, `scoring:`
+- `.github/workflows/daily-backfill.yml` (20:00 UTC M-F)
+- `.github/workflows/daily-trade-execution.yml` (20:30 UTC M-F)
+- `.github/workflows/quarterly-review.yml` (14:00 UTC quarterly)
 
-### Outputs (committed to repo)
+### Outputs (committed)
 
-- `breakout_tracker.db` — SQLite; ~34k+ ticker_score rows
-- `trade_history.json` — 5 buys under old sizing, 0 sells
-- `wash_sale_log.json` — probably empty
-- `quarterly_reviews/review_2026_Q2.txt` — baseline review
-- `quarterly_reviews/review_history.json` — index for trend tracking
+- `breakout_tracker.db` — SQLite
+- `trade_history.json` — trade audit log
+- `wash_sale_log.json`
+- `quarterly_reviews/review_YYYY_QN.txt` + `review_history.json`
 
-### Specs (read-only historical context)
+### Docs
 
-- `ALPHA_SCANNER_DOCUMENTATION.md` — main technical methodology doc
-  (kept in sync with this handoff)
-- `QUARTERLY_REVIEW_SPEC.md`, `THRESHOLD_OPTIMIZER_SPEC.md`,
-  `PORTFOLIO_BACKTEST_SPEC.md`, `ALPACA_PAPER_TRADING_SPEC.md`,
-  `PORTFOLIO_ANALYSIS_SPEC.md` — original specs for shipped features
+- `README.md` — public overview
+- `HANDOFF.md` — **this file**
+- `ALPHA_SCANNER_DOCUMENTATION.md` — technical deep dive
 
 ---
 
 ## Gotchas
 
-- **`fetch_all` signature is `fetch_all(cfg, period=...)`**, not
-  `fetch_all(tickers, period=...)`.
-- **Python 3.9 compatibility**: use `from __future__ import annotations`
+- **`fetch_all(cfg, period=...)`**, not `fetch_all(tickers, ...)`. Not
+  the other way round. Easy to get wrong.
+- **Python 3.9 compatibility**: `from __future__ import annotations`
   and `str | None` still needs the future import.
-- **Score 0 with `signals=[]`** is valid output, not a bug.
-- **Max score is 10.0**, not 13.0. An older plan
-  (`glistening-prancing-reddy.md`) proposed a 13-point scoring system
-  that was never adopted.
-- **MA Alignment is computed but NOT scored.** Same with Near 52w High.
-  Both exist in the `indicators` dict for dashboard display only.
-- **`check_persistence` requires a `db_conn` param** — pass it through
-  from `main()`. Don't create a new connection inside the function.
-- **Alpaca orders are paper only.** `connect_alpaca()` enforces a
-  paper-account check (account number must start with "PA") — don't
-  bypass it. Production is `paper=True` in every call.
+- **Score 0 with empty signals** is valid, not a bug.
+- **Max score is 10.0**, not 13.0. An old plan proposed 13-point; never
+  adopted.
+- **MA Alignment and Near 52w High** are computed but NOT scored.
+- **`check_persistence` needs a `db_conn` param** — pass it through
+  from `main()`, don't create a new connection.
+- **Alpaca orders are paper only.** `connect_alpaca()` enforces
+  account number starts with `PA`. Do not bypass. `paper=True` in
+  every call.
+- **`--preview-email`** renders HTML to a local file (default
+  `email_preview.html`, gitignored). Use for visual testing without
+  sending.
 - **Dashboard 5-tier palette uses black text on Hot/Warm/Tepid**,
-  white on Fire/Cold. If you change a background color, verify text
-  contrast before shipping.
-- **The email digest palette is GREEN/AMBER/ORANGE/RED** — semantic,
-  not the dashboard's heat palette. They're intentionally different.
-- **`trade_executor.py` is the source of truth for `SUBSECTOR_CODES`**
-  — the 2-letter email-column codes for all 31 subsectors. Update the
-  dict there if a subsector is added or renamed; `_subsector_code()`
-  falls back to the full name if a code is missing.
+  white on Fire/Cold. Contrast matters if you change a bg color.
+- **`SUBSECTOR_CODES` lives in `trade_executor.py`**, not
+  ticker_config.yaml. Update it when subsectors change.
+- **Limit orders auto-cancel at close next day (DAY TIF).** Don't try
+  to cancel them manually — stale limit IDs from yesterday are
+  already gone by the time today's run starts.
+- **`transition_trim.py` is DONE** — ran 2026-04-20. Do not re-run.
 
 ---
 
@@ -510,14 +413,15 @@ Priority roughly top-down:
 ```bash
 cd /Users/toddbruschwein/Claude-Workspace/breakout-tracker
 
-# Score once, print top signals (no trading)
-python3 -c "from config import load_config; from data_fetcher import fetch_all; from indicators import score_all; cfg=load_config(); data=fetch_all(cfg, period='1y', verbose=False); res=score_all(data, cfg); [print(f\"{r['ticker']:8} {r['score']:.1f}\") for r in res[:20]]"
-
-# Dry-run trade executor (needs .env with ALPACA_API_KEY/ALPACA_SECRET_KEY)
+# Dry-run the daily pipeline
 python3 trade_executor.py --dry-run
 
-# Dry-run trade executor with email preview
-python3 trade_executor.py --dry-run --email
+# Dry-run + render email HTML for visual preview
+python3 trade_executor.py --dry-run --preview-email
+open email_preview.html
+
+# Force an entry (bypass threshold + persistence, keep cash floor + sizing)
+python3 trade_executor.py --dry-run --force-entry HL
 
 # Trade log summary + bucket stats
 python3 trade_log.py
@@ -525,46 +429,35 @@ python3 trade_log.py
 # Dashboard
 streamlit run dashboard.py
 
-# Run a quarterly review (writes to quarterly_reviews/)
+# Quarterly review
 python3 quarterly_review.py --months 12
 
-# Backfill the DB (long-running)
-python3 backfill_subsector.py --days 180 --frequency 5
-
-# Portfolio sizing comparison (baseline backtest)
+# Backtests
 python3 sizing_comparison_backtest.py
-
-# Entry-mode backtest (market vs limit)
+python3 sizing_comparison_backtest.py --sweep-entry-threshold 7.5,8.0,8.5,9.0,9.5
 python3 entry_mode_backtest.py
 
-# Signal diagnostics (aggregate → subsector → bootstrap significance)
+# Signal diagnostics
 python3 signal_diagnostics.py
 python3 signal_diagnostics_subsector.py
 python3 signal_diagnostics_significance.py
-
-# ONE-TIME: resize 5 old-sizing positions to new 8.33% basis
-python3 transition_trim.py --dry-run    # preview
-python3 transition_trim.py --execute    # actually run, market must be open
 ```
 
 ---
 
-## Tone / working style notes for the next thread
+## Working style for the next thread
 
 - User prefers concise, direct responses. No preamble, no "great
   question" intros.
-- When making changes, prefer editing existing files over creating
-  new ones. This project has accumulated enough scripts.
-- Investigation > delegation: when a user asks "why is X happening",
+- Prefer editing existing files over creating new ones. This project
+  has accumulated enough scripts.
+- Investigation > delegation. When the user asks "why is X happening,"
   query the DB or Alpaca directly, run small scripts, show the data.
   Don't theorize without evidence.
-- User is a fluent programmer — no need to explain basics, but do
+- User is a fluent programmer. No need to explain basics, but do
   show the reasoning behind design choices.
-- When suggesting config changes, always ground them in a specific
-  backtest or diagnostic artifact.
-- **Don't call something a "data issue" or "bug" without verifying
-  against the raw data first.** NVDA/IREN zero scores looked like
-  "data issues" once — they were legitimate score decays during a
-  breadth pullback.
-- Commit every meaningful code change; the user will usually ask.
-  When in doubt: present the change, ask before committing.
+- Ground every config change in a specific backtest or diagnostic
+  artifact.
+- Don't call something a "data issue" or "bug" without verifying
+  against raw data first.
+- Commit every meaningful code change. When in doubt: present, ask.
