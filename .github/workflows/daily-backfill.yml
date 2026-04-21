@@ -2,10 +2,17 @@ name: Daily Database Backfill
 
 on:
   schedule:
-    # 5:00 PM ET (21:00 UTC) Monday-Friday — runs 30 min before the
-    # trade executor (21:30 UTC) so the daily backfill can complete
-    # and push first, avoiding DB rebase contention.
-    - cron: '0 21 * * 1-5'
+    # 4:00 PM ET Monday-Friday (at market close) — runs 30 min before
+    # the trade executor (20:30 UTC) so this backfill can complete and
+    # push first, avoiding DB rebase contention. Backfill reads historical
+    # bars, so landing exactly at close is fine — it doesn't need today's
+    # bar to be finalized.
+    #
+    # GitHub Actions cron is UTC-only. The fixed UTC time below is
+    # tuned for US Eastern DAYLIGHT TIME (March-November): 20:00 UTC = 4:00 PM ET.
+    # When US returns to STANDARD TIME (~Nov 2026), shift to
+    # cron: '0 21 * * 1-5' so it fires at 4:00 PM ET year-round.
+    - cron: '0 20 * * 1-5'
   workflow_dispatch: # Allow manual trigger from GitHub UI
 
 jobs:

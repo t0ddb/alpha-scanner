@@ -2,9 +2,14 @@ name: Daily Trade Execution
 
 on:
   schedule:
-    # 5:30 PM ET (21:30 UTC) Monday-Friday.
-    # Runs after market close; orders placed for next open.
-    - cron: '30 21 * * 1-5'
+    # 4:30 PM ET Monday-Friday — 30 min after market close.
+    # Orders placed for next open. Backfill runs 30 min earlier (20:00 UTC).
+    #
+    # GitHub Actions cron is UTC-only. The fixed UTC time below is
+    # tuned for US Eastern DAYLIGHT TIME (March-November): 20:30 UTC = 4:30 PM ET.
+    # When US returns to STANDARD TIME (~Nov 2026), shift to
+    # cron: '30 21 * * 1-5' so it fires at 4:30 PM ET year-round.
+    - cron: '30 20 * * 1-5'
   workflow_dispatch:
     # Allow manual trigger from GitHub UI
     inputs:
