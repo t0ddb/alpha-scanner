@@ -1,6 +1,6 @@
 # Alpha Scanner — Technical Documentation
 
-**Automated paper-trading system driven by a daily momentum-scoring signal across 180 tickers.**
+**Automated momentum trading system driven by a daily score across 180 tickers.**
 *April 2026*
 
 ---
@@ -14,7 +14,7 @@ Alpha Scanner is a single script (`trade_executor.py`) that runs once per weekda
 3. Exits positions where the score has dropped below 5 (market sell at next open)
 4. Cancels the GTC stop for each exited position
 5. Enters positions where the score ≥ 8.5 has persisted for 3 consecutive trading days, passing wash-sale and cash-floor checks
-6. Submits 3% limit orders to Alpaca paper trading for tomorrow's open
+6. Submits 3% limit orders to Alpaca for tomorrow's open
 7. On the next day's run, attaches a real GTC stop at entry × 0.80 to each newly-filled position
 8. Sends a daily email digest summarizing everything that happened
 
@@ -39,7 +39,7 @@ Individual stock return prediction is noisy. Aggregating multiple technical indi
 | Max single-trade slippage | +2.6% |
 | Days with negative cash | 0 |
 
-These are paper-trade results against historical data. Live paper performance will diverge — the rest of this doc explains the system mechanics well enough to understand why.
+These are backtest results against historical data. Live performance will diverge — the rest of this doc explains the system mechanics well enough to understand why.
 
 ---
 
@@ -237,7 +237,7 @@ quiet → warming → emerging → confirmed → fading → quiet
 
 **The subsector state machine does not drive trades.** Entries are purely score-based on the individual ticker. The state machine is a Streamlit dashboard layer — useful for humans to understand why a cluster of tickers is scoring high on a given day ("Chips — Networking is Confirmed → the data center capex wave is active"), but it never gates an entry.
 
-If you ever want to wire it into execution (e.g., "only enter if subsector is Confirmed"), that's a material strategy change requiring its own backtest validation. The current paper-trade record is under score-only entry logic.
+If you ever want to wire it into execution (e.g., "only enter if subsector is Confirmed"), that's a material strategy change requiring its own backtest validation. The current live-trade record is under score-only entry logic.
 
 ---
 
@@ -341,7 +341,7 @@ The observation-level bootstrap overstates precision — it assumes independence
 |---|---|
 | Runtime | GitHub Actions (3 scheduled workflows) |
 | Language | Python 3.9.6 |
-| Broker | Alpaca Paper Trading API (`alpaca-py` SDK) |
+| Broker | Alpaca Trading API (`alpaca-py` SDK) |
 | Market data | yfinance (historical batch) + Alpaca `StockHistoricalDataClient` (latest-trade) |
 | Database | SQLite (local, committed to repo) |
 | Dashboard | Streamlit + Plotly, deployed on Streamlit Community Cloud |
@@ -438,7 +438,7 @@ Daily crons are staggered so backfill commits the DB before trade-exec checks ou
 
 11. **Three-layer commit sequencing** (backfill → trade-exec → dashboard rerender) plus DAY TIF limit orders plus idempotent stop-backfill means the system self-heals from any single-day failure. A missed cron doesn't leave orphaned state.
 
-12. **Paper trading enforcement at the API boundary.** `connect_alpaca()` checks the account number prefix ("PA") on every connection. Bypassing this is a deliberate act, not a confused mistake.
+12. **Account-type safety check at the API boundary.** `connect_alpaca()` verifies the account number prefix on every connection — currently enforcing `PA` (paper) during the validation phase. When switching to live, this check and the `paper=True` flag on the `TradingClient` must be updated in coordinated fashion. Bypassing either on its own is a deliberate act, not a confused mistake.
 
 ---
 

@@ -11,17 +11,22 @@ non-obvious state, decisions, and reasoning.
 
 ## What Alpha Scanner is (1 paragraph)
 
-**Alpha Scanner is an automated paper-trading system.** Every trading
-day at 4:30 PM ET (30 min after market close), a GitHub Actions
-workflow runs `trade_executor.py`, which scores 180 tickers with a
-7-indicator momentum signal, evaluates exits on held positions,
-evaluates entries on candidates that pass a 3-day persistence filter,
-and places 3% limit orders on Alpaca paper trading for the next
-session's open. Real GTC stop orders at Alpaca protect each position
-at entry × 0.80. A daily email summary lands in inbox ~5 min after
-the run. Everything else in this repo — the subsector state machine,
-the Streamlit dashboard, the backtest scripts, the signal
-diagnostics — exists to feed or observe or validate this one pipeline.
+**Alpha Scanner is an automated momentum trading system.** Every
+trading day at 4:30 PM ET (30 min after market close), a GitHub
+Actions workflow runs `trade_executor.py`, which scores 180 tickers
+with a 7-indicator momentum signal, evaluates exits on held
+positions, evaluates entries on candidates that pass a 3-day
+persistence filter, and places 3% limit orders on Alpaca for the
+next session's open. Real GTC stop orders at Alpaca protect each
+position at entry × 0.80. A daily email summary lands in inbox
+~5 min after the run. Everything else in this repo — the subsector
+state machine, the Streamlit dashboard, the backtest scripts, the
+signal diagnostics — exists to feed or observe or validate this one
+pipeline.
+
+The system is designed for real-capital trading. It currently runs
+against an Alpaca paper-trading account for live-market validation;
+the live-capital switchover is the next planned step.
 
 Repo: `/Users/toddbruschwein/Claude-Workspace/breakout-tracker`
 GitHub: `github.com/t0ddb/alpha-scanner`
@@ -391,9 +396,12 @@ Priority roughly top-down:
 - **MA Alignment and Near 52w High** are computed but NOT scored.
 - **`check_persistence` needs a `db_conn` param** — pass it through
   from `main()`, don't create a new connection.
-- **Alpaca orders are paper only.** `connect_alpaca()` enforces
-  account number starts with `PA`. Do not bypass. `paper=True` in
-  every call.
+- **Alpaca account-type safety check.** `connect_alpaca()` currently
+  enforces that the account number starts with `PA` (paper), and
+  `paper=True` is passed to `TradingClient`. This protects the
+  validation phase from accidental live-account use. When switching
+  to live trading, both the account-prefix check and `paper=True`
+  need to be updated together — don't bypass just one.
 - **`--preview-email`** renders HTML to a local file (default
   `email_preview.html`, gitignored). Use for visual testing without
   sending.

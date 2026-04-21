@@ -1,8 +1,8 @@
 # Alpha Scanner
 
-**An automated paper-trading system that runs every weekday at 4:30 PM ET, scores 180 stocks with a daily momentum signal, and places limit orders on Alpaca for the next session's open — with real GTC stop orders for downside protection.**
+**An automated momentum trading system that runs every weekday at 4:30 PM ET, scores 180 stocks with a daily signal, and places limit orders on Alpaca for the next session's open — with real GTC stop orders for downside protection.**
 
-![Python](https://img.shields.io/badge/Python-3.9+-blue) ![Broker](https://img.shields.io/badge/Broker-Alpaca_Paper-purple) ![Automation](https://img.shields.io/badge/Runtime-GitHub_Actions-black) ![Dashboard](https://img.shields.io/badge/Dashboard-Streamlit-FF4B4B) ![License](https://img.shields.io/badge/License-MIT-green)
+![Python](https://img.shields.io/badge/Python-3.9+-blue) ![Broker](https://img.shields.io/badge/Broker-Alpaca-purple) ![Automation](https://img.shields.io/badge/Runtime-GitHub_Actions-black) ![Dashboard](https://img.shields.io/badge/Dashboard-Streamlit-FF4B4B) ![License](https://img.shields.io/badge/License-MIT-green)
 
 [Alpha Scanner Dashboard](https://alphascanner.streamlit.app/)
 
@@ -16,7 +16,7 @@ Every trading day at 4:30 PM ET — 30 minutes after market close — a GitHub A
 2. Scores every ticker 0–10 using 7 momentum indicators
 3. Checks which positions to exit (score dropped below 5, or stop fired)
 4. Checks which new entries qualify (score ≥ 8.5 for 3 consecutive days)
-5. Submits limit orders to Alpaca paper trading, sized at 8.3% of equity with a 5% cash floor
+5. Submits limit orders to Alpaca, sized at 8.3% of equity with a 5% cash floor
 6. Attaches a real GTC stop order to each filled position at entry × 0.80
 7. Emails a daily summary with P&L, positions, and next-day candidates
 
@@ -188,7 +188,7 @@ python3 signal_diagnostics_significance.py
 
 Stored in `.env` (local) or GitHub Actions secrets (production):
 
-- `ALPACA_API_KEY`, `ALPACA_SECRET_KEY` — paper trading credentials (account number must start with `PA`; enforced at runtime)
+- `ALPACA_API_KEY`, `ALPACA_SECRET_KEY` — Alpaca credentials. Runtime enforces a paper-account safety check (account number prefix `PA`) during the current validation phase; that check gets relaxed / rewired when the account is switched to live
 - `GMAIL_ADDRESS`, `GMAIL_APP_PASSWORD`, `ALERT_EMAIL_TO` — email digest (optional)
 - `ENTRY_THRESHOLD`, `EXIT_THRESHOLD`, `PERSISTENCE_DAYS`, `STOP_LOSS_PCT`, `MAX_POSITIONS`, `MAX_POSITION_PCT` — override `ticker_config.yaml` for manual test runs
 
@@ -201,7 +201,7 @@ Stored in `.env` (local) or GitHub Actions secrets (production):
 | Runtime | GitHub Actions | 2 daily workflows (backfill + trade exec), 1 quarterly review |
 | Language | Python 3.9 | Single codebase; no microservices |
 | Market data | yfinance + Alpaca Market Data | yfinance for batch historical, Alpaca latest-trade for pre-open pricing |
-| Broker | Alpaca Paper Trading API | All orders + position management |
+| Broker | Alpaca Trading API | All orders + position management |
 | Database | SQLite | Historical score rows + subsector state |
 | Dashboard | Streamlit + Plotly | Deployed on Streamlit Community Cloud |
 | Config | YAML | Universe + indicator params + trade execution config |
@@ -233,6 +233,6 @@ alpha-scanner/
 
 ## About
 
-Built by [Todd Bruschwein](https://linkedin.com/in/toddbruschwein). Started as a research tool for tracking the AI infrastructure investment cycle; evolved into a full automated paper-trading system. Built with Python and [Claude](https://claude.ai). Ongoing.
+Built by [Todd Bruschwein](https://linkedin.com/in/toddbruschwein). Started as a research tool for tracking the AI infrastructure investment cycle; evolved into a full automated momentum trading system designed to run against real capital. Built with Python and [Claude](https://claude.ai). Ongoing.
 
-All trading is on Alpaca's paper trading environment — no real capital. This is a personal research / learning tool, not financial advice.
+The system currently runs on an Alpaca paper-trading account for live-market validation before the live-capital switchover. Nothing on this page constitutes financial advice.
