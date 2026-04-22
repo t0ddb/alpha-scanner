@@ -194,6 +194,28 @@
       "score_at_entry": 8.8,
       "reason": "Score \u2265 8.5 + 3d persist",
       "alpaca_order_id": "d96dd312-0553-494b-9dab-ac59e7f1ae39"
+    },
+    {
+      "ticker": "CIEN",
+      "side": "buy",
+      "date": "2026-04-22",
+      "price": 499.05,
+      "qty": 17.0,
+      "cost_basis": 8483.85,
+      "score_at_entry": 9.0,
+      "reason": "Score \u2265 8.5 + 3d persist",
+      "alpaca_order_id": "c9a431f0-1f80-4b42-92d2-b607725a15a3"
+    },
+    {
+      "ticker": "COHU",
+      "side": "buy",
+      "date": "2026-04-22",
+      "price": 44.805,
+      "qty": 198.0,
+      "cost_basis": 8871.39,
+      "score_at_entry": 8.9,
+      "reason": "Score \u2265 8.5 + 3d persist",
+      "alpaca_order_id": "dbc52a5b-b204-48ca-8549-8a14dcb82931"
     }
   ]
 }
