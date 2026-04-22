@@ -1304,8 +1304,17 @@ def _build_trade_digest_html(
         vs_spy_dollar = None
 
     dry_tag = " [DRY RUN]" if dry_run else ""
-    subject = (f"Alpha Scanner {today.strftime('%m/%d')}: "
-               f"{today_pct_str} | "
+    # Subject formatting is intentionally different from the email body:
+    #  - 📡 satellite emoji replaces "Alpha Scanner" text (branding at a glance)
+    #  - %-m drops the leading zero from the month (e.g. "4/22" not "04/22")
+    #  - Day P&L gets an explicit +/- prefix in the subject (body uses
+    #    _fmt_signed_pct which suppresses + for positive values)
+    if last_equity and last_equity > 0:
+        subject_pct_str = f"{today_pnl_pct:+.2f}%"
+    else:
+        subject_pct_str = "N/A"
+    subject = (f"📡 {today.strftime('%-m/%d')}: "
+               f"{subject_pct_str} | "
                f"{len(entries)} buy / {len(exits)} sell{dry_tag}")
 
     # ── HTML helpers ─────────────────────────────────────────────
