@@ -216,6 +216,17 @@
       "score_at_entry": 8.9,
       "reason": "Score \u2265 8.5 + 3d persist",
       "alpaca_order_id": "dbc52a5b-b204-48ca-8549-8a14dcb82931"
+    },
+    {
+      "ticker": "STM",
+      "side": "buy",
+      "date": "2026-04-23",
+      "price": 49.73,
+      "qty": 137.0,
+      "cost_basis": 6813.01,
+      "score_at_entry": 9.8,
+      "reason": "Score \u2265 8.5 + 3d persist",
+      "alpaca_order_id": "eb25becb-498f-462a-8c35-ff6cfd865b68"
     }
   ]
 }
