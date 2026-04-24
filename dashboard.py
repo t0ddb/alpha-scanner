@@ -94,7 +94,7 @@ def get_pct_since_breakout(tickers: list, data: dict, threshold: float = 9.0) ->
 # =============================================================
 st.set_page_config(
     page_title="Alpha Scanner",
-    page_icon="🚀",
+    page_icon="📡",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -416,7 +416,7 @@ def results_to_dataframe(results: list) -> pd.DataFrame:
 # =============================================================
 def render_sidebar(cfg: dict, timestamps: dict = None):
     """Render the sidebar with navigation."""
-    st.sidebar.title("🚀 Alpha Scanner")
+    st.sidebar.title("📡 Alpha Scanner")
     st.sidebar.divider()
 
     # Navigation
