@@ -3,21 +3,36 @@ from __future__ import annotations
 """
 indicators.py -- Breakout scoring engine.
 
-Computes 8 indicators per ticker, all regime-independent. Weights set by
-3-year conditional edge analysis (incremental edge after controlling for RS):
+Computes 7 scored indicators per ticker (+ display-only MA Alignment and
+Near 52w High for the dashboard). All regime-independent. Weights updated
+2026-04-24 to Scheme C after full audit — see backtest_results/audit_*.
 
     GRADIENT (signal strength → proportional points):
         Relative Strength vs SPY     0-3.0 pts  (top signal, gradient by pctl)
-        Higher Lows                  0-1.0 pts  (consistent, gradient by count)
+        Higher Lows                  0-0.5 pts  (halved from 1.0 — near-zero
+                                                 incremental edge in 3yr + 12mo)
 
     BINARY (fire if triggered, regardless of RS regime):
         Ichimoku Cloud               2.0 pts    (+11.9% incremental edge)
-        Chaikin Money Flow           1.5 pts    (+8.9% edge in both regimes)
         Rate of Change               1.5 pts    (+7.5% incremental edge)
-        Dual-TF RS Acceleration      0.5 pts    (+5.2% edge, new)
+        Dual-TF RS Acceleration      2.5 pts    (was 0.5; +5.5% incremental
+                                                 edge 3yr, +9.6% 12mo — biggest
+                                                 under-weighted signal)
         ATR Expansion                0.5 pts    (+5.2% incremental edge)
+        Chaikin Money Flow           0.0 pts    (was 1.5; NEGATIVE incremental
+                                                 edge in both 3yr and 12mo —
+                                                 audit 2026-04-24; still
+                                                 computed for dashboard)
 
     Max weighted score: 10.0
+
+Scheme C portfolio backtest (13mo, production-equivalent config, 5 path
+starts) vs baseline:
+    Return:    +438%  →  +598%   (+160 pp, +37% relative)
+    Sharpe:     1.97  →   2.21   (+12%)
+    Max DD:    -21.2% →  -20.3%  (slightly better)
+    Win rate:  50.7%  →   59.0%  (+8.3 pp)
+    Entry threshold: 8.5 → 9.0
 
 Dropped: MA Alignment (-9.3% incremental edge, harmful when RS strong)
 Dropped: Near 52w High (-3.3% incremental edge, redundant with RS)
@@ -43,13 +58,13 @@ from config import load_config, get_indicator_config, get_scoring_config, get_ti
 INDICATOR_WEIGHTS = {
     # Gradient — max achievable weight
     "relative_strength": 3.0,
-    "higher_lows":       1.0,
-    # Binary — full weight if triggered
-    "ichimoku_cloud":    2.0,   # +11.9% incremental edge
-    "cmf":               1.5,   # +8.9% edge in both regimes
-    "roc":               1.5,   # +7.5% incremental edge
-    "dual_tf_rs":        0.5,   # +5.2% edge, RS acceleration
-    "atr_expansion":     0.5,   # +5.2% incremental edge
+    "higher_lows":       0.5,   # was 1.0; halved — near-zero incremental edge
+    # Binary — full weight if triggered (weight 0 skips; indicator still computed)
+    "ichimoku_cloud":    2.0,
+    "roc":               1.5,
+    "dual_tf_rs":        2.5,   # was 0.5; biggest under-weighted signal per audit
+    "atr_expansion":     0.5,
+    "cmf":               0.0,   # was 1.5; dropped — NEGATIVE incremental edge
 }
 
 MAX_SCORE = 10.0
@@ -75,11 +90,12 @@ RS_GRADIENT = [
 ]
 
 HIGHER_LOWS_GRADIENT = [
-    # (min_count, points)
-    (5, 1.0),
-    (4, 0.75),
-    (3, 0.5),
-    (2, 0.25),
+    # (min_count, points) — halved from prior (1.0 max → 0.5 max)
+    # per Scheme C audit: HL has near-zero incremental edge after RS
+    (5, 0.5),
+    (4, 0.375),
+    (3, 0.25),
+    (2, 0.125),
 ]
 
 
@@ -552,10 +568,13 @@ def score_ticker(indicators: dict) -> dict:
         total += hl_pts
 
     # ── Binary — all regime-independent ──
+    # Skip indicators with weight 0 (computed but not scored; e.g. CMF per Scheme C).
     for name in ("ichimoku_cloud", "cmf", "roc", "dual_tf_rs", "atr_expansion"):
+        weight = INDICATOR_WEIGHTS.get(name, 0.0)
+        if weight <= 0:
+            continue
         result = indicators.get(name, {})
         if result.get("triggered", False):
-            weight = INDICATOR_WEIGHTS[name]
             signals.append(name)
             signal_weights[name] = weight
             total += weight

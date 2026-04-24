@@ -1,6 +1,6 @@
 # Alpha Scanner
 
-**An automated momentum trading system that runs every weekday at 4:30 PM ET, scores 180 stocks with a daily signal, and places limit orders on Alpaca for the next session's open — with real GTC stop orders for downside protection.**
+**An automated momentum trading system that runs every weekday at 4:30 PM ET, scores 180 stocks with a 6-indicator momentum signal (Scheme C — 2026-04 audit), and places limit orders on Alpaca for the next session's open — with real GTC stop orders for downside protection.**
 
 ![Python](https://img.shields.io/badge/Python-3.9+-blue) ![Broker](https://img.shields.io/badge/Broker-Alpaca-purple) ![Automation](https://img.shields.io/badge/Runtime-GitHub_Actions-black) ![Dashboard](https://img.shields.io/badge/Dashboard-Streamlit-FF4B4B) ![License](https://img.shields.io/badge/License-MIT-green)
 
@@ -15,7 +15,7 @@ Every trading day at 4:30 PM ET — 30 minutes after market close — a GitHub A
 1. Pulls today's OHLC data for 180 tickers across 31 subsectors
 2. Scores every ticker 0–10 using 7 momentum indicators
 3. Checks which positions to exit (score dropped below 5, or stop fired)
-4. Checks which new entries qualify (score ≥ 8.5 for 3 consecutive days)
+4. Checks which new entries qualify (score ≥ 9.0 for 3 consecutive days)
 5. Submits limit orders to Alpaca, sized at 8.3% of equity with a 5% cash floor
 6. Attaches a real GTC stop order to each filled position at entry × 0.80
 7. Emails a daily summary with P&L, positions, and next-day candidates
@@ -30,8 +30,8 @@ The underlying thesis is that individual stock return prediction is noisy, but a
 
 | Rule | Value | Why |
 |---|---|---|
-| **Entry threshold** | score ≥ 8.5 | 3-year backtest winner; highest Sharpe on the `entry-threshold` sweep |
-| **Persistence filter** | 3 prior trading days ≥ 8.5 | Filters out false-start signals (one-day score spikes that fade) |
+| **Entry threshold** | score ≥ 9.0 | Scheme C audit (2026-04-24); Sharpe 2.21, win rate 59% |
+| **Persistence filter** | 3 prior trading days ≥ 9.0 | Filters out false-start signals (one-day score spikes that fade) |
 | **Entry order type** | 3% LIMIT, DAY TIF | Caps overnight gap-up slippage at 3%; 87% fill rate in backtest |
 | **Position sizing** | 8.3% of equity | = 1/12, gives full utilization at the cap |
 | **Max concurrent positions** | 12 | Plateau optimum on the position-cap sweep |
@@ -72,7 +72,7 @@ The current configuration won on risk-adjusted return, eliminated negative-cash 
                   ├─ ensure_stops_for_positions()   ← backfill any missing stops
                   ├─ score_all()                    ← yfinance fetch + 7 indicators
                   ├─ evaluate_exits()               ← score < 5 → market sell next open
-                  ├─ evaluate_entries()             ← score ≥ 8.5 + persistence → limit order
+                  ├─ evaluate_entries()             ← score ≥ 9.0 + persistence → limit order
                   ├─ submit LIMIT orders            ← at sizing × 1.03, DAY TIF
                   └─ send daily email digest
               └─ commits trade_history.json, breakout_tracker.db
@@ -88,27 +88,27 @@ The whole thing is idempotent. If a run fails, rerunning it the next day picks u
 
 ## How the scoring works
 
-The 0–10 score is a weighted sum of 7 technical indicators, chosen by conditional-edge analysis (each indicator's contribution **after** controlling for the others):
+The 0–10 score is a weighted sum of 6 technical indicators (+1 computed but weighted 0), chosen by conditional-edge analysis (each indicator's contribution **after** controlling for the others). Weights revised to **Scheme C** per the 2026-04 audit:
 
 | Indicator | Weight | What it measures |
 |---|---|---|
 | Relative Strength vs S&P 500 | 0–3.0 (gradient) | 63-day outperformance, percentile-ranked across universe |
+| Dual-Timeframe RS | 2.5 (binary) | Momentum accelerating across 21/63/126-day windows |
 | Ichimoku Cloud | 2.0 (binary) | Price above cloud AND cloud bullish |
-| Chaikin Money Flow | 1.5 (binary) | 20-day CMF > 0.05 (institutional buying) |
 | Rate of Change | 1.5 (binary) | 21-day ROC > 5% |
-| Higher Lows | 0–1.0 (gradient) | Consecutive weekly higher-lows |
-| Dual-Timeframe RS | 0.5 (binary) | Momentum accelerating across 21/63/126-day windows |
 | ATR Expansion | 0.5 (binary) | 14-day ATR in top 20% of 50-day range |
+| Higher Lows | 0–0.5 (gradient) | Consecutive weekly higher-lows |
+| Chaikin Money Flow | 0 (computed, not scored) | 20-day CMF — dropped; negative incremental edge in audit |
 
-Two indicators tested but **not** included: Moving Average Alignment (−9.3% incremental edge — redundant with RS) and Near 52-Week High (−3.3% — same story). Both are computed for dashboard display but don't count toward the score.
+Three indicators tested but **not scored**: Moving Average Alignment (−9.3% incremental edge — redundant with RS), Near 52-Week High (−3.3% — same story), and Chaikin Money Flow (dropped in Scheme C audit after showing negative incremental edge in both 3yr and 12mo windows). All three are still computed for dashboard display.
 
 The score maps to a 5-tier display palette:
 
 | Tier | Score | Meaning |
 |---|---|---|
 | 🔴 Fire | 9.5+ | Nearly every signal firing |
-| 🟠 Hot | 8.5 – 9.5 | **Live entry threshold** |
-| 🟡 Warm | 7 – 8.5 | Setup building |
+| 🟠 Hot | 9.0 – 9.5 | **Live entry threshold** |
+| 🟡 Warm | 7 – 9.0 | Setup building |
 | 🔵 Tepid | 5 – 7 | Watchlist only |
 | 🟦 Cold | < 5 | **Live exit threshold** |
 

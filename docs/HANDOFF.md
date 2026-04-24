@@ -1,6 +1,6 @@
 # Alpha Scanner — Session Handoff
 
-Last updated: 2026-04-21
+Last updated: 2026-04-24 (Scheme C weight audit deployed)
 
 This doc exists so a fresh Claude Code thread can pick up where the
 last one left off. Read it first, then read the code. Anything a
@@ -34,7 +34,7 @@ Dashboard: `alphascanner.streamlit.app`
 
 ---
 
-## Current live config (deployed 2026-04-17)
+## Current live config (Scheme C deployed 2026-04-24)
 
 All values below are in `ticker_config.yaml` under `trade_execution:`.
 Env vars override YAML (precedence: env > yaml > hardcoded default in
@@ -42,8 +42,8 @@ Env vars override YAML (precedence: env > yaml > hardcoded default in
 
 | Parameter | Value | Source |
 |---|---|---|
-| Entry threshold | **8.5** | `--sweep-entry-threshold` optimum (Sharpe 1.98) |
-| Persistence | **3 prior days ≥ 8.5** | 3yr backtest + Pareto vs 9.5 baseline |
+| Entry threshold | **9.0** | Scheme C audit (was 8.5) — matches prior ~5% selectivity under new weights |
+| Persistence | **3 prior days ≥ 9.0** | unchanged |
 | Exit threshold | **< 5.0** | Fixed since project start |
 | Stop loss | **20%** | `--sweep-stop-loss` winner (fixed beats trailing) |
 | Max positions | **12** | `--sweep-max-positions` plateau optimum |
@@ -52,6 +52,35 @@ Env vars override YAML (precedence: env > yaml > hardcoded default in
 | **Entry order** | **3% LIMIT @ DAY TIF** | `entry_mode_backtest.py` — Limit-3% won |
 | **Sizing price** | **Alpaca latest-trade** (yfinance fallback) | Post-AEHR-gap fix |
 | Min position | $500 | Never hit in practice |
+
+### Indicator weights — Scheme C (deployed 2026-04-24)
+
+| Indicator | Weight | Change from prior |
+|---|---|---|
+| Relative Strength | 3.0 | unchanged |
+| Ichimoku Cloud | 2.0 | unchanged |
+| **Dual-TF RS Acceleration** | **2.5** | **was 0.5** (+5x; highest under-weighted signal per audit) |
+| Rate of Change | 1.5 | unchanged |
+| **Higher Lows** | **0.5** | **was 1.0** (halved; near-zero incremental edge) |
+| ATR Expansion | 0.5 | unchanged |
+| **Chaikin Money Flow** | **0.0** | **dropped from 1.5** (negative incremental edge in 3yr + 12mo) |
+| **Total (max score)** | **10.0** | unchanged |
+
+**Backtest validation (13mo window, 5 path starts, Scheme C @ 9.0 vs baseline @ 8.5):**
+- Return: +438% → +598% (+160 pp)
+- Sharpe: 1.97 → 2.21
+- Max DD: −21.2% → −20.3%
+- Win rate: 50.7% → 59.0%
+- Path std: 8.3% → 11.9% (proportional to higher return; normalized dispersion same)
+- Scheme C's worst start beats Baseline's best. No overlap in return distributions.
+
+Decomposition: dropping CMF drove +90 pp alone, boosting Dual-TF drove +47 pp
+alone, reducing HL was ~neutral; combined synergy added another +29 pp.
+Extensions tested and rejected: MACD rescue indicator (no lift at threshold
+9.0), `pct_from_52w_high` filter (signal-level win but portfolio-level fail
+due to whipsaw/concentration/timing).
+
+Audit artifacts: `backtest_results/audit_*.{txt,log,parquet}`.
 
 **Constants not in YAML** (hardcoded in `trade_executor.py`, too
 tightly validated to expose):
@@ -74,7 +103,7 @@ Inside `trade_executor.main()`:
 5. detect_unfilled_limits_since()    # prior-day limit orders that canceled (for email)
 6. score_all() + upsert_ticker_scores()   # compute + persist today's scores
 7. evaluate_exits()                  # positions where score < 5 → market sell next open
-8. evaluate_entries()                # candidates: score ≥ 8.5 + persistence + cash floor
+8. evaluate_entries()                # candidates: score ≥ 9.0 + persistence + cash floor
 9. execute_entries()                 # submit LIMIT BUY at sizing_price × 1.03, DAY TIF
 10. send_trade_digest()              # email summary via Gmail SMTP
 ```

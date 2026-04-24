@@ -13,7 +13,7 @@ Alpha Scanner is a single script (`trade_executor.py`) that runs once per weekda
 2. Scores every ticker 0–10 using 7 weighted technical indicators
 3. Exits positions where the score has dropped below 5 (market sell at next open)
 4. Cancels the GTC stop for each exited position
-5. Enters positions where the score ≥ 8.5 has persisted for 3 consecutive trading days, passing wash-sale and cash-floor checks
+5. Enters positions where the score ≥ 9.0 has persisted for 3 consecutive trading days, passing wash-sale and cash-floor checks (threshold raised from 8.5 in Scheme C audit, 2026-04-24)
 6. Submits 3% limit orders to Alpaca for tomorrow's open
 7. On the next day's run, attaches a real GTC stop at entry × 0.80 to each newly-filled position
 8. Sends a daily email digest summarizing everything that happened
@@ -61,7 +61,7 @@ These are backtest results against historical data. Live performance will diverg
                   5. detect_unfilled_limits_since()    # prior-day limits that canceled
                   6. score_all() + upsert_ticker_scores()
                   7. evaluate_exits()                  # score<5 → queue market sell
-                  8. evaluate_entries()                # score≥8.5 + persistence + cash floor
+                  8. evaluate_entries()                # score≥9.0 + persistence + cash floor
                   9. execute_entries()                 # submit LIMIT BUY, DAY TIF
                   10. send_trade_digest()              # email via Gmail SMTP
               └─ commits trade_history.json, breakout_tracker.db
@@ -85,8 +85,8 @@ All values live in `ticker_config.yaml` under `trade_execution:`, with env-var o
 
 A candidate ticker is entered if and only if all of the following are true:
 
-1. **Score ≥ 8.5 today** (the Hot tier threshold; validated by `--sweep-entry-threshold`)
-2. **Score ≥ 8.5 for each of the 3 prior trading days** (persistence filter — "N most recent DB rows", not strict trading days, so holidays don't block legitimate signals)
+1. **Score ≥ 9.0 today** (the Hot tier threshold; Scheme C audit 2026-04-24 — matches prior ~5% selectivity under the new weights)
+2. **Score ≥ 9.0 for each of the 3 prior trading days** (persistence filter — "N most recent DB rows", not strict trading days, so holidays don't block legitimate signals)
 3. **Not already held** (skips tickers in current positions)
 4. **Not excluded** (crypto spot tickers and futures contracts are filtered; only Alpaca-tradeable equities + ETFs considered)
 5. **Sized above `min_position_size` ($500)** after applying the cash floor
@@ -158,7 +158,7 @@ When `evaluate_entries()` rejects a candidate, the reason is categorized into on
 
 | Category | Meaning |
 |---|---|
-| `persistence` | Score ≥ 8.5 today but not for all 3 prior days |
+| `persistence` | Score ≥ 9.0 today but not for all 3 prior days |
 | `cash floor cap` | Would exceed 95% equity commit budget |
 | `position cap reached` | At max_positions (12) |
 | `insufficient cash` | Raw cash or min-size fail |
@@ -170,34 +170,47 @@ When `evaluate_entries()` rejects a candidate, the reason is categorized into on
 
 ## 4. Signal generation (scoring)
 
-The 0–10 score is a weighted sum of 7 technical indicators. Weights were determined by 3-year conditional-edge analysis — each indicator's incremental predictive edge **after controlling for the others**.
+The 0–10 score is a weighted sum of 6 scored technical indicators (one additional is computed for dashboard display but weighted 0). Weights revised to **Scheme C** in the 2026-04-24 audit based on 3-year daily edge re-measurement.
 
-### 4.1 Scored indicators
+### 4.1 Scored indicators (Scheme C, 2026-04-24)
 
-| Indicator | Weight | Type | Incremental edge | Logic |
+| Indicator | Weight | Type | Incremental edge (12mo / 3yr) | Logic |
 |---|---|---|---|---|
-| Relative Strength | 0–3.0 | Gradient | +13.31% | 63-day return vs SPY, percentile-ranked across universe. 90th→3.0, 80th→2.4, 70th→1.8, 60th→1.2, 50th→0.6 |
-| Ichimoku Cloud | 2.0 | Binary | +11.9% | Price > cloud AND Senkou A > Senkou B |
-| Chaikin Money Flow | 1.5 | Binary | +8.9% | 20-day CMF > 0.05 |
-| Rate of Change | 1.5 | Binary | +7.5% | 21-day ROC > 5% |
-| Higher Lows | 0–1.0 | Gradient | +7.73% | 0.25 per consecutive higher-low period (4 periods = 1.0) |
-| Dual-Timeframe RS | 0.5 | Binary | +5.2% | RS strong AND accelerating across 21/63/126-day windows |
-| ATR Expansion | 0.5 | Binary | +5.2% | 14-day ATR in top 20% of 50-day range |
+| Relative Strength | 0–3.0 | Gradient | +10.5% / +3.2% standalone | 63-day return vs SPY, percentile-ranked across universe. 90th→3.0, 80th→2.4, 70th→1.8, 60th→1.2, 50th→0.6 |
+| Dual-Timeframe RS | 2.5 | Binary | +9.6% / +5.5% | RS strong AND accelerating across 21/63/126-day windows. **Was 0.5; biggest under-weighted signal per audit.** |
+| Ichimoku Cloud | 2.0 | Binary | +10.3% / +1.3% | Price > cloud AND Senkou A > Senkou B |
+| Rate of Change | 1.5 | Binary | +4.8% / +3.6% | 21-day ROC > 5% |
+| ATR Expansion | 0.5 | Binary | +2.9% / +1.0% | 14-day ATR in top 20% of 50-day range |
+| Higher Lows | 0–0.5 | Gradient | +0.2% / −0.6% | 0.125 per consecutive higher-low period (4 periods = 0.5). **Was 0–1.0; halved per audit.** |
 
 Maximum score: 10.0.
 
-### 4.2 Not scored (but computed for dashboard display)
+### 4.2 Computed but not scored (dashboard-only)
 
+- **Chaikin Money Flow** — **dropped in Scheme C** (was weight 1.5). Incremental edge −2.15% (3yr) / −2.07% (12mo) — actively degrades the signal. Still computed for dashboard display.
 - **Moving Average Alignment** — standalone edge +7.5%, but **incremental edge −9.3%** after controlling for RS. Almost fully redundant with relative strength. Adding it actively degrades the signal. (Note: the 2026-Q2 quarterly review showed a 12-month window where MA Alignment's edge flipped to +7.76% — watch for re-inclusion if 2026-Q3 also shows positive.)
 - **Near 52-Week High** — incremental edge −3.3%. Tickers with high RS are almost always near their 52w high; this indicator adds no additional information.
 
-Both are displayed in the dashboard's ticker detail view for visual context but don't count toward the score.
+All three are displayed in the dashboard's ticker detail view for visual context but don't count toward the score.
+
+### 4.2a Scheme C audit summary (2026-04-24)
+
+Portfolio backtest (13mo window, 5 path starts, production-equivalent config):
+
+| Config | Return | Sharpe | Max DD | Win rate | Trades |
+|---|---|---|---|---|---|
+| Prior (baseline @ 8.5) | +438% | 1.97 | −21.2% | 50.7% | 75 |
+| **Scheme C @ 9.0** | **+598%** | **2.21** | **−20.3%** | **59.0%** | 78 |
+
+Decomposition: dropping CMF drove +90 pp alone, boosting Dual-TF RS +47 pp, reducing HL was ~neutral; combined synergy produced an additional +29 pp. Return distributions across path starts do not overlap between baseline and Scheme C. Extensions tested and rejected: MACD rescue indicator, `pct_from_52w_high` filter (signal-level win but portfolio-level fail due to whipsaw, concentration, and timing effects).
+
+Audit artifacts: `backtest_results/audit_*.{txt,log,parquet}`.
 
 ### 4.3 Scoring process (two-pass)
 
 **Pass 1**: For every ticker, compute raw relative-strength values at 4 timeframes (21d, 63d, 126d, primary) in parallel. Then percentile-rank each timeframe across the universe.
 
-**Pass 2**: For each ticker, run all 7 indicators, apply gradient/binary scoring, sum to the weighted score, sort results by score descending.
+**Pass 2**: For each ticker, run all 6 scored indicators (+ CMF/MA/52w for dashboard only), apply gradient/binary scoring, sum to the weighted score, sort results by score descending.
 
 ### 4.4 Display tiers
 
@@ -206,8 +219,8 @@ Dashboard and email use the same 5-tier bucketing:
 | Tier | Range | Dashboard color | Action |
 |---|---|---|---|
 | 🔴 Fire | 9.5+ | `#E15759` | — |
-| 🟠 Hot | 8.5 – 9.5 | `#F28E2B` | **Entry threshold** |
-| 🟡 Warm | 7 – 8.5 | `#F1CE63` | — |
+| 🟠 Hot | 9.0 – 9.5 | `#F28E2B` | **Entry threshold** |
+| 🟡 Warm | 7 – 9.0 | `#F1CE63` | — |
 | 🔵 Tepid | 5 – 7 | `#A0CBE8` | — |
 | 🟦 Cold | < 5 | `#4E79A7` | **Exit threshold** |
 

@@ -466,14 +466,17 @@ scoring:
 # =============================================================
 # TRADE EXECUTION (Alpaca paper trading)
 # =============================================================
-# Thresholds from 3yr backtest: 8.5 entry with 3-day persistence
-# beats the prior 9.5 baseline on return, DD, and win rate while
-# filtering out false-start tickers (IREN, AAOI, BTBT, RCAT, RGTI).
+# Entry threshold: 9.0 (was 8.5) per Scheme C audit 2026-04-24.
+# Rationale: Scheme C re-weighting (CMF 0, HL 0.5, Dual-TF RS 2.5)
+# shifts the score distribution upward; 9.0 matches prior ~5%
+# selectivity under the new weights. Portfolio backtest:
+#   Return +438% → +598%, Sharpe 1.97 → 2.21, DD -21.2% → -20.3%,
+#   Win rate 50.7% → 59.0% (13-month window, 5 path starts).
 # Env vars override these: ENTRY_THRESHOLD, EXIT_THRESHOLD,
 # PERSISTENCE_DAYS, STOP_LOSS_PCT.
 # =============================================================
 trade_execution:
-  entry_threshold: 8.5       # Score ≥ this to open new position
+  entry_threshold: 9.0       # Score ≥ this to open new position (was 8.5)
   exit_threshold: 5.0        # Score < this closes the position
   persistence_days: 3        # Require N prior trading days at/above entry_threshold
   stop_loss_pct: 0.20        # 20% stop loss from entry (was 0.15; backtested 2026-04-16)
