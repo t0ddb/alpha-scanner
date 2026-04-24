@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import argparse
 import math
+import os
 import sqlite3
 import sys
 from collections import defaultdict
@@ -35,7 +36,7 @@ import pandas as pd
 from config import load_config
 from data_fetcher import fetch_all
 
-DB_PATH = Path(__file__).parent / "breakout_tracker.db"
+DB_PATH = Path(os.environ.get("ALPHA_DB_PATH", Path(__file__).parent / "breakout_tracker.db"))
 
 
 # ============================================================
