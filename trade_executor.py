@@ -593,13 +593,13 @@ LIMIT_ORDER_BUFFER = 0.03      # limit price = sizing_price × 1.03
 
 # Skip-reason categories used by the email digest (keep in sync with
 # the allowed values in _build_trade_digest_html).
-SKIP_CATEGORY_INSUFFICIENT_CASH = "insufficient cash"
-SKIP_CATEGORY_POSITION_CAP = "position cap reached"
-SKIP_CATEGORY_WASH_SALE = "wash sale cooldown"
-SKIP_CATEGORY_CASH_FLOOR = "cash floor cap"
-SKIP_CATEGORY_LIMIT_UNFILLED = "limit unfilled"
-SKIP_CATEGORY_PERSISTENCE = "persistence"
-SKIP_CATEGORY_OTHER = "other"
+SKIP_CATEGORY_INSUFFICIENT_CASH = "No Cash"
+SKIP_CATEGORY_POSITION_CAP = "Full"
+SKIP_CATEGORY_WASH_SALE = "Wash"
+SKIP_CATEGORY_CASH_FLOOR = "Cap Hit"
+SKIP_CATEGORY_LIMIT_UNFILLED = "Missed"
+SKIP_CATEGORY_PERSISTENCE = "Heating"
+SKIP_CATEGORY_OTHER = "Other"
 
 
 def evaluate_entries(
@@ -621,7 +621,7 @@ def evaluate_entries(
     tradeability, wash sale logging) still apply.
 
     Each skip dict carries both a verbose ``reason`` (for console) and a
-    normalized ``skip_category`` used by the email's Skip Reason column.
+    normalized ``skip_category`` used by the email's Reason column.
     """
     entry_threshold = trade_cfg["entry_threshold"]
     persistence_days = trade_cfg["persistence_days"]
@@ -735,7 +735,7 @@ def evaluate_entries(
 
         if target_size < min_position_size:
             # Distinguish cash-floor cap (commit budget depleted) from raw
-            # cash shortage — matters for the email Skip Reason column.
+            # cash shortage — matters for the email Reason column.
             if per_slot_cap < raw_max_position - 1e-9:
                 skipped.append({
                     "ticker": ticker,
@@ -1318,13 +1318,17 @@ def _build_trade_digest_html(
                f"{len(entries)} buy / {len(exits)} sell{dry_tag}")
 
     # ── HTML helpers ─────────────────────────────────────────────
+    # Vertical cell padding (10px) gives single-line rows room to breathe
+    # on mobile — with the old 6px value, Current Positions rows looked
+    # squished because none of the cells wrap, so every row rendered at
+    # the minimum height.
     # white-space:nowrap on every <th> prevents mobile clients from
     # breaking single-word headers mid-word (e.g. "Current" → "Cur rent").
-    td_left = "padding:6px 10px;border-bottom:1px solid #e5e7eb;text-align:left"
-    td_center = "padding:6px 10px;border-bottom:1px solid #e5e7eb;text-align:center"
-    th_left = ("padding:6px 10px;text-align:left;background:#f3f4f6;"
+    td_left = "padding:10px 10px;border-bottom:1px solid #e5e7eb;text-align:left"
+    td_center = "padding:10px 10px;border-bottom:1px solid #e5e7eb;text-align:center"
+    th_left = ("padding:10px 10px;text-align:left;background:#f3f4f6;"
                "border-bottom:2px solid #d1d5db;white-space:nowrap")
-    th_center = ("padding:6px 10px;text-align:center;background:#f3f4f6;"
+    th_center = ("padding:10px 10px;text-align:center;background:#f3f4f6;"
                  "border-bottom:2px solid #d1d5db;white-space:nowrap")
 
     def row_mixed(cells: list[str], aligns: list[str]) -> str:
@@ -1427,7 +1431,7 @@ def _build_trade_digest_html(
         ], entry_aligns))
 
     # ── Skipped Signals ──
-    # Columns: Ticker | Subsector | Score | Days ≥ threshold | Skip Reason
+    # Columns: Ticker | Subsector | Score | Streak | Reason
     # Sorted by days_above DESC (most persistent at top — most likely to enter tomorrow).
     entry_threshold = trade_cfg.get("entry_threshold", 8.5)
     persistence_days = trade_cfg.get("persistence_days", 3)
@@ -1539,7 +1543,7 @@ def _build_trade_digest_html(
 
     # Pre-build tables with headers
     skip_table_html = table_mixed(
-        ["Ticker", "Sub Sector", "Score", "Streak", "Skip Reason"],
+        ["Ticker", "Sub Sector", "Score", "Streak", "Reason"],
         skip_rows,
         skip_aligns,
     )
