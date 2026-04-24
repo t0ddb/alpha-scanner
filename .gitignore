@@ -16,6 +16,10 @@ breakout_tracker_C3_*.db
 breakout_tracker_C3_*.db-shm
 breakout_tracker_C3_*.db-wal
 
+# Pre-change local backups of production DB (timestamped)
+breakout_tracker.db.*.bak
+breakout_tracker.db.pre-*.bak
+
 # Python
 __pycache__/
 *.pyc
