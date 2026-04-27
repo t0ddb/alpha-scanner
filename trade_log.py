@@ -42,11 +42,27 @@ re-walking the log.
 
 from __future__ import annotations
 import json
+import os
 from datetime import datetime, date
 from pathlib import Path
 
 
-TRADE_LOG_FILE = Path(__file__).parent / "trade_history.json"
+def _mode_suffix() -> str:
+    """Return '_paper' or '_live' based on ALPACA_MODE env (default paper)."""
+    mode = (os.getenv("ALPACA_MODE") or "paper").strip().lower()
+    return "_live" if mode == "live" else "_paper"
+
+
+# Trade log path is mode-aware: paper and live get separate files so the
+# logs don't conflate. Resolved at every access (not module import) so
+# tests / scripts can flip ALPACA_MODE per call.
+def _get_trade_log_file() -> Path:
+    return Path(__file__).parent / f"trade_history{_mode_suffix()}.json"
+
+
+# Module-level constant for external callers (reflects mode at import time).
+# Prefer `_get_trade_log_file()` internally — it's mode-current per call.
+TRADE_LOG_FILE = _get_trade_log_file()
 
 
 def _iso(d) -> str:
@@ -60,10 +76,11 @@ def _iso(d) -> str:
 
 def _load() -> dict:
     """Load the trade log from disk (empty structure if missing)."""
-    if not TRADE_LOG_FILE.exists():
+    f_path = _get_trade_log_file()
+    if not f_path.exists():
         return {"trades": []}
     try:
-        with open(TRADE_LOG_FILE, "r") as f:
+        with open(f_path, "r") as f:
             data = json.load(f)
             if "trades" not in data:
                 data["trades"] = []
@@ -74,7 +91,7 @@ def _load() -> dict:
 
 def _save(data: dict) -> None:
     """Write the trade log to disk."""
-    with open(TRADE_LOG_FILE, "w") as f:
+    with open(_get_trade_log_file(), "w") as f:
         json.dump(data, f, indent=2)
 
 

@@ -41,6 +41,7 @@ jobs:
       # actions (checkout@v4, setup-python@v5). Node 24 becomes the default
       # on 2026-06-02 per GitHub's deprecation schedule.
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+      ALPACA_MODE: paper
       ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
       ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
       GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
@@ -84,8 +85,10 @@ jobs:
           # Stage state files only if they exist.
           # breakout_tracker.db carries today's per-ticker scores, which
           # tomorrow's run reads for the N-day persistence filter.
-          [ -f trade_history.json ] && git add trade_history.json || true
-          [ -f wash_sale_log.json ] && git add wash_sale_log.json || true
+          # Trade log + wash-sale log are mode-suffixed (paper/live) so
+          # paper and live histories don't conflate.
+          [ -f trade_history_paper.json ] && git add trade_history_paper.json || true
+          [ -f wash_sale_log_paper.json ] && git add wash_sale_log_paper.json || true
           [ -f breakout_tracker.db ] && git add breakout_tracker.db || true
 
           if git diff --cached --quiet; then

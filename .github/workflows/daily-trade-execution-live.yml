@@ -1,0 +1,108 @@
+name: Daily Trade Execution (LIVE)
+
+# IMPORTANT: This workflow trades real money against the LIVE Alpaca
+# account. To launch:
+#   1. Verify ALPACA_LIVE_API_KEY and ALPACA_LIVE_SECRET_KEY secrets are set
+#   2. Run a manual `--dry-run` first via Actions tab to verify connection
+#   3. Run a manual real trade once to confirm orders + email + persistence
+#   4. Uncomment the `schedule:` block below to enable daily automation
+#
+# Currently disabled (workflow_dispatch only). The first run is intentionally
+# manual so you can verify everything before automation kicks in.
+
+on:
+  # schedule:
+  #   # 4:30 PM ET Mon-Fri, same time as paper. Backfill runs once at 4:00 PM
+  #   # ET regardless of mode — DB is account-agnostic.
+  #   - cron: '30 20 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (do not place orders)'
+        required: false
+        default: 'true'    # safer default for the live workflow
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+      max_entries_per_day:
+        description: 'Cap on new entries per day (4 recommended for first weeks)'
+        required: false
+        default: '4'
+      entry_threshold:
+        description: 'Override entry threshold (blank = ticker_config.yaml)'
+        required: false
+        default: ''
+      persistence_days:
+        description: 'Override N-day persistence (blank = ticker_config.yaml)'
+        required: false
+        default: ''
+
+jobs:
+  trade:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+      ALPACA_MODE: live
+      ALPACA_LIVE_API_KEY: ${{ secrets.ALPACA_LIVE_API_KEY }}
+      ALPACA_LIVE_SECRET_KEY: ${{ secrets.ALPACA_LIVE_SECRET_KEY }}
+      GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+      GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+      ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+      # Live-account-specific overrides:
+      #   $5k starting capital + 12-position cap × 8.3% = $415/slot, just
+      #   below the $500 default min. Lowering MIN_POSITION_SIZE to $300
+      #   keeps 12-position diversification feasible at this capital level.
+      MIN_POSITION_SIZE: '300'
+      # Phased live launch: cap entries per day. Default 4; can override
+      # via workflow_dispatch input. Removing the cap: set to '0' or empty.
+      MAX_ENTRIES_PER_DAY: ${{ inputs.max_entries_per_day || '4' }}
+      ENTRY_THRESHOLD: ${{ inputs.entry_threshold }}
+      PERSISTENCE_DAYS: ${{ inputs.persistence_days }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run trade executor (LIVE)
+        run: |
+          ARGS=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          if [ -n "$GMAIL_ADDRESS" ] && [ -n "$GMAIL_APP_PASSWORD" ]; then
+            ARGS="$ARGS --email"
+          fi
+          echo "Running: python trade_executor.py $ARGS  (ALPACA_MODE=$ALPACA_MODE)"
+          python trade_executor.py $ARGS
+
+      - name: Commit and push updated trade state
+        # Live mode persists separate state files (trade_history_live.json,
+        # wash_sale_log_live.json). DB is shared between paper and live (it
+        # stores per-ticker scores, which are account-agnostic). Live workflow
+        # does NOT commit the DB — that's owned by daily-backfill + paper run.
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          [ -f trade_history_live.json ] && git add trade_history_live.json || true
+          [ -f wash_sale_log_live.json ] && git add wash_sale_log_live.json || true
+
+          if git diff --cached --quiet; then
+            echo "No live state changes to commit."
+          else
+            git commit -m "Automated LIVE trade execution $(date -u +%Y-%m-%d)"
+            git pull --rebase -X ours || git rebase --abort
+            git push
+          fi

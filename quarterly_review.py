@@ -620,16 +620,24 @@ def section_4(cfg: dict, price_data: dict) -> dict:
     print("  SECTION 4: LIVE vs BACKTEST COMPARISON")
     print("=" * 80)
 
-    history_path = Path(__file__).parent / "trade_history.json"
+    # Quarterly review reads paper history by default — that's the long-running
+    # validation account. Live history is also tracked separately in
+    # trade_history_live.json once live trading begins.
+    history_path = Path(__file__).parent / "trade_history_paper.json"
     if not history_path.exists():
-        print("\n  SKIPPED: trade_history.json not found.")
-        return {"status": SKIP}
+        # Fallback to legacy unsuffixed filename for backward compat
+        legacy = Path(__file__).parent / "trade_history.json"
+        if legacy.exists():
+            history_path = legacy
+        else:
+            print("\n  SKIPPED: trade_history_paper.json not found.")
+            return {"status": SKIP}
 
     try:
         with open(history_path) as f:
             history = json.load(f)
     except Exception as e:
-        print(f"\n  SKIPPED: could not read trade_history.json ({e})")
+        print(f"\n  SKIPPED: could not read {history_path.name} ({e})")
         return {"status": SKIP}
 
     trades = history.get("trades", [])

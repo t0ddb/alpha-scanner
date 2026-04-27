@@ -1,30 +1,45 @@
 """
-trade_executor.py — Daily paper-trade execution against Alpaca.
+trade_executor.py — Daily paper-/live-trade execution against Alpaca.
 
 Runs after market close. Scores all tickers, evaluates exits on open
 positions, and places entry orders on new breakout signals.
 
 Entry config comes from `trade_execution:` in ticker_config.yaml and can
-be overridden by environment variables. The current default is
-threshold ≥ 8.5 with a 3-day persistence filter (score must have been
-at/above the threshold for the prior 3 trading days), exit < 5, and a
-20% stop loss (real Alpaca GTC stop orders) — validated by the sizing
-comparison backtest (2026-04-16).
+be overridden by environment variables. The current default is Scheme C
+(2026-04-24): threshold ≥ 9.0 with a 3-day persistence filter, exit < 5,
+20% stop loss (real Alpaca GTC stop orders), max 12 positions, 8.3% sizing.
+
+Account-mode:
+    ALPACA_MODE=paper (default) → uses ALPACA_API_KEY / ALPACA_SECRET_KEY
+                                  and validates account # starts with "PA"
+    ALPACA_MODE=live           → uses ALPACA_LIVE_API_KEY / ALPACA_LIVE_SECRET_KEY
+                                  and validates account # does NOT start with "PA"
+
+Per-mode artifacts (keeps paper + live cleanly separated):
+    trade_history_paper.json / trade_history_live.json
+    wash_sale_log_paper.json / wash_sale_log_live.json
+    Email subject prefixed [paper] or [live]
 
 Usage:
-    python3 trade_executor.py              # live paper trading
+    python3 trade_executor.py              # paper (default)
+    ALPACA_MODE=live python3 trade_executor.py   # live trading
     python3 trade_executor.py --dry-run    # show what it WOULD do, no orders
 
 Env vars (store in .env or CI secrets):
-    ALPACA_API_KEY       — Alpaca paper trading API key (required)
-    ALPACA_SECRET_KEY    — Alpaca paper trading secret (required)
-    ENTRY_THRESHOLD      — override config entry score (e.g. "8.5")
-    EXIT_THRESHOLD       — override config exit score  (e.g. "5.0")
-    PERSISTENCE_DAYS     — override config prior-day persistence (e.g. "3")
-    STOP_LOSS_PCT        — override config stop loss   (e.g. "0.20")
-    GMAIL_ADDRESS        — Gmail sender address        (optional, for --email)
-    GMAIL_APP_PASSWORD   — Gmail app password          (optional, for --email)
-    ALERT_EMAIL_TO       — Recipient (defaults to sender if unset)
+    ALPACA_MODE              — "paper" (default) or "live"
+    ALPACA_API_KEY           — Alpaca PAPER API key (required if mode=paper)
+    ALPACA_SECRET_KEY        — Alpaca PAPER secret  (required if mode=paper)
+    ALPACA_LIVE_API_KEY      — Alpaca LIVE API key  (required if mode=live)
+    ALPACA_LIVE_SECRET_KEY   — Alpaca LIVE secret   (required if mode=live)
+    ENTRY_THRESHOLD          — override config entry score (e.g. "9.0")
+    EXIT_THRESHOLD           — override config exit score  (e.g. "5.0")
+    PERSISTENCE_DAYS         — override config prior-day persistence (e.g. "3")
+    STOP_LOSS_PCT            — override config stop loss   (e.g. "0.20")
+    MAX_ENTRIES_PER_DAY      — cap on new entries per run (e.g. "4" for phased
+                                live launch). Unset = unlimited.
+    GMAIL_ADDRESS            — Gmail sender address        (optional, for --email)
+    GMAIL_APP_PASSWORD       — Gmail app password          (optional, for --email)
+    ALERT_EMAIL_TO           — Recipient (defaults to sender if unset)
 """
 
 from __future__ import annotations
@@ -68,7 +83,7 @@ PT_TZ = ZoneInfo("America/Los_Angeles")
 
 # Defaults if neither config nor env var is set
 _DEFAULTS = {
-    "entry_threshold": 8.5,
+    "entry_threshold": 9.0,
     "exit_threshold": 5.0,
     "persistence_days": 3,
     "stop_loss_pct": 0.20,
@@ -76,6 +91,22 @@ _DEFAULTS = {
     "max_position_pct": 0.083,
     "min_position_size": 500,
 }
+
+
+# ─────────────────────────────────────────────────────────────
+# Account mode (paper vs live)
+# ─────────────────────────────────────────────────────────────
+def get_alpaca_mode() -> str:
+    """Return 'paper' or 'live' from ALPACA_MODE env var. Default 'paper'."""
+    mode = (os.getenv("ALPACA_MODE") or "paper").strip().lower()
+    if mode not in ("paper", "live"):
+        print(f"  [WARN] ALPACA_MODE={mode!r} unrecognized; defaulting to 'paper'")
+        mode = "paper"
+    return mode
+
+
+def is_live_mode() -> bool:
+    return get_alpaca_mode() == "live"
 
 
 def _env_float(name: str) -> float | None:
@@ -134,29 +165,58 @@ EXCLUDED_EXACT = {"GC=F", "SI=F"}      # futures
 # Alpaca helpers
 # ─────────────────────────────────────────────────────────────
 
+def _alpaca_credentials() -> tuple[str | None, str | None, str]:
+    """Return (api_key, secret_key, mode) per ALPACA_MODE env var."""
+    mode = get_alpaca_mode()
+    if mode == "live":
+        return os.getenv("ALPACA_LIVE_API_KEY"), os.getenv("ALPACA_LIVE_SECRET_KEY"), mode
+    return os.getenv("ALPACA_API_KEY"), os.getenv("ALPACA_SECRET_KEY"), mode
+
+
 def connect_alpaca() -> TradingClient:
-    """Initialize and validate the Alpaca paper trading client."""
-    api_key = os.getenv("ALPACA_API_KEY")
-    secret_key = os.getenv("ALPACA_SECRET_KEY")
+    """Initialize and validate the Alpaca trading client (paper or live).
+
+    Safety: account-prefix check enforces that mode and credentials match.
+    Paper accounts have account numbers starting with "PA"; live do NOT.
+    Bypassing either side of the check is a deliberate action, not an
+    accident — both move together when you flip mode.
+    """
+    api_key, secret_key, mode = _alpaca_credentials()
+
     if not api_key or not secret_key:
-        print("  [ERROR] ALPACA_API_KEY and ALPACA_SECRET_KEY must be set in .env")
+        if mode == "live":
+            print("  [ERROR] ALPACA_LIVE_API_KEY and ALPACA_LIVE_SECRET_KEY must be set "
+                  "(ALPACA_MODE=live)")
+        else:
+            print("  [ERROR] ALPACA_API_KEY and ALPACA_SECRET_KEY must be set in .env")
         sys.exit(1)
 
-    client = TradingClient(api_key, secret_key, paper=True)
+    client = TradingClient(api_key, secret_key, paper=(mode == "paper"))
 
-    # Safety check: must be a paper account
+    # Safety check: account number must match mode
     account = client.get_account()
-    if not str(account.account_number).startswith("PA"):
-        print(f"  [ERROR] NOT A PAPER ACCOUNT ({account.account_number}) — ABORTING")
+    acct_num = str(account.account_number)
+    is_paper_account = acct_num.startswith("PA")
+
+    if mode == "paper" and not is_paper_account:
+        print(f"  [ERROR] ALPACA_MODE=paper but account {acct_num} is NOT a paper "
+              f"account — ABORTING")
+        sys.exit(1)
+    if mode == "live" and is_paper_account:
+        print(f"  [ERROR] ALPACA_MODE=live but account {acct_num} IS a paper "
+              f"account (PA prefix) — ABORTING")
         sys.exit(1)
 
     return client
 
 
 def connect_alpaca_data() -> StockHistoricalDataClient:
-    """Initialize the Alpaca historical data client (stocks)."""
-    api_key = os.getenv("ALPACA_API_KEY")
-    secret_key = os.getenv("ALPACA_SECRET_KEY")
+    """Initialize the Alpaca historical data client (stocks).
+
+    Uses the same credentials as `connect_alpaca()` per ALPACA_MODE. Either
+    paper or live keys can fetch market data — Alpaca routes by key.
+    """
+    api_key, secret_key, _ = _alpaca_credentials()
     return StockHistoricalDataClient(api_key, secret_key)
 
 
@@ -599,6 +659,7 @@ SKIP_CATEGORY_WASH_SALE = "Wash"
 SKIP_CATEGORY_CASH_FLOOR = "Cap Hit"
 SKIP_CATEGORY_LIMIT_UNFILLED = "Missed"
 SKIP_CATEGORY_PERSISTENCE = "Heating"
+SKIP_CATEGORY_DAILY_CAP = "Daily Cap"
 SKIP_CATEGORY_OTHER = "Other"
 
 
@@ -628,6 +689,11 @@ def evaluate_entries(
     max_positions = trade_cfg["max_positions"]
     max_position_pct = trade_cfg["max_position_pct"]
     min_position_size = trade_cfg["min_position_size"]
+    # Daily entries cap (for phased live launch). 0/unset = unlimited.
+    # When set, the top N highest-scoring valid entries are accepted; the rest
+    # are skipped with SKIP_CATEGORY_DAILY_CAP. Forced entries always pass.
+    max_entries_per_day_env = _env_int("MAX_ENTRIES_PER_DAY")
+    max_entries_per_day = max_entries_per_day_env if max_entries_per_day_env and max_entries_per_day_env > 0 else None
     force_set = set(force_entry or [])
 
     held = set(snapshot["positions"].keys())
@@ -792,6 +858,20 @@ def evaluate_entries(
             )
             reason_str = f"Score ≥ {entry_threshold}{persistence_tag}"
 
+        # Daily entries cap — applied AFTER all other validation, so we cap the
+        # top-N highest-scoring valid candidates (candidates are pre-sorted).
+        # Forced entries always pass. Skipped candidates show in the email.
+        if (max_entries_per_day is not None
+                and not is_forced
+                and len([e for e in entries if e["ticker"] not in force_set]) >= max_entries_per_day):
+            skipped.append({
+                "ticker": ticker,
+                "score": score,
+                "reason": f"Daily entries cap ({max_entries_per_day}) reached",
+                "skip_category": SKIP_CATEGORY_DAILY_CAP,
+            })
+            continue
+
         entries.append({
             "ticker": ticker,
             "qty": qty,
@@ -948,13 +1028,14 @@ def execute_entries(
 
 def print_header(dry_run: bool) -> None:
     now = datetime.now(PT_TZ)
-    mode = "  [DRY RUN MODE — NO ORDERS WILL BE PLACED]\n" if dry_run else ""
+    dry_mode = "  [DRY RUN MODE — NO ORDERS WILL BE PLACED]\n" if dry_run else ""
+    account_mode = "LIVE" if is_live_mode() else "PAPER"
     print("=" * 66)
-    print("  ALPHA SCANNER — DAILY TRADE EXECUTION")
+    print(f"  ALPHA SCANNER — DAILY TRADE EXECUTION  [{account_mode}]")
     print(f"  {now.strftime('%Y-%m-%d %H:%M %Z')}")
     print("=" * 66)
-    if mode:
-        print(mode)
+    if dry_mode:
+        print(dry_mode)
 
 
 def print_trade_config(trade_cfg: dict) -> None:
@@ -969,6 +1050,9 @@ def print_trade_config(trade_cfg: dict) -> None:
     print(f"  Cash floor:        {CASH_FLOOR_PCT*100:.0f}% of equity (max commit {(1-CASH_FLOOR_PCT)*100:.0f}%)")
     print(f"  Entry order:       LIMIT @ sizing × (1 + {LIMIT_ORDER_BUFFER*100:.0f}%) — DAY TIF")
     print(f"  Pricing source:    Alpaca latest-trade (yfinance fallback)")
+    daily_cap = _env_int("MAX_ENTRIES_PER_DAY")
+    if daily_cap and daily_cap > 0:
+        print(f"  Daily entries cap: {daily_cap} (env MAX_ENTRIES_PER_DAY)")
 
 
 def print_account_status(snapshot: dict, trade_cfg: dict | None = None) -> None:
@@ -1313,7 +1397,11 @@ def _build_trade_digest_html(
         subject_pct_str = f"{today_pnl_pct:+.2f}%"
     else:
         subject_pct_str = "N/A"
-    subject = (f"📡 {today.strftime('%-m/%d')}: "
+    # Mode tag in subject so paper vs live emails are distinguishable in inbox.
+    # Paper is the default and historically had no tag; preserve that to keep
+    # email-rule filters working. Only the live run gets an explicit [LIVE].
+    mode_tag = " [LIVE]" if is_live_mode() else ""
+    subject = (f"📡{mode_tag} {today.strftime('%-m/%d')}: "
                f"{subject_pct_str} | "
                f"{len(entries)} buy / {len(exits)} sell{dry_tag}")
 

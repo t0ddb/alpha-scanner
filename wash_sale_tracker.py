@@ -33,11 +33,24 @@ Schema:
 
 from __future__ import annotations
 import json
+import os
 from datetime import datetime, timedelta, date
 from pathlib import Path
 
 
-WASH_SALE_FILE = Path(__file__).parent / "wash_sale_log.json"
+def _mode_suffix() -> str:
+    """Return '_paper' or '_live' based on ALPACA_MODE env (default paper)."""
+    mode = (os.getenv("ALPACA_MODE") or "paper").strip().lower()
+    return "_live" if mode == "live" else "_paper"
+
+
+def _get_wash_sale_file() -> Path:
+    return Path(__file__).parent / f"wash_sale_log{_mode_suffix()}.json"
+
+
+# Module-level constant for external callers (reflects mode at import time).
+# Prefer `_get_wash_sale_file()` internally — it's mode-current per call.
+WASH_SALE_FILE = _get_wash_sale_file()
 COOLDOWN_DAYS = 30
 
 
@@ -58,10 +71,11 @@ def _empty() -> dict:
 
 def _load() -> dict:
     """Load the wash sale log from disk, upgrading old flat format if needed."""
-    if not WASH_SALE_FILE.exists():
+    f_path = _get_wash_sale_file()
+    if not f_path.exists():
         return _empty()
     try:
-        with open(WASH_SALE_FILE, "r") as f:
+        with open(f_path, "r") as f:
             data = json.load(f)
     except (json.JSONDecodeError, OSError):
         return _empty()
@@ -85,7 +99,7 @@ def _load() -> dict:
 
 def _save(data: dict) -> None:
     """Write the wash sale log to disk."""
-    with open(WASH_SALE_FILE, "w") as f:
+    with open(_get_wash_sale_file(), "w") as f:
         json.dump(data, f, indent=2, sort_keys=True)
 
 
