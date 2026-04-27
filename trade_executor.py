@@ -660,7 +660,61 @@ SKIP_CATEGORY_CASH_FLOOR = "Cap Hit"
 SKIP_CATEGORY_LIMIT_UNFILLED = "Missed"
 SKIP_CATEGORY_PERSISTENCE = "Heating"
 SKIP_CATEGORY_DAILY_CAP = "Daily Cap"
+SKIP_CATEGORY_HALTED = "Halted"
 SKIP_CATEGORY_OTHER = "Other"
+
+
+# ─────────────────────────────────────────────────────────────
+# Entry halts: kill switch + daily-loss circuit breaker
+# ─────────────────────────────────────────────────────────────
+# Both gate NEW entries only. Exits + stop-loss management always run.
+# Score-based scoring does cool naturally in a broad selloff (RS percentile
+# falls when the universe is weak), so these are belt-and-suspenders for
+# edge cases (sector-specific blow-ups, individual-account anomalies).
+
+DAILY_LOSS_CIRCUIT_BREAKER_PCT = 0.10   # halt entries if equity drops > 10% intraday
+
+
+def _kill_switch_active() -> tuple[bool, str | None]:
+    """Manual kill switch via env var. Truthy values: 1, true, yes, on."""
+    val = (os.getenv("KILL_SWITCH") or "").strip().lower()
+    if val in ("1", "true", "yes", "on"):
+        return True, "Manual kill switch active (env KILL_SWITCH set)"
+    return False, None
+
+
+def _daily_loss_circuit_breaker(snapshot: dict) -> tuple[bool, str | None]:
+    """Halt entries if today's equity has dropped > DAILY_LOSS_CIRCUIT_BREAKER_PCT
+    relative to yesterday's close (Alpaca's account.last_equity).
+
+    Does NOT halt on missing data — if last_equity is unavailable (e.g. first run),
+    treat as no-halt and log a warning.
+    """
+    equity = snapshot.get("equity")
+    last_equity = snapshot.get("last_equity")
+    if not equity or not last_equity or last_equity <= 0:
+        return False, None
+    drop_pct = (last_equity - equity) / last_equity
+    if drop_pct > DAILY_LOSS_CIRCUIT_BREAKER_PCT:
+        return True, (
+            f"Daily-loss circuit breaker: equity dropped "
+            f"{drop_pct*100:.1f}% (${last_equity:,.0f} → ${equity:,.0f}) "
+            f"vs threshold {DAILY_LOSS_CIRCUIT_BREAKER_PCT*100:.0f}%"
+        )
+    return False, None
+
+
+def check_entry_halts(snapshot: dict) -> tuple[bool, str | None]:
+    """Return (halted: bool, reason: str | None) for any entry-blocking condition.
+    Kill switch takes precedence over circuit breaker if both fire.
+    """
+    killed, reason = _kill_switch_active()
+    if killed:
+        return True, reason
+    breaker_tripped, reason = _daily_loss_circuit_breaker(snapshot)
+    if breaker_tripped:
+        return True, reason
+    return False, None
 
 
 def evaluate_entries(
@@ -695,6 +749,31 @@ def evaluate_entries(
     max_entries_per_day_env = _env_int("MAX_ENTRIES_PER_DAY")
     max_entries_per_day = max_entries_per_day_env if max_entries_per_day_env and max_entries_per_day_env > 0 else None
     force_set = set(force_entry or [])
+
+    # Entry halts (kill switch + daily-loss circuit breaker) — belt-and-suspenders
+    # over the score-based filter. Forced entries (cold-start catch-up) bypass.
+    halted, halt_reason = check_entry_halts(snapshot)
+    if halted and not force_set:
+        print(f"\n  ⛔ ENTRIES HALTED: {halt_reason}")
+        # Build a candidate list for visibility (so the email digest still
+        # shows what would have qualified). Same threshold + universe filter
+        # as the normal path; skip the per-candidate validation since none
+        # will become entries.
+        skipped = []
+        for ticker, rec in scores.items():
+            if rec["score"] < entry_threshold:
+                continue
+            if ticker in snapshot["positions"] and ticker not in {e["ticker"] for e in exits}:
+                continue
+            if is_ticker_excluded(ticker):
+                continue
+            skipped.append({
+                "ticker": ticker,
+                "score": rec["score"],
+                "reason": halt_reason,
+                "skip_category": SKIP_CATEGORY_HALTED,
+            })
+        return [], skipped
 
     held = set(snapshot["positions"].keys())
     exiting = {e["ticker"] for e in exits}
@@ -1053,6 +1132,11 @@ def print_trade_config(trade_cfg: dict) -> None:
     daily_cap = _env_int("MAX_ENTRIES_PER_DAY")
     if daily_cap and daily_cap > 0:
         print(f"  Daily entries cap: {daily_cap} (env MAX_ENTRIES_PER_DAY)")
+    # Show halt-control status (manual switch + circuit breaker threshold)
+    killed, _ = _kill_switch_active()
+    if killed:
+        print(f"  ⛔ KILL SWITCH:     ON (env KILL_SWITCH set — entries blocked)")
+    print(f"  Circuit breaker:   halt entries on >{DAILY_LOSS_CIRCUIT_BREAKER_PCT*100:.0f}% intraday equity drop")
 
 
 def print_account_status(snapshot: dict, trade_cfg: dict | None = None) -> None:

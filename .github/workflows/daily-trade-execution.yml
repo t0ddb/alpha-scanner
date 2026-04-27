@@ -47,6 +47,11 @@ jobs:
       GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
       GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
       ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+      # Manual kill switch — toggle via GitHub repo variables
+      # (Settings → Secrets and variables → Actions → Variables tab).
+      # Set KILL_SWITCH=1 to halt entries (exits + stops still run normally).
+      # Unset or blank = no halt.
+      KILL_SWITCH: ${{ vars.KILL_SWITCH }}
       # Manual overrides from workflow_dispatch inputs. Empty strings
       # are ignored by load_trade_config() so the scheduled run still
       # reads entry_threshold / persistence_days from ticker_config.yaml.

@@ -62,6 +62,11 @@ jobs:
       MAX_ENTRIES_PER_DAY: ${{ inputs.max_entries_per_day || '4' }}
       ENTRY_THRESHOLD: ${{ inputs.entry_threshold }}
       PERSISTENCE_DAYS: ${{ inputs.persistence_days }}
+      # Manual kill switch — toggle via GitHub repo variables
+      # (Settings → Secrets and variables → Actions → Variables tab).
+      # Set KILL_SWITCH_LIVE=1 to halt LIVE entries only (paper unaffected).
+      # Exits + stop-loss management always continue.
+      KILL_SWITCH: ${{ vars.KILL_SWITCH_LIVE }}
 
     steps:
       - name: Checkout repo
