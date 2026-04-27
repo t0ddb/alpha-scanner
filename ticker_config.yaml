@@ -482,6 +482,12 @@ trade_execution:
   stop_loss_pct: 0.20        # 20% stop loss from entry (was 0.15; backtested 2026-04-16)
   max_positions: 12          # Hard cap on concurrent positions (backtested 2026-04-16)
   max_position_pct: 0.083    # 1/12 of current equity per position (= 1/max_positions)
+  position_pct_flex: 0.02    # Allow rounding up to next whole share when cost ≤
+                             # (max_position_pct + position_pct_flex) × equity.
+                             # 8.3% target → 10.3% ceiling. Avoids capital
+                             # under-deployment on stocks that don't divide
+                             # evenly into the per-slot $ target. Especially
+                             # relevant at small account sizes (e.g. $5k live).
   min_position_size: 500     # Minimum $ size for a new position
 
 # =============================================================

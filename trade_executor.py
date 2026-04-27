@@ -35,6 +35,10 @@ Env vars (store in .env or CI secrets):
     EXIT_THRESHOLD           — override config exit score  (e.g. "5.0")
     PERSISTENCE_DAYS         — override config prior-day persistence (e.g. "3")
     STOP_LOSS_PCT            — override config stop loss   (e.g. "0.20")
+    POSITION_PCT_FLEX        — extra % above max_position_pct allowed when
+                                rounding up to next whole share (e.g. "0.02"
+                                allows 8.3% target → 10.3% max). Whole shares
+                                only; no fractional share support.
     MAX_ENTRIES_PER_DAY      — cap on new entries per run (e.g. "4" for phased
                                 live launch). Unset = unlimited.
     GMAIL_ADDRESS            — Gmail sender address        (optional, for --email)
@@ -89,6 +93,7 @@ _DEFAULTS = {
     "stop_loss_pct": 0.20,
     "max_positions": 12,
     "max_position_pct": 0.083,
+    "position_pct_flex": 0.02,    # round up to next whole share if cost ≤ (max + flex)
     "min_position_size": 500,
 }
 
@@ -153,6 +158,7 @@ def load_trade_config(cfg: dict) -> dict:
         "stop_loss_pct": pick("stop_loss_pct", float, "STOP_LOSS_PCT"),
         "max_positions": pick("max_positions", int, "MAX_POSITIONS"),
         "max_position_pct": pick("max_position_pct", float, "MAX_POSITION_PCT"),
+        "position_pct_flex": pick("position_pct_flex", float, "POSITION_PCT_FLEX"),
         "min_position_size": pick("min_position_size", int, "MIN_POSITION_SIZE"),
     }
 
@@ -917,7 +923,7 @@ def evaluate_entries(
             })
             continue
 
-        qty = int(target_size // est_price)  # whole shares only
+        qty = int(target_size // est_price)  # whole shares (floor)
         if qty <= 0:
             skipped.append({
                 "ticker": ticker,
@@ -926,6 +932,24 @@ def evaluate_entries(
                 "skip_category": SKIP_CATEGORY_INSUFFICIENT_CASH,
             })
             continue
+
+        # ── Sizing flex: round up by one share if it fits within tolerance ──
+        # Whole-share floor leaves capital underdeployed when est_price doesn't
+        # divide cleanly into the per-slot target (e.g. $5k account, ARM at
+        # ~$235: 1 share = 4.7% of equity vs 8.3% target — 1 extra share is
+        # 9.4%, well within the +2% flex band). Flex up only if all caps allow.
+        flex_pct = trade_cfg.get("position_pct_flex", 0.0) or 0.0
+        flexed = False
+        if flex_pct > 0:
+            qty_flex = qty + 1
+            cost_flex = qty_flex * est_price
+            flex_max_position = equity * (max_position_pct + flex_pct)
+            # Stays within: flex tolerance, available cash, 95% cash floor.
+            if (cost_flex <= flex_max_position
+                    and cost_flex <= projected_cash
+                    and (cost_flex + projected_committed) <= equity * (1 - CASH_FLOOR_PCT)):
+                qty = qty_flex
+                flexed = True
 
         cost_basis = qty * est_price
         if is_forced:
@@ -959,6 +983,7 @@ def evaluate_entries(
             "score": score,
             "reason": reason_str,
             "wash_sale_warning": wash_sale_warning,
+            "flexed": flexed,
         })
         projected_cash -= cost_basis
         projected_committed += cost_basis
@@ -1069,9 +1094,10 @@ def execute_entries(
         action = "[DRY RUN] " if dry_run else ""
         sizing_price = e["est_price"]
         limit_price = round(sizing_price * (1 + LIMIT_ORDER_BUFFER), 2)
+        flex_tag = "  flex+1" if e.get("flexed") else ""
         print(f"  {action}BUY   {e['ticker']:<6s} {e['qty']:>6.0f} shares  "
               f"sizing ${sizing_price:>8.2f}  limit ${limit_price:>8.2f}  "
-              f"Score: {e['score']:<5.1f}  Est Cost: ${e['cost_basis']:>9,.0f}")
+              f"Score: {e['score']:<5.1f}  Est Cost: ${e['cost_basis']:>9,.0f}{flex_tag}")
 
         # Wash sale warning (log only — trade proceeds regardless)
         ws = e.get("wash_sale_warning")
@@ -1125,7 +1151,13 @@ def print_trade_config(trade_cfg: dict) -> None:
     print(f"  Exit threshold:    < {trade_cfg['exit_threshold']}")
     print(f"  Stop loss:         {trade_cfg['stop_loss_pct']*100:.0f}% (GTC stop orders)")
     print(f"  Max positions:     {trade_cfg['max_positions']}")
-    print(f"  Position size:     {trade_cfg['max_position_pct']*100:.1f}% of equity")
+    pos_pct = trade_cfg['max_position_pct']
+    flex_pct = trade_cfg.get('position_pct_flex', 0.0) or 0.0
+    if flex_pct > 0:
+        print(f"  Position size:     {pos_pct*100:.1f}% target / "
+              f"up to {(pos_pct+flex_pct)*100:.1f}% with whole-share flex")
+    else:
+        print(f"  Position size:     {pos_pct*100:.1f}% of equity")
     print(f"  Cash floor:        {CASH_FLOOR_PCT*100:.0f}% of equity (max commit {(1-CASH_FLOOR_PCT)*100:.0f}%)")
     print(f"  Entry order:       LIMIT @ sizing × (1 + {LIMIT_ORDER_BUFFER*100:.0f}%) — DAY TIF")
     print(f"  Pricing source:    Alpaca latest-trade (yfinance fallback)")
