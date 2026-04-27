@@ -227,6 +227,17 @@
       "score_at_entry": 9.8,
       "reason": "Score \u2265 8.5 + 3d persist",
       "alpaca_order_id": "eb25becb-498f-462a-8c35-ff6cfd865b68"
+    },
+    {
+      "ticker": "ARM",
+      "side": "buy",
+      "date": "2026-04-27",
+      "price": 215.9,
+      "qty": 31.0,
+      "cost_basis": 6692.9,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "3d4b6748-6dbe-4f9e-92c8-c215078b1c40"
     }
   ]
 }
