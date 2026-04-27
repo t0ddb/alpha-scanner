@@ -57,6 +57,10 @@ jobs:
       #   below the $500 default min. Lowering MIN_POSITION_SIZE to $300
       #   keeps 12-position diversification feasible at this capital level.
       MIN_POSITION_SIZE: '300'
+      # Starting-equity baseline for All-Time P&L + vs-SPY-total in the email
+      # digest. UPDATE THIS when capital is added to the live account so the
+      # historical performance numbers stay accurate.
+      STARTING_EQUITY: '5000'
       # Phased live launch: cap entries per day. Default 4; can override
       # via workflow_dispatch input. Removing the cap: set to '0' or empty.
       MAX_ENTRIES_PER_DAY: ${{ inputs.max_entries_per_day || '4' }}

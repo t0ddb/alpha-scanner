@@ -1453,7 +1453,26 @@ def _count_consecutive_days_below(
     return count
 
 
-STARTING_EQUITY = 100_000.0  # Paper account baseline (see Alpaca ph.base_value)
+# Starting-equity baseline for All-Time P&L + vs-SPY-total calculations in
+# the email digest. Mode-aware:
+#   paper: $100,000 (Alpaca paper-account default deposit)
+#   live:  $5,000   (current real-capital deposit)
+# Override via STARTING_EQUITY env var when capital is added or for testing.
+_STARTING_EQUITY_DEFAULTS = {
+    "paper": 100_000.0,
+    "live":  5_000.0,
+}
+
+
+def _starting_equity() -> float:
+    """Resolve starting-equity baseline. Env var wins; else mode-default."""
+    env_val = os.getenv("STARTING_EQUITY")
+    if env_val:
+        try:
+            return float(env_val)
+        except ValueError:
+            print(f"  [WARN] STARTING_EQUITY={env_val!r} is not numeric — using default")
+    return _STARTING_EQUITY_DEFAULTS.get(get_alpaca_mode(), 100_000.0)
 
 
 def _build_trade_digest_html(
@@ -1488,9 +1507,10 @@ def _build_trade_digest_html(
         today_pnl_pct = 0.0
         today_pct_str = "N/A"
 
-    # ── All-Time P&L (vs starting $100k equity) ───────────────────
-    alltime_pnl_dollar = equity - STARTING_EQUITY
-    alltime_pnl_pct = alltime_pnl_dollar / STARTING_EQUITY * 100
+    # ── All-Time P&L (vs starting equity baseline; mode-aware) ────
+    starting_equity = _starting_equity()
+    alltime_pnl_dollar = equity - starting_equity
+    alltime_pnl_pct = alltime_pnl_dollar / starting_equity * 100
 
     # ── vs SPY total (portfolio all-time return − SPY return) ────
     spy_ret_pct = None
@@ -1498,7 +1518,7 @@ def _build_trade_digest_html(
         spy_ret_pct = _get_spy_return_since(price_data, account_created)
     if spy_ret_pct is not None:
         vs_spy_pct = alltime_pnl_pct - spy_ret_pct
-        vs_spy_dollar = vs_spy_pct / 100 * STARTING_EQUITY
+        vs_spy_dollar = vs_spy_pct / 100 * starting_equity
     else:
         vs_spy_pct = None
         vs_spy_dollar = None
