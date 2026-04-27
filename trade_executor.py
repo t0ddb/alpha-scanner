@@ -93,7 +93,7 @@ _DEFAULTS = {
     "stop_loss_pct": 0.20,
     "max_positions": 12,
     "max_position_pct": 0.083,
-    "position_pct_flex": 0.02,    # round up to next whole share if cost ≤ (max + flex)
+    "position_pct_flex": 0.012,   # round up to next whole share if cost ≤ (max + flex)
     "min_position_size": 500,
 }
 
