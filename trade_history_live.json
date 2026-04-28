@@ -1,0 +1,48 @@
+{
+  "trades": [
+    {
+      "ticker": "AEHR",
+      "side": "buy",
+      "date": "2026-04-28",
+      "price": 81.88,
+      "qty": 5.0,
+      "cost_basis": 409.4,
+      "score_at_entry": 9.8,
+      "reason": "Reconstructed (live workflow first-run git push failed; submitted 2026-04-28)",
+      "alpaca_order_id": "b70c8fc3-4f97-4b03-be87-18daea575def"
+    },
+    {
+      "ticker": "ARM",
+      "side": "buy",
+      "date": "2026-04-28",
+      "price": 197.0,
+      "qty": 2.0,
+      "cost_basis": 394.0,
+      "score_at_entry": 9.9,
+      "reason": "Reconstructed (live workflow first-run git push failed; submitted 2026-04-28)",
+      "alpaca_order_id": "e85de384-916d-466f-9ad6-84a8ea87b531"
+    },
+    {
+      "ticker": "IRDM",
+      "side": "buy",
+      "date": "2026-04-28",
+      "price": 37.4,
+      "qty": 11.0,
+      "cost_basis": 411.4,
+      "score_at_entry": 9.9,
+      "reason": "Reconstructed (live workflow first-run git push failed; submitted 2026-04-28)",
+      "alpaca_order_id": "e12c5555-7ab9-4091-acf0-a8a23c5b532f"
+    },
+    {
+      "ticker": "FORM",
+      "side": "buy",
+      "date": "2026-04-28",
+      "price": 134.1,
+      "qty": 3.0,
+      "cost_basis": 402.3,
+      "score_at_entry": 9.8,
+      "reason": "Reconstructed (live workflow first-run git push failed; submitted 2026-04-28)",
+      "alpaca_order_id": "14fd5d5a-9f37-4c2a-af4a-55335a6ab583"
+    }
+  ]
+}
