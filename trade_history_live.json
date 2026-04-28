@@ -43,6 +43,50 @@
       "score_at_entry": 9.8,
       "reason": "Reconstructed (live workflow first-run git push failed; submitted 2026-04-28)",
       "alpaca_order_id": "14fd5d5a-9f37-4c2a-af4a-55335a6ab583"
+    },
+    {
+      "ticker": "MRVL",
+      "side": "buy",
+      "date": "2026-04-28",
+      "price": 153.11,
+      "qty": 3.0,
+      "cost_basis": 459.33,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "1286f5e5-91a6-4e43-8176-3cab29f8ec6c"
+    },
+    {
+      "ticker": "NVTS",
+      "side": "buy",
+      "date": "2026-04-28",
+      "price": 15.105,
+      "qty": 26.0,
+      "cost_basis": 392.73,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "bd9f968d-badf-4df4-8115-3118d3577168"
+    },
+    {
+      "ticker": "STM",
+      "side": "buy",
+      "date": "2026-04-28",
+      "price": 49.8,
+      "qty": 8.0,
+      "cost_basis": 398.4,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "c0b72d76-d05e-4093-ac6e-927ddf6494ba"
+    },
+    {
+      "ticker": "AAOI",
+      "side": "buy",
+      "date": "2026-04-28",
+      "price": 137.27,
+      "qty": 3.0,
+      "cost_basis": 411.81,
+      "score_at_entry": 9.5,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "f9b6c281-53f4-409f-93c0-170f3289ead5"
     }
   ]
 }
