@@ -1,0 +1,67 @@
+name: Reconstruct Live Trade Log (one-time)
+
+# One-time recovery workflow: rebuilds trade_history_live.json from Alpaca's
+# order history after the live workflow's first run committed locally but
+# failed to push (workflow bug, fixed in commit 4814177).
+#
+# Run with dry_run=true first to verify what would be logged, then re-run
+# with dry_run=false to commit + push.
+
+on:
+  workflow_dispatch:
+    inputs:
+      days:
+        description: 'Look back N days for filled BUY orders'
+        required: false
+        default: '5'
+      dry_run:
+        description: 'Dry run (show what would be logged, do not write)'
+        required: false
+        default: 'true'
+        type: choice
+        options: ['true', 'false']
+
+jobs:
+  reconstruct:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+      ALPACA_MODE: live
+      ALPACA_LIVE_API_KEY: ${{ secrets.ALPACA_LIVE_API_KEY }}
+      ALPACA_LIVE_SECRET_KEY: ${{ secrets.ALPACA_LIVE_SECRET_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+
+      - name: Reconstruct
+        run: |
+          ARGS="--days ${{ inputs.days }}"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          echo "Running: python reconstruct_live_trade_log.py $ARGS"
+          python reconstruct_live_trade_log.py $ARGS
+
+      - name: Commit reconstructed log
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          [ -f trade_history_live.json ] && git add trade_history_live.json || true
+          # Discard any DB writes from the run (DB is owned by paper + backfill)
+          git checkout -- breakout_tracker.db || true
+
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+          else
+            git commit -m "Reconstruct trade_history_live.json from Alpaca order history"
+            git pull --rebase -X ours || git rebase --abort
+            git push
+          fi
