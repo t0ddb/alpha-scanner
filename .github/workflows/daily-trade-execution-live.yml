@@ -1,20 +1,22 @@
 name: Daily Trade Execution (LIVE)
 
 # IMPORTANT: This workflow trades real money against the LIVE Alpaca
-# account. To launch:
-#   1. Verify ALPACA_LIVE_API_KEY and ALPACA_LIVE_SECRET_KEY secrets are set
-#   2. Run a manual `--dry-run` first via Actions tab to verify connection
-#   3. Run a manual real trade once to confirm orders + email + persistence
-#   4. Uncomment the `schedule:` block below to enable daily automation
+# account. Schedule enabled 2026-04-28 — runs daily at 4:30 PM ET.
 #
-# Currently disabled (workflow_dispatch only). The first run is intentionally
-# manual so you can verify everything before automation kicks in.
+# To halt without removing the schedule: set repo variable
+# KILL_SWITCH_LIVE=1 (Settings → Secrets and variables → Actions → Variables).
+# Code-side halts are also enforced by the 10% daily-loss circuit breaker.
 
 on:
-  # schedule:
-  #   # 4:30 PM ET Mon-Fri, same time as paper. Backfill runs once at 4:00 PM
-  #   # ET regardless of mode — DB is account-agnostic.
-  #   - cron: '30 20 * * 1-5'
+  schedule:
+    # 4:30 PM ET Mon-Fri, same time as paper. Backfill runs once at 4:00 PM
+    # ET regardless of mode — DB is account-agnostic.
+    #
+    # GitHub Actions cron is UTC-only. The fixed UTC time below is tuned
+    # for US Eastern DAYLIGHT TIME (March-November): 20:30 UTC = 4:30 PM ET.
+    # When US returns to STANDARD TIME (~Nov 2026), shift to
+    # cron: '30 21 * * 1-5' so it fires at 4:30 PM ET year-round.
+    - cron: '30 20 * * 1-5'
   workflow_dispatch:
     inputs:
       dry_run:
