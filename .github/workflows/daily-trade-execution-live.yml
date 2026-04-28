@@ -108,6 +108,12 @@ jobs:
           [ -f trade_history_live.json ] && git add trade_history_live.json || true
           [ -f wash_sale_log_live.json ] && git add wash_sale_log_live.json || true
 
+          # The trade_executor writes today's scores into breakout_tracker.db
+          # via score_all + upsert_ticker_scores. The live workflow doesn't
+          # commit the DB (paper + backfill own it), but the unstaged DB
+          # mutation blocks `git pull --rebase` later. Discard it.
+          git checkout -- breakout_tracker.db || true
+
           if git diff --cached --quiet; then
             echo "No live state changes to commit."
           else
