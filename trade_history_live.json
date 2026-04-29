@@ -87,6 +87,50 @@
       "score_at_entry": 9.5,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "f9b6c281-53f4-409f-93c0-170f3289ead5"
+    },
+    {
+      "ticker": "BE",
+      "side": "buy",
+      "date": "2026-04-29",
+      "price": 287.26,
+      "qty": 1.0,
+      "cost_basis": 287.26,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "4a5ab35a-bb4c-47a8-910d-f28c4aec3b8f"
+    },
+    {
+      "ticker": "STM",
+      "side": "buy",
+      "date": "2026-04-29",
+      "price": 52.705,
+      "qty": 8.0,
+      "cost_basis": 421.64,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "8fb636a3-f9a5-4c55-ad2a-277f73830dd9"
+    },
+    {
+      "ticker": "VIAV",
+      "side": "buy",
+      "date": "2026-04-29",
+      "price": 45.5,
+      "qty": 9.0,
+      "cost_basis": 409.5,
+      "score_at_entry": 9.4,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "fe101589-bb1c-4420-a349-8df9d7cea5ae"
+    },
+    {
+      "ticker": "VRT",
+      "side": "buy",
+      "date": "2026-04-29",
+      "price": 306.21,
+      "qty": 1.0,
+      "cost_basis": 306.21,
+      "score_at_entry": 9.4,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "f4ef1548-1916-4761-abd6-5654c1cb1d66"
     }
   ]
 }
