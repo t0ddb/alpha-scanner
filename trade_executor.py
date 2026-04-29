@@ -53,6 +53,7 @@ import os
 import smtplib
 import sys
 from datetime import date, datetime
+from pathlib import Path
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from zoneinfo import ZoneInfo
@@ -112,6 +113,35 @@ def get_alpaca_mode() -> str:
 
 def is_live_mode() -> bool:
     return get_alpaca_mode() == "live"
+
+
+def _system_inception_date(mode: str) -> date | None:
+    """Return the date of the first buy in trade_history_{mode}.json, or None
+    if the file is missing or has no buys.
+
+    Used to anchor "vs SPY total" P&L in the email digest. This reflects when
+    the SYSTEM started trading the account, which is what we actually want to
+    compare to SPY — not when the Alpaca account itself was created (which
+    could be days or weeks before the system started running on it).
+    """
+    import json
+    suffix = "_live" if mode == "live" else "_paper"
+    path = Path(__file__).parent / f"trade_history{suffix}.json"
+    if not path.exists():
+        return None
+    try:
+        with open(path) as f:
+            data = json.load(f)
+    except (json.JSONDecodeError, OSError):
+        return None
+    buys = [t.get("date") for t in data.get("trades", [])
+            if t.get("side") == "buy" and t.get("date")]
+    if not buys:
+        return None
+    try:
+        return datetime.strptime(min(buys), "%Y-%m-%d").date()
+    except ValueError:
+        return None
 
 
 def _env_float(name: str) -> float | None:
@@ -2022,13 +2052,20 @@ def main():
     client = connect_alpaca()
     data_client = connect_alpaca_data()
 
-    # 2b. Account inception (used for SPY comparison in email digest)
-    try:
-        _acct = client.get_account()
-        account_created = (_acct.created_at.date()
-                           if getattr(_acct, "created_at", None) else None)
-    except APIError:
-        account_created = None
+    # 2b. Inception for SPY comparison in email digest. Prefer the date of the
+    # first buy in trade_history_{mode}.json — that's when the SYSTEM started
+    # trading this account, regardless of when the Alpaca account was created.
+    # Live launched 2026-04-28: the live Alpaca account itself was created
+    # earlier (when keys were generated), so account.created_at would compute
+    # SPY return over an irrelevant window.
+    account_created = _system_inception_date(get_alpaca_mode())
+    if account_created is None:
+        try:
+            _acct = client.get_account()
+            account_created = (_acct.created_at.date()
+                               if getattr(_acct, "created_at", None) else None)
+        except APIError:
+            account_created = None
 
     # 3. Snapshot account
     snapshot = get_account_snapshot(client)
