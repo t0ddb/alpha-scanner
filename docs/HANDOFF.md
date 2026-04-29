@@ -1,6 +1,6 @@
 # Alpha Scanner — Session Handoff
 
-Last updated: 2026-04-24 (Scheme C weight audit deployed)
+Last updated: 2026-04-28 (live trading launched)
 
 This doc exists so a fresh Claude Code thread can pick up where the
 last one left off. Read it first, then read the code. Anything a
@@ -24,9 +24,12 @@ state machine, the Streamlit dashboard, the backtest scripts, the
 signal diagnostics — exists to feed or observe or validate this one
 pipeline.
 
-The system is designed for real-capital trading. It currently runs
-against an Alpaca paper-trading account for live-market validation;
-the live-capital switchover is the next planned step.
+The system is designed for real-capital trading and **runs against
+both a paper and a live Alpaca account in parallel**. Paper started
+2026-04-10 with $100k synthetic; live started 2026-04-28 with $5k
+real capital. Both run on the same daily 4:30 PM ET schedule via
+separate GitHub Actions workflows that share the scoring DB but
+maintain independent trade histories and wash-sale logs.
 
 Repo: `/Users/toddbruschwein/Claude-Workspace/breakout-tracker`
 GitHub: `github.com/t0ddb/alpha-scanner`
@@ -122,31 +125,57 @@ relative to overnight risk.
 
 ## GitHub Actions workflows
 
-Three cron-scheduled workflows. All three commit state back to the
-repo on completion.
+Four cron-scheduled workflows + one one-time recovery workflow. All
+commit state back to the repo on completion.
 
 | Workflow | Cron (UTC, DST) | What it does |
 |---|---|---|
 | `daily-backfill.yml` | `0 20 * * 1-5` (4:00 PM ET) | `backfill_subsector.py` fills any missing historical DB rows |
-| `daily-trade-execution.yml` | `30 20 * * 1-5` (4:30 PM ET) | `trade_executor.py` scores + trades |
+| `daily-trade-execution.yml` | `30 20 * * 1-5` (4:30 PM ET) | Paper trade execution (`ALPACA_MODE=paper`) |
+| `daily-trade-execution-live.yml` | `30 20 * * 1-5` (4:30 PM ET) | **Live** trade execution (`ALPACA_MODE=live`) — enabled 2026-04-28 |
 | `quarterly-review.yml` | `0 14 1 1,4,7,10 *` | `quarterly_review.py --months 12` writes 7-section health report |
+| `reconstruct-live-trade-log.yml` | manual only | One-time recovery for `trade_history_live.json`. Used 2026-04-28 to replay the failed first live run; harmless residue, can be deleted |
 
 **⚠️ DST note**: GitHub Actions cron is UTC-only. Current UTC values
 are tuned for US Eastern DAYLIGHT TIME (March–November). When the US
-returns to Standard Time (~Nov 2026), both daily crons need to shift
+returns to Standard Time (~Nov 2026), all daily crons need to shift
 +1 hour:
 - backfill: `0 21 * * 1-5`
-- trade-exec: `30 21 * * 1-5`
+- trade-exec (paper + live): `30 21 * * 1-5`
 
-YAML comments in both workflow files document this.
+YAML comments in all three workflow files document this.
+
+**Paper + live run in parallel at 4:30 PM ET.** They use shared
+infrastructure (DB, scoring code, indicators) but maintain independent
+state files: `trade_history_paper.json` / `trade_history_live.json`,
+and `wash_sale_log_paper.json` / `wash_sale_log_live.json`. The DB is
+**paper/backfill-owned** — the live workflow has a `git checkout --
+breakout_tracker.db` step before its rebase to discard any local DB
+mutations from `score_all()`. (This was the bug that caused the first
+live run on 2026-04-28 to lose its commit; fixed in 4814177.)
 
 **Crons are staggered** (backfill 4:00, trade-exec 4:30) so backfill's
 DB commit lands before trade-exec checks out the repo. Eliminated the
 original race condition that needed a `-X ours` merge strategy.
 
-**Manual override**: `workflow_dispatch` on `daily-trade-execution.yml`
-exposes `entry_threshold` and `persistence_days` as inputs → env vars
-that `load_trade_config()` picks up.
+**Manual override**: `workflow_dispatch` on either trade-execution
+workflow exposes `dry_run`, `entry_threshold`, `persistence_days` as
+inputs. Live workflow additionally exposes `max_entries_per_day`
+(default 4 for phased rollout — review for removal after 2-4 weeks
+of clean operation).
+
+### Live-mode safety controls
+
+| Control | Where | Trigger |
+|---|---|---|
+| Manual kill switch (paper) | repo variable `KILL_SWITCH=1` | Halts paper entries |
+| Manual kill switch (live) | repo variable `KILL_SWITCH_LIVE=1` | Halts live entries |
+| Daily-loss circuit breaker | `DAILY_LOSS_CIRCUIT_BREAKER_PCT = 0.10` | Auto-halts entries if equity drops > 10% intraday |
+| Account-prefix safety | `connect_alpaca()` | Rejects mode/account-type mismatches |
+| Daily entries cap (live) | env `MAX_ENTRIES_PER_DAY=4` | Caps new entries per run |
+| Min position size (live) | env `MIN_POSITION_SIZE=300` | Excludes high-priced tickers that can't fit at $5k |
+
+All halts gate ENTRIES only — exits and stop-loss management always run.
 
 ---
 
@@ -299,39 +328,49 @@ intentionally held.
 
 Priority roughly top-down:
 
-1. **Monitor the new limit-order + cash-floor regime.** First few
-   weeks of entries will tell us if fill rates and slippage match the
-   `entry_mode_backtest.py` predictions (87% fill, ≤3% slippage). If
-   reality diverges meaningfully (e.g. fill rate < 70%, slippage > 5%
-   regularly), that's a signal the market is behaving differently
-   than the backtest window and needs re-tuning.
+1. **Monitor live trading first 2-4 weeks.** Live launched 2026-04-28
+   with $5k and 4 initial positions (AEHR, ARM, IRDM, FORM). Watch:
+   - Fill rates (should match `entry_mode_backtest.py` 87% prediction)
+   - Slippage on actual fills vs Alpaca latest-trade sizing prices
+   - Score-based exits and stop fires
+   - Daily P&L delta between paper and live (for systematic divergence)
+   - All-Time P&L number tracks $5k baseline correctly
 
-2. **Reconcile actual fill prices back into `trade_history.json`.**
-   `log_buy()` currently records `price = sizing_price` (Alpaca
-   latest at submit time), not the actual fill price. For accurate
-   per-position cost basis, a next-day reconciliation step could look
-   up `filled_avg_price` from Alpaca's order history and update the
-   trade log entry. Not shipped.
+2. **Remove `MAX_ENTRIES_PER_DAY=4` cap from live workflow** after a
+   few weeks of clean operation. Set in
+   `.github/workflows/daily-trade-execution-live.yml` env block.
+   Currently caps live entries to 4/day for phased rollout.
 
-3. **MA Alignment re-inclusion watch.** Its 12-month edge flipped to
+3. **Update `STARTING_EQUITY` env var when capital is added.** Live
+   workflow has `STARTING_EQUITY: '5000'`. If you deposit more, update
+   this so All-Time P&L stays accurate.
+
+4. **MA Alignment re-inclusion watch.** Its 12-month edge flipped to
    +7.76% in the 2026-Q2 quarterly review (was −9.3% in the 3yr
    window). Do NOT re-add yet — wait for 2026-Q3 review to confirm
    it's not a one-window fluke. If Q3 also shows positive edge, add
    back at weight ~1.5 and rerun `--sweep-entry-threshold`.
 
-4. **Daily-backfill frequency.** Currently `frequency=5` (samples
+5. **Quarterly review Q3 2026** (next: Oct 1). First quarterly under
+   Scheme C weights — baselines will be re-established. Section 4
+   (live vs backtest) becomes meaningful once 20+ live sells accumulate.
+
+6. **Daily-backfill frequency.** Currently `frequency=5` (samples
    every 5 trading days, 180-day window). The persistence filter
    works fine because the executor fills in the per-day rows, but
    `frequency=1` would give a robust fallback if trade-exec commits
    fail. Tradeoff: runtime goes 10-20 min → ~50+ min. CI budget
    permitting.
 
-5. **Quarterly review Section 4 completion.** Needs live sells to be
-   meaningful. Wire up bucket-grouped realized P&L comparison vs
-   backtest expectations once 20+ sells accumulate.
-
-6. **DST cron shift**. Both daily workflows need `+1` hour around
+7. **DST cron shift**. All daily workflows need `+1` hour around
    Nov 2, 2026. YAML comments document the replacement values.
+
+8. **Fractional shares** — discussed and deferred 2026-04-27. Would
+   capture high-priced tickers (GEV/CIEN/SNDK) excluded at $5k scale
+   but requires switching from Alpaca-side GTC stops to software-
+   monitored stops (Alpaca rejects GTC stops on fractional positions).
+   Revisit when capital grows past ~$15k, at which point all currently
+   excluded tickers fit naturally as whole shares.
 
 ---
 
@@ -395,7 +434,9 @@ Priority roughly top-down:
 - `ticker_config.yaml` — 180 tickers, indicator weights,
   `trade_execution:`, `breakout_detection:`, `scoring:`
 - `.github/workflows/daily-backfill.yml` (20:00 UTC M-F)
-- `.github/workflows/daily-trade-execution.yml` (20:30 UTC M-F)
+- `.github/workflows/daily-trade-execution.yml` (20:30 UTC M-F, paper)
+- `.github/workflows/daily-trade-execution-live.yml` (20:30 UTC M-F, live)
+- `.github/workflows/reconstruct-live-trade-log.yml` (manual-only recovery)
 - `.github/workflows/quarterly-review.yml` (14:00 UTC quarterly)
 
 ### Outputs (committed)
