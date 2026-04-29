@@ -1564,9 +1564,9 @@ def _build_trade_digest_html(
     else:
         subject_pct_str = "N/A"
     # Mode tag in subject so paper vs live emails are distinguishable in inbox.
-    # Paper is the default and historically had no tag; preserve that to keep
-    # email-rule filters working. Only the live run gets an explicit [LIVE].
-    mode_tag = " [LIVE]" if is_live_mode() else ""
+    # Live is the primary pipeline (clean subject); paper is the parallel
+    # validation pipeline and gets an explicit [PAPER] tag.
+    mode_tag = " [PAPER]" if not is_live_mode() else ""
     subject = (f"📡{mode_tag} {today.strftime('%-m/%d')}: "
                f"{subject_pct_str} | "
                f"{len(entries)} buy / {len(exits)} sell{dry_tag}")
