@@ -131,6 +131,28 @@
       "score_at_entry": 9.4,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "f4ef1548-1916-4761-abd6-5654c1cb1d66"
+    },
+    {
+      "ticker": "VIAV",
+      "side": "buy",
+      "date": "2026-04-30",
+      "price": 52.39,
+      "qty": 8.0,
+      "cost_basis": 419.12,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "ecc00796-6295-4b2b-ae9d-f521fd66f4f6"
+    },
+    {
+      "ticker": "WOLF",
+      "side": "buy",
+      "date": "2026-04-30",
+      "price": 29.64,
+      "qty": 12.0,
+      "cost_basis": 355.68,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "fa3a9571-c307-48f6-823a-411e9e2844a5"
     }
   ]
 }
