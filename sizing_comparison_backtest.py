@@ -38,6 +38,11 @@ from data_fetcher import fetch_all
 
 DB_PATH = Path(os.environ.get("ALPHA_DB_PATH", Path(__file__).parent / "breakout_tracker.db"))
 
+# Persistence-days override (env var) — for testing extended-persistence variants
+# without rewriting all the hardcoded `persistence_days=3` literals.
+_PERSISTENCE_OVERRIDE = os.environ.get("PERSISTENCE_DAYS_OVERRIDE")
+PERSISTENCE_DAYS = int(_PERSISTENCE_OVERRIDE) if _PERSISTENCE_OVERRIDE else 3
+
 
 # ============================================================
 # STRATEGY CONFIG
@@ -80,7 +85,7 @@ STRATEGY_A = StrategyConfig(
     entry_threshold=8.5,
     exit_threshold=5.0,
     stop_loss=STOP_FIXED_15,
-    persistence_days=3,
+    persistence_days=PERSISTENCE_DAYS,
 )
 
 STRATEGY_B = StrategyConfig(
@@ -94,7 +99,7 @@ STRATEGY_B = StrategyConfig(
     entry_threshold=8.5,
     exit_threshold=5.0,
     stop_loss=STOP_FIXED_15,
-    persistence_days=3,
+    persistence_days=PERSISTENCE_DAYS,
 )
 
 STRATEGY_C = StrategyConfig(
@@ -108,7 +113,7 @@ STRATEGY_C = StrategyConfig(
     entry_threshold=8.5,
     exit_threshold=5.0,
     stop_loss=STOP_FIXED_15,
-    persistence_days=3,
+    persistence_days=PERSISTENCE_DAYS,
 )
 
 STRATEGY_D = StrategyConfig(
@@ -122,7 +127,7 @@ STRATEGY_D = StrategyConfig(
     entry_threshold=8.5,
     exit_threshold=5.0,
     stop_loss=STOP_FIXED_15,
-    persistence_days=3,
+    persistence_days=PERSISTENCE_DAYS,
     swap_at_cap=True,
     swap_score_threshold=8.0,
 )
@@ -1774,7 +1779,7 @@ def main():
                 entry_threshold=8.5,
                 exit_threshold=5.0,
                 stop_loss=STOP_FIXED_15,
-                persistence_days=3,
+                persistence_days=PERSISTENCE_DAYS,
             )
 
             # Primary run (default start)
@@ -1860,7 +1865,7 @@ def main():
                 entry_threshold=8.5,
                 exit_threshold=5.0,
                 stop_loss=sl_cfg,
-                persistence_days=3,
+                persistence_days=PERSISTENCE_DAYS,
             )
 
             print(f"    {label:<14s}...", end="", flush=True)
@@ -1940,7 +1945,7 @@ def main():
         # Compute path dependency start dates
         et_start_candidates = compute_path_start_dates(
             score_df, daily_scores, args.path_starts,
-            persistence_days=3,
+            persistence_days=PERSISTENCE_DAYS,
         )
 
         et_sweep_results: list[dict] = []
@@ -1959,7 +1964,7 @@ def main():
                 entry_threshold=threshold,
                 exit_threshold=5.0,
                 stop_loss=StopLossConfig(type="fixed", value=0.20),
-                persistence_days=3,
+                persistence_days=PERSISTENCE_DAYS,
             )
 
             print(f"    threshold={threshold:.1f}...", end="", flush=True)

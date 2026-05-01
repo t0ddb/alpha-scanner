@@ -294,7 +294,8 @@ def build_row(
 # ─────────────────────────────────────────────────────────────
 # MAIN BUILDER
 # ─────────────────────────────────────────────────────────────
-def build(years: int, frequency: int, output_path: str, quick: bool = False) -> None:
+def build(years: int, frequency: int, output_path: str, quick: bool = False,
+          include_recent: bool = False) -> None:
     cfg = load_config()
     ind_cfg = get_indicator_config(cfg)
     metadata = get_ticker_metadata(cfg)
@@ -317,16 +318,23 @@ def build(years: int, frequency: int, output_path: str, quick: bool = False) -> 
     max_fwd = max(FORWARD_WINDOWS)
     total_days = len(bench_df)
     start_idx = WARMUP_DAYS
-    end_idx = total_days - max_fwd
+    # By default reserve last max_fwd days so all forward returns are
+    # computable. With --include-recent, score through today and emit NaN
+    # for forward-return columns where insufficient future data exists.
+    if include_recent:
+        end_idx = total_days
+    else:
+        end_idx = total_days - max_fwd
     # Limit to `years` of dates
     target_dates = years * 252
     if end_idx - start_idx > target_dates:
         start_idx = end_idx - target_dates
 
     test_indices = list(range(start_idx, end_idx, frequency))
+    last_idx = min(end_idx - 1, total_days - 1)
     print(f"[build] {len(test_indices)} date snapshots from "
           f"{bench_df.index[start_idx].strftime('%Y-%m-%d')} to "
-          f"{bench_df.index[end_idx].strftime('%Y-%m-%d')}")
+          f"{bench_df.index[last_idx].strftime('%Y-%m-%d')}")
     print(f"[build] {len(data_nobench)} tickers × {len(test_indices)} dates "
           f"= up to {len(data_nobench)*len(test_indices):,} rows")
 
@@ -383,7 +391,11 @@ if __name__ == "__main__":
     ap.add_argument("--frequency", type=int, default=1)
     ap.add_argument("--output", default=OUTPUT_PATH)
     ap.add_argument("--quick", action="store_true")
+    ap.add_argument("--include-recent", action="store_true",
+                    help="score through today (forward-return columns NaN where "
+                         "insufficient future data — useful for rescore-only workflows)")
     args = ap.parse_args()
 
     build(years=args.years, frequency=args.frequency,
-          output_path=args.output, quick=args.quick)
+          output_path=args.output, quick=args.quick,
+          include_recent=args.include_recent)

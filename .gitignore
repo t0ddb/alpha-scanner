@@ -6,6 +6,12 @@ breakout_tracker.db-shm
 breakout_tracker_schemeC*.db
 breakout_tracker_schemeC*.db-shm
 breakout_tracker_schemeC*.db-wal
+breakout_tracker_schemeD*.db
+breakout_tracker_schemeD*.db-shm
+breakout_tracker_schemeD*.db-wal
+breakout_tracker_schemeE*.db
+breakout_tracker_schemeE*.db-shm
+breakout_tracker_schemeE*.db-wal
 breakout_tracker_C1_*.db
 breakout_tracker_C1_*.db-shm
 breakout_tracker_C1_*.db-wal
