@@ -137,8 +137,21 @@ STRATEGY_D = StrategyConfig(
 # DATA LOADING
 # ============================================================
 
-def load_score_data() -> pd.DataFrame:
-    """Load all ticker scores from SQLite."""
+def load_score_data(source: str = "sqlite") -> pd.DataFrame:
+    """Load all ticker scores. Supports two sources:
+      - "sqlite": load from breakout_tracker.db (default; Scheme C scores)
+      - "parquet:<path>": load from a parquet file with columns
+        date, ticker, score (e.g. Scheme I+ pre-computed scores).
+    """
+    if source.startswith("parquet:"):
+        path = source.split(":", 1)[1]
+        df = pd.read_parquet(path)
+        if "date" not in df.columns or "ticker" not in df.columns or "score" not in df.columns:
+            raise ValueError(f"parquet at {path} missing required columns (date, ticker, score)")
+        df = df[["date", "ticker", "score"]].copy()
+        df["date"] = pd.to_datetime(df["date"])
+        return df.sort_values(["date", "ticker"]).reset_index(drop=True)
+
     conn = sqlite3.connect(str(DB_PATH))
     df = pd.read_sql_query(
         "SELECT date, ticker, score FROM ticker_scores ORDER BY date, ticker",
@@ -1642,6 +1655,11 @@ def main():
     parser.add_argument("--sweep-entry-threshold", type=str, default=None,
                         help="Comma-separated entry thresholds for threshold sweep "
                              "(e.g. 7.5,8.0,8.5,9.0,9.5). Uses current live config as base.")
+    parser.add_argument("--score-source", type=str, default="sqlite",
+                        help="Score source: 'sqlite' (default; Scheme C from DB) "
+                             "or 'parquet:<path>' (e.g. parquet:backtest_results/scheme_i_plus_scores.parquet)")
+    parser.add_argument("--scheme-label", type=str, default=None,
+                        help="Label for output (e.g. 'Scheme I+'). Defaults to inferring from score-source.")
     args = parser.parse_args()
 
     print("\n" + "=" * 80)
@@ -1650,8 +1668,11 @@ def main():
     print("=" * 80)
 
     # ── Load data ──
-    print("\n  Loading score data from database...")
-    score_df = load_score_data()
+    scheme_label = args.scheme_label or (
+        "Scheme I+" if args.score_source.startswith("parquet:") else "Scheme C"
+    )
+    print(f"\n  Loading score data — source: {args.score_source} ({scheme_label})")
+    score_df = load_score_data(args.score_source)
     print(f"  {len(score_df)} score records")
     print(f"  Date range: {score_df['date'].min().strftime('%Y-%m-%d')} to "
           f"{score_df['date'].max().strftime('%Y-%m-%d')}")

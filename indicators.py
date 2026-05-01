@@ -100,6 +100,143 @@ HIGHER_LOWS_GRADIENT = [
 
 
 # =============================================================
+# SCHEME I+ (v2) — Regime-tuned scoring, total max 10.0
+# =============================================================
+# Calibrated to current AI-bull regime (2025-Q2+). Empirically
+# bucketed using audit_indicator_curves_regime.txt.
+# See docs/SCHEME_I_PLUS_PROPOSAL.md for full design rationale.
+#
+# All Layer 1 buckets are positive-only (no negative scores in
+# the base score). Negative adjustments live in Layer 2 (sequence
+# overlay) — see sequence_overlay.py.
+# =============================================================
+INDICATOR_WEIGHTS_V2 = {
+    "relative_strength": 2.30,
+    "higher_lows":       0.40,
+    "ichimoku_cloud":    1.55,
+    "roc":               1.00,
+    "cmf":               0.85,
+    "atr_expansion":     0.65,
+    "dual_tf_rs_126d":   1.50,
+    "dual_tf_rs_63d":    1.75,
+}
+
+MAX_SCORE_V2 = sum(INDICATOR_WEIGHTS_V2.values())  # = 10.00
+
+# RS — non-monotonic curve with peak 88-94 and SOFT dip at 96-98
+# Empirical Δ vs full-dataset baseline (current regime, fwd_63d_xspy):
+#   <50: -9.2pp, 50-60: +3-10pp, 60-70: +6-9pp, 70-80: +8-10pp,
+#   80-88: +10-11pp, 88-90: +17.6pp PEAK, 90-94: +15pp,
+#   94-96: +12pp, 96-98: +1.7pp dip, 98-100: +4.6pp recovery
+#
+# NOTE: v1.0 had aggressive 0.20 at 96-98 and 0.60 at 98-100. Backtest
+# showed this missed mega-winners (AXTI, BW, IREN, NVTS) which typically
+# live in RS 97-100. Heavy-tail regime dynamics dominated the full-dataset
+# bucket-mean analysis. v1.1 softens the dip and lifts 98-100 toward peak.
+RS_BUCKETS_V2 = [
+    # (min_pctl_inclusive, max_pctl_exclusive, points)
+    (0,    50,  0.00),
+    (50,   60,  0.85),
+    (60,   70,  1.00),
+    (70,   80,  1.20),
+    (80,   85,  1.50),
+    (85,   88,  1.40),
+    (88,   90,  2.30),  # PEAK
+    (90,   92,  2.30),  # extend peak — same empirical lift
+    (92,   94,  2.20),
+    (94,   96,  1.90),
+    (96,   98,  1.40),  # SOFT dip (was 0.20)
+    (98,   101, 2.00),  # heavy-tail recovery (was 0.60)
+]
+
+# Higher Lows — peak at 4+ consecutive
+HL_BUCKETS_V2 = [
+    (0, 2,  0.00),  # 0 or 1
+    (2, 3,  0.05),
+    (3, 4,  0.30),
+    (4, 999, 0.40),  # 4+
+]
+
+# Ichimoku composite (0/3, 1/3, 2/3, 3/3 components) — only 3/3 scores
+ICH_BUCKETS_V2 = [
+    (0, 1, 0.00),  # 0/3
+    (1, 2, 0.00),  # 1/3
+    (2, 3, 0.05),  # 2/3
+    (3, 4, 1.55),  # 3/3
+]
+
+# Rate of Change (21d %) — sweet spot 15-50, soft tail-off above
+# v1.1: Softened upper-tail handling. v1.0 had 75-100=0 and 100+=0,
+# which excluded mega-winners during their parabolic phases (regime
+# heavy-tail). Empirical full-dataset analysis showed exhaustion above
+# 50%, but in current regime, very-high ROC stocks frequently continue
+# running. Keep moderate scoring above 50%.
+ROC_BUCKETS_V2 = [
+    (-1e9, 5,    0.00),
+    (5,    7.5,  0.05),
+    (7.5,  10,   0.50),
+    (10,   15,   0.75),
+    (15,   50,   1.00),
+    (50,   75,   0.70),  # was 0.35 — softened
+    (75,   100,  0.40),  # was 0.00 — softened
+    (100,  1e9,  0.20),  # was 0.00 — small but nonzero for parabolics
+]
+
+# CMF — re-included from 0; positive curve
+CMF_BUCKETS_V2 = [
+    (-1e9, 0.05,  0.00),
+    (0.05, 0.20,  0.25),
+    (0.20, 0.30,  0.50),
+    (0.30, 1e9,   0.85),
+]
+
+# ATR percentile — direction matches current regime (high = good)
+ATR_BUCKETS_V2 = [
+    (0,  50,  0.00),
+    (50, 60,  0.00),
+    (60, 70,  0.30),
+    (70, 80,  0.40),
+    (80, 90,  0.45),
+    (90, 95,  0.65),
+    (95, 101, 0.50),
+]
+
+# Dual-TF — 126d RS percentile (peak 85-90, soft tail-off above)
+# v1.1: Lifted 95-100 from 0.20 to 1.20 — heavy-tail recovery.
+DTF_126D_BUCKETS_V2 = [
+    (0,  50,  0.00),
+    (50, 65,  0.30),
+    (65, 75,  0.85),
+    (75, 85,  1.00),
+    (85, 90,  1.50),  # PEAK
+    (90, 95,  1.30),
+    (95, 101, 1.20),  # was 0.20 — softened for heavy-tail
+]
+
+# Dual-TF — 63d RS percentile (peak 90-95, soft tail-off above)
+# v1.1: Lifted 95-100 from 0.70 to 1.50 — heavy-tail recovery.
+DTF_63D_BUCKETS_V2 = [
+    (0,  50,  0.00),
+    (50, 60,  1.00),
+    (60, 70,  1.10),
+    (70, 80,  1.30),
+    (80, 90,  1.60),
+    (90, 95,  1.75),  # PEAK
+    (95, 101, 1.50),  # was 0.70 — softened
+]
+
+
+def _bucket_lookup(value: float, buckets: list) -> float:
+    """Return points for a value, given a list of (lo, hi, pts) tuples."""
+    if value is None:
+        return 0.0
+    for lo, hi, pts in buckets:
+        if lo <= value < hi:
+            return pts
+    return 0.0
+
+
+# =============================================================
 # INDICATOR 1: Relative Strength vs. SPY  (weight: 0-2.5, gradient)
 # =============================================================
 def check_relative_strength(
@@ -582,6 +719,110 @@ def score_ticker(indicators: dict) -> dict:
     return {
         "score": round(total, 1),
         "max_score": MAX_SCORE,
+        "signals": signals,
+        "signal_weights": signal_weights,
+    }
+
+
+# =============================================================
+# SCORING V2: Scheme I+ Layer 1 (positive-only buckets, max 10.0)
+# =============================================================
+def score_ticker_v2(indicators: dict) -> dict:
+    """
+    Compute Scheme I+ Layer 1 base score (0-10) from indicator results.
+
+    Differences from score_ticker():
+      - Empirically-bucketed (non-monotonic where data supports it)
+      - DTF split into separate 126d and 63d components
+      - CMF re-included with low weight
+      - ATR direction matches current regime (high = good)
+      - Positive-only (negative scoring lives in Layer 2 sequence overlay)
+
+    Layer 2 adjustments (sequence_overlay.py) are applied separately
+    by callers; this function returns the Layer 1 base only.
+
+    Returns:
+        {
+            "score": float,        # Layer 1 base (0 to 10.0)
+            "max_score": 10.0,
+            "signals": [str, ...], # indicators contributing > 0 points
+            "signal_weights": {str: float, ...},
+        }
+    """
+    signals = []
+    signal_weights = {}
+    total = 0.0
+
+    rs = indicators.get("relative_strength", {})
+    rs_pctl = rs.get("rs_percentile", 0) or 0
+    pts = _bucket_lookup(rs_pctl, RS_BUCKETS_V2)
+    if pts > 0:
+        signals.append("relative_strength")
+        signal_weights["relative_strength"] = pts
+        total += pts
+
+    hl = indicators.get("higher_lows", {})
+    hl_count = hl.get("consecutive_higher_lows", 0) or 0
+    pts = _bucket_lookup(hl_count, HL_BUCKETS_V2)
+    if pts > 0:
+        signals.append("higher_lows")
+        signal_weights["higher_lows"] = pts
+        total += pts
+
+    ich = indicators.get("ichimoku_cloud", {})
+    ich_composite = (
+        int(ich.get("above_cloud", False))
+        + int(ich.get("cloud_bullish", False))
+        + int(ich.get("tenkan_above_kijun", False))
+    )
+    pts = _bucket_lookup(ich_composite, ICH_BUCKETS_V2)
+    if pts > 0:
+        signals.append("ichimoku_cloud")
+        signal_weights["ichimoku_cloud"] = pts
+        total += pts
+
+    roc = indicators.get("roc", {})
+    roc_value = roc.get("roc", 0) or 0
+    pts = _bucket_lookup(roc_value, ROC_BUCKETS_V2)
+    if pts > 0:
+        signals.append("roc")
+        signal_weights["roc"] = pts
+        total += pts
+
+    cmf = indicators.get("cmf", {})
+    cmf_value = cmf.get("cmf", 0) or 0
+    pts = _bucket_lookup(cmf_value, CMF_BUCKETS_V2)
+    if pts > 0:
+        signals.append("cmf")
+        signal_weights["cmf"] = pts
+        total += pts
+
+    atr = indicators.get("atr_expansion", {})
+    atr_pctl = atr.get("atr_percentile", 0) or 0
+    pts = _bucket_lookup(atr_pctl, ATR_BUCKETS_V2)
+    if pts > 0:
+        signals.append("atr_expansion")
+        signal_weights["atr_expansion"] = pts
+        total += pts
+
+    # Dual-TF: split 126d and 63d into separate scores
+    dtf = indicators.get("dual_tf_rs", {})
+    dtf_126d = dtf.get("rs_126d_percentile", 0) or 0
+    dtf_63d  = dtf.get("rs_63d_percentile", 0) or 0
+    pts_126 = _bucket_lookup(dtf_126d, DTF_126D_BUCKETS_V2)
+    pts_63  = _bucket_lookup(dtf_63d,  DTF_63D_BUCKETS_V2)
+    if pts_126 > 0:
+        signals.append("dual_tf_rs_126d")
+        signal_weights["dual_tf_rs_126d"] = pts_126
+        total += pts_126
+    if pts_63 > 0:
+        signals.append("dual_tf_rs_63d")
+        signal_weights["dual_tf_rs_63d"] = pts_63
+        total += pts_63
+
+    return {
+        "score": round(total, 2),
+        "max_score": MAX_SCORE_V2,
         "signals": signals,
         "signal_weights": signal_weights,
     }
