@@ -42,7 +42,11 @@ import subsector_store as store
 
 # ─── Configuration ────────────────────────────────────────────────
 ENTRY_THRESHOLD = float(os.environ.get("PATHC_ENTRY_THRESHOLD", "7.5"))
-EXIT_THRESHOLD  = float(os.environ.get("PATHC_EXIT_THRESHOLD", "5.0"))
+# Exit threshold validated via _test_pathc_exit_threshold.py:
+# 4.5 is most path-stable in the high-return zone (path std 10.5% vs
+# 23.4% at exit=5.0, with cumulative +550% vs +530%). Above 6.0 returns
+# collapse; below 4.0 path variance increases sharply.
+EXIT_THRESHOLD  = float(os.environ.get("PATHC_EXIT_THRESHOLD", "4.5"))
 PERSISTENCE_DAYS = int(os.environ.get("PATHC_PERSISTENCE_DAYS", "3"))
 MAX_POSITIONS = int(os.environ.get("PATHC_MAX_POSITIONS", "12"))
 POSITION_PCT = float(os.environ.get("PATHC_POSITION_PCT", "0.0833"))
