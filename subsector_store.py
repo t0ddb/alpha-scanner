@@ -81,10 +81,115 @@ def init_db(db_path: str | Path = None) -> sqlite3.Connection:
 
         CREATE INDEX IF NOT EXISTS idx_ticker_scores_score
             ON ticker_scores (score, date);
+
+        -- ─── Path C (Scheme I+) shadow tracking tables ─────────
+        -- Stores per-day Path C scores AND fire flags AND raw indicator
+        -- values. Fire flags are needed for Layer 2 streak computation.
+        -- Raw values are stored so we can re-derive scores or audit later.
+        CREATE TABLE IF NOT EXISTS ticker_scores_v2 (
+            date              TEXT NOT NULL,
+            ticker            TEXT NOT NULL,
+            score             REAL NOT NULL,        -- final v2 score (Layer 1 + Layer 2)
+            layer_1           REAL NOT NULL,        -- 0-10 base
+            layer_2           REAL NOT NULL,        -- additive (can be negative)
+            sequence_tags     TEXT,                 -- pipe-separated pattern tags
+            -- Fire flags (binary 0/1) for streak computation downstream
+            fire_rs           INTEGER NOT NULL DEFAULT 0,
+            fire_ich          INTEGER NOT NULL DEFAULT 0,
+            fire_hl           INTEGER NOT NULL DEFAULT 0,
+            fire_cmf          INTEGER NOT NULL DEFAULT 0,
+            fire_roc          INTEGER NOT NULL DEFAULT 0,
+            fire_atr          INTEGER NOT NULL DEFAULT 0,
+            fire_dtf          INTEGER NOT NULL DEFAULT 0,
+            -- Raw indicator values (for audit / re-scoring)
+            rs_pctl           REAL,
+            hl_count          INTEGER,
+            ich_score         INTEGER,              -- 0/3, 1/3, 2/3, 3/3 composite
+            roc_value         REAL,
+            cmf_value         REAL,
+            atr_pctl          REAL,
+            dtf_126d_pctl     REAL,
+            dtf_63d_pctl      REAL,
+            PRIMARY KEY (date, ticker)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_ticker_scores_v2_ticker
+            ON ticker_scores_v2 (ticker, date);
+
+        CREATE INDEX IF NOT EXISTS idx_ticker_scores_v2_score
+            ON ticker_scores_v2 (score, date);
     """)
 
     conn.commit()
     return conn
+
+
+def upsert_ticker_scores_v2(conn: sqlite3.Connection, date: str, records: list[dict]) -> None:
+    """Insert or replace v2 (Path C) ticker scores + fire flags + raw values.
+
+    Each record dict should contain:
+      ticker, score, layer_1, layer_2, sequence_tags,
+      fire_rs, fire_ich, fire_hl, fire_cmf, fire_roc, fire_atr, fire_dtf,
+      rs_pctl, hl_count, ich_score, roc_value, cmf_value, atr_pctl,
+      dtf_126d_pctl, dtf_63d_pctl
+    """
+    if not records:
+        return
+    conn.executemany(
+        """INSERT OR REPLACE INTO ticker_scores_v2 (
+              date, ticker, score, layer_1, layer_2, sequence_tags,
+              fire_rs, fire_ich, fire_hl, fire_cmf, fire_roc, fire_atr, fire_dtf,
+              rs_pctl, hl_count, ich_score, roc_value, cmf_value, atr_pctl,
+              dtf_126d_pctl, dtf_63d_pctl
+           ) VALUES (?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, ?, ?, ?)""",
+        [
+            (
+                date, r["ticker"], r["score"], r["layer_1"], r["layer_2"],
+                r.get("sequence_tags", ""),
+                r["fire_rs"], r["fire_ich"], r["fire_hl"], r["fire_cmf"],
+                r["fire_roc"], r["fire_atr"], r["fire_dtf"],
+                r.get("rs_pctl"), r.get("hl_count"), r.get("ich_score"),
+                r.get("roc_value"), r.get("cmf_value"), r.get("atr_pctl"),
+                r.get("dtf_126d_pctl"), r.get("dtf_63d_pctl"),
+            )
+            for r in records
+        ],
+    )
+    conn.commit()
+
+
+def get_fire_flags_history_v2(conn: sqlite3.Connection, ticker: str,
+                                end_date: str, days: int = 90) -> list[dict]:
+    """Get the last N daily fire-flag rows for a ticker, ending at end_date
+    (inclusive). Returns list of dicts ordered chronologically (oldest first)."""
+    cur = conn.execute(
+        """SELECT date, fire_rs, fire_ich, fire_hl, fire_cmf,
+                  fire_roc, fire_atr, fire_dtf
+           FROM ticker_scores_v2
+           WHERE ticker = ? AND date <= ?
+           ORDER BY date DESC LIMIT ?""",
+        (ticker, end_date, days),
+    )
+    rows = [
+        dict(date=r[0], rs=r[1], ich=r[2], hl=r[3], cmf=r[4],
+             roc=r[5], atr=r[6], dtf=r[7])
+        for r in cur.fetchall()
+    ]
+    rows.reverse()  # chronological (oldest first)
+    return rows
+
+
+def get_v2_scores_for_persistence(conn: sqlite3.Connection, ticker: str,
+                                    end_date: str, days: int = 5) -> list[float]:
+    """Get the last N v2 scores for a ticker, ending BEFORE end_date.
+    Used for persistence check. Returns list ordered most-recent first."""
+    cur = conn.execute(
+        """SELECT score FROM ticker_scores_v2
+           WHERE ticker = ? AND date < ?
+           ORDER BY date DESC LIMIT ?""",
+        (ticker, end_date, days),
+    )
+    return [r[0] for r in cur.fetchall()]
 
 
 def upsert_daily(conn: sqlite3.Connection, date: str, records: list[dict]) -> None:

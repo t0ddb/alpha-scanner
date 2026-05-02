@@ -82,6 +82,16 @@ jobs:
           echo "Running: python trade_executor.py $ARGS"
           python trade_executor.py $ARGS
 
+      - name: Run Path C shadow tracker
+        # Hypothetical Path C portfolio (Scheme I+ scoring at threshold 7.5).
+        # No real trades — purely shadow. State files (pathc_shadow_*.json)
+        # tracked in repo so dashboard can visualize over time. Failures
+        # here MUST NOT block the production trade-executor pipeline.
+        continue-on-error: true
+        run: |
+          echo "Running Path C shadow tracker..."
+          python shadow_pathc.py
+
       - name: Commit and push updated trade state
         run: |
           git config user.name "github-actions[bot]"
@@ -95,6 +105,10 @@ jobs:
           [ -f trade_history_paper.json ] && git add trade_history_paper.json || true
           [ -f wash_sale_log_paper.json ] && git add wash_sale_log_paper.json || true
           [ -f breakout_tracker.db ] && git add breakout_tracker.db || true
+          # Path C shadow state files (updated daily by shadow_pathc.py)
+          [ -f pathc_shadow_state.json ] && git add pathc_shadow_state.json || true
+          [ -f pathc_shadow_trades.json ] && git add pathc_shadow_trades.json || true
+          [ -f pathc_shadow_log.json ] && git add pathc_shadow_log.json || true
 
           if git diff --cached --quiet; then
             echo "No state changes to commit."

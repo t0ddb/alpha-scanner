@@ -1,0 +1,252 @@
+[
+  {
+    "date": "2026-05-01",
+    "entries": [
+      {
+        "ticker": "ARM",
+        "score": 9.5,
+        "entry_price": 211.17999267578125,
+        "shares": 39,
+        "cost": 8236.02,
+        "sequence_tags": "BONUS: last_two=cmf\u2192rs (+0.4; last-2 mean +72% (n=58))|BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=2 (+0.5; 2-led-Ich mean +76% (n=218))"
+      },
+      {
+        "ticker": "FORM",
+        "score": 9.45,
+        "entry_price": 137.3699951171875,
+        "shares": 60,
+        "cost": 8242.2,
+        "sequence_tags": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))|BONUS: last_two=dtf\u2192roc (+0.5; last-2 mean +118% (n=55))"
+      },
+      {
+        "ticker": "MRVL",
+        "score": 9.2,
+        "entry_price": 164.9499969482422,
+        "shares": 50,
+        "cost": 8247.5,
+        "sequence_tags": "BONUS: first_two_pair=roc\u2192atr (+0.5; first-2 mean +95% (n=116))|BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))"
+      },
+      {
+        "ticker": "TSEM",
+        "score": 9.2,
+        "entry_price": 218.00999450683594,
+        "shares": 38,
+        "cost": 8284.38,
+        "sequence_tags": "BONUS: n_led_ich=2 (+0.5; 2-led-Ich mean +76% (n=218))|BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))|PENALTY: first_two_pair=roc\u2192cmf (-0.3; first-2 mean +10.6% (n=93))"
+      },
+      {
+        "ticker": "SNDK",
+        "score": 9.15,
+        "entry_price": 1187.0,
+        "shares": 7,
+        "cost": 8309.0,
+        "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=2 (+0.5; 2-led-Ich mean +76% (n=218))"
+      },
+      {
+        "ticker": "AAOI",
+        "score": 8.45,
+        "entry_price": 183.50999450683594,
+        "shares": 45,
+        "cost": 8257.95,
+        "sequence_tags": "BONUS: first_three_pat=ich\u2192rs\u2192dtf (+0.5; first-3 mean +115% (n=79))|BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
+      },
+      {
+        "ticker": "BE",
+        "score": 8.45,
+        "entry_price": 290.5199890136719,
+        "shares": 28,
+        "cost": 8134.56,
+        "sequence_tags": ""
+      },
+      {
+        "ticker": "STM",
+        "score": 8.45,
+        "entry_price": 55.75,
+        "shares": 149,
+        "cost": 8306.75,
+        "sequence_tags": "PENALTY: first_three_pat=ich\u2192roc\u2192cmf (-0.5; first-3 mean -5% (n=64) \u2014 only neg-mean pattern)|PENALTY: last_two=atr\u2192rs (-0.3; last-2 mean +6.4% (n=69))"
+      },
+      {
+        "ticker": "AXTI",
+        "score": 8.3,
+        "entry_price": 96.0,
+        "shares": 86,
+        "cost": 8256.0,
+        "sequence_tags": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
+      },
+      {
+        "ticker": "VRT",
+        "score": 8.05,
+        "entry_price": 328.30999755859375,
+        "shares": 25,
+        "cost": 8207.75,
+        "sequence_tags": "PENALTY: first_three_pat=ich\u2192dtf\u2192roc (-0.3; first-3 mean +12% (n=81))|PENALTY: first_two_pair=ich\u2192dtf (-0.2; first-2 mean +22.5% (n=211))"
+      },
+      {
+        "ticker": "LITE",
+        "score": 8.0,
+        "entry_price": 949.9299926757812,
+        "shares": 8,
+        "cost": 7599.44,
+        "sequence_tags": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
+      },
+      {
+        "ticker": "AEHR",
+        "score": 7.95,
+        "entry_price": 93.06999969482422,
+        "shares": 89,
+        "cost": 8283.23,
+        "sequence_tags": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
+      }
+    ],
+    "exits": [],
+    "skipped": [
+      {
+        "ticker": "STX",
+        "score": 8.2,
+        "reason": "persistence failed (priors [7.1, 6.8, 8.3])"
+      },
+      {
+        "ticker": "WDC",
+        "score": 8.3,
+        "reason": "persistence failed (priors [7.8, 6.6, 8.4])"
+      },
+      {
+        "ticker": "PWR",
+        "score": 7.75,
+        "reason": "persistence failed (priors [7.7, 6.0, 6.0])"
+      },
+      {
+        "ticker": "WULF",
+        "score": 8.0,
+        "reason": "persistence failed (priors [7.4, 7.5, 8.2])"
+      },
+      {
+        "ticker": "ONTO",
+        "score": 8.15,
+        "reason": "persistence failed (priors [6.7, 6.5, 7.0])"
+      },
+      {
+        "ticker": "ON",
+        "score": 7.9,
+        "reason": "persistence failed (priors [7.5, 7.1, 6.5])"
+      },
+      {
+        "ticker": "GEV",
+        "score": 7.55,
+        "reason": "persistence failed (priors [7.7, 7.5, 8.6])"
+      },
+      {
+        "ticker": "TWST",
+        "score": 7.65,
+        "reason": "persistence failed (priors [7.2, 7.5, 7.5])"
+      },
+      {
+        "ticker": "AKT-USD",
+        "score": 8.2,
+        "reason": "persistence failed (priors [4.3, 4.6, 2.7])"
+      },
+      {
+        "ticker": "MU",
+        "score": 7.75,
+        "reason": "persistence failed (priors [7.5, 7.3, 7.5])"
+      },
+      {
+        "ticker": "IRDM",
+        "score": 7.75,
+        "reason": "portfolio full"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 13,
+    "equity": 100000.0,
+    "cash": 1635.22,
+    "positions_count": 12,
+    "positions": [
+      {
+        "ticker": "ARM",
+        "shares": 39,
+        "entry_price": 211.17999267578125,
+        "current_price": 211.17999267578125,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "FORM",
+        "shares": 60,
+        "entry_price": 137.3699951171875,
+        "current_price": 137.3699951171875,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "MRVL",
+        "shares": 50,
+        "entry_price": 164.9499969482422,
+        "current_price": 164.9499969482422,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "TSEM",
+        "shares": 38,
+        "entry_price": 218.00999450683594,
+        "current_price": 218.00999450683594,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1187.0,
+        "current_price": 1187.0,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "AAOI",
+        "shares": 45,
+        "entry_price": 183.50999450683594,
+        "current_price": 183.50999450683594,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "BE",
+        "shares": 28,
+        "entry_price": 290.5199890136719,
+        "current_price": 290.5199890136719,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "STM",
+        "shares": 149,
+        "entry_price": 55.75,
+        "current_price": 55.75,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "AXTI",
+        "shares": 86,
+        "entry_price": 96.0,
+        "current_price": 96.0,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "VRT",
+        "shares": 25,
+        "entry_price": 328.30999755859375,
+        "current_price": 328.30999755859375,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "LITE",
+        "shares": 8,
+        "entry_price": 949.9299926757812,
+        "current_price": 949.9299926757812,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "AEHR",
+        "shares": 89,
+        "entry_price": 93.06999969482422,
+        "current_price": 93.06999969482422,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
+  }
+]

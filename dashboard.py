@@ -422,7 +422,7 @@ def render_sidebar(cfg: dict, timestamps: dict = None):
     # Navigation
     page = st.sidebar.radio(
         "Navigate",
-        ["🔥 Subsectors", "📈 Tickers", "📊 Historical Charts"],
+        ["🔥 Subsectors", "📈 Tickers", "📊 Historical Charts", "🧪 Path C Shadow"],
         label_visibility="collapsed",
     )
 
@@ -1253,6 +1253,203 @@ def load_subsector_daily_db():
     return df
 
 
+def render_pathc_shadow(scheme_c_results: list):
+    """Path C shadow tracker — visualize hypothetical Path C portfolio
+    running in parallel to live Scheme C trading.
+
+    Path C uses Scheme I+ scoring (Layer 1 indicator buckets + Layer 2
+    sequence overlay) at threshold 7.5. No real money — purely shadow.
+    """
+    import json
+    from pathlib import Path
+
+    st.title("🧪 Path C Shadow Tracker")
+    st.caption(
+        "Hypothetical portfolio using Scheme I+ scoring (Path C @ 7.5). "
+        "Tracks what Path C *would* trade in parallel to live Scheme C."
+    )
+
+    repo_root = Path(__file__).parent
+    state_p = repo_root / "pathc_shadow_state.json"
+    trades_p = repo_root / "pathc_shadow_trades.json"
+    log_p = repo_root / "pathc_shadow_log.json"
+
+    if not state_p.exists():
+        st.warning(
+            "No shadow state yet. Run `python3 shadow_pathc.py` to bootstrap."
+        )
+        return
+
+    state = json.loads(state_p.read_text())
+    trades = json.loads(trades_p.read_text()) if trades_p.exists() else []
+    log = json.loads(log_p.read_text()) if log_p.exists() else []
+
+    # ─── Top metrics ───────────────────────────────────────────
+    if log:
+        latest = log[-1]
+        equity = latest.get("equity", state.get("starting_equity", 100000))
+    else:
+        equity = state.get("starting_equity", 100000)
+    starting_eq = state.get("starting_equity", 100000)
+    total_pnl_pct = (equity / starting_eq - 1) * 100 if starting_eq else 0
+    realized_pnl = sum(t["pnl"] for t in trades)
+    n_positions = len(state.get("positions", {}))
+    n_closed = len(trades)
+    n_winners = sum(1 for t in trades if t["pnl"] > 0)
+    win_rate = (n_winners / n_closed * 100) if n_closed else 0
+
+    c1, c2, c3, c4, c5 = st.columns(5)
+    with c1:
+        st.metric("Total Equity", f"${equity:,.0f}", f"{total_pnl_pct:+.1f}%")
+    with c2:
+        st.metric("Cash", f"${state.get('cash', 0):,.0f}")
+    with c3:
+        st.metric("Open Positions", f"{n_positions}/12")
+    with c4:
+        st.metric("Closed Trades", str(n_closed))
+    with c5:
+        st.metric("Win Rate", f"{win_rate:.0f}%")
+
+    st.caption(
+        f"Last shadow run: **{state.get('last_run_date', 'never')}** · "
+        f"Realized P&L: **${realized_pnl:+,.0f}** · "
+        f"Started from ${starting_eq:,.0f}"
+    )
+
+    # ─── Equity curve ──────────────────────────────────────────
+    if len(log) >= 2:
+        st.subheader("Equity curve")
+        eq_df = pd.DataFrame(
+            [{"date": pd.to_datetime(e["date"]), "equity": e.get("equity", 0)}
+             for e in log if "equity" in e]
+        )
+        if not eq_df.empty:
+            import plotly.graph_objects as go
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(
+                x=eq_df["date"], y=eq_df["equity"],
+                mode="lines+markers", name="Path C equity",
+                line=dict(color="#4E79A7", width=2),
+            ))
+            fig.add_hline(y=starting_eq, line_dash="dot",
+                          line_color="#94a3b8", opacity=0.6,
+                          annotation_text="Starting equity")
+            fig.update_layout(
+                template="plotly_dark", height=320,
+                margin=dict(l=10, r=10, t=10, b=10),
+                yaxis=dict(title="$ equity"),
+                xaxis=dict(title=None),
+            )
+            st.plotly_chart(fig, use_container_width=True)
+
+    # ─── Open positions table ──────────────────────────────────
+    st.subheader("Open positions")
+    positions = state.get("positions", {})
+    if not positions:
+        st.info("No open positions.")
+    else:
+        # Find latest prices from log if available
+        latest_prices = {}
+        if log:
+            for p in log[-1].get("positions", []):
+                latest_prices[p["ticker"]] = p.get("current_price")
+
+        rows = []
+        for ticker, pos in positions.items():
+            cur_px = latest_prices.get(ticker, pos["entry_price"])
+            pnl_pct = (cur_px / pos["entry_price"] - 1) * 100
+            rows.append({
+                "Ticker": ticker,
+                "Entry Date": pos["entry_date"],
+                "Entry Score": f"{pos['entry_score']:.2f}",
+                "Entry $": f"${pos['entry_price']:.2f}",
+                "Current $": f"${cur_px:.2f}",
+                "Unreal P&L %": f"{pnl_pct:+.1f}%",
+                "Shares": pos["shares"],
+                "Sequence Tags": pos.get("sequence_tags", "")[:80],
+            })
+        st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+
+    # ─── Recent closed trades ──────────────────────────────────
+    st.subheader("Recent closed trades")
+    if not trades:
+        st.info("No closed trades yet.")
+    else:
+        recent = sorted(trades, key=lambda t: t["exit_date"], reverse=True)[:30]
+        rows = []
+        for t in recent:
+            rows.append({
+                "Ticker": t["ticker"],
+                "Entered": t["entry_date"],
+                "Exited": t["exit_date"],
+                "Reason": t["exit_reason"],
+                "Entry $": f"${t['entry_price']:.2f}",
+                "Exit $": f"${t['exit_price']:.2f}",
+                "P&L %": f"{t['pnl_pct']*100:+.1f}%",
+                "P&L $": f"${t['pnl']:+,.0f}",
+                "Entry Score": f"{t['entry_score']:.2f}",
+            })
+        st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+
+    # ─── Path C top candidates today (from DB) ─────────────────
+    st.subheader("Path C top candidates today")
+    try:
+        import sqlite3
+        from subsector_store import DB_PATH
+        conn = sqlite3.connect(str(DB_PATH))
+        latest_v2 = pd.read_sql_query(
+            """SELECT date, ticker, score, layer_1, layer_2, sequence_tags
+               FROM ticker_scores_v2
+               WHERE date = (SELECT MAX(date) FROM ticker_scores_v2)
+               AND score >= 6.0
+               ORDER BY score DESC LIMIT 30""", conn)
+        conn.close()
+        if not latest_v2.empty:
+            display_v2 = latest_v2.copy()
+            display_v2["score"] = display_v2["score"].map(lambda x: f"{x:.2f}")
+            display_v2["layer_1"] = display_v2["layer_1"].map(lambda x: f"{x:.2f}")
+            display_v2["layer_2"] = display_v2["layer_2"].map(lambda x: f"{x:+.2f}")
+            display_v2["sequence_tags"] = display_v2["sequence_tags"].str[:60]
+            display_v2.columns = ["Date", "Ticker", "Score", "Layer 1", "Layer 2", "Sequence Tags"]
+            st.dataframe(display_v2, hide_index=True, use_container_width=True)
+        else:
+            st.info("No Path C scores in DB yet.")
+    except Exception as e:
+        st.info(f"Could not load Path C scores: {e}")
+
+    # ─── Comparison: Path C vs Scheme C top tickers ──────────
+    st.subheader("Side-by-side: Path C vs Scheme C top scores today")
+    if scheme_c_results:
+        sc_top = sorted(scheme_c_results, key=lambda r: -r["score"])[:15]
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("**Scheme C (live)**")
+            sc_df = pd.DataFrame([
+                {"Rank": i + 1, "Ticker": r["ticker"], "Score": f"{r['score']:.2f}"}
+                for i, r in enumerate(sc_top)
+            ])
+            st.dataframe(sc_df, hide_index=True, use_container_width=True, height=560)
+        with col2:
+            st.markdown("**Path C (shadow)**")
+            try:
+                conn = sqlite3.connect(str(DB_PATH))
+                pc_top = pd.read_sql_query(
+                    """SELECT ticker, score
+                       FROM ticker_scores_v2
+                       WHERE date = (SELECT MAX(date) FROM ticker_scores_v2)
+                       ORDER BY score DESC LIMIT 15""", conn)
+                conn.close()
+                if not pc_top.empty:
+                    pc_top.insert(0, "Rank", range(1, len(pc_top) + 1))
+                    pc_top["score"] = pc_top["score"].map(lambda x: f"{x:.2f}")
+                    pc_top.columns = ["Rank", "Ticker", "Score"]
+                    st.dataframe(pc_top, hide_index=True, use_container_width=True, height=560)
+                else:
+                    st.info("No Path C scores yet.")
+            except Exception as e:
+                st.info(f"Path C scores unavailable: {e}")
+
+
 def render_historical_charts():
     """Historical charts page — pulls from SQLite database."""
 
@@ -1565,6 +1762,8 @@ def main():
         render_dashboard(results, cfg, data=data)
     elif page == "📊 Historical Charts":
         render_historical_charts()
+    elif page == "🧪 Path C Shadow":
+        render_pathc_shadow(results)
 
 
 if __name__ == "__main__":
