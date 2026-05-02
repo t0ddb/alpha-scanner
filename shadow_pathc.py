@@ -43,9 +43,13 @@ import subsector_store as store
 # ─── Configuration ────────────────────────────────────────────────
 ENTRY_THRESHOLD = float(os.environ.get("PATHC_ENTRY_THRESHOLD", "7.5"))
 # Exit threshold validated via _test_pathc_exit_threshold.py:
-# 4.5 is most path-stable in the high-return zone (path std 10.5% vs
-# 23.4% at exit=5.0, with cumulative +550% vs +530%). Above 6.0 returns
-# collapse; below 4.0 path variance increases sharply.
+# Cumulative returns are within statistical noise across exit 4.0-5.5
+# (+550% to +565%, range 15pp on +550 base = 2.7% relative; path std
+# ~11-14%). Path ranges overlap substantially, so any choice in this
+# zone is defensible. Picked 4.5 for SHADOW TRACKING because it has
+# both lowest path std (10.5%) AND best per-trade quality (mean +76%
+# vs 5.5's +51%) — cleaner observation signal for learning. Above 6.0
+# returns collapse; below 4.0 path variance rises.
 EXIT_THRESHOLD  = float(os.environ.get("PATHC_EXIT_THRESHOLD", "4.5"))
 PERSISTENCE_DAYS = int(os.environ.get("PATHC_PERSISTENCE_DAYS", "3"))
 MAX_POSITIONS = int(os.environ.get("PATHC_MAX_POSITIONS", "12"))
