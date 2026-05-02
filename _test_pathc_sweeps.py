@@ -36,9 +36,9 @@ PATH_STARTS = [
     "2025-06-03", "2025-06-10",
 ]
 
-# Validated defaults
+# Validated defaults (exit 4.5 — see commit a0225e8 for revert rationale)
 DEFAULT_ENTRY = 7.5
-DEFAULT_EXIT = 5.5
+DEFAULT_EXIT = 4.5
 DEFAULT_PERSIST = 3
 DEFAULT_STOP = 0.20
 
