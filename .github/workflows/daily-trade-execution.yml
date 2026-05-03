@@ -92,6 +92,25 @@ jobs:
           echo "Running Scheme M shadow tracker..."
           python shadow_m.py
 
+      - name: Spillover tracker (paper)
+        # Hypothetical "spillover" portfolio: opens a position for every
+        # paper-stream skip caused by capacity (cap full / cash floor /
+        # no cash / daily cap). Same exit/stop rules as Scheme C; no
+        # position cap or cash limit. Pure observability — no Alpaca
+        # calls. Reads pending_spillover_paper.json (written by
+        # trade_executor above), then deletes it.
+        continue-on-error: true
+        run: |
+          echo "Running spillover tracker (paper)..."
+          python spillover_tracker.py --mode paper
+
+      - name: Spillover tracker (Scheme M)
+        # Same idea, but for Scheme M skips. Reads pending_spillover_scheme_m.json.
+        continue-on-error: true
+        run: |
+          echo "Running spillover tracker (Scheme M)..."
+          python spillover_tracker.py --mode scheme_m
+
       - name: Commit and push updated trade state
         run: |
           git config user.name "github-actions[bot]"
@@ -109,6 +128,13 @@ jobs:
           [ -f shadow_m_state.json ] && git add shadow_m_state.json || true
           [ -f shadow_m_trades.json ] && git add shadow_m_trades.json || true
           [ -f shadow_m_log.json ] && git add shadow_m_log.json || true
+          # Spillover tracker state files (updated daily by spillover_tracker.py)
+          [ -f spillover_state_paper.json ] && git add spillover_state_paper.json || true
+          [ -f spillover_trades_paper.json ] && git add spillover_trades_paper.json || true
+          [ -f spillover_log_paper.json ] && git add spillover_log_paper.json || true
+          [ -f spillover_state_scheme_m.json ] && git add spillover_state_scheme_m.json || true
+          [ -f spillover_trades_scheme_m.json ] && git add spillover_trades_scheme_m.json || true
+          [ -f spillover_log_scheme_m.json ] && git add spillover_log_scheme_m.json || true
 
           if git diff --cached --quiet; then
             echo "No state changes to commit."

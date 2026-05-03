@@ -49,11 +49,14 @@ Env vars (store in .env or CI secrets):
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import smtplib
 import sys
 from datetime import date, datetime
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).parent
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from zoneinfo import ZoneInfo
@@ -876,6 +879,7 @@ def evaluate_entries(
                 "score": score,
                 "reason": f"Position cap ({max_positions})",
                 "skip_category": SKIP_CATEGORY_POSITION_CAP,
+                "intended_slot_dollars": equity * max_position_pct,
             })
             continue
 
@@ -924,6 +928,7 @@ def evaluate_entries(
                     "reason": (f"Cash floor cap: only ${max_position:,.0f} of 95% "
                                f"equity budget remains across {remaining_slots} slot(s)"),
                     "skip_category": SKIP_CATEGORY_CASH_FLOOR,
+                    "intended_slot_dollars": equity * max_position_pct,
                 })
             else:
                 skipped.append({
@@ -931,6 +936,7 @@ def evaluate_entries(
                     "score": score,
                     "reason": f"Insufficient cash (${projected_cash:,.0f} available, need ${min_position_size})",
                     "skip_category": SKIP_CATEGORY_INSUFFICIENT_CASH,
+                    "intended_slot_dollars": equity * max_position_pct,
                 })
             continue
 
@@ -1002,6 +1008,7 @@ def evaluate_entries(
                 "score": score,
                 "reason": f"Daily entries cap ({max_entries_per_day}) reached",
                 "skip_category": SKIP_CATEGORY_DAILY_CAP,
+                "intended_slot_dollars": cost_basis,
             })
             continue
 
@@ -1384,6 +1391,40 @@ def _get_spy_return_since(
     if start_price <= 0:
         return None
     return (end_price / start_price - 1.0) * 100.0
+
+
+_SPILLOVER_TRIGGER_CATEGORIES = {
+    SKIP_CATEGORY_POSITION_CAP,
+    SKIP_CATEGORY_CASH_FLOOR,
+    SKIP_CATEGORY_INSUFFICIENT_CASH,
+    SKIP_CATEGORY_DAILY_CAP,
+}
+
+
+def _write_pending_spillover(skipped: list[dict], today_str: str, mode: str) -> None:
+    """
+    Write capacity-skip records to ``pending_spillover_{mode}.json`` for
+    consumption by spillover_tracker.py. Overwrites any prior file from
+    today (idempotent for re-runs). Only the four capacity categories
+    (Full / Cap Hit / No Cash / Daily Cap) qualify; signal-quality and
+    safety skips are excluded.
+    """
+    path = REPO_ROOT / f"pending_spillover_{mode}.json"
+    triggers = [
+        {
+            "ticker": s["ticker"],
+            "score": s["score"],
+            "skip_category": s["skip_category"],
+            "intended_slot_dollars": s.get("intended_slot_dollars", 0.0),
+        }
+        for s in skipped
+        if s.get("skip_category") in _SPILLOVER_TRIGGER_CATEGORIES
+    ]
+    payload = {"date": today_str, "mode": mode, "skips": triggers}
+    path.write_text(json.dumps(payload, indent=2))
+    if triggers:
+        print(f"  [spillover] wrote {len(triggers)} pending capacity-skip "
+              f"record(s) → {path.name}")
 
 
 def _compute_recent_return(
@@ -2231,6 +2272,12 @@ def main():
                        f"and score {today_score:.1f} < {entry_threshold}"),
             "skip_category": SKIP_CATEGORY_LIMIT_UNFILLED,
         })
+
+    # 10c. Persist capacity-skip records for the spillover tracker.
+    # The spillover tracker (separate workflow step) consumes these to
+    # open hypothetical positions that would have been bought if not for
+    # capacity constraints. See spillover_tracker.py.
+    _write_pending_spillover(skipped, today_str, get_alpaca_mode())
 
     # 11. Skipped
     print_section("SKIPPED SIGNALS")

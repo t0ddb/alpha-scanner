@@ -284,10 +284,16 @@ def main(dry_run: bool = False):
     # ─── 3. Execute new entries ────────────────────────────────
     eq = total_equity(state, prices)
     target_size_dollars = eq * POSITION_PCT
+    capacity_skips: list[dict] = []  # for spillover tracker
     for ticker, score, info in candidates:
         if len(state["positions"]) >= MAX_POSITIONS:
             log_entry["skipped"].append({
                 "ticker": ticker, "score": score, "reason": "portfolio full",
+            })
+            capacity_skips.append({
+                "ticker": ticker, "score": score,
+                "skip_category": "Full",
+                "intended_slot_dollars": target_size_dollars,
             })
             continue
         cur_px = prices.get(ticker)
@@ -298,6 +304,11 @@ def main(dry_run: bool = False):
             log_entry["skipped"].append({
                 "ticker": ticker, "score": score,
                 "reason": f"insufficient cash (${state['cash']:.0f} < ${target_size_dollars * 0.95:.0f})",
+            })
+            capacity_skips.append({
+                "ticker": ticker, "score": score,
+                "skip_category": "No Cash",
+                "intended_slot_dollars": target_size_dollars,
             })
             continue
         shares = int(target_size_dollars // cur_px)
@@ -334,6 +345,18 @@ def main(dry_run: bool = False):
         save_state(state)
         save_trades(trades)
         append_log(log_entry)
+
+    # ─── 5b. Persist capacity-skip records for the spillover tracker ──
+    # Always write (even on dry-run) so the spillover dry-run can pick
+    # them up; the file is overwritten each run, so no accumulation risk.
+    pending_path = REPO_ROOT / "pending_spillover_scheme_m.json"
+    pending_path.write_text(json.dumps(
+        {"date": today, "mode": "scheme_m", "skips": capacity_skips},
+        indent=2,
+    ))
+    if capacity_skips:
+        print(f"  [spillover] wrote {len(capacity_skips)} pending capacity-skip "
+              f"record(s) → {pending_path.name}")
 
     # ─── Print summary ─────────────────────────────────────────
     print(f"\n=== Daily summary ===")

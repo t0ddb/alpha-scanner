@@ -98,6 +98,17 @@ jobs:
           echo "Running: python trade_executor.py $ARGS  (ALPACA_MODE=$ALPACA_MODE)"
           python trade_executor.py $ARGS
 
+      - name: Spillover tracker (live)
+        # Hypothetical "spillover" portfolio for the LIVE stream: opens a
+        # position for every live skip caused by capacity (cap full / cash
+        # floor / no cash / daily cap). Same exit/stop rules as Scheme C;
+        # no position cap or cash limit. Pure observability — no Alpaca
+        # calls. Failures here MUST NOT block the live trade pipeline.
+        continue-on-error: true
+        run: |
+          echo "Running spillover tracker (live)..."
+          python spillover_tracker.py --mode live
+
       - name: Commit and push updated trade state
         # Live mode persists separate state files (trade_history_live.json,
         # wash_sale_log_live.json). DB is shared between paper and live (it
@@ -109,6 +120,10 @@ jobs:
 
           [ -f trade_history_live.json ] && git add trade_history_live.json || true
           [ -f wash_sale_log_live.json ] && git add wash_sale_log_live.json || true
+          # Spillover tracker (live) state files
+          [ -f spillover_state_live.json ] && git add spillover_state_live.json || true
+          [ -f spillover_trades_live.json ] && git add spillover_trades_live.json || true
+          [ -f spillover_log_live.json ] && git add spillover_log_live.json || true
 
           # The trade_executor writes today's scores into breakout_tracker.db
           # via score_all + upsert_ticker_scores. The live workflow doesn't
