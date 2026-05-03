@@ -82,14 +82,17 @@ def init_db(db_path: str | Path = None) -> sqlite3.Connection:
         CREATE INDEX IF NOT EXISTS idx_ticker_scores_score
             ON ticker_scores (score, date);
 
-        -- ─── Path C (Scheme I+) shadow tracking tables ─────────
-        -- Stores per-day Path C scores AND fire flags AND raw indicator
+        -- ─── Scheme M shadow tracking table ────────────────────
+        -- Stores per-day Scheme M scores AND fire flags AND raw indicator
         -- values. Fire flags are needed for Layer 2 streak computation.
         -- Raw values are stored so we can re-derive scores or audit later.
-        CREATE TABLE IF NOT EXISTS ticker_scores_v2 (
+        --
+        -- Renamed from ticker_scores_v2 on 2026-05-03 (Path C → Scheme M).
+        -- Migration handled below if old table is present.
+        CREATE TABLE IF NOT EXISTS ticker_scores_m (
             date              TEXT NOT NULL,
             ticker            TEXT NOT NULL,
-            score             REAL NOT NULL,        -- final v2 score (Layer 1 + Layer 2)
+            score             REAL NOT NULL,        -- final score (Layer 1 + Layer 2)
             layer_1           REAL NOT NULL,        -- 0-10 base
             layer_2           REAL NOT NULL,        -- additive (can be negative)
             sequence_tags     TEXT,                 -- pipe-separated pattern tags
@@ -113,19 +116,35 @@ def init_db(db_path: str | Path = None) -> sqlite3.Connection:
             PRIMARY KEY (date, ticker)
         );
 
-        CREATE INDEX IF NOT EXISTS idx_ticker_scores_v2_ticker
-            ON ticker_scores_v2 (ticker, date);
+        CREATE INDEX IF NOT EXISTS idx_ticker_scores_m_ticker
+            ON ticker_scores_m (ticker, date);
 
-        CREATE INDEX IF NOT EXISTS idx_ticker_scores_v2_score
-            ON ticker_scores_v2 (score, date);
+        CREATE INDEX IF NOT EXISTS idx_ticker_scores_m_score
+            ON ticker_scores_m (score, date);
     """)
+
+    # ─── Migration: rename ticker_scores_v2 → ticker_scores_m if present ──
+    # Idempotent — runs every init_db() but only does work once.
+    has_old = conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='ticker_scores_v2'"
+    ).fetchone()
+    if has_old:
+        # Copy data into the new table (which CREATE TABLE IF NOT EXISTS just made).
+        # INSERT OR IGNORE handles the case where someone wrote to ticker_scores_m
+        # already; old data takes a back seat to anything new.
+        conn.execute("""INSERT OR IGNORE INTO ticker_scores_m
+                        SELECT * FROM ticker_scores_v2""")
+        conn.execute("DROP TABLE ticker_scores_v2")
+        # Drop the old indexes (they reference the dropped table)
+        conn.execute("DROP INDEX IF EXISTS idx_ticker_scores_v2_ticker")
+        conn.execute("DROP INDEX IF EXISTS idx_ticker_scores_v2_score")
 
     conn.commit()
     return conn
 
 
-def upsert_ticker_scores_v2(conn: sqlite3.Connection, date: str, records: list[dict]) -> None:
-    """Insert or replace v2 (Path C) ticker scores + fire flags + raw values.
+def upsert_ticker_scores_m(conn: sqlite3.Connection, date: str, records: list[dict]) -> None:
+    """Insert or replace Scheme M ticker scores + fire flags + raw values.
 
     Each record dict should contain:
       ticker, score, layer_1, layer_2, sequence_tags,
@@ -136,7 +155,7 @@ def upsert_ticker_scores_v2(conn: sqlite3.Connection, date: str, records: list[d
     if not records:
         return
     conn.executemany(
-        """INSERT OR REPLACE INTO ticker_scores_v2 (
+        """INSERT OR REPLACE INTO ticker_scores_m (
               date, ticker, score, layer_1, layer_2, sequence_tags,
               fire_rs, fire_ich, fire_hl, fire_cmf, fire_roc, fire_atr, fire_dtf,
               rs_pctl, hl_count, ich_score, roc_value, cmf_value, atr_pctl,
@@ -158,14 +177,14 @@ def upsert_ticker_scores_v2(conn: sqlite3.Connection, date: str, records: list[d
     conn.commit()
 
 
-def get_fire_flags_history_v2(conn: sqlite3.Connection, ticker: str,
-                                end_date: str, days: int = 90) -> list[dict]:
+def get_fire_flags_history_m(conn: sqlite3.Connection, ticker: str,
+                              end_date: str, days: int = 90) -> list[dict]:
     """Get the last N daily fire-flag rows for a ticker, ending at end_date
     (inclusive). Returns list of dicts ordered chronologically (oldest first)."""
     cur = conn.execute(
         """SELECT date, fire_rs, fire_ich, fire_hl, fire_cmf,
                   fire_roc, fire_atr, fire_dtf
-           FROM ticker_scores_v2
+           FROM ticker_scores_m
            WHERE ticker = ? AND date <= ?
            ORDER BY date DESC LIMIT ?""",
         (ticker, end_date, days),
@@ -179,12 +198,12 @@ def get_fire_flags_history_v2(conn: sqlite3.Connection, ticker: str,
     return rows
 
 
-def get_v2_scores_for_persistence(conn: sqlite3.Connection, ticker: str,
-                                    end_date: str, days: int = 5) -> list[float]:
-    """Get the last N v2 scores for a ticker, ending BEFORE end_date.
+def get_m_scores_for_persistence(conn: sqlite3.Connection, ticker: str,
+                                  end_date: str, days: int = 5) -> list[float]:
+    """Get the last N Scheme M scores for a ticker, ending BEFORE end_date.
     Used for persistence check. Returns list ordered most-recent first."""
     cur = conn.execute(
-        """SELECT score FROM ticker_scores_v2
+        """SELECT score FROM ticker_scores_m
            WHERE ticker = ? AND date < ?
            ORDER BY date DESC LIMIT ?""",
         (ticker, end_date, days),

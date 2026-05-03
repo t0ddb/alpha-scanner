@@ -422,7 +422,7 @@ def render_sidebar(cfg: dict, timestamps: dict = None):
     # Navigation
     page = st.sidebar.radio(
         "Navigate",
-        ["🔥 Subsectors", "📈 Tickers", "📊 Historical Charts", "🧪 Path C Shadow"],
+        ["🔥 Subsectors", "📈 Tickers", "📊 Historical Charts", "🧪 Scheme M Shadow"],
         label_visibility="collapsed",
     )
 
@@ -1253,30 +1253,30 @@ def load_subsector_daily_db():
     return df
 
 
-def render_pathc_shadow(scheme_c_results: list):
-    """Path C shadow tracker — visualize hypothetical Path C portfolio
+def render_scheme_m_shadow(scheme_c_results: list):
+    """Scheme M shadow tracker — visualize hypothetical Scheme M portfolio
     running in parallel to live Scheme C trading.
 
-    Path C uses Scheme I+ scoring (Layer 1 indicator buckets + Layer 2
+    Scheme M uses Layer 1 + Layer 2 scoring (Layer 1 indicator buckets + Layer 2
     sequence overlay) at threshold 7.5. No real money — purely shadow.
     """
     import json
     from pathlib import Path
 
-    st.title("🧪 Path C Shadow Tracker")
+    st.title("🧪 Scheme M Shadow Tracker")
     st.caption(
-        "Hypothetical portfolio using Scheme I+ scoring (Path C @ 7.5). "
-        "Tracks what Path C *would* trade in parallel to live Scheme C."
+        "Hypothetical portfolio using Scheme M scoring (entry 7.5). "
+        "Tracks what Scheme M *would* trade in parallel to live Scheme C."
     )
 
     repo_root = Path(__file__).parent
-    state_p = repo_root / "pathc_shadow_state.json"
-    trades_p = repo_root / "pathc_shadow_trades.json"
-    log_p = repo_root / "pathc_shadow_log.json"
+    state_p = repo_root / "shadow_m_state.json"
+    trades_p = repo_root / "shadow_m_trades.json"
+    log_p = repo_root / "shadow_m_log.json"
 
     if not state_p.exists():
         st.warning(
-            "No shadow state yet. Run `python3 shadow_pathc.py` to bootstrap."
+            "No shadow state yet. Run `python3 shadow_m.py` to bootstrap."
         )
         return
 
@@ -1328,7 +1328,7 @@ def render_pathc_shadow(scheme_c_results: list):
             fig = go.Figure()
             fig.add_trace(go.Scatter(
                 x=eq_df["date"], y=eq_df["equity"],
-                mode="lines+markers", name="Path C equity",
+                mode="lines+markers", name="Scheme M equity",
                 line=dict(color="#4E79A7", width=2),
             ))
             fig.add_hline(y=starting_eq, line_dash="dot",
@@ -1391,16 +1391,16 @@ def render_pathc_shadow(scheme_c_results: list):
             })
         st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
 
-    # ─── Path C top candidates today (from DB) ─────────────────
-    st.subheader("Path C top candidates today")
+    # ─── Scheme M top candidates today (from DB) ─────────────────
+    st.subheader("Scheme M top candidates today")
     try:
         import sqlite3
         from subsector_store import DB_PATH
         conn = sqlite3.connect(str(DB_PATH))
         latest_v2 = pd.read_sql_query(
             """SELECT date, ticker, score, layer_1, layer_2, sequence_tags
-               FROM ticker_scores_v2
-               WHERE date = (SELECT MAX(date) FROM ticker_scores_v2)
+               FROM ticker_scores_m
+               WHERE date = (SELECT MAX(date) FROM ticker_scores_m)
                AND score >= 6.0
                ORDER BY score DESC LIMIT 30""", conn)
         conn.close()
@@ -1413,12 +1413,12 @@ def render_pathc_shadow(scheme_c_results: list):
             display_v2.columns = ["Date", "Ticker", "Score", "Layer 1", "Layer 2", "Sequence Tags"]
             st.dataframe(display_v2, hide_index=True, use_container_width=True)
         else:
-            st.info("No Path C scores in DB yet.")
+            st.info("No Scheme M scores in DB yet.")
     except Exception as e:
-        st.info(f"Could not load Path C scores: {e}")
+        st.info(f"Could not load Scheme M scores: {e}")
 
-    # ─── Comparison: Path C vs Scheme C top tickers ──────────
-    st.subheader("Side-by-side: Path C vs Scheme C top scores today")
+    # ─── Comparison: Scheme M vs Scheme C top tickers ──────────
+    st.subheader("Side-by-side: Scheme M vs Scheme C top scores today")
     if scheme_c_results:
         sc_top = sorted(scheme_c_results, key=lambda r: -r["score"])[:15]
         col1, col2 = st.columns(2)
@@ -1430,13 +1430,13 @@ def render_pathc_shadow(scheme_c_results: list):
             ])
             st.dataframe(sc_df, hide_index=True, use_container_width=True, height=560)
         with col2:
-            st.markdown("**Path C (shadow)**")
+            st.markdown("**Scheme M (shadow)**")
             try:
                 conn = sqlite3.connect(str(DB_PATH))
                 pc_top = pd.read_sql_query(
                     """SELECT ticker, score
-                       FROM ticker_scores_v2
-                       WHERE date = (SELECT MAX(date) FROM ticker_scores_v2)
+                       FROM ticker_scores_m
+                       WHERE date = (SELECT MAX(date) FROM ticker_scores_m)
                        ORDER BY score DESC LIMIT 15""", conn)
                 conn.close()
                 if not pc_top.empty:
@@ -1445,9 +1445,9 @@ def render_pathc_shadow(scheme_c_results: list):
                     pc_top.columns = ["Rank", "Ticker", "Score"]
                     st.dataframe(pc_top, hide_index=True, use_container_width=True, height=560)
                 else:
-                    st.info("No Path C scores yet.")
+                    st.info("No Scheme M scores yet.")
             except Exception as e:
-                st.info(f"Path C scores unavailable: {e}")
+                st.info(f"Scheme M scores unavailable: {e}")
 
 
 def render_historical_charts():
@@ -1762,8 +1762,8 @@ def main():
         render_dashboard(results, cfg, data=data)
     elif page == "📊 Historical Charts":
         render_historical_charts()
-    elif page == "🧪 Path C Shadow":
-        render_pathc_shadow(results)
+    elif page == "🧪 Scheme M Shadow":
+        render_scheme_m_shadow(results)
 
 
 if __name__ == "__main__":

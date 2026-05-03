@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 """
-backfill_pathc_history.py — One-time population of ticker_scores_v2 table
+backfill_scheme_m_history.py — One-time population of ticker_scores_m table
 from audit_dataset.parquet.
 
-Computes Path C scores (Layer 1 + Layer 2 sequence overlay) for the entire
-historical window in the parquet, then inserts into ticker_scores_v2.
+Computes Scheme M scores (Layer 1 + Layer 2 sequence overlay) for the entire
+historical window in the parquet, then inserts into ticker_scores_m.
 
-Run once before deploying shadow_pathc.py. Subsequent days are populated
+Run once before deploying shadow_m.py. Subsequent days are populated
 by the shadow tracker itself.
 """
 
@@ -21,7 +21,7 @@ import subsector_store as store
 
 def _row_to_indicators_dict(row) -> dict:
     """Convert a parquet row into the nested-dict format that
-    score_ticker_v2() expects."""
+    score_ticker_m() expects."""
     return {
         "relative_strength": {
             "rs_percentile": row.get("rs_percentile", 0) or 0,
@@ -104,9 +104,9 @@ def main(input_path: str, db_path: str | None = None,
     all_flags = {lbl: [] for lbl in so.LABELS}
     for _, row in df.iterrows():
         ind_dict = _row_to_indicators_dict(row)
-        result = ind.score_ticker_v2(ind_dict)
+        result = ind.score_ticker_m(ind_dict)
         layer_1_scores.append(result["score"])
-        flags = so.fire_flags_v2_from_indicators(ind_dict)
+        flags = so.fire_flags_m_from_indicators(ind_dict)
         for lbl in so.LABELS:
             all_flags[lbl].append(flags[lbl])
     df["layer_1"] = layer_1_scores
@@ -137,7 +137,7 @@ def main(input_path: str, db_path: str | None = None,
     df["seq_tags"] = layer_2_tags
 
     # ─── Insert into DB grouped by date ─────────────────────────
-    print(f"\ninserting into ticker_scores_v2...")
+    print(f"\ninserting into ticker_scores_m...")
     conn = store.init_db(db_path)
 
     by_date = df.groupby(df["date"].dt.strftime("%Y-%m-%d"))
@@ -149,13 +149,13 @@ def main(input_path: str, db_path: str | None = None,
             records.append(_row_record(
                 row, fire_flags, row["layer_1"], row["layer_2"], row["seq_tags"]
             ))
-        store.upsert_ticker_scores_v2(conn, date_str, records)
+        store.upsert_ticker_scores_m(conn, date_str, records)
         if i % 100 == 0 or i == n_dates:
             print(f"  {i}/{n_dates} dates done...")
 
     print("\ndone.")
-    print(f"  total v2-score rows in DB: {conn.execute('SELECT COUNT(*) FROM ticker_scores_v2').fetchone()[0]:,}")
-    print(f"  date range in DB: {conn.execute('SELECT MIN(date), MAX(date) FROM ticker_scores_v2').fetchone()}")
+    print(f"  total v2-score rows in DB: {conn.execute('SELECT COUNT(*) FROM ticker_scores_m').fetchone()[0]:,}")
+    print(f"  date range in DB: {conn.execute('SELECT MIN(date), MAX(date) FROM ticker_scores_m').fetchone()}")
 
     conn.close()
 

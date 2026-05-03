@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 """
-sequence_overlay.py — Scheme I+ Layer 2 (sequence-pattern adjustments).
+sequence_overlay.py — Scheme M Layer 2 (sequence-pattern adjustments).
 
 Adds positive bonuses and negative penalties to the Layer 1 base score
 based on the order in which indicators fired, ending today.
@@ -16,7 +16,7 @@ Streaks should be in TRADING DAYS. An indicator with streak=5 has been
 firing for 5 consecutive trading days ending today. Streak=0 means the
 indicator is not currently firing.
 
-The "fired" definitions for v2 streaks (scoring-aligned):
+The "fired" definitions for Scheme M streaks (scoring-aligned):
   - RS:  percentile >= 90
   - HL:  consecutive_higher_lows >= 4
   - ICH: above_cloud AND cloud_bullish (the existing trigger)
@@ -103,7 +103,7 @@ def compute_sequence_features(streaks: dict[str, int]) -> dict:
 
 
 # ──────────────────────────────────────────────────────────────────
-# PATH C v2 — Mean-return-based Layer 2
+# SCHEME M — Mean-return-based Layer 2
 # ──────────────────────────────────────────────────────────────────
 # Replaces v1.1's win-rate-based bonuses/penalties with magnitudes
 # derived from MEAN forward return per pattern (regime-filtered to
@@ -170,7 +170,7 @@ LAYER_2_RULES = [
 def compute_layer_2_adjustment(features: dict) -> tuple[float, list[str]]:
     """Return (adjustment, list-of-pattern-tags) for the given sequence features.
 
-    Path C: additive bonuses/penalties based on per-pattern mean forward return.
+    Scheme M: additive bonuses/penalties based on per-pattern mean forward return.
     All magnitudes |adjustment| <= 0.5 per pattern. Cumulative effect typically ±1.5.
     """
     if features.get("_no_indicators_firing"):
@@ -214,11 +214,11 @@ def compute_streaks_from_history(fire_flags_per_day: list[dict[str, int]]) -> di
     return streaks
 
 
-def fire_flags_v2_from_indicators(indicators: dict) -> dict[str, int]:
+def fire_flags_m_from_indicators(indicators: dict) -> dict[str, int]:
     """Convert a single-day indicators dict (output of compute_all_indicators)
-    into the v2 binary fire flags. Used by callers to populate fire_flags_per_day.
+    into the Scheme M binary fire flags. Used by callers to populate fire_flags_per_day.
 
-    Uses scoring-aligned thresholds (RS >= 90, HL >= 4) per Scheme I+ design.
+    Uses scoring-aligned thresholds (RS >= 90, HL >= 4) per Scheme M design.
     """
     flags = {}
 

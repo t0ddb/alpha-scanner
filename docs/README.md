@@ -9,7 +9,7 @@
 | `HANDOFF.md` | Project state. What's deployed, current config, files to know, gotchas. | First, when picking up the project. |
 | `DECISIONS.md` | Append-only chronological log of major decisions + rationale + commit references. | When you need to know *why* something is the way it is. |
 | `ALPHA_SCANNER_DOCUMENTATION.md` | Technical deep-dive on architecture, scoring engine, state machine. | When you need to understand internals beyond what HANDOFF.md covers. |
-| `PATH_C_SCORING.md` | Spec for the Path C shadow scoring scheme (Layer 1 indicator buckets + Layer 2 sequence overlay). | When working on `shadow_pathc.py`, `sequence_overlay.py`, or `compute_scheme_i_plus_scores.py`. |
+| `SCHEME_M_SCORING.md` | Spec for the Scheme M shadow scoring scheme (Layer 1 indicator buckets + Layer 2 sequence overlay). | When working on `shadow_m.py`, `sequence_overlay.py`, or `compute_scheme_m_scores.py`. |
 
 ## Specs (reference; updated when their module changes)
 

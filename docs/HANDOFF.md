@@ -1,6 +1,6 @@
 # Alpha Scanner — Project Handoff
 
-Last updated: 2026-05-02 (Path C shadow tracker deployed)
+Last updated: 2026-05-02 (Scheme M shadow tracker deployed)
 
 This doc exists so a fresh Claude Code thread can pick up where the
 last one left off. Read it first, then read the code. Anything a
@@ -12,7 +12,7 @@ non-obvious state, decisions, and reasoning.
   commit references. Read this when you need to know **why** something
   is the way it is.
 - `ALPHA_SCANNER_DOCUMENTATION.md` — technical deep dive on architecture.
-- `PATH_C_SCORING.md` — scoring spec for the Path C shadow scheme.
+- `SCHEME_M_SCORING.md` — scoring spec for the Scheme M shadow scheme.
 
 ---
 
@@ -138,7 +138,7 @@ commit state back to the repo on completion.
 | Workflow | Cron (UTC, DST) | What it does |
 |---|---|---|
 | `daily-backfill.yml` | `0 20 * * 1-5` (4:00 PM ET) | `backfill_subsector.py` fills any missing historical DB rows |
-| `daily-trade-execution.yml` | `30 20 * * 1-5` (4:30 PM ET) | Paper trade execution (`ALPACA_MODE=paper`) **+ Path C shadow tracker** (`shadow_pathc.py`, no Alpaca) |
+| `daily-trade-execution.yml` | `30 20 * * 1-5` (4:30 PM ET) | Paper trade execution (`ALPACA_MODE=paper`) **+ Scheme M shadow tracker** (`shadow_m.py`, no Alpaca) |
 | `daily-trade-execution-live.yml` | `30 20 * * 1-5` (4:30 PM ET) | **Live** trade execution (`ALPACA_MODE=live`) — enabled 2026-04-28 |
 | `quarterly-review.yml` | `0 14 1 1,4,7,10 *` | `quarterly_review.py --months 12` writes 7-section health report |
 | `reconstruct-live-trade-log.yml` | manual only | One-time recovery for `trade_history_live.json`. Used 2026-04-28 to replay the failed first live run; harmless residue, can be deleted |
@@ -270,21 +270,21 @@ deterioration), not a data bug.
   2026-04-10. See `trade_history_paper.json` and `trade_history_live.json`
   for current positions; check the Streamlit dashboard for visualization.
 
-**Path C shadow tracker (NEW, deployed 2026-05-01):**
-- Hypothetical portfolio using Scheme I+ scoring (Layer 1 indicator
+**Scheme M shadow tracker (NEW, deployed 2026-05-01):**
+- Hypothetical portfolio using Scheme M scoring (Layer 1 indicator
   buckets + Layer 2 sequence overlay). Threshold 7.5 / exit 4.5.
 - Runs daily as second step in `daily-trade-execution.yml` workflow,
   wrapped in `continue-on-error: true` so production is never blocked.
 - State in three JSON files:
-  - `pathc_shadow_state.json` — open positions, cash, equity
-  - `pathc_shadow_trades.json` — closed trade history with P&L
-  - `pathc_shadow_log.json` — daily decision log (entries/exits/skips)
-- New SQLite table `ticker_scores_v2` stores per-day Path C scores and
+  - `shadow_m_state.json` — open positions, cash, equity
+  - `shadow_m_trades.json` — closed trade history with P&L
+  - `shadow_m_log.json` — daily decision log (entries/exits/skips)
+- New SQLite table `ticker_scores_m` stores per-day Scheme M scores and
   fire flags (needed for Layer 2 streak computation). Backfilled with
   127k rows from `audit_dataset.parquet` covering 2023-05 to 2026-04.
-- Dashboard tab "🧪 Path C Shadow" visualizes all of it.
-- See `PATH_C_SCORING.md` for the scoring spec.
-- Purpose: collect real-world data on whether Path C's higher per-trade
+- Dashboard tab "🧪 Scheme M Shadow" visualizes all of it.
+- See `SCHEME_M_SCORING.md` for the scoring spec.
+- Purpose: collect real-world data on whether Scheme M's higher per-trade
   median quality (+12.4% vs Scheme C's +4.4%) translates to better
   outcomes than its slightly lower backtest cumulative would suggest.
 
@@ -409,11 +409,11 @@ Priority roughly top-down:
 - `config.py` — YAML loader
 - `data_fetcher.py` — yfinance batch fetch
 - `subsector_store.py` — SQLite CRUD (4 tables: `subsector_daily`,
-  `subsector_breakout_state`, `ticker_scores`, `ticker_scores_v2`).
-  See `init_db()` for the schema; `ticker_scores_v2` was added 2026-05-01
-  for Path C shadow tracking.
+  `subsector_breakout_state`, `ticker_scores`, `ticker_scores_m`).
+  See `init_db()` for the schema; `ticker_scores_m` was added 2026-05-01
+  for Scheme M shadow tracking.
 - `sequence_overlay.py` — Layer 2 sequence-pattern bonuses/penalties
-  for Path C. Pure functions; consumed by `shadow_pathc.py`.
+  for Scheme M. Pure functions; consumed by `shadow_m.py`.
 - `subsector_breakout.py` — state machine (dashboard-only — does not
   gate trades)
 - `trade_log.py` — JSON audit log. `log_buy` / `log_sell` /
@@ -424,20 +424,20 @@ Priority roughly top-down:
 ### Dashboard + review
 
 - `dashboard.py` — Streamlit, **4 pages** (Subsectors / Tickers /
-  Historical Charts / **🧪 Path C Shadow**), 5-tier Tableau 20 palette
+  Historical Charts / **🧪 Scheme M Shadow**), 5-tier Tableau 20 palette
 - `quarterly_review.py` — 7-section quarterly health report
 
-### Path C shadow scheme (2026-05-01)
+### Scheme M shadow scheme (2026-05-01)
 
-- `shadow_pathc.py` — daily runner; computes Path C scores, maintains
+- `shadow_m.py` — daily runner; computes Scheme M scores, maintains
   hypothetical portfolio. Run by `daily-trade-execution.yml`.
-- `compute_scheme_i_plus_scores.py` — pre-compute Path C scores from
+- `compute_scheme_m_scores.py` — pre-compute Scheme M scores from
   `audit_dataset.parquet` for backtester consumption.
-- `backfill_pathc_history.py` — one-time backfill of `ticker_scores_v2`
+- `backfill_scheme_m_history.py` — one-time backfill of `ticker_scores_m`
   from parquet. Already run; don't re-run.
 - `indicators.score_ticker_v2()` — Layer 1 indicator scoring (positive-only
   buckets, max 10.0). Lives alongside existing `score_ticker()`.
-- See `PATH_C_SCORING.md` for full spec (weights, bucket tables, Layer 2
+- See `SCHEME_M_SCORING.md` for full spec (weights, bucket tables, Layer 2
   rules).
 
 ### Backtesting (validates live config)
@@ -489,7 +489,7 @@ See `docs/README.md` for the directory map. Key entries:
 - `docs/HANDOFF.md` — **this file** (project state)
 - `docs/DECISIONS.md` — append-only log of major decisions + rationale
 - `docs/ALPHA_SCANNER_DOCUMENTATION.md` — technical deep dive
-- `docs/PATH_C_SCORING.md` — Path C scoring spec (Layer 1 + Layer 2)
+- `docs/SCHEME_M_SCORING.md` — Scheme M scoring spec (Layer 1 + Layer 2)
 - `docs/*_SPEC.md` — design specs for various modules (most are reference)
 
 ---
@@ -560,9 +560,9 @@ python3 signal_diagnostics.py
 python3 signal_diagnostics_subsector.py
 python3 signal_diagnostics_significance.py
 
-# Path C shadow tracker (runs daily in CI; can also run manually)
-python3 shadow_pathc.py            # writes to pathc_shadow_*.json
-python3 shadow_pathc.py --dry-run  # print decisions without writing state
+# Scheme M shadow tracker (runs daily in CI; can also run manually)
+python3 shadow_m.py            # writes to shadow_m_*.json
+python3 shadow_m.py --dry-run  # print decisions without writing state
 ```
 
 ---

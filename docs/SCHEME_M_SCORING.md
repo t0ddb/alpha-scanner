@@ -1,9 +1,9 @@
-# Path C Scoring Spec (Scheme I+ Layer 1 + Layer 2)
+# Scheme M Scoring Spec (Layer 1 + Layer 2)
 
 **Status:** **DEPLOYED as shadow tracker** (2026-05-01). Not in production
-trading; runs in parallel to live Scheme C as `shadow_pathc.py`.
+trading; runs in parallel to live Scheme C as `shadow_m.py`.
 
-> Scheme C remains the production scoring system (entry 9.0). Path C is
+> Scheme C remains the production scoring system (entry 9.0). Scheme M is
 > a parallel hypothetical portfolio that catches different (often
 > higher-quality per trade) signals. See `DECISIONS.md` for the full
 > investigation history that led here.
@@ -308,17 +308,17 @@ def should_enter(ticker, signal):
 - Unit tests against pattern-match cases
 
 ### Phase 3 — Integrate into trade_executor.py (~1 hour)
-- Add `SCHEME` env var (or YAML config flag) to select between `c` (current) and `v2` (Scheme I+)
+- Add `SCHEME` env var (or YAML config flag) to select between `c` (current) and `v2` (Scheme M)
 - Wire `compute_score_v2()` into the entry evaluation path
 - Keep Scheme C path intact for backwards compatibility
 
 ### Phase 4 — Backtest threshold sweep (~2 hours)
 - Update `sizing_comparison_backtest.py` to support `--scheme v2`
 - Run sweep at threshold values 7.0 through 10.0 in 0.5 increments
-- Output comparison table: Scheme C vs Scheme I+ at each threshold
+- Output comparison table: Scheme C vs Scheme M at each threshold
 
 ### Phase 5 — Decide on production deployment
-- Compare best Scheme I+ threshold to Scheme C (current 9.0)
+- Compare best Scheme M threshold to Scheme C (current 9.0)
 - Decision criteria:
   - Total return ≥ Scheme C
   - Sharpe ≥ 2.0
@@ -326,7 +326,7 @@ def should_enter(ticker, signal):
   - Win rate ≥ 60%
   - Path std meaningfully lower than Scheme C
   - # trades not dramatically lower
-- If Scheme I+ wins on most criteria → deploy to paper account first, then live
+- If Scheme M wins on most criteria → deploy to paper account first, then live
 
 **Total estimated effort:** 1-2 days of focused work to get to a backtest result.
 
@@ -344,7 +344,7 @@ def should_enter(ticker, signal):
 ## Open data caveats
 
 - Sub-threshold sample sizes for fast-track patterns (FT1-FT4) are modest. FT4 (RS→ATR last-2) has only n=21 sub-threshold. Confidence is moderate; live data will refine.
-- Model R² out-of-sample within current regime was -0.05 (close to zero). Scheme I+ should be expected to MODESTLY improve on Scheme C, not transform performance dramatically.
+- Model R² out-of-sample within current regime was -0.05 (close to zero). Scheme M should be expected to MODESTLY improve on Scheme C, not transform performance dramatically.
 - The sub-threshold baseline win rate isn't directly known; the +6-8pp lifts for fast-track patterns compare to the score≥9.0 baseline (74.2%), which may slightly overstate vs the proper sub-threshold baseline.
 
 These caveats are acceptable for a v1 trial. If backtest shows clear improvement, deploy. If marginal or worse, the data caveats become reasons to investigate further.
@@ -353,21 +353,21 @@ These caveats are acceptable for a v1 trial. If backtest shows clear improvement
 
 ## Investigation that led here
 
-After 4 sessions of analysis (2026-04-30 to 2026-05-01) we tested Path C
-against Scheme C across multiple variants (v1.0, v1.1, Path C, Path C
+After 4 sessions of analysis (2026-04-30 to 2026-05-01) we tested Scheme M
+against Scheme C across multiple variants (v1.0, v1.1, Scheme M, Scheme M
 coarse), position caps (12, 15, 20), and threshold values, with 10-start
 within-regime path-dep validation. Result on cumulative return × stability:
-Scheme C @ 9.0 wins (+651.6% / std 10.2% / Sharpe 3.28). Path C best:
+Scheme C @ 9.0 wins (+651.6% / std 10.2% / Sharpe 3.28). Scheme M best:
 +529.9% / std 23.3% / Sharpe 3.18 — slightly lower cumulative.
 
-**But Path C picks 3x better signals on per-trade median** (+12.4% vs
+**But Scheme M picks 3x better signals on per-trade median** (+12.4% vs
 Scheme C's +4.4%). This per-trade quality advantage didn't translate to
 cumulative return in backtest due to lower trade frequency — but
-backtest is single-regime. We deployed Path C as a SHADOW tracker
+backtest is single-regime. We deployed Scheme M as a SHADOW tracker
 (no real money) to collect out-of-sample data on whether the per-trade
 quality advantage persists in real-world conditions.
 
 See `DECISIONS.md` (entries 2026-04-30 → 2026-05-01) for the full
-investigation arc and `shadow_pathc.py` / `dashboard.py` for the
+investigation arc and `shadow_m.py` / `dashboard.py` for the
 shadow tracking implementation.
 

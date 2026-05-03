@@ -141,7 +141,7 @@ def load_score_data(source: str = "sqlite") -> pd.DataFrame:
     """Load all ticker scores. Supports two sources:
       - "sqlite": load from breakout_tracker.db (default; Scheme C scores)
       - "parquet:<path>": load from a parquet file with columns
-        date, ticker, score (e.g. Scheme I+ pre-computed scores).
+        date, ticker, score (e.g. Scheme M pre-computed scores).
     """
     if source.startswith("parquet:"):
         path = source.split(":", 1)[1]
@@ -1659,7 +1659,7 @@ def main():
                         help="Score source: 'sqlite' (default; Scheme C from DB) "
                              "or 'parquet:<path>' (e.g. parquet:backtest_results/scheme_i_plus_scores.parquet)")
     parser.add_argument("--scheme-label", type=str, default=None,
-                        help="Label for output (e.g. 'Scheme I+'). Defaults to inferring from score-source.")
+                        help="Label for output (e.g. 'Scheme M'). Defaults to inferring from score-source.")
     args = parser.parse_args()
 
     print("\n" + "=" * 80)
@@ -1669,7 +1669,7 @@ def main():
 
     # ── Load data ──
     scheme_label = args.scheme_label or (
-        "Scheme I+" if args.score_source.startswith("parquet:") else "Scheme C"
+        "Scheme M" if args.score_source.startswith("parquet:") else "Scheme C"
     )
     print(f"\n  Loading score data — source: {args.score_source} ({scheme_label})")
     score_df = load_score_data(args.score_source)

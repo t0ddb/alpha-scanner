@@ -1,20 +1,20 @@
 from __future__ import annotations
 
 """
-shadow_pathc.py — Shadow tracker for Path C (Scheme I+) scoring.
+shadow_m.py — Shadow tracker for Scheme M scoring.
 
-Runs daily after trade_executor.py. Computes Path C scores for all tickers,
+Runs daily after trade_executor.py. Computes Scheme M scores for all tickers,
 tracks a HYPOTHETICAL portfolio at threshold 7.5, and logs would-have
 decisions to JSON files. Does NOT touch Alpaca or any live trading state.
 
 Outputs:
-  pathc_shadow_state.json — current shadow positions, equity, cash
-  pathc_shadow_trades.json — closed-trade history with P&L
-  pathc_shadow_log.json — per-day decision log (entries, exits, skips)
+  shadow_m_state.json — current shadow positions, equity, cash
+  shadow_m_trades.json — closed-trade history with P&L
+  shadow_m_log.json — per-day decision log (entries, exits, skips)
 
-Configuration (matches Scheme C live config except scoring):
+Configuration (sweep-validated; see DECISIONS.md 2026-05-01):
   ENTRY_THRESHOLD = 7.5
-  EXIT_THRESHOLD  = 5.0
+  EXIT_THRESHOLD  = 4.5     (Scheme M has wider score range; lower exit optimal)
   PERSISTENCE_DAYS = 3
   MAX_POSITIONS = 12
   POSITION_PCT = 0.0833  (8.33% of equity)
@@ -22,8 +22,8 @@ Configuration (matches Scheme C live config except scoring):
   STARTING_EQUITY = 100000  (synthetic, mirrors original paper account)
 
 Usage:
-  python3 shadow_pathc.py            # run daily after trade_executor
-  python3 shadow_pathc.py --dry-run  # don't write state, just print
+  python3 shadow_m.py            # run daily after trade_executor
+  python3 shadow_m.py --dry-run  # don't write state, just print
 """
 
 import argparse
@@ -35,14 +35,14 @@ from pathlib import Path
 
 from config import load_config
 from data_fetcher import fetch_all
-from indicators import score_ticker_v2
+from indicators import score_ticker_m
 import sequence_overlay as so
 import subsector_store as store
 
 
 # ─── Configuration ────────────────────────────────────────────────
-ENTRY_THRESHOLD = float(os.environ.get("PATHC_ENTRY_THRESHOLD", "7.5"))
-# Exit threshold validated via _test_pathc_exit_threshold.py:
+ENTRY_THRESHOLD = float(os.environ.get("SCHEME_M_ENTRY_THRESHOLD", "7.5"))
+# Exit threshold validated via _test_scheme_m_exit_threshold.py:
 # Cumulative returns are within statistical noise across exit 4.0-5.5
 # (+550% to +565%, range 15pp on +550 base = 2.7% relative; path std
 # ~11-14%). Path ranges overlap substantially, so any choice in this
@@ -50,17 +50,17 @@ ENTRY_THRESHOLD = float(os.environ.get("PATHC_ENTRY_THRESHOLD", "7.5"))
 # both lowest path std (10.5%) AND best per-trade quality (mean +76%
 # vs 5.5's +51%) — cleaner observation signal for learning. Above 6.0
 # returns collapse; below 4.0 path variance rises.
-EXIT_THRESHOLD  = float(os.environ.get("PATHC_EXIT_THRESHOLD", "4.5"))
-PERSISTENCE_DAYS = int(os.environ.get("PATHC_PERSISTENCE_DAYS", "3"))
-MAX_POSITIONS = int(os.environ.get("PATHC_MAX_POSITIONS", "12"))
-POSITION_PCT = float(os.environ.get("PATHC_POSITION_PCT", "0.0833"))
-STOP_LOSS_PCT = float(os.environ.get("PATHC_STOP_LOSS_PCT", "0.20"))
-STARTING_EQUITY = float(os.environ.get("PATHC_STARTING_EQUITY", "100000"))
+EXIT_THRESHOLD  = float(os.environ.get("SCHEME_M_EXIT_THRESHOLD", "4.5"))
+PERSISTENCE_DAYS = int(os.environ.get("SCHEME_M_PERSISTENCE_DAYS", "3"))
+MAX_POSITIONS = int(os.environ.get("SCHEME_M_MAX_POSITIONS", "12"))
+POSITION_PCT = float(os.environ.get("SCHEME_M_POSITION_PCT", "0.0833"))
+STOP_LOSS_PCT = float(os.environ.get("SCHEME_M_STOP_LOSS_PCT", "0.20"))
+STARTING_EQUITY = float(os.environ.get("SCHEME_M_STARTING_EQUITY", "100000"))
 
 REPO_ROOT = Path(__file__).parent
-STATE_PATH = REPO_ROOT / "pathc_shadow_state.json"
-TRADES_PATH = REPO_ROOT / "pathc_shadow_trades.json"
-LOG_PATH = REPO_ROOT / "pathc_shadow_log.json"
+STATE_PATH = REPO_ROOT / "shadow_m_state.json"
+TRADES_PATH = REPO_ROOT / "shadow_m_trades.json"
+LOG_PATH = REPO_ROOT / "shadow_m_log.json"
 
 
 # ─── Helpers ──────────────────────────────────────────────────────
@@ -117,7 +117,7 @@ def total_equity(state: dict, prices: dict[str, float]) -> float:
 # ─── Main daily logic ─────────────────────────────────────────────
 def main(dry_run: bool = False):
     today = date.today().strftime("%Y-%m-%d")
-    print(f"\n=== Shadow PathC tracker — run for {today} ===\n")
+    print(f"\n=== Scheme M shadow tracker — run for {today} ===\n")
 
     cfg = load_config()
     print("fetching market data...")
@@ -130,31 +130,31 @@ def main(dry_run: bool = False):
         if df is not None and len(df) > 0:
             prices[ticker] = float(df["Close"].iloc[-1])
 
-    # Compute today's indicators + Path C score for every ticker
-    print("computing indicators + v2 scores...")
+    # Compute today's indicators + Scheme M score for every ticker
+    print("computing indicators + Scheme M scores...")
     from indicators import score_all
     raw_results = score_all(data, cfg)  # list of dicts with 'ticker', 'indicators', etc.
 
     # Connect to DB once for streak history lookups
     conn = store.init_db()
 
-    # Build records to insert into ticker_scores_v2
-    v2_records = []
+    # Build records to insert into ticker_scores_m
+    m_records = []
     score_by_ticker: dict[str, dict] = {}
     for r in raw_results:
         ticker = r["ticker"]
         ind = r["indicators"]
 
         # Layer 1
-        l1_result = score_ticker_v2(ind)
+        l1_result = score_ticker_m(ind)
         layer_1 = l1_result["score"]
 
         # Today's fire flags (v2 thresholds)
-        today_flags = so.fire_flags_v2_from_indicators(ind)
+        today_flags = so.fire_flags_m_from_indicators(ind)
 
         # Recent fire flag history (for streak computation)
         # We need streaks "as of today" — append today's flags to history
-        history_rows = store.get_fire_flags_history_v2(conn, ticker, today, days=120)
+        history_rows = store.get_fire_flags_history_m(conn, ticker, today, days=120)
         # Append today's row (would be inserted below, but compute with it)
         history_with_today = history_rows + [{
             "date": today, "rs": today_flags["rs"], "ich": today_flags["ich"],
@@ -185,7 +185,7 @@ def main(dry_run: bool = False):
         cmf_v = ind.get("cmf", {}).get("cmf", 0) or 0
         atr_v = ind.get("atr_expansion", {}).get("atr_percentile", 0) or 0
         dtf_v = ind.get("dual_tf_rs", {})
-        v2_records.append({
+        m_records.append({
             "ticker": ticker, "score": score, "layer_1": layer_1,
             "layer_2": layer_2, "sequence_tags": "|".join(tags),
             "fire_rs": today_flags["rs"], "fire_ich": today_flags["ich"],
@@ -198,10 +198,10 @@ def main(dry_run: bool = False):
             "dtf_63d_pctl": dtf_v.get("rs_63d_percentile", 0) or 0,
         })
 
-    # Insert today's v2 scores into DB
+    # Insert today's Scheme M scores into DB
     if not dry_run:
-        store.upsert_ticker_scores_v2(conn, today, v2_records)
-        print(f"  inserted {len(v2_records)} v2-score rows for {today}")
+        store.upsert_ticker_scores_m(conn, today, m_records)
+        print(f"  inserted {len(m_records)} v2-score rows for {today}")
 
     # ─── Shadow portfolio update ────────────────────────────────
     state = load_state()
@@ -261,7 +261,7 @@ def main(dry_run: bool = False):
         if info["score"] < ENTRY_THRESHOLD:
             continue
         # Persistence check: prior N days >= ENTRY_THRESHOLD
-        prior = store.get_v2_scores_for_persistence(conn, ticker, today, days=PERSISTENCE_DAYS)
+        prior = store.get_m_scores_for_persistence(conn, ticker, today, days=PERSISTENCE_DAYS)
         if len(prior) < PERSISTENCE_DAYS:
             log_entry["skipped"].append({
                 "ticker": ticker, "score": info["score"],

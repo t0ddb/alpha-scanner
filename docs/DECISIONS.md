@@ -193,3 +193,44 @@ misleading. Git history is authoritative for "what existed at time X";
 DECISIONS.md captures "why" — together they replace the multi-doc library.
 
 **Status:** Active. This file is the canonical decision log going forward.
+
+---
+
+## 2026-05-03 — Renamed Path C → Scheme M (universal)
+
+**Decision:** Renamed "Path C" (a.k.a. "Scheme I+") to "Scheme M" across
+the entire codebase, docs, dashboard, DB schema, env vars, and state files.
+
+**Rationale:** "Path C" was visually and verbally too similar to "Scheme C"
+(both have C, similar structure), causing ambiguity in conversation and
+documentation. "Scheme M" follows the existing Scheme A-G family naming
+convention and is unambiguous. The "M" mnemonic captures the key
+differentiator: Scheme M's Layer 2 is **mean-return-based** (vs Scheme
+C's win-rate-based empirical calibration).
+
+**Scope of rename (universal):**
+- DB table: `ticker_scores_v2` → `ticker_scores_m` (with idempotent
+  ALTER TABLE migration in `subsector_store.init_db()`)
+- Python: `score_ticker_v2` → `score_ticker_m`, `INDICATOR_WEIGHTS_V2`
+  → `INDICATOR_WEIGHTS_M`, all `*_BUCKETS_V2` → `*_BUCKETS_M`,
+  `upsert_ticker_scores_v2` → `upsert_ticker_scores_m`,
+  `get_fire_flags_history_v2` → `get_fire_flags_history_m`,
+  `get_v2_scores_for_persistence` → `get_m_scores_for_persistence`
+- Files: `shadow_pathc.py` → `shadow_m.py`,
+  `compute_scheme_i_plus_scores.py` → `compute_scheme_m_scores.py`,
+  `backfill_pathc_history.py` → `backfill_scheme_m_history.py`
+- State files: `pathc_shadow_*.json` → `shadow_m_*.json`
+- Env vars: `PATHC_*` → `SCHEME_M_*`
+- Dashboard: tab "🧪 Path C Shadow" → "🧪 Scheme M Shadow",
+  function `render_pathc_shadow` → `render_scheme_m_shadow`
+- Docs: `PATH_C_SCORING.md` → `SCHEME_M_SCORING.md`; updated
+  HANDOFF.md, README.md, docs/README.md references
+
+**Backward compatibility:** None needed. Path C had only just been
+deployed (2026-05-01) with 2 days of state (initial bootstrap). The DB
+migration preserves the v2 historical backfill rows (127k rows). State
+files renamed via git mv preserve content.
+
+**Status:** Active. Past DECISIONS.md entries reference "Path C"; those
+entries are historical and not edited (per append-only rule). All
+new references use "Scheme M".

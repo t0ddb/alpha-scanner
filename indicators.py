@@ -100,17 +100,17 @@ HIGHER_LOWS_GRADIENT = [
 
 
 # =============================================================
-# SCHEME I+ (v2) — Regime-tuned scoring, total max 10.0
+# SCHEME M — Regime-tuned scoring, total max 10.0
 # =============================================================
 # Calibrated to current AI-bull regime (2025-Q2+). Empirically
 # bucketed using audit_indicator_curves_regime.txt.
-# See docs/SCHEME_I_PLUS_PROPOSAL.md for full design rationale.
+# See docs/SCHEME_M_SCORING.md for full design rationale.
 #
 # All Layer 1 buckets are positive-only (no negative scores in
 # the base score). Negative adjustments live in Layer 2 (sequence
 # overlay) — see sequence_overlay.py.
 # =============================================================
-INDICATOR_WEIGHTS_V2 = {
+INDICATOR_WEIGHTS_M = {
     "relative_strength": 2.30,
     "higher_lows":       0.40,
     "ichimoku_cloud":    1.55,
@@ -121,7 +121,7 @@ INDICATOR_WEIGHTS_V2 = {
     "dual_tf_rs_63d":    1.75,
 }
 
-MAX_SCORE_V2 = sum(INDICATOR_WEIGHTS_V2.values())  # = 10.00
+MAX_SCORE_M = sum(INDICATOR_WEIGHTS_M.values())  # = 10.00
 
 # RS — non-monotonic curve with peak 88-94 and SOFT dip at 96-98
 # Empirical Δ vs full-dataset baseline (current regime, fwd_63d_xspy):
@@ -133,7 +133,7 @@ MAX_SCORE_V2 = sum(INDICATOR_WEIGHTS_V2.values())  # = 10.00
 # showed this missed mega-winners (AXTI, BW, IREN, NVTS) which typically
 # live in RS 97-100. Heavy-tail regime dynamics dominated the full-dataset
 # bucket-mean analysis. v1.1 softens the dip and lifts 98-100 toward peak.
-RS_BUCKETS_V2 = [
+RS_BUCKETS_M = [
     # (min_pctl_inclusive, max_pctl_exclusive, points)
     (0,    50,  0.00),
     (50,   60,  0.85),
@@ -150,7 +150,7 @@ RS_BUCKETS_V2 = [
 ]
 
 # Higher Lows — peak at 4+ consecutive
-HL_BUCKETS_V2 = [
+HL_BUCKETS_M = [
     (0, 2,  0.00),  # 0 or 1
     (2, 3,  0.05),
     (3, 4,  0.30),
@@ -158,7 +158,7 @@ HL_BUCKETS_V2 = [
 ]
 
 # Ichimoku composite (0/3, 1/3, 2/3, 3/3 components) — only 3/3 scores
-ICH_BUCKETS_V2 = [
+ICH_BUCKETS_M = [
     (0, 1, 0.00),  # 0/3
     (1, 2, 0.00),  # 1/3
     (2, 3, 0.05),  # 2/3
@@ -171,7 +171,7 @@ ICH_BUCKETS_V2 = [
 # heavy-tail). Empirical full-dataset analysis showed exhaustion above
 # 50%, but in current regime, very-high ROC stocks frequently continue
 # running. Keep moderate scoring above 50%.
-ROC_BUCKETS_V2 = [
+ROC_BUCKETS_M = [
     (-1e9, 5,    0.00),
     (5,    7.5,  0.05),
     (7.5,  10,   0.50),
@@ -183,7 +183,7 @@ ROC_BUCKETS_V2 = [
 ]
 
 # CMF — re-included from 0; positive curve
-CMF_BUCKETS_V2 = [
+CMF_BUCKETS_M = [
     (-1e9, 0.05,  0.00),
     (0.05, 0.20,  0.25),
     (0.20, 0.30,  0.50),
@@ -191,7 +191,7 @@ CMF_BUCKETS_V2 = [
 ]
 
 # ATR percentile — direction matches current regime (high = good)
-ATR_BUCKETS_V2 = [
+ATR_BUCKETS_M = [
     (0,  50,  0.00),
     (50, 60,  0.00),
     (60, 70,  0.30),
@@ -203,7 +203,7 @@ ATR_BUCKETS_V2 = [
 
 # Dual-TF — 126d RS percentile (peak 85-90, soft tail-off above)
 # v1.1: Lifted 95-100 from 0.20 to 1.20 — heavy-tail recovery.
-DTF_126D_BUCKETS_V2 = [
+DTF_126D_BUCKETS_M = [
     (0,  50,  0.00),
     (50, 65,  0.30),
     (65, 75,  0.85),
@@ -215,7 +215,7 @@ DTF_126D_BUCKETS_V2 = [
 
 # Dual-TF — 63d RS percentile (peak 90-95, soft tail-off above)
 # v1.1: Lifted 95-100 from 0.70 to 1.50 — heavy-tail recovery.
-DTF_63D_BUCKETS_V2 = [
+DTF_63D_BUCKETS_M = [
     (0,  50,  0.00),
     (50, 60,  1.00),
     (60, 70,  1.10),
@@ -725,11 +725,11 @@ def score_ticker(indicators: dict) -> dict:
 
 
 # =============================================================
-# SCORING V2: Scheme I+ Layer 1 (positive-only buckets, max 10.0)
+# SCORING SCHEME M: Layer 1 (positive-only buckets, max 10.0)
 # =============================================================
-def score_ticker_v2(indicators: dict) -> dict:
+def score_ticker_m(indicators: dict) -> dict:
     """
-    Compute Scheme I+ Layer 1 base score (0-10) from indicator results.
+    Compute Scheme M Layer 1 base score (0-10) from indicator results.
 
     Differences from score_ticker():
       - Empirically-bucketed (non-monotonic where data supports it)
@@ -755,7 +755,7 @@ def score_ticker_v2(indicators: dict) -> dict:
 
     rs = indicators.get("relative_strength", {})
     rs_pctl = rs.get("rs_percentile", 0) or 0
-    pts = _bucket_lookup(rs_pctl, RS_BUCKETS_V2)
+    pts = _bucket_lookup(rs_pctl, RS_BUCKETS_M)
     if pts > 0:
         signals.append("relative_strength")
         signal_weights["relative_strength"] = pts
@@ -763,7 +763,7 @@ def score_ticker_v2(indicators: dict) -> dict:
 
     hl = indicators.get("higher_lows", {})
     hl_count = hl.get("consecutive_higher_lows", 0) or 0
-    pts = _bucket_lookup(hl_count, HL_BUCKETS_V2)
+    pts = _bucket_lookup(hl_count, HL_BUCKETS_M)
     if pts > 0:
         signals.append("higher_lows")
         signal_weights["higher_lows"] = pts
@@ -775,7 +775,7 @@ def score_ticker_v2(indicators: dict) -> dict:
         + int(ich.get("cloud_bullish", False))
         + int(ich.get("tenkan_above_kijun", False))
     )
-    pts = _bucket_lookup(ich_composite, ICH_BUCKETS_V2)
+    pts = _bucket_lookup(ich_composite, ICH_BUCKETS_M)
     if pts > 0:
         signals.append("ichimoku_cloud")
         signal_weights["ichimoku_cloud"] = pts
@@ -783,7 +783,7 @@ def score_ticker_v2(indicators: dict) -> dict:
 
     roc = indicators.get("roc", {})
     roc_value = roc.get("roc", 0) or 0
-    pts = _bucket_lookup(roc_value, ROC_BUCKETS_V2)
+    pts = _bucket_lookup(roc_value, ROC_BUCKETS_M)
     if pts > 0:
         signals.append("roc")
         signal_weights["roc"] = pts
@@ -791,7 +791,7 @@ def score_ticker_v2(indicators: dict) -> dict:
 
     cmf = indicators.get("cmf", {})
     cmf_value = cmf.get("cmf", 0) or 0
-    pts = _bucket_lookup(cmf_value, CMF_BUCKETS_V2)
+    pts = _bucket_lookup(cmf_value, CMF_BUCKETS_M)
     if pts > 0:
         signals.append("cmf")
         signal_weights["cmf"] = pts
@@ -799,7 +799,7 @@ def score_ticker_v2(indicators: dict) -> dict:
 
     atr = indicators.get("atr_expansion", {})
     atr_pctl = atr.get("atr_percentile", 0) or 0
-    pts = _bucket_lookup(atr_pctl, ATR_BUCKETS_V2)
+    pts = _bucket_lookup(atr_pctl, ATR_BUCKETS_M)
     if pts > 0:
         signals.append("atr_expansion")
         signal_weights["atr_expansion"] = pts
@@ -809,8 +809,8 @@ def score_ticker_v2(indicators: dict) -> dict:
     dtf = indicators.get("dual_tf_rs", {})
     dtf_126d = dtf.get("rs_126d_percentile", 0) or 0
     dtf_63d  = dtf.get("rs_63d_percentile", 0) or 0
-    pts_126 = _bucket_lookup(dtf_126d, DTF_126D_BUCKETS_V2)
-    pts_63  = _bucket_lookup(dtf_63d,  DTF_63D_BUCKETS_V2)
+    pts_126 = _bucket_lookup(dtf_126d, DTF_126D_BUCKETS_M)
+    pts_63  = _bucket_lookup(dtf_63d,  DTF_63D_BUCKETS_M)
     if pts_126 > 0:
         signals.append("dual_tf_rs_126d")
         signal_weights["dual_tf_rs_126d"] = pts_126
@@ -822,7 +822,7 @@ def score_ticker_v2(indicators: dict) -> dict:
 
     return {
         "score": round(total, 2),
-        "max_score": MAX_SCORE_V2,
+        "max_score": MAX_SCORE_M,
         "signals": signals,
         "signal_weights": signal_weights,
     }

@@ -1,17 +1,17 @@
 from __future__ import annotations
 
 """
-compute_scheme_i_plus_scores.py — Pre-compute Scheme I+ scores from
+compute_scheme_m_scores.py — Pre-compute Scheme M scores from
 audit_dataset.parquet for use by the backtester.
 
 For each (ticker, date) row in the audit dataset:
-  1. Compute Layer 1 base score from indicator values (calls score_ticker_v2)
+  1. Compute Layer 1 base score from indicator values (calls score_ticker_m)
   2. Compute v2 fire flags for that day
   3. Walk back through the ticker's recent history to compute streaks
   4. Apply Layer 2 sequence overlay
   5. Output final score = Layer 1 + Layer 2
 
-Output: backtest_results/scheme_i_plus_scores.parquet
+Output: backtest_results/scheme_m_scores.parquet
 Columns: date, ticker, score (final v2 score), layer_1, layer_2, tags
 """
 
@@ -24,7 +24,7 @@ import sequence_overlay as so
 
 def _row_to_indicators_dict(row) -> dict:
     """Convert a parquet row into the nested-dict format that
-    score_ticker_v2() and fire_flags_v2_from_indicators() expect."""
+    score_ticker_m() and fire_flags_m_from_indicators() expect."""
     return {
         "relative_strength": {
             "rs_percentile": row.get("rs_percentile", 0) or 0,
@@ -72,7 +72,7 @@ def main(input_path: str, output_path: str):
     print("computing Layer 1 base scores...")
     layer_1_scores = []
     for _, row in df.iterrows():
-        result = ind.score_ticker_v2(_row_to_indicators_dict(row))
+        result = ind.score_ticker_m(_row_to_indicators_dict(row))
         layer_1_scores.append(result["score"])
     df["layer_1"] = layer_1_scores
 
@@ -80,31 +80,31 @@ def main(input_path: str, output_path: str):
     print("computing v2 fire flags...")
     fire_flag_lists: dict[str, list[int]] = {lbl: [] for lbl in so.LABELS}
     for _, row in df.iterrows():
-        flags = so.fire_flags_v2_from_indicators(_row_to_indicators_dict(row))
+        flags = so.fire_flags_m_from_indicators(_row_to_indicators_dict(row))
         for lbl in so.LABELS:
             fire_flag_lists[lbl].append(flags[lbl])
     for lbl in so.LABELS:
-        df[f"fire_v2_{lbl}"] = fire_flag_lists[lbl]
+        df[f"fire_m_{lbl}"] = fire_flag_lists[lbl]
 
     # ─── Step 3: Streaks per ticker per day ─────────────────────
     print("computing per-ticker streaks (vectorized)...")
     for lbl in so.LABELS:
-        col = f"fire_v2_{lbl}"
+        col = f"fire_m_{lbl}"
         # Per-ticker: streak resets when fire flag = 0
         is_on = df[col]
         # Group: each new run starts when fire flag changes within a ticker
         groups = (df["ticker"] != df["ticker"].shift()) | (is_on != is_on.shift())
         groups = groups.cumsum()
         cumulative = is_on.groupby(groups).cumsum()
-        df[f"streak_v2_{lbl}"] = cumulative.where(is_on == 1, 0)
+        df[f"streak_m_{lbl}"] = cumulative.where(is_on == 1, 0)
 
     # ─── Step 4: Layer 2 adjustment per row ─────────────────────
     print("computing Layer 2 sequence adjustments...")
-    streak_cols = [f"streak_v2_{lbl}" for lbl in so.LABELS]
+    streak_cols = [f"streak_m_{lbl}" for lbl in so.LABELS]
     layer_2_adj = []
     layer_2_tags = []
     for _, row in df.iterrows():
-        streaks = {lbl: int(row[f"streak_v2_{lbl}"]) for lbl in so.LABELS}
+        streaks = {lbl: int(row[f"streak_m_{lbl}"]) for lbl in so.LABELS}
         features = so.compute_sequence_features(streaks)
         adj, tags = so.compute_layer_2_adjustment(features)
         layer_2_adj.append(adj)
@@ -137,6 +137,6 @@ def main(input_path: str, output_path: str):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--input",  default="backtest_results/audit_dataset.parquet")
-    ap.add_argument("--output", default="backtest_results/scheme_i_plus_scores.parquet")
+    ap.add_argument("--output", default="backtest_results/scheme_m_scores.parquet")
     args = ap.parse_args()
     main(args.input, args.output)
