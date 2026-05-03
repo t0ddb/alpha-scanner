@@ -39,6 +39,7 @@ venv/
 
 # Preview files
 email_preview.html
+weekly_recap_preview.html
 
 # Pending spillover handoff files — written by trade_executor/shadow_m,
 # consumed (and deleted) by spillover_tracker. Not part of repo history.

@@ -1,0 +1,75 @@
+name: Weekly Recap (LIVE)
+
+# Sunday morning narrative recap of the week's LIVE-account performance.
+# Pulls live positions, week's trade activity, and recent price action,
+# then asks Claude to write per-holding outlooks + an AI-infrastructure
+# sector summary. Single Anthropic API call per run; cost ~$0.05-0.20.
+#
+# Read-only: never places trades, never modifies state files. Failures
+# do not affect the daily trade pipelines.
+
+on:
+  schedule:
+    # Sunday 9:00 AM ET.
+    #
+    # GitHub Actions cron is UTC-only. The fixed UTC time below is tuned
+    # for US Eastern DAYLIGHT TIME (March-November): 13:00 UTC = 9:00 AM EDT.
+    # When US returns to STANDARD TIME (~Nov 2026), shift to
+    # cron: '0 14 * * 0' so it fires at 9:00 AM EST year-round.
+    - cron: '0 13 * * 0'
+  workflow_dispatch:
+    inputs:
+      preview_only:
+        description: 'Render preview HTML only (do not send email)'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+jobs:
+  recap:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+      ALPACA_MODE: live
+      ALPACA_LIVE_API_KEY: ${{ secrets.ALPACA_LIVE_API_KEY }}
+      ALPACA_LIVE_SECRET_KEY: ${{ secrets.ALPACA_LIVE_SECRET_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+      GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+      ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+      STARTING_EQUITY: '5000'
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate weekly recap
+        run: |
+          ARGS=""
+          if [ "${{ inputs.preview_only }}" = "true" ]; then
+            ARGS="--preview-email"
+          fi
+          echo "Running: python weekly_recap.py $ARGS"
+          python weekly_recap.py $ARGS
+
+      - name: Upload preview HTML (workflow_dispatch only)
+        if: ${{ inputs.preview_only == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-recap-preview
+          path: weekly_recap_preview.html
+          retention-days: 7
