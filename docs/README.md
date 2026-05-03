@@ -37,6 +37,38 @@ We use **living docs + append-only decision log**:
 This avoids the "library of stale dated handoffs" failure mode. See
 `DECISIONS.md` 2026-05-01 entry for the rationale.
 
+## Thread handoff protocol
+
+For when a Claude Code conversation needs to switch to a new thread
+(context window filling, new session, etc.):
+
+**Scenario 1 — Stable state:** No handoff doc needed. New thread reads
+`HANDOFF.md` (auto-loaded via memory pointer) and continues from there.
+This is ~80% of cases.
+
+**Scenario 2 — Mid-investigation:** Maintain ONE working doc per active
+investigation as `docs/WIP_<topic>.md`. Properties:
+- Labeled `WIP_` so it's visibly transient
+- Continuously **overwritten** during the investigation (NOT appended-to
+  as a session log)
+- Captures: current hypothesis, what's been tried, current best
+  understanding, open questions, next steps when picking up
+- **Deleted** when the investigation resolves; content distills into
+  HANDOFF.md update + DECISIONS.md entry + spec docs as appropriate
+
+**Scenario 3 — Just-in-time end-of-session summary:** When user signals
+"context filling," ask current Claude to write a focused handoff covering:
+what we just did, what's in flight, what's pending, what to do next.
+User pastes into next thread's first message OR saves as `WIP_<topic>.md`.
+
+**What NOT to do:**
+- Do not create dated session-handoff docs (`SESSION_2026-05-02.md`,
+  `HANDOFF_session3.md`, etc.). They accumulate. The previous attempt
+  with `SCORING_INVESTIGATION_*.md` produced 3 contradictory "concluded"
+  docs over 2 days — see DECISIONS.md 2026-05-01 entry.
+- Do not let `WIP_*.md` docs persist past investigation resolution.
+  Delete them; git preserves history if needed.
+
 ## Images
 
 `images/` directory contains architecture diagrams referenced by
