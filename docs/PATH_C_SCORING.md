@@ -1,20 +1,18 @@
-# Scheme I+ Scoring Proposal — INVESTIGATION CONCLUDED
+# Path C Scoring Spec (Scheme I+ Layer 1 + Layer 2)
 
-> **STATUS: NOT DEPLOYED.** Investigation determined that the current LIVE
-> Scheme C config (cap 12, threshold 9.0) is the regime-optimal configuration.
-> Scheme I+ (in three variants — v1.0, v1.1, Path C, Path C coarse) tested
-> against Scheme C across multiple position caps (12, 15, 20) and threshold
-> values, with 10-start within-regime path-dep validation. **No tested
-> configuration beats Scheme C on the combined return × stability metric.**
->
-> See "Final Results" section at bottom for the full comparison and rationale.
-> The full design proposal below is preserved for future reference and
-> potential re-evaluation when the regime changes.
+**Status:** **DEPLOYED as shadow tracker** (2026-05-01). Not in production
+trading; runs in parallel to live Scheme C as `shadow_pathc.py`.
 
-**Status:** Locked for implementation. All design decisions resolved 2026-05-01.
-**Source data:** `backtest_results/audit_dataset.parquet`, regime-filtered to ≥ 2025-05-01
-**Baseline win rate (current regime, score ≥ 9.0):** 74.2%
-**Joint scoring (J1, J2):** DEFERRED to v1.5
+> Scheme C remains the production scoring system (entry 9.0). Path C is
+> a parallel hypothetical portfolio that catches different (often
+> higher-quality per trade) signals. See `DECISIONS.md` for the full
+> investigation history that led here.
+
+**Source data calibration:** `backtest_results/audit_dataset.parquet`,
+regime-filtered to ≥ 2025-05-01.
+**Baseline win rate (current regime, score ≥ 9.0):** 74.2%.
+**Live config (validated via sweeps):** entry 7.5 / exit 4.5 / persist 3
+/ stop 20% / cap 12 / sizing 8.33% / starting equity $100k synthetic.
 
 ---
 
@@ -353,97 +351,23 @@ These caveats are acceptable for a v1 trial. If backtest shows clear improvement
 
 ---
 
-## Final Results (2026-05-01) — Investigation Conclusion
+## Investigation that led here
 
-After implementing Layer 1 (recalibrated indicator scoring) and Layer 2
-(sequence overlay) in three variants, then testing each across position caps
-(12, 15, 20) with 10-start within-regime path-dep validation, the
-**current LIVE Scheme C configuration remains the regime-optimal**.
+After 4 sessions of analysis (2026-04-30 to 2026-05-01) we tested Path C
+against Scheme C across multiple variants (v1.0, v1.1, Path C, Path C
+coarse), position caps (12, 15, 20), and threshold values, with 10-start
+within-regime path-dep validation. Result on cumulative return × stability:
+Scheme C @ 9.0 wins (+651.6% / std 10.2% / Sharpe 3.28). Path C best:
++529.9% / std 23.3% / Sharpe 3.18 — slightly lower cumulative.
 
-### Best result per scheme (within-regime, 10-start path-dep)
+**But Path C picks 3x better signals on per-trade median** (+12.4% vs
+Scheme C's +4.4%). This per-trade quality advantage didn't translate to
+cumulative return in backtest due to lower trade frequency — but
+backtest is single-regime. We deployed Path C as a SHADOW tracker
+(no real money) to collect out-of-sample data on whether the per-trade
+quality advantage persists in real-world conditions.
 
-| Config | Cap | Threshold | Mean Return | Path Std | Sharpe |
-|---|---|---|---|---|---|
-| **Scheme C (LIVE)** | **12** | **9.0** | **+651.6%** | **10.2%** | **3.28** |
-| Scheme C | 12 | 8.0 | +666.2% | 21.2% | 3.31 |
-| Scheme C | 15 | 9.0 | +515.9% | 10.1% | 3.06 |
-| Scheme C | 20 | 9.0 | +369.9% | 4.7% | 2.85 |
-| Path C coarse | 12 | 7.0 | +549.9% | 21.1% | 3.13 |
-| Path C coarse | 12 | 7.5 | +522.9% | 11.5% | 3.02 |
-| Path C | 12 | 7.5 | +529.9% | 23.3% | 3.18 |
-| Layer 1 only | 12 | 7.0 | +491.3% | 109% | 3.15 |
+See `DECISIONS.md` (entries 2026-04-30 → 2026-05-01) for the full
+investigation arc and `shadow_pathc.py` / `dashboard.py` for the
+shadow tracking implementation.
 
-### Key findings from the investigation
-
-**1. Scheme C's coarseness IS its key advantage.** With buckets at
-0.6/1.2/1.8/2.4/3.0, dozens of signals tie at score 9.9. Alphabetical tie-
-breaking on those ties produces consistent, path-stable selections. Finer
-bucketing (Path C) breaks ties and increases path-dep.
-
-**2. Empirical curves were misleading for total-return optimization.** The
-RS dip at 96-98 percentile (full-dataset analysis) is real on average, but
-the regime's biggest winners (AXTI, BW, IREN) live in RS 96-100 with massive
-heavy-tail returns. Penalizing this zone (Scheme I+ v1.0) excluded the
-biggest winners and crushed returns.
-
-**3. Win-rate-based sequence overlay was inverted.** Patterns we penalized
-(`ich→rs first-2`) had +88% mean fwd return — heavy-tail captures, not bad
-signals. Patterns we bonused (MOMENTUM→TREND first-2 type) had below-pop
-mean. Path C corrected this with mean-return-based bonuses, but cumulative
-adjustments still didn't beat Scheme C.
-
-**4. Increasing the position cap HURTS returns** for every scheme tested.
-Cap 12 → 15 → 20 reduces mean return by 30-50%. The additional slots get
-filled with lower-quality entries that dilute average return per slot, even
-though more "good" trades catch the same big winners. Position cap 12 is
-near-optimal.
-
-**5. Layer 2 sequence overlay is a poor architecture for this regime.**
-Heavy-tail dynamics dominate. Adjustment magnitudes that make any meaningful
-difference at the score-threshold gate also disrupt path-stable
-tie-breaking. Cumulative ±1.5 to ±5 adjustments are too disruptive.
-
-### What was preserved from the investigation
-
-The investigation produced significant analytical infrastructure that will
-be valuable when the regime changes:
-
-- **`audit_indicator_curves.py`** — empirical bucket curves for all 7
-  indicators, with `--start-date` regime filter
-- **`audit_indicator_interactions_full.py`** — gradient-boosted regression
-  + partial dependence + SHAP interaction analysis
-- **`audit_sequence_v2.py`** — sequence pattern discovery with corrected
-  fire thresholds
-- **`audit_sequence_total_return.py`** — patterns ranked by mean fwd return
-  (the right metric for portfolio optimization)
-- **`audit_signal_score_distribution.py`** — score-distribution-conditional
-  sequence pattern analysis (confirms which patterns work at sub-threshold)
-- **`compute_scheme_i_plus_scores.py`** — pre-computes Scheme I+ scores for
-  off-DB backtesting via `--score-source parquet:<path>` flag added to
-  `sizing_comparison_backtest.py`
-- **`sequence_overlay.py`** — additive Layer 2 framework (Path C
-  mean-return-based version, working but not adopted)
-
-These tools should be re-run when the regime appears to be shifting (e.g.,
-quarterly review shows degraded performance). The empirical curves will
-detect the shift before the live trading system produces clear signals.
-
-### Implementation work that was completed
-
-The full Scheme I+ implementation is in `indicators.py` as
-`score_ticker_v2()` alongside the existing `score_ticker()`. The Layer 2
-overlay is in `sequence_overlay.py`. Neither is wired into
-`trade_executor.py`, so production is unaffected. To enable in the future:
-
-1. Add `SCHEME` env var or YAML config flag in `trade_executor.py`
-2. Wire `compute_score_v2()` + `compute_layer_2_adjustment()` into the entry
-   evaluation path
-3. Test against the chosen threshold via `sizing_comparison_backtest.py
-   --score-source parquet:<path>`
-
-### Conclusion
-
-**Recommend: keep Scheme C at threshold 9.0 in production.** The
-investigation produced no actionable improvement for current regime, but
-substantially improved our analytical capability to detect and adapt to
-future regime changes.

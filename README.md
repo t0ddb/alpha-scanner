@@ -136,11 +136,12 @@ Adding or removing tickers is YAML-only (`ticker_config.yaml`) — no code chang
 
 ## Dashboard
 
-[alphascanner.streamlit.app](https://alphascanner.streamlit.app/) — observability layer for the automated system, not a strategy control center. Three pages:
+[alphascanner.streamlit.app](https://alphascanner.streamlit.app/) — observability layer for the automated system, not a strategy control center. Four pages:
 
 - **Tickers** — current scores in the 5-tier palette, drill-down candlestick charts, indicator breakdown per ticker
 - **Subsectors** — 31 subsectors in a 7-state lifecycle (quiet → warming → emerging → confirmed → fading → revival); shows which themes are coordinated today
 - **Historical Charts** — score history per ticker, subsector avg-score trends, 2-month universe heatmap, score distribution over time
+- **Path C Shadow** — hypothetical portfolio running on an alternative scoring scheme (Scheme I+ Layer 1 + Layer 2 sequence overlay) at threshold 7.5. No real money; purely shadow tracking deployed 2026-05-01 to collect out-of-sample data. See `docs/PATH_C_SCORING.md`.
 
 The subsector state machine is an informational layer. It does **not** drive trade decisions — entries are purely score-based on the individual ticker. The subsector dashboard helps interpret *why* a cluster of tickers is scoring high on a given day (e.g. "Chips — Networking has 12/13 tickers hot → data center capex wave").
 
@@ -217,16 +218,18 @@ alpha-scanner/
 ├── data_fetcher.py                    # yfinance batch fetch
 ├── config.py                          # YAML loader
 ├── subsector_breakout.py              # State machine (dashboard layer)
-├── subsector_store.py                 # SQLite persistence
+├── subsector_store.py                 # SQLite persistence (4 tables)
 ├── trade_log.py                       # Trade audit log
 ├── wash_sale_tracker.py               # Log-only advisory
-├── dashboard.py                       # Streamlit UI (3 pages)
+├── dashboard.py                       # Streamlit UI (4 pages, incl. Path C shadow)
 ├── quarterly_review.py                # Quarterly health report
 ├── sizing_comparison_backtest.py      # Portfolio-construction validation
 ├── entry_mode_backtest.py             # Market vs limit validation
 ├── signal_diagnostics*.py             # Universe signal-quality stats
 ├── transition_trim.py                 # One-time sizing migration
-└── .github/workflows/                 # 3 cron-scheduled workflows
+├── shadow_pathc.py                    # Path C shadow tracker (deployed 2026-05-01)
+├── sequence_overlay.py                # Path C Layer 2 sequence-pattern adjustments
+└── .github/workflows/                 # 5 cron-scheduled workflows + 1 manual recovery
 ```
 
 ---
