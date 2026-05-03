@@ -1386,6 +1386,31 @@ def _get_spy_return_since(
     return (end_price / start_price - 1.0) * 100.0
 
 
+def _compute_recent_return(
+    price_data: dict | None,
+    ticker: str,
+    lookback: int = 5,
+) -> float | None:
+    """
+    Trailing close-to-close return over `lookback` trading rows.
+    lookback=5 ≈ 7 calendar days. Returns None if data is unavailable
+    or insufficient.
+    """
+    if not price_data:
+        return None
+    df = price_data.get(ticker)
+    if df is None or len(df) < lookback + 1:
+        return None
+    try:
+        end_price = float(df["Close"].iloc[-1])
+        start_price = float(df["Close"].iloc[-(lookback + 1)])
+    except (KeyError, ValueError, IndexError):
+        return None
+    if start_price <= 0:
+        return None
+    return end_price / start_price - 1.0
+
+
 def _categorize_skip_reason(skip: dict) -> str:
     """Normalize a skip entry's reason into one of the email categories."""
     # Explicit skip_category wins (set by evaluate_entries)
@@ -1685,7 +1710,7 @@ def _build_trade_digest_html(
         ], entry_aligns))
 
     # ── Skipped Signals ──
-    # Columns: Ticker | Subsector | Score | Streak | Reason
+    # Columns: Ticker | Subsector | Score | 7d % | Streak | Reason
     # Sorted by days_above DESC (most persistent at top — most likely to enter tomorrow).
     entry_threshold = trade_cfg.get("entry_threshold", 8.5)
     persistence_days = trade_cfg.get("persistence_days", 3)
@@ -1701,19 +1726,28 @@ def _build_trade_digest_html(
             "subsector": subsector_for(ticker),
             "score": score,
             "days_above": days_above,
+            "return_7d": _compute_recent_return(price_data, ticker, lookback=5),
             "category": _categorize_skip_reason(s),
         })
     skip_records.sort(key=lambda r: (-r["days_above"], -r["score"]))
 
-    skip_aligns = ["left", "center", "center", "center", "center"]
+    skip_aligns = ["left", "center", "center", "center", "center", "center"]
     # Denominator is persistence_days + 1 so a full pass (today + N prior
     # days all ≥ threshold) displays as e.g. "4/4" with persistence_days=3.
     streak_denom = persistence_days + 1
+
+    def _fmt_7d(val: float | None) -> str:
+        if val is None:
+            return "<span style='color:#9ca3af'>–</span>"
+        pct = val * 100
+        return _colored(_fmt_signed_pct(pct, 1), _pnl_color(pct))
+
     skip_rows = [
         row_mixed([
             f"<b>{r['ticker']}</b>",
             r["subsector"],
             _colored(f"{r['score']:.1f}", _score_color(r["score"])),
+            _fmt_7d(r["return_7d"]),
             f"{r['days_above']}/{streak_denom}",
             r["category"],
         ], skip_aligns)
@@ -1797,7 +1831,7 @@ def _build_trade_digest_html(
 
     # Pre-build tables with headers
     skip_table_html = table_mixed(
-        ["Ticker", "Sub Sector", "Score", "Streak", "Reason"],
+        ["Ticker", "Sub Sector", "Score", "7d %", "Streak", "Reason"],
         skip_rows,
         skip_aligns,
     )
