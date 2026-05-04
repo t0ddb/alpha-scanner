@@ -248,5 +248,183 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-05-04",
+    "entries": [],
+    "exits": [],
+    "skipped": [
+      {
+        "ticker": "IRDM",
+        "score": 8.95,
+        "reason": "only 0 prior days available"
+      },
+      {
+        "ticker": "STX",
+        "score": 9.4,
+        "reason": "only 0 prior days available"
+      },
+      {
+        "ticker": "NVTS",
+        "score": 7.7,
+        "reason": "only 0 prior days available"
+      },
+      {
+        "ticker": "VIAV",
+        "score": 7.55,
+        "reason": "only 0 prior days available"
+      },
+      {
+        "ticker": "PWR",
+        "score": 8.7,
+        "reason": "only 0 prior days available"
+      },
+      {
+        "ticker": "WDC",
+        "score": 8.45,
+        "reason": "only 0 prior days available"
+      },
+      {
+        "ticker": "PUMP",
+        "score": 8.55,
+        "reason": "only 0 prior days available"
+      },
+      {
+        "ticker": "ONTO",
+        "score": 8.55,
+        "reason": "only 0 prior days available"
+      },
+      {
+        "ticker": "WULF",
+        "score": 8.35,
+        "reason": "only 0 prior days available"
+      },
+      {
+        "ticker": "BKSY",
+        "score": 8.15,
+        "reason": "only 0 prior days available"
+      },
+      {
+        "ticker": "INTC",
+        "score": 7.55,
+        "reason": "only 0 prior days available"
+      },
+      {
+        "ticker": "GEV",
+        "score": 8.15,
+        "reason": "only 0 prior days available"
+      },
+      {
+        "ticker": "MU",
+        "score": 8.5,
+        "reason": "only 0 prior days available"
+      },
+      {
+        "ticker": "COHR",
+        "score": 7.5,
+        "reason": "only 0 prior days available"
+      },
+      {
+        "ticker": "LBRT",
+        "score": 7.5,
+        "reason": "only 0 prior days available"
+      },
+      {
+        "ticker": "TER",
+        "score": 7.65,
+        "reason": "only 0 prior days available"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 0,
+    "equity": 99670.23,
+    "cash": 1635.22,
+    "positions_count": 12,
+    "positions": [
+      {
+        "ticker": "ARM",
+        "shares": 39,
+        "entry_price": 211.17999267578125,
+        "current_price": 203.25999450683594,
+        "unrealized_pnl_pct": -0.0375
+      },
+      {
+        "ticker": "FORM",
+        "shares": 60,
+        "entry_price": 137.3699951171875,
+        "current_price": 134.3699951171875,
+        "unrealized_pnl_pct": -0.0218
+      },
+      {
+        "ticker": "MRVL",
+        "shares": 50,
+        "entry_price": 164.9499969482422,
+        "current_price": 163.66000366210938,
+        "unrealized_pnl_pct": -0.0078
+      },
+      {
+        "ticker": "TSEM",
+        "shares": 38,
+        "entry_price": 218.00999450683594,
+        "current_price": 215.05999755859375,
+        "unrealized_pnl_pct": -0.0135
+      },
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1187.0,
+        "current_price": 1255.8599853515625,
+        "unrealized_pnl_pct": 0.058
+      },
+      {
+        "ticker": "AAOI",
+        "shares": 45,
+        "entry_price": 183.50999450683594,
+        "current_price": 172.97999572753906,
+        "unrealized_pnl_pct": -0.0574
+      },
+      {
+        "ticker": "BE",
+        "shares": 28,
+        "entry_price": 290.5199890136719,
+        "current_price": 288.6400146484375,
+        "unrealized_pnl_pct": -0.0065
+      },
+      {
+        "ticker": "STM",
+        "shares": 149,
+        "entry_price": 55.75,
+        "current_price": 55.130001068115234,
+        "unrealized_pnl_pct": -0.0111
+      },
+      {
+        "ticker": "AXTI",
+        "shares": 86,
+        "entry_price": 96.0,
+        "current_price": 106.0,
+        "unrealized_pnl_pct": 0.1042
+      },
+      {
+        "ticker": "VRT",
+        "shares": 25,
+        "entry_price": 328.30999755859375,
+        "current_price": 330.9700012207031,
+        "unrealized_pnl_pct": 0.0081
+      },
+      {
+        "ticker": "LITE",
+        "shares": 8,
+        "entry_price": 949.9299926757812,
+        "current_price": 976.1799926757812,
+        "unrealized_pnl_pct": 0.0276
+      },
+      {
+        "ticker": "AEHR",
+        "shares": 89,
+        "entry_price": 93.06999969482422,
+        "current_price": 85.61000061035156,
+        "unrealized_pnl_pct": -0.0802
+      }
+    ]
   }
 ]

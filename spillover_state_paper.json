@@ -1,0 +1,60 @@
+{
+  "positions": {
+    "SNDK": {
+      "entry_date": "2026-05-04",
+      "entry_price": 1255.8599853515625,
+      "shares": 7,
+      "cost_basis": 8791.019897460938,
+      "entry_score": 9.9,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9520.58306
+    },
+    "STX": {
+      "entry_date": "2026-05-04",
+      "entry_price": 738.5399780273438,
+      "shares": 12,
+      "cost_basis": 8862.479736328125,
+      "entry_score": 9.9,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9520.58306
+    },
+    "WOLF": {
+      "entry_date": "2026-05-04",
+      "entry_price": 35.939998626708984,
+      "shares": 264,
+      "cost_basis": 9488.159637451172,
+      "entry_score": 9.9,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9520.58306
+    },
+    "AAOI": {
+      "entry_date": "2026-05-04",
+      "entry_price": 172.97999572753906,
+      "shares": 55,
+      "cost_basis": 9513.899765014648,
+      "entry_score": 9.5,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9520.58306
+    },
+    "NVTS": {
+      "entry_date": "2026-05-04",
+      "entry_price": 15.920000076293945,
+      "shares": 598,
+      "cost_basis": 9520.16004562378,
+      "entry_score": 9.5,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9520.58306
+    },
+    "VRT": {
+      "entry_date": "2026-05-04",
+      "entry_price": 330.9700012207031,
+      "shares": 28,
+      "cost_basis": 9267.160034179688,
+      "entry_score": 9.0,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9520.58306
+    }
+  },
+  "last_run_date": "2026-05-04",
+  "cumulative_pnl": 0.0
+}

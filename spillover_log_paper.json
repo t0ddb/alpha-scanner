@@ -1,0 +1,114 @@
+[
+  {
+    "date": "2026-05-04",
+    "mode": "paper",
+    "entries": [
+      {
+        "ticker": "SNDK",
+        "score": 9.9,
+        "entry_price": 1255.8599853515625,
+        "shares": 7,
+        "cost": 8791.02,
+        "skip_reason": "Full"
+      },
+      {
+        "ticker": "STX",
+        "score": 9.9,
+        "entry_price": 738.5399780273438,
+        "shares": 12,
+        "cost": 8862.48,
+        "skip_reason": "Full"
+      },
+      {
+        "ticker": "WOLF",
+        "score": 9.9,
+        "entry_price": 35.939998626708984,
+        "shares": 264,
+        "cost": 9488.16,
+        "skip_reason": "Full"
+      },
+      {
+        "ticker": "AAOI",
+        "score": 9.5,
+        "entry_price": 172.97999572753906,
+        "shares": 55,
+        "cost": 9513.9,
+        "skip_reason": "Full"
+      },
+      {
+        "ticker": "NVTS",
+        "score": 9.5,
+        "entry_price": 15.920000076293945,
+        "shares": 598,
+        "cost": 9520.16,
+        "skip_reason": "Full"
+      },
+      {
+        "ticker": "VRT",
+        "score": 9.0,
+        "entry_price": 330.9700012207031,
+        "shares": 28,
+        "cost": 9267.16,
+        "skip_reason": "Full"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 6,
+    "open_value": 55442.88,
+    "open_unrealized_pnl": 0.0,
+    "realized_cumulative_pnl": 0.0,
+    "total_pnl": 0.0,
+    "positions": [
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1255.8599853515625,
+        "current_price": 1255.8599853515625,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "STX",
+        "shares": 12,
+        "entry_price": 738.5399780273438,
+        "current_price": 738.5399780273438,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "WOLF",
+        "shares": 264,
+        "entry_price": 35.939998626708984,
+        "current_price": 35.939998626708984,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "AAOI",
+        "shares": 55,
+        "entry_price": 172.97999572753906,
+        "current_price": 172.97999572753906,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "NVTS",
+        "shares": 598,
+        "entry_price": 15.920000076293945,
+        "current_price": 15.920000076293945,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "VRT",
+        "shares": 28,
+        "entry_price": 330.9700012207031,
+        "current_price": 330.9700012207031,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
+  }
+]
