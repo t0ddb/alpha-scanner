@@ -1,0 +1,29 @@
+[
+  {
+    "date": "2026-05-04",
+    "mode": "live",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "SNDK",
+        "reason": "intended $439 too small for share price $1255.86"
+      },
+      {
+        "ticker": "STX",
+        "reason": "intended $439 too small for share price $738.54"
+      },
+      {
+        "ticker": "CIEN",
+        "reason": "intended $439 too small for share price $538.51"
+      }
+    ],
+    "open_positions": 0,
+    "open_value": 0.0,
+    "open_unrealized_pnl": 0.0,
+    "realized_cumulative_pnl": 0.0,
+    "total_pnl": 0.0,
+    "positions": []
+  }
+]
