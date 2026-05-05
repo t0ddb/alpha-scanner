@@ -1,5 +1,15 @@
 {
-  "positions": {},
-  "last_run_date": "2026-05-04",
+  "positions": {
+    "AXTI": {
+      "entry_date": "2026-05-05",
+      "entry_price": 107.55000305175781,
+      "shares": 4,
+      "cost_basis": 430.20001220703125,
+      "entry_score": 9.9,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 450.18453
+    }
+  },
+  "last_run_date": "2026-05-05",
   "cumulative_pnl": 0.0
 }

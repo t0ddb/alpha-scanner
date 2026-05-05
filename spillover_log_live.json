@@ -25,5 +25,46 @@
     "realized_cumulative_pnl": 0.0,
     "total_pnl": 0.0,
     "positions": []
+  },
+  {
+    "date": "2026-05-05",
+    "mode": "live",
+    "entries": [
+      {
+        "ticker": "AXTI",
+        "score": 9.9,
+        "entry_price": 107.55000305175781,
+        "shares": 4,
+        "cost": 430.2,
+        "skip_reason": "Full"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "SNDK",
+        "reason": "intended $450 too small for share price $1406.32"
+      },
+      {
+        "ticker": "STX",
+        "reason": "intended $450 too small for share price $771.01"
+      }
+    ],
+    "open_positions": 1,
+    "open_value": 430.2,
+    "open_unrealized_pnl": 0.0,
+    "realized_cumulative_pnl": 0.0,
+    "total_pnl": 0.0,
+    "positions": [
+      {
+        "ticker": "AXTI",
+        "shares": 4,
+        "entry_price": 107.55000305175781,
+        "current_price": 107.55000305175781,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]
