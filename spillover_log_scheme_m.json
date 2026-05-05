@@ -12,5 +12,19 @@
     "realized_cumulative_pnl": 0.0,
     "total_pnl": 0.0,
     "positions": []
+  },
+  {
+    "date": "2026-05-05",
+    "mode": "scheme_m",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 0,
+    "open_value": 0.0,
+    "open_unrealized_pnl": 0.0,
+    "realized_cumulative_pnl": 0.0,
+    "total_pnl": 0.0,
+    "positions": []
   }
 ]

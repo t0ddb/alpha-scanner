@@ -110,5 +110,93 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-05-05",
+    "mode": "paper",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "SNDK",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "STX",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "WOLF",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "AAOI",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "NVTS",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "VRT",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 6,
+    "open_value": 58741.49,
+    "open_unrealized_pnl": 3298.61,
+    "realized_cumulative_pnl": 0.0,
+    "total_pnl": 3298.61,
+    "positions": [
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1255.8599853515625,
+        "current_price": 1406.3199462890625,
+        "unrealized_pnl": 1053.22,
+        "unrealized_pnl_pct": 0.1198
+      },
+      {
+        "ticker": "STX",
+        "shares": 12,
+        "entry_price": 738.5399780273438,
+        "current_price": 771.010009765625,
+        "unrealized_pnl": 389.64,
+        "unrealized_pnl_pct": 0.044
+      },
+      {
+        "ticker": "WOLF",
+        "shares": 264,
+        "entry_price": 35.939998626708984,
+        "current_price": 36.630001068115234,
+        "unrealized_pnl": 182.16,
+        "unrealized_pnl_pct": 0.0192
+      },
+      {
+        "ticker": "AAOI",
+        "shares": 55,
+        "entry_price": 172.97999572753906,
+        "current_price": 180.57000732421875,
+        "unrealized_pnl": 417.45,
+        "unrealized_pnl_pct": 0.0439
+      },
+      {
+        "ticker": "NVTS",
+        "shares": 598,
+        "entry_price": 15.920000076293945,
+        "current_price": 17.549999237060547,
+        "unrealized_pnl": 974.74,
+        "unrealized_pnl_pct": 0.1024
+      },
+      {
+        "ticker": "VRT",
+        "shares": 28,
+        "entry_price": 330.9700012207031,
+        "current_price": 341.0199890136719,
+        "unrealized_pnl": 281.4,
+        "unrealized_pnl_pct": 0.0304
+      }
+    ]
   }
 ]
