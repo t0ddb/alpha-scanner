@@ -72,6 +72,13 @@ class StrategyConfig:
     persistence_days: int
     swap_at_cap: bool = False          # swap weakest position when at cap
     swap_score_threshold: float = 8.0  # victim must score below this OR have negative P&L
+    # Gap-gated swap (path-dependency mitigation, 2026-05): require the
+    # candidate's score to clear the victim's by at least `swap_score_gap`,
+    # AND require the candidate to have `swap_min_persistence` consecutive
+    # prior days at-or-above entry_threshold (i.e., a deeper streak than
+    # the entry filter requires). Both default to 0 = no extra gating.
+    swap_score_gap: float = 0.0
+    swap_min_persistence: int = 0
 
 
 STRATEGY_A = StrategyConfig(
@@ -622,6 +629,40 @@ class PortfolioSimulator:
                             swap_skipped_threshold += 1
                             signals_skipped += 1
                             continue
+
+                        # Gap check (gap-gated swap): candidate must score
+                        # at least `swap_score_gap` above the victim. A 0.0
+                        # gap reproduces the legacy unconditional behavior.
+                        if cfg.swap_score_gap > 0.0:
+                            if (score - victim_sc) < cfg.swap_score_gap:
+                                swap_skipped_threshold += 1
+                                signals_skipped += 1
+                                continue
+
+                        # Min-persistence check: candidate must have at
+                        # least `swap_min_persistence` consecutive prior
+                        # days at-or-above entry_threshold. Note that the
+                        # entry filter above already guaranteed cfg.persistence_days
+                        # of prior coverage, so this only matters when
+                        # swap_min_persistence > cfg.persistence_days.
+                        if cfg.swap_min_persistence > cfg.persistence_days:
+                            extra = cfg.swap_min_persistence - cfg.persistence_days
+                            ok = True
+                            base = i - cfg.persistence_days  # already-verified day
+                            for back in range(1, extra + 1):
+                                idx = base - back
+                                if idx < 0:
+                                    ok = False
+                                    break
+                                prior_str = days[idx].strftime("%Y-%m-%d")
+                                prior_scores = self.daily_scores.get(prior_str, {})
+                                if prior_scores.get(ticker, 0) < cfg.entry_threshold:
+                                    ok = False
+                                    break
+                            if not ok:
+                                swap_skipped_threshold += 1
+                                signals_skipped += 1
+                                continue
 
                         # Execute the swap: sell victim
                         sell_price = get_price(self.price_data, victim_t, buy_day, "Open")
@@ -1632,6 +1673,99 @@ def print_entry_threshold_sweep(sweep_results: list[dict]):
     print()
 
 
+def print_exit_threshold_sweep(sweep_results: list[dict]):
+    """Output: Exit threshold sweep summary table."""
+    print("\n" + "=" * 140)
+    print("  EXIT THRESHOLD SWEEP (Entry=9.0/p=3, 12-Max, 8.3% sizing, -20% stop)")
+    print("=" * 140)
+
+    header = (
+        f"\n  {'Exit Thr':>9s} | {'Return':>9s} | {'Max DD':>8s} | "
+        f"{'Sharpe':>6s} | {'Sortino':>7s} | {'Win Rate':>8s} | "
+        f"{'Trades':>6s} | {'Avg Hold':>8s} | {'Path Std Dev':>12s} | "
+        f"{'Path Range':>10s}"
+    )
+    print(header)
+    print("  " + "-" * 138)
+
+    best_sharpe_idx = max(range(len(sweep_results)),
+                          key=lambda i: sweep_results[i]["sharpe"])
+
+    for i, r in enumerate(sweep_results):
+        marker = "  ◀ BEST" if i == best_sharpe_idx else ""
+        current = " *" if r.get("is_current") else ""
+        label = f"{r['threshold']:.1f}{current}"
+
+        print(
+            f"  {label:>9s} | {r['return']:>+8.1f}% | {r['max_dd']:>+7.1f}% | "
+            f"{r['sharpe']:>6.2f} | {r['sortino']:>7.2f} | {r['win_rate']:>7.1f}% | "
+            f"{r['total_trades']:>6d} | {r['avg_hold_days']:>7.1f}d | "
+            f"{r['path_std']:>11.1f}% | {r['path_range']:>9.1f}%{marker}"
+        )
+
+    print()
+    best = sweep_results[best_sharpe_idx]
+    print(f"  Peak Sharpe: {best['sharpe']:.2f} at exit={best['threshold']:.1f} "
+          f"(return={best['return']:+.1f}%, DD={best['max_dd']:+.1f}%, "
+          f"trades={best['total_trades']}, path std={best['path_std']:.1f}%)")
+    print()
+    print("  * = current live configuration")
+    print("  All runs hold entry=9.0, 3-day persistence, 12-pos cap, 8.3% sizing, -20% stop")
+    print()
+
+
+def print_swap_gap_sweep(sweep_results: list[dict], baseline: dict | None = None):
+    """Output: Gap-gated swap rule sweep (2D grid: gap × persistence)."""
+    print("\n" + "=" * 140)
+    print("  GAP-GATED SWAP SWEEP (Entry=9.0/p=3, exit=5.0, 12-Max, 8.3% sizing, -20% stop)")
+    print("=" * 140)
+
+    header = (
+        f"\n  {'Score Gap':>9s} | {'MinPersist':>10s} | {'Return':>9s} | "
+        f"{'Max DD':>8s} | {'Sharpe':>6s} | {'Sortino':>7s} | {'Win Rate':>8s} | "
+        f"{'Trades':>6s} | {'Swaps':>6s} | {'Path Std':>9s}"
+    )
+    print(header)
+    print("  " + "-" * 138)
+
+    if baseline is not None:
+        print(
+            f"  {'BASELINE':>9s} | {'(no swap)':>10s} | "
+            f"{baseline['return']:>+8.1f}% | {baseline['max_dd']:>+7.1f}% | "
+            f"{baseline['sharpe']:>6.2f} | {baseline['sortino']:>7.2f} | "
+            f"{baseline['win_rate']:>7.1f}% | {baseline['total_trades']:>6d} | "
+            f"{0:>6d} | {baseline['path_std']:>8.1f}%"
+        )
+        print("  " + "-" * 138)
+
+    best_sharpe_idx = max(range(len(sweep_results)),
+                          key=lambda i: sweep_results[i]["sharpe"])
+
+    for i, r in enumerate(sweep_results):
+        marker = "  ◀ BEST" if i == best_sharpe_idx else ""
+        print(
+            f"  {r['gap']:>9.1f} | {r['persist']:>10d} | "
+            f"{r['return']:>+8.1f}% | {r['max_dd']:>+7.1f}% | "
+            f"{r['sharpe']:>6.2f} | {r['sortino']:>7.2f} | "
+            f"{r['win_rate']:>7.1f}% | {r['total_trades']:>6d} | "
+            f"{r['swaps_executed']:>6d} | {r['path_std']:>8.1f}%{marker}"
+        )
+
+    print()
+    best = sweep_results[best_sharpe_idx]
+    print(f"  Peak Sharpe: {best['sharpe']:.2f} at gap={best['gap']:.1f}, "
+          f"persist={best['persist']} "
+          f"(return={best['return']:+.1f}%, swaps={best['swaps_executed']}, "
+          f"path std={best['path_std']:.1f}%)")
+    if baseline is not None:
+        print(f"  Baseline (no swap): Sharpe={baseline['sharpe']:.2f}, "
+              f"return={baseline['return']:+.1f}%, path std={baseline['path_std']:.1f}%")
+        print(f"  Δ vs baseline:      Sharpe={best['sharpe'] - baseline['sharpe']:+.2f}, "
+              f"return={best['return'] - baseline['return']:+.1f}pp, "
+              f"path std={best['path_std'] - baseline['path_std']:+.1f}pp")
+    print()
+
+
 # ============================================================
 # MAIN
 # ============================================================
@@ -1655,6 +1789,15 @@ def main():
     parser.add_argument("--sweep-entry-threshold", type=str, default=None,
                         help="Comma-separated entry thresholds for threshold sweep "
                              "(e.g. 7.5,8.0,8.5,9.0,9.5). Uses current live config as base.")
+    parser.add_argument("--sweep-exit-threshold", type=str, default=None,
+                        help="Comma-separated exit thresholds for exit-threshold sweep "
+                             "(e.g. 4.0,4.5,5.0,5.5,6.0,6.5,7.0). Holds entry=9.0 and "
+                             "all other current-live params constant.")
+    parser.add_argument("--sweep-swap-gap", type=str, default=None,
+                        help="Gap-gated swap sweep. Format: "
+                             "'gap1,gap2,...:persist1,persist2,...' "
+                             "(e.g. '1.5,2.0,2.5,3.0:3,5,7,10'). 2D grid over "
+                             "score-gap × min-persistence on swap-at-cap variant.")
     parser.add_argument("--score-source", type=str, default="sqlite",
                         help="Score source: 'sqlite' (default; Scheme C from DB) "
                              "or 'parquet:<path>' (e.g. parquet:backtest_results/scheme_i_plus_scores.parquet)")
@@ -2040,6 +2183,230 @@ def main():
                   f"path std={path_std:.1f}%, done", flush=True)
 
         print_entry_threshold_sweep(et_sweep_results)
+
+    # ── EXIT THRESHOLD SWEEP ──
+    if args.sweep_exit_threshold:
+        thresholds = [float(v.strip()) for v in args.sweep_exit_threshold.split(",")]
+        thresholds.sort()
+
+        print("\n" + "=" * 140)
+        print(f"  RUNNING EXIT THRESHOLD SWEEP: {thresholds}")
+        print("=" * 140)
+
+        ext_start_candidates = compute_path_start_dates(
+            score_df, daily_scores, args.path_starts,
+            persistence_days=PERSISTENCE_DAYS,
+        )
+
+        ext_sweep_results: list[dict] = []
+
+        for threshold in thresholds:
+            is_current = abs(threshold - 5.0) < 0.01
+
+            strat = StrategyConfig(
+                name=f"Exit-{threshold:.1f}",
+                max_positions=12,
+                sizing_mode="fixed_pct",
+                fixed_position_pct=0.083,
+                min_entry_pct=0.05,
+                trim_enabled=False,
+                entry_protection_days=7,
+                entry_threshold=9.0,
+                exit_threshold=threshold,
+                stop_loss=StopLossConfig(type="fixed", value=0.20),
+                persistence_days=PERSISTENCE_DAYS,
+            )
+
+            print(f"    exit={threshold:.1f}...", end="", flush=True)
+
+            sim = PortfolioSimulator(
+                config=strat,
+                daily_scores=daily_scores,
+                price_data=price_data,
+                trading_days=trading_days,
+                start_date=args.start,
+                end_date=args.end,
+            )
+            result = sim.run()
+            metrics = compute_metrics(result)
+            print(f" {metrics['total_return']:+.1f}%", end="", flush=True)
+
+            path_returns: list[float] = []
+            if not args.no_path_test and ext_start_candidates:
+                for start in ext_start_candidates:
+                    psim = PortfolioSimulator(
+                        config=strat,
+                        daily_scores=daily_scores,
+                        price_data=price_data,
+                        trading_days=trading_days,
+                        start_date=start,
+                        end_date=args.end,
+                    )
+                    presult = psim.run()
+                    pmetrics = compute_metrics(presult)
+                    path_returns.append(pmetrics["total_return"])
+
+            path_std = float(np.std(path_returns)) if len(path_returns) > 1 else 0.0
+            path_range = float(np.ptp(path_returns)) if path_returns else 0.0
+
+            avg_hold = (
+                np.mean([t.hold_days for t in result.trades]) if result.trades else 0.0
+            )
+
+            ext_sweep_results.append({
+                "threshold": threshold,
+                "is_current": is_current,
+                "return": metrics["total_return"],
+                "max_dd": metrics["max_drawdown"],
+                "sharpe": metrics["sharpe"],
+                "sortino": metrics["sortino"],
+                "win_rate": metrics["win_rate"],
+                "total_trades": metrics["total_trades"],
+                "avg_hold_days": float(avg_hold),
+                "path_std": path_std,
+                "path_range": path_range,
+            })
+
+            print(f", trades={metrics['total_trades']}, "
+                  f"avg-hold={avg_hold:.1f}d, path std={path_std:.1f}%, done",
+                  flush=True)
+
+        print_exit_threshold_sweep(ext_sweep_results)
+
+    # ── GAP-GATED SWAP SWEEP (2D grid: score-gap × min-persistence) ──
+    if args.sweep_swap_gap:
+        try:
+            gaps_str, persist_str = args.sweep_swap_gap.split(":", 1)
+        except ValueError:
+            raise SystemExit(
+                "--sweep-swap-gap must be 'gaps:persists' "
+                "(e.g. '1.5,2.0,2.5,3.0:3,5,7,10')"
+            )
+        gaps = sorted(float(v.strip()) for v in gaps_str.split(","))
+        persists = sorted(int(v.strip()) for v in persist_str.split(","))
+
+        print("\n" + "=" * 140)
+        print(f"  RUNNING GAP-GATED SWAP SWEEP: gaps={gaps}, persists={persists}")
+        print("=" * 140)
+
+        swap_start_candidates = compute_path_start_dates(
+            score_df, daily_scores, args.path_starts,
+            persistence_days=PERSISTENCE_DAYS,
+        )
+
+        # Baseline: Fixed/12-Max with no swap (current production rule).
+        baseline_strat = StrategyConfig(
+            name="Baseline-NoSwap",
+            max_positions=12,
+            sizing_mode="fixed_pct",
+            fixed_position_pct=0.083,
+            min_entry_pct=0.05,
+            trim_enabled=False,
+            entry_protection_days=7,
+            entry_threshold=9.0,
+            exit_threshold=5.0,
+            stop_loss=StopLossConfig(type="fixed", value=0.20),
+            persistence_days=PERSISTENCE_DAYS,
+        )
+        print("    baseline (no swap)...", end="", flush=True)
+        bsim = PortfolioSimulator(
+            config=baseline_strat,
+            daily_scores=daily_scores,
+            price_data=price_data,
+            trading_days=trading_days,
+            start_date=args.start,
+            end_date=args.end,
+        )
+        bresult = bsim.run()
+        bmetrics = compute_metrics(bresult)
+        path_returns_baseline: list[float] = []
+        if not args.no_path_test and swap_start_candidates:
+            for start in swap_start_candidates:
+                psim = PortfolioSimulator(
+                    config=baseline_strat, daily_scores=daily_scores,
+                    price_data=price_data, trading_days=trading_days,
+                    start_date=start, end_date=args.end,
+                )
+                presult = psim.run()
+                path_returns_baseline.append(compute_metrics(presult)["total_return"])
+        baseline = {
+            "return": bmetrics["total_return"],
+            "max_dd": bmetrics["max_drawdown"],
+            "sharpe": bmetrics["sharpe"],
+            "sortino": bmetrics["sortino"],
+            "win_rate": bmetrics["win_rate"],
+            "total_trades": bmetrics["total_trades"],
+            "path_std": float(np.std(path_returns_baseline))
+                       if len(path_returns_baseline) > 1 else 0.0,
+        }
+        print(f" {bmetrics['total_return']:+.1f}%, "
+              f"trades={bmetrics['total_trades']}, "
+              f"Sharpe={bmetrics['sharpe']:.2f}", flush=True)
+
+        # 2D grid
+        swap_results: list[dict] = []
+        for gap in gaps:
+            for persist in persists:
+                strat = StrategyConfig(
+                    name=f"Swap-gap{gap:.1f}-p{persist}",
+                    max_positions=12,
+                    sizing_mode="fixed_pct",
+                    fixed_position_pct=0.083,
+                    min_entry_pct=0.05,
+                    trim_enabled=False,
+                    entry_protection_days=7,
+                    entry_threshold=9.0,
+                    exit_threshold=5.0,
+                    stop_loss=StopLossConfig(type="fixed", value=0.20),
+                    persistence_days=PERSISTENCE_DAYS,
+                    swap_at_cap=True,
+                    swap_score_threshold=8.0,  # legacy floor still applies
+                    swap_score_gap=gap,
+                    swap_min_persistence=persist,
+                )
+                print(f"    gap={gap:.1f} persist={persist}...",
+                      end="", flush=True)
+                sim = PortfolioSimulator(
+                    config=strat, daily_scores=daily_scores,
+                    price_data=price_data, trading_days=trading_days,
+                    start_date=args.start, end_date=args.end,
+                )
+                result = sim.run()
+                metrics = compute_metrics(result)
+                swaps_executed = len(result.swaps)
+                print(f" {metrics['total_return']:+.1f}%, "
+                      f"swaps={swaps_executed}", end="", flush=True)
+
+                path_returns: list[float] = []
+                if not args.no_path_test and swap_start_candidates:
+                    for start in swap_start_candidates:
+                        psim = PortfolioSimulator(
+                            config=strat, daily_scores=daily_scores,
+                            price_data=price_data, trading_days=trading_days,
+                            start_date=start, end_date=args.end,
+                        )
+                        presult = psim.run()
+                        path_returns.append(
+                            compute_metrics(presult)["total_return"]
+                        )
+                path_std = float(np.std(path_returns)) if len(path_returns) > 1 else 0.0
+                path_range = float(np.ptp(path_returns)) if path_returns else 0.0
+
+                swap_results.append({
+                    "gap": gap, "persist": persist,
+                    "return": metrics["total_return"],
+                    "max_dd": metrics["max_drawdown"],
+                    "sharpe": metrics["sharpe"],
+                    "sortino": metrics["sortino"],
+                    "win_rate": metrics["win_rate"],
+                    "total_trades": metrics["total_trades"],
+                    "swaps_executed": swaps_executed,
+                    "path_std": path_std,
+                    "path_range": path_range,
+                })
+                print(f", path std={path_std:.1f}%, done", flush=True)
+
+        print_swap_gap_sweep(swap_results, baseline=baseline)
 
     # ── Done ──
     print("\n" + "=" * 80)

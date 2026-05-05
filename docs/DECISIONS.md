@@ -234,3 +234,79 @@ files renamed via git mv preserve content.
 **Status:** Active. Past DECISIONS.md entries reference "Path C"; those
 entries are historical and not edited (per append-only rule). All
 new references use "Scheme M".
+
+---
+
+## 2026-05-05 — Re-validated exit=5.0 + skip-when-full under Scheme C
+
+**Decision:** Keep production exit threshold at < 5.0 unchanged. Reject
+all gap-gated swap-at-cap variants. No change to live config.
+
+**Rationale:** Path-dependency concern surfaced after observing the
+daily email — multiple capacity-skipped tickers (SNDK +40%, AXTI +57%
+over 7 days) were running materially hotter than the weakest current
+holdings (BE at score 7.9, P&L −0.4%). Two questions arose:
+  1. Is exit=5.0 too lenient under Scheme C? (Original number was tuned
+     under the pre-Scheme-C weighting and never re-swept.)
+  2. Should a gap-gated swap rule replace stalled holdings with
+     hotter skipped candidates? (Distinct from the unconditional
+     trim/swap rules already disproved in the 2026-04-16 backtest.)
+
+Both questions were swept under current Scheme C scoring on the
+historical DB. Both answers came back negative.
+
+**Evidence (sizing_comparison_backtest.py):**
+
+Exit-threshold sweep across {4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0}, holding
+entry=9.0/p=3, 12-pos cap, 8.3% sizing, -20% stop:
+
+| Exit | Return | Max DD | Sharpe | Trades | Avg Hold |
+|---|---|---|---|---|---|
+| 4.0 | +741.7% | -19.6% | 2.39 | 59 | 65.7d |
+| 5.0 (live) | +745.1% | -20.3% | 2.35 | 79 | 48.7d |
+| 5.5 | +496.6% | -20.6% | 2.25 | 94 | 41.4d |
+| 6.0 | +498.9% | -17.8% | 2.32 | 108 | 36.0d |
+| 7.0 | +299.8% | -25.2% | 1.80 | 149 | 25.2d |
+
+Tightening the exit destroys cumulative return: 5.0 → 6.0 cuts ~33%,
+5.0 → 7.0 cuts ~60%. Mechanism: shorter holds (49d → 25d), more
+trades (79 → 149), positions exit before they recover or compound.
+Looser exit (4.0) is a marginal Sharpe winner (+0.04) with longer
+holds, but cumulative return is essentially tied (+741.7% vs +745.1%).
+No empirical case for tightening; weak-but-real case for 4.0 if
+re-validated with full path-dependency analysis.
+
+Gap-gated swap sweep — 2D grid over score_gap ∈ {1.0, 1.5, 2.0, 2.5, 3.0}
+× min_persistence ∈ {3, 5, 7, 10}. New `swap_score_gap` and
+`swap_min_persistence` fields on StrategyConfig require: candidate
+score must clear victim by `swap_score_gap`, AND candidate must have
+`swap_min_persistence` consecutive prior days at-or-above entry
+threshold. Best variant (gap=3.0, persist=3): +569.8% / Sharpe 2.17 /
+44 swaps over the full backtest window. **All 20 variants underperform
+the no-swap baseline (+745.1% / 2.35).** The strictest filter still
+loses 175 pp of cumulative return and 0.18 Sharpe.
+
+**Why the data refuses to validate the rotation intuition** (recorded
+for future re-analyses): The strategy compounds via long-tail outliers,
+not median trades. Cutting any holding to make room for a hotter
+candidate roulette-spins both: you lose the held position's optionality
+to become a +30%+ winner, and gain only the chance the swapped-in
+candidate does. The "weakest holding" today is rarely the weakest
+ex-post — AAOI was a flat early holding before becoming a +25.9%
+position. Today's "hottest skipped" candidates suffer survivorship
+bias: the names that look hottest at any given snapshot are not the
+names that would have looked hottest when the swap would have fired.
+
+**Spillover tracker is the empirical follow-up.** The shipped tracker
+opens hypothetical positions for every capacity-skipped name and
+will, after 3-4 weeks of accumulation, give us direct P&L data on
+"what we would have bought." If the spillover portfolio meaningfully
+outpaces the live portfolio over a sustained window, that warrants
+re-opening this question with new evidence.
+
+**Commit:** Sweep machinery added (`--sweep-exit-threshold`,
+`--sweep-swap-gap`, `swap_score_gap`/`swap_min_persistence` fields on
+StrategyConfig). Re-runnable with one command if observations later
+warrant.
+
+**Status:** Active. No live config change.
