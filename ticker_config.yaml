@@ -11,6 +11,13 @@ benchmark:
   name: S&P 500 ETF
   description: Used for relative strength calculations
 
+# Additional benchmarks fetched alongside SPY for the email digest's
+# "All-Time vs:" comparison block. NOT used for relative-strength scoring
+# — that path keeps using benchmark.ticker (SPY) only. To add another
+# comparison ticker (QQQ, IWM, IBIT, etc.), append it here.
+comparison_benchmarks:
+  - SMH    # VanEck Semiconductor ETF — closer proxy for our AI/Tech tilt
+
 sectors:
 
   # -----------------------------------------------------------

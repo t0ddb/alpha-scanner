@@ -1355,24 +1355,54 @@ def _subsector_code(full_name: str) -> str:
     return SUBSECTOR_CODES.get(full_name, full_name)
 
 
-def _get_spy_return_since(
+def _get_benchmark_return_since(
     price_data: dict,
+    ticker: str,
     start_date: date,
 ) -> float | None:
     """
-    Compute SPY total return % from ``start_date`` to the most recent
-    price available in ``price_data``. Returns None if SPY data isn't
-    available or doesn't cover the range.
+    Compute TOTAL return % (price + dividends) for ``ticker`` from
+    ``start_date`` to the most recent close. Used by the email digest's
+    All-Time-vs-benchmark comparison block (SPY, SMH, ...).
+
+    The ``price_data`` dict carried into the email is fetched via
+    yfinance with auto_adjust=False (raw Close), which is what the
+    scoring path expects — but for SPY/SMH benchmark *total* return,
+    raw-close understates by the dividend yield (~1.3% annualized for
+    SPY). To get true total return we re-fetch the benchmark with
+    ``auto_adjust=True`` so splits AND dividends are baked into Close.
+    Two extra yfinance calls per email run (SPY + SMH) — negligible
+    cost. Falls back to raw price_data if the auto-adjust fetch fails.
+
+    Returns None if the ticker is unavailable or doesn't cover the range.
     """
     import pandas as pd
+    import yfinance as yf
 
-    spy = price_data.get("SPY") if price_data else None
-    if spy is None or spy.empty:
+    # Try auto-adjusted fetch first (true total return).
+    df = None
+    try:
+        adj = yf.Ticker(ticker).history(
+            start=start_date.isoformat(),
+            interval="1d",
+            auto_adjust=True,
+        )
+        if adj is not None and not adj.empty and "Close" in adj.columns:
+            df = adj
+    except Exception:
+        df = None
+
+    # Fallback to whatever's in price_data if the live re-fetch failed
+    # (network blip, ticker delisted, etc.). Note: this falls back to
+    # raw-close behavior, which slightly understates true total return.
+    if df is None:
+        df = price_data.get(ticker) if price_data else None
+    if df is None or df.empty:
         return None
 
     # Work in a naive index for comparison but use positional access on
     # the original DataFrame (which may carry a tz-aware index).
-    idx_naive = spy.index.tz_localize(None) if spy.index.tz else spy.index
+    idx_naive = df.index.tz_localize(None) if df.index.tz else df.index
     target = pd.Timestamp(start_date)
 
     mask = idx_naive >= target
@@ -1380,11 +1410,11 @@ def _get_spy_return_since(
         return None
 
     pos_start = int(mask.argmax())  # first True position
-    pos_end = len(spy) - 1
+    pos_end = len(df) - 1
 
     try:
-        start_price = float(spy.iloc[pos_start]["Close"])
-        end_price = float(spy.iloc[pos_end]["Close"])
+        start_price = float(df.iloc[pos_start]["Close"])
+        end_price = float(df.iloc[pos_end]["Close"])
     except (KeyError, ValueError, IndexError):
         return None
 
@@ -1608,16 +1638,23 @@ def _build_trade_digest_html(
     alltime_pnl_dollar = equity - starting_equity
     alltime_pnl_pct = alltime_pnl_dollar / starting_equity * 100
 
-    # ── vs SPY total (portfolio all-time return − SPY return) ────
-    spy_ret_pct = None
-    if price_data and account_created:
-        spy_ret_pct = _get_spy_return_since(price_data, account_created)
-    if spy_ret_pct is not None:
-        vs_spy_pct = alltime_pnl_pct - spy_ret_pct
-        vs_spy_dollar = vs_spy_pct / 100 * starting_equity
-    else:
-        vs_spy_pct = None
-        vs_spy_dollar = None
+    # ── All-Time vs benchmarks (portfolio all-time return − benchmark return) ────
+    # Both SPY and SMH render as rows under the "All-Time vs:" subheading
+    # in the P&L card. SPY is the broad-market reference; SMH (semis ETF)
+    # is a closer proxy for our AI/Tech tilt.
+    def _vs_benchmark(bench_ticker: str) -> tuple[float | None, float | None]:
+        if not (price_data and account_created):
+            return None, None
+        bench_ret = _get_benchmark_return_since(
+            price_data, bench_ticker, account_created,
+        )
+        if bench_ret is None:
+            return None, None
+        delta_pct = alltime_pnl_pct - bench_ret
+        return delta_pct, delta_pct / 100 * starting_equity
+
+    vs_spy_pct, vs_spy_dollar = _vs_benchmark("SPY")
+    vs_smh_pct, vs_smh_dollar = _vs_benchmark("SMH")
 
     dry_tag = " [DRY RUN]" if dry_run else ""
     # Subject formatting is intentionally different from the email body:
@@ -1781,7 +1818,7 @@ def _build_trade_digest_html(
         if val is None:
             return "<span style='color:#9ca3af'>–</span>"
         pct = val * 100
-        return _colored(_fmt_signed_pct(pct, 1), _pnl_color(pct))
+        return _colored(_fmt_signed_pct(pct, 0), _pnl_color(pct))
 
     skip_rows = [
         row_mixed([
@@ -1872,7 +1909,7 @@ def _build_trade_digest_html(
 
     # Pre-build tables with headers
     skip_table_html = table_mixed(
-        ["Ticker", "Sub Sector", "Score", "7d %", "Streak", "Reason"],
+        ["Ticker", "Sector", "Score", "7d %", "Streak", "Reason"],
         skip_rows,
         skip_aligns,
     )
@@ -1897,18 +1934,21 @@ def _build_trade_digest_html(
     alltime_color = _pnl_color(alltime_pnl_dollar)
     cash_color = "#dc2626" if cash < 0 else "inherit"
 
-    today_pct_cell = _colored(_fmt_signed_pct(today_pnl_pct, 2), today_color)
+    today_pct_cell = _colored(_fmt_signed_pct(today_pnl_pct, 1), today_color)
     today_dol_cell = _colored(_fmt_signed_dollar(today_pnl_dollar), today_color)
-    alltime_pct_cell = _colored(_fmt_signed_pct(alltime_pnl_pct, 2), alltime_color)
+    alltime_pct_cell = _colored(_fmt_signed_pct(alltime_pnl_pct, 1), alltime_color)
     alltime_dol_cell = _colored(_fmt_signed_dollar(alltime_pnl_dollar), alltime_color)
 
-    if vs_spy_pct is not None:
-        vs_spy_color = _pnl_color(vs_spy_pct)
-        vs_spy_pct_cell = _colored(_fmt_signed_pct(vs_spy_pct, 2), vs_spy_color)
-        vs_spy_dol_cell = _colored(_fmt_signed_dollar(vs_spy_dollar), vs_spy_color)
-    else:
-        vs_spy_pct_cell = "<span style='color:#9ca3af'>n/a</span>"
-        vs_spy_dol_cell = "<span style='color:#9ca3af'>—</span>"
+    def _vs_cells(vs_pct: float | None, vs_dollar: float | None) -> tuple[str, str]:
+        if vs_pct is None:
+            return ("<span style='color:#9ca3af'>n/a</span>",
+                    "<span style='color:#9ca3af'>—</span>")
+        c = _pnl_color(vs_pct)
+        return (_colored(_fmt_signed_pct(vs_pct, 1), c),
+                _colored(_fmt_signed_dollar(vs_dollar), c))
+
+    vs_spy_pct_cell, vs_spy_dol_cell = _vs_cells(vs_spy_pct, vs_spy_dollar)
+    vs_smh_pct_cell, vs_smh_dol_cell = _vs_cells(vs_smh_pct, vs_smh_dollar)
 
     card_base = ("background:#f9fafb;padding:14px 18px;border-radius:8px;"
                  "vertical-align:top")
@@ -1930,11 +1970,15 @@ def _build_trade_digest_html(
             <td style="{kv_num_pct}">{alltime_pct_cell}</td>
             <td style="{kv_num_dol}">{alltime_dol_cell}</td>
           </tr>
-          <tr><td colspan="3" style="padding:6px 0 0 0;border-top:1px solid #e5e7eb"></td></tr>
           <tr>
-            <td style="{kv_label}">vs SPY total</td>
+            <td style="padding:3px 12px 3px 18px;color:#6b7280">vs SPY</td>
             <td style="{kv_num_pct}">{vs_spy_pct_cell}</td>
             <td style="{kv_num_dol}">{vs_spy_dol_cell}</td>
+          </tr>
+          <tr>
+            <td style="padding:3px 12px 3px 18px;color:#6b7280">vs SMH</td>
+            <td style="{kv_num_pct}">{vs_smh_pct_cell}</td>
+            <td style="{kv_num_dol}">{vs_smh_dol_cell}</td>
           </tr>
         </table>
       </td>
@@ -1975,7 +2019,7 @@ def _build_trade_digest_html(
             for code, name in sorted(used_subsectors.items())
         )
         legend_html = (
-            "<h3 style='margin:24px 0 8px 0'>Subsectors referenced</h3>"
+            "<h3 style='margin:24px 0 8px 0'>Sectors Referenced</h3>"
             f"<div style='padding:6px 0'>{legend_rows}</div>"
         )
     else:
@@ -1988,17 +2032,17 @@ def _build_trade_digest_html(
 
       {summary_block}
 
-      <h3 style="margin:24px 0 8px 0">Exits ({len(exits)})</h3>
-      {exit_table_html}
-
-      <h3 style="margin:24px 0 8px 0">Entries ({len(entries)})</h3>
-      {entry_table_html}
+      <h3 style="margin:24px 0 8px 0">Current Positions ({num_pos})</h3>
+      {pos_table_html}
 
       <h3 style="margin:24px 0 8px 0">Skipped Signals ({len(skipped)})</h3>
       {skip_table_html}
 
-      <h3 style="margin:24px 0 8px 0">Current Positions ({num_pos})</h3>
-      {pos_table_html}
+      <h3 style="margin:24px 0 8px 0">Entries ({len(entries)})</h3>
+      {entry_table_html}
+
+      <h3 style="margin:24px 0 8px 0">Exits ({len(exits)})</h3>
+      {exit_table_html}
 
       <h3 style="margin:24px 0 8px 0">Exit Watch</h3>
       {exit_watch_html}

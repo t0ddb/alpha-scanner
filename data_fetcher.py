@@ -176,6 +176,9 @@ def fetch_all(
         benchmark = cfg["benchmark"]["ticker"]
         if benchmark not in tickers:
             tickers.insert(0, benchmark)
+        for extra in cfg.get("comparison_benchmarks", []) or []:
+            if extra not in tickers:
+                tickers.insert(0, extra)
 
     return fetch_batch(tickers, period=period, interval=interval,
                        start=start, end=end, delay=delay, verbose=verbose)
