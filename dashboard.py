@@ -422,7 +422,7 @@ def render_sidebar(cfg: dict, timestamps: dict = None):
     # Navigation
     page = st.sidebar.radio(
         "Navigate",
-        ["🔥 Subsectors", "📈 Tickers", "📊 Historical Charts", "🧪 Scheme M Shadow"],
+        ["🔥 Subsectors", "📈 Tickers", "📊 Historical Charts", "🧪 Scheme M Shadow", "💧 Spillover Trackers"],
         label_visibility="collapsed",
     )
 
@@ -1450,6 +1450,308 @@ def render_scheme_m_shadow(scheme_c_results: list):
                 st.info(f"Scheme M scores unavailable: {e}")
 
 
+def render_spillover_trackers(price_data: dict | None = None):
+    """Spillover trackers — visualize hypothetical P&L of trades skipped
+    purely on capacity (Full / Cap Hit / No Cash / Daily Cap).
+
+    Three independent trackers — one per parent stream (live, paper,
+    Scheme M shadow). Each tracker has its own JSON state files written
+    daily by spillover_tracker.py.
+
+    The killer metric is "vs Parent Realized" — answers whether the
+    capacity-constrained portfolio is leaving meaningful P&L on the
+    table.
+    """
+    import json
+    from pathlib import Path
+
+    st.title("💧 Spillover Trackers")
+    st.caption(
+        "Hypothetical positions opened for every entry skipped on capacity "
+        "(Full / Cap Hit / No Cash / Daily Cap). Same exit/stop rules as the "
+        "parent stream; no position cap or cash limit. Measures the "
+        "path-dependency cost of being size-constrained."
+    )
+
+    repo_root = Path(__file__).parent
+
+    # ─── Stream selector ──────────────────────────────────────────
+    stream_label = st.radio(
+        "Parent stream",
+        ["Live", "Paper", "Scheme M"],
+        horizontal=True,
+        index=0,
+    )
+    mode = {"Live": "live", "Paper": "paper", "Scheme M": "scheme_m"}[stream_label]
+
+    # ─── Resolve file paths per stream ────────────────────────────
+    state_p = repo_root / f"spillover_state_{mode}.json"
+    trades_p = repo_root / f"spillover_trades_{mode}.json"
+    log_p = repo_root / f"spillover_log_{mode}.json"
+
+    # Parent trade-history file (for the "vs Parent Realized" metric)
+    parent_trades_p = {
+        "live":     repo_root / "trade_history_live.json",
+        "paper":    repo_root / "trade_history_paper.json",
+        "scheme_m": repo_root / "shadow_m_trades.json",
+    }[mode]
+
+    if not state_p.exists():
+        st.warning(
+            f"No spillover state for the {stream_label} stream yet. "
+            f"Will populate after the next daily workflow run "
+            f"(spillover_tracker.py --mode {mode})."
+        )
+        return
+
+    state = json.loads(state_p.read_text())
+    trades = json.loads(trades_p.read_text()) if trades_p.exists() else []
+    log = json.loads(log_p.read_text()) if log_p.exists() else []
+
+    # ─── Compute parent realized P&L for the comparison metric ───
+    parent_realized = 0.0
+    parent_trade_count = 0
+    if parent_trades_p.exists():
+        try:
+            parent_data = json.loads(parent_trades_p.read_text())
+            if mode in ("live", "paper"):
+                # trade_history_{mode}.json is a dict with a "trades" key.
+                # Sum P&L on closed sells; trade_log writes pnl on the sell record.
+                for t in parent_data.get("trades", []):
+                    if t.get("side") == "sell" and "pnl" in t:
+                        parent_realized += float(t["pnl"])
+                        parent_trade_count += 1
+            else:  # scheme_m
+                # shadow_m_trades.json is a list of closed-trade records.
+                for t in parent_data:
+                    if "pnl" in t:
+                        parent_realized += float(t["pnl"])
+                        parent_trade_count += 1
+        except (json.JSONDecodeError, ValueError, KeyError):
+            parent_realized = 0.0
+
+    # ─── Headline metrics ─────────────────────────────────────────
+    if log:
+        latest = log[-1]
+        total_pnl = float(latest.get("total_pnl", 0.0))
+        open_value = float(latest.get("open_value", 0.0))
+        open_unrlz = float(latest.get("open_unrealized_pnl", 0.0))
+    else:
+        total_pnl = 0.0
+        open_value = 0.0
+        open_unrlz = 0.0
+
+    spillover_realized = float(state.get("cumulative_pnl", 0.0))
+    n_open = len(state.get("positions", {}))
+    n_closed = len(trades)
+    n_winners = sum(1 for t in trades if t.get("pnl", 0) > 0)
+    win_loss = (
+        f"{n_winners}W / {n_closed - n_winners}L"
+        if n_closed else "—"
+    )
+    vs_parent = spillover_realized - parent_realized
+
+    # Compute pct-of-parent for context: how big is the spillover delta vs the parent's own realized P&L
+    if parent_realized != 0:
+        vs_parent_pct = (vs_parent / abs(parent_realized)) * 100
+        vs_parent_label = f"{vs_parent_pct:+.1f}% of parent"
+    else:
+        vs_parent_label = "no parent realized yet"
+
+    c1, c2, c3, c4, c5 = st.columns(5)
+    with c1:
+        st.metric(
+            "Total P&L",
+            f"${total_pnl:+,.0f}",
+            f"unrealized ${open_unrlz:+,.0f}",
+        )
+    with c2:
+        st.metric(
+            "Realized P&L",
+            f"${spillover_realized:+,.0f}",
+            f"{n_closed} closed",
+        )
+    with c3:
+        st.metric(
+            "vs Parent Realized",
+            f"${vs_parent:+,.0f}",
+            vs_parent_label,
+        )
+    with c4:
+        st.metric(
+            "Open Positions",
+            f"{n_open}",
+            f"${open_value:,.0f} value",
+        )
+    with c5:
+        st.metric(
+            "Closed Trades",
+            f"{n_closed}",
+            win_loss,
+        )
+
+    st.caption(
+        f"Last spillover run: **{state.get('last_run_date', 'never')}** · "
+        f"Parent stream realized P&L: **${parent_realized:+,.0f}** "
+        f"({parent_trade_count} closed trades) · "
+        f"Spillover deployed 2026-05-03"
+    )
+
+    # ─── Cumulative P&L chart ─────────────────────────────────────
+    if len(log) >= 2:
+        st.subheader("Cumulative P&L over time")
+        eq_df = pd.DataFrame([
+            {
+                "date": pd.to_datetime(e["date"]),
+                "total_pnl": float(e.get("total_pnl", 0.0)),
+                "realized": float(e.get("realized_cumulative_pnl", 0.0)),
+            }
+            for e in log if "date" in e
+        ])
+        if not eq_df.empty:
+            import plotly.graph_objects as go
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(
+                x=eq_df["date"], y=eq_df["total_pnl"],
+                mode="lines+markers", name="Total P&L (realized + unrealized)",
+                line=dict(color="#4E79A7", width=2),
+            ))
+            fig.add_trace(go.Scatter(
+                x=eq_df["date"], y=eq_df["realized"],
+                mode="lines", name="Realized only",
+                line=dict(color="#A0CBE8", width=1, dash="dash"),
+            ))
+            fig.add_hline(
+                y=0, line_dash="dot", line_color="#94a3b8", opacity=0.6,
+            )
+            fig.update_layout(
+                template="plotly_dark", height=320,
+                margin=dict(l=10, r=10, t=10, b=10),
+                yaxis=dict(title="$ P&L"),
+                xaxis=dict(title=None),
+                legend=dict(orientation="h", yanchor="bottom", y=1.02),
+            )
+            st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.info(
+            "Cumulative P&L chart needs at least 2 daily log entries. "
+            "Spillover deployed 2026-05-03 — chart populates after a few "
+            "more runs."
+        )
+
+    # ─── Open positions table ─────────────────────────────────────
+    st.subheader(f"Open positions ({n_open})")
+    positions = state.get("positions", {})
+    if not positions:
+        st.info("No open positions in this spillover stream yet.")
+    else:
+        # Try to source latest prices: log first (mark-to-market snapshot),
+        # then live price_data dict, then fallback to entry price.
+        latest_prices = {}
+        if log:
+            for p in log[-1].get("positions", []):
+                latest_prices[p["ticker"]] = p.get("current_price")
+
+        rows = []
+        today = pd.Timestamp.now(tz=LOCAL_TZ).normalize()
+        for ticker, pos in positions.items():
+            cur_px = latest_prices.get(ticker)
+            if cur_px is None and price_data:
+                df = price_data.get(ticker)
+                if df is not None and not df.empty:
+                    cur_px = float(df["Close"].iloc[-1])
+            if cur_px is None:
+                cur_px = pos["entry_price"]
+
+            entry_price = float(pos["entry_price"])
+            shares = float(pos["shares"])
+            unrlz_pct = (cur_px / entry_price - 1) * 100 if entry_price else 0
+            unrlz_dol = (cur_px - entry_price) * shares
+            try:
+                entry_dt = pd.to_datetime(pos["entry_date"]).tz_localize(LOCAL_TZ.key)
+                days_held = max(0, (today - entry_dt).days)
+            except Exception:
+                days_held = 0
+
+            rows.append({
+                "Ticker": ticker,
+                "Entry Date": pos["entry_date"],
+                "Days": days_held,
+                "Entry $": f"${entry_price:.2f}",
+                "Current $": f"${cur_px:.2f}",
+                "Shares": int(shares) if shares == int(shares) else f"{shares:.2f}",
+                "Unrlz %": f"{unrlz_pct:+.1f}%",
+                "Unrlz $": f"${unrlz_dol:+,.0f}",
+                "Entry Score": f"{float(pos.get('entry_score', 0)):.2f}",
+                "Skip Reason": pos.get("skip_reason_at_entry", ""),
+            })
+        # Sort by unrealized % descending
+        rows.sort(
+            key=lambda r: -float(r["Unrlz %"].rstrip("%")),
+        )
+        st.dataframe(
+            pd.DataFrame(rows), hide_index=True, use_container_width=True,
+        )
+
+    # ─── Recent activity (last 14 days from log) ──────────────────
+    st.subheader("Recent activity (last 14 days)")
+    if not log:
+        st.info("No daily activity log yet.")
+    else:
+        recent_log = log[-14:]
+        rows = []
+        for e in recent_log:
+            rows.append({
+                "Date": e.get("date", ""),
+                "Entries": len(e.get("entries", [])),
+                "Exits": len(e.get("exits", [])),
+                "Stops": len(e.get("stops_fired", [])),
+                "Open Positions": e.get("open_positions", 0),
+                "Open Value $": f"${float(e.get('open_value', 0)):,.0f}",
+                "Realized $": f"${float(e.get('realized_cumulative_pnl', 0)):+,.0f}",
+                "Total P&L $": f"${float(e.get('total_pnl', 0)):+,.0f}",
+            })
+        # Newest first
+        rows.reverse()
+        st.dataframe(
+            pd.DataFrame(rows), hide_index=True, use_container_width=True,
+        )
+
+    # ─── Closed trades table ──────────────────────────────────────
+    st.subheader(f"Closed trades ({n_closed})")
+    if not trades:
+        st.info("No closed trades yet — capacity skips have to ride to a "
+                "score-exit or stop before they show up here.")
+    else:
+        recent = sorted(trades, key=lambda t: t.get("exit_date", ""), reverse=True)
+        rows = []
+        for t in recent:
+            pnl_pct_v = float(t.get("pnl_pct", 0)) * 100
+            pnl_dol_v = float(t.get("pnl", 0))
+            try:
+                e_dt = pd.to_datetime(t.get("entry_date"))
+                x_dt = pd.to_datetime(t.get("exit_date"))
+                hold = max(0, (x_dt - e_dt).days)
+            except Exception:
+                hold = 0
+            rows.append({
+                "Ticker": t.get("ticker", ""),
+                "Entered": t.get("entry_date", ""),
+                "Exited": t.get("exit_date", ""),
+                "Hold (d)": hold,
+                "Entry $": f"${float(t.get('entry_price', 0)):.2f}",
+                "Exit $": f"${float(t.get('exit_price', 0)):.2f}",
+                "P&L %": f"{pnl_pct_v:+.1f}%",
+                "P&L $": f"${pnl_dol_v:+,.0f}",
+                "Exit Reason": t.get("exit_reason", ""),
+                "Skip Reason at Entry": t.get("skip_reason_at_entry", ""),
+                "Entry Score": f"{float(t.get('entry_score', 0)):.2f}",
+            })
+        st.dataframe(
+            pd.DataFrame(rows), hide_index=True, use_container_width=True,
+        )
+
+
 def render_historical_charts():
     """Historical charts page — pulls from SQLite database."""
 
@@ -1764,6 +2066,8 @@ def main():
         render_historical_charts()
     elif page == "🧪 Scheme M Shadow":
         render_scheme_m_shadow(results)
+    elif page == "💧 Spillover Trackers":
+        render_spillover_trackers(price_data=data)
 
 
 if __name__ == "__main__":
