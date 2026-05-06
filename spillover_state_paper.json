@@ -53,8 +53,17 @@
       "entry_score": 9.0,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9520.58306
+    },
+    "PWR": {
+      "entry_date": "2026-05-06",
+      "entry_price": 785.239990234375,
+      "shares": 12,
+      "cost_basis": 9422.8798828125,
+      "entry_score": 9.3,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 10045.6726
     }
   },
-  "last_run_date": "2026-05-05",
+  "last_run_date": "2026-05-06",
   "cumulative_pnl": 0.0
 }
