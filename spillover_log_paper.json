@@ -295,5 +295,93 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-05-07",
+    "mode": "paper",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "AAOI",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "SNDK",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "VRT",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "STX",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 7,
+    "open_value": 67135.95,
+    "open_unrealized_pnl": 2270.19,
+    "realized_cumulative_pnl": 0.0,
+    "total_pnl": 2270.19,
+    "positions": [
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1255.8599853515625,
+        "current_price": 1339.9599609375,
+        "unrealized_pnl": 588.7,
+        "unrealized_pnl_pct": 0.067
+      },
+      {
+        "ticker": "STX",
+        "shares": 12,
+        "entry_price": 738.5399780273438,
+        "current_price": 766.4400024414062,
+        "unrealized_pnl": 334.8,
+        "unrealized_pnl_pct": 0.0378
+      },
+      {
+        "ticker": "WOLF",
+        "shares": 264,
+        "entry_price": 35.939998626708984,
+        "current_price": 45.15999984741211,
+        "unrealized_pnl": 2434.08,
+        "unrealized_pnl_pct": 0.2565
+      },
+      {
+        "ticker": "AAOI",
+        "shares": 55,
+        "entry_price": 172.97999572753906,
+        "current_price": 157.5500030517578,
+        "unrealized_pnl": -848.65,
+        "unrealized_pnl_pct": -0.0892
+      },
+      {
+        "ticker": "NVTS",
+        "shares": 598,
+        "entry_price": 15.920000076293945,
+        "current_price": 15.789999961853027,
+        "unrealized_pnl": -77.74,
+        "unrealized_pnl_pct": -0.0082
+      },
+      {
+        "ticker": "VRT",
+        "shares": 28,
+        "entry_price": 330.9700012207031,
+        "current_price": 340.010009765625,
+        "unrealized_pnl": 253.12,
+        "unrealized_pnl_pct": 0.0273
+      },
+      {
+        "ticker": "PWR",
+        "shares": 12,
+        "entry_price": 785.239990234375,
+        "current_price": 750.72998046875,
+        "unrealized_pnl": -414.12,
+        "unrealized_pnl_pct": -0.0439
+      }
+    ]
   }
 ]

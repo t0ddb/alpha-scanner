@@ -40,5 +40,101 @@
     "realized_cumulative_pnl": 0.0,
     "total_pnl": 0.0,
     "positions": []
+  },
+  {
+    "date": "2026-05-07",
+    "mode": "scheme_m",
+    "entries": [
+      {
+        "ticker": "STX",
+        "score": 9.5,
+        "entry_price": 766.4400024414062,
+        "shares": 10,
+        "cost": 7664.4,
+        "skip_reason": "Full"
+      },
+      {
+        "ticker": "IRDM",
+        "score": 8.65,
+        "entry_price": 40.189998626708984,
+        "shares": 206,
+        "cost": 8279.14,
+        "skip_reason": "Full"
+      },
+      {
+        "ticker": "WDC",
+        "score": 8.3,
+        "entry_price": 463.9100036621094,
+        "shares": 17,
+        "cost": 7886.47,
+        "skip_reason": "Full"
+      },
+      {
+        "ticker": "PWR",
+        "score": 8.2,
+        "entry_price": 750.72998046875,
+        "shares": 11,
+        "cost": 8258.03,
+        "skip_reason": "Full"
+      },
+      {
+        "ticker": "ONTO",
+        "score": 7.7,
+        "entry_price": 274.1700134277344,
+        "shares": 30,
+        "cost": 8225.1,
+        "skip_reason": "Full"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 5,
+    "open_value": 40313.14,
+    "open_unrealized_pnl": 0.0,
+    "realized_cumulative_pnl": 0.0,
+    "total_pnl": 0.0,
+    "positions": [
+      {
+        "ticker": "STX",
+        "shares": 10,
+        "entry_price": 766.4400024414062,
+        "current_price": 766.4400024414062,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "IRDM",
+        "shares": 206,
+        "entry_price": 40.189998626708984,
+        "current_price": 40.189998626708984,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "WDC",
+        "shares": 17,
+        "entry_price": 463.9100036621094,
+        "current_price": 463.9100036621094,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "PWR",
+        "shares": 11,
+        "entry_price": 750.72998046875,
+        "current_price": 750.72998046875,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "ONTO",
+        "shares": 30,
+        "entry_price": 274.1700134277344,
+        "current_price": 274.1700134277344,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]

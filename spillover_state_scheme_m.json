@@ -1,5 +1,51 @@
 {
-  "positions": {},
-  "last_run_date": "2026-05-06",
+  "positions": {
+    "STX": {
+      "entry_date": "2026-05-07",
+      "entry_price": 766.4400024414062,
+      "shares": 10,
+      "cost_basis": 7664.4000244140625,
+      "entry_score": 9.5,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 8308.61287053604
+    },
+    "IRDM": {
+      "entry_date": "2026-05-07",
+      "entry_price": 40.189998626708984,
+      "shares": 206,
+      "cost_basis": 8279.13971710205,
+      "entry_score": 8.65,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 8308.61287053604
+    },
+    "WDC": {
+      "entry_date": "2026-05-07",
+      "entry_price": 463.9100036621094,
+      "shares": 17,
+      "cost_basis": 7886.470062255859,
+      "entry_score": 8.3,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 8308.61287053604
+    },
+    "PWR": {
+      "entry_date": "2026-05-07",
+      "entry_price": 750.72998046875,
+      "shares": 11,
+      "cost_basis": 8258.02978515625,
+      "entry_score": 8.2,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 8308.61287053604
+    },
+    "ONTO": {
+      "entry_date": "2026-05-07",
+      "entry_price": 274.1700134277344,
+      "shares": 30,
+      "cost_basis": 8225.100402832031,
+      "entry_score": 7.7,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 8308.61287053604
+    }
+  },
+  "last_run_date": "2026-05-07",
   "cumulative_pnl": 0.0
 }
