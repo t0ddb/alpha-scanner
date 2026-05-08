@@ -44,8 +44,17 @@
       "entry_score": 7.7,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 8308.61287053604
+    },
+    "ON": {
+      "entry_date": "2026-05-08",
+      "entry_price": 103.19999694824219,
+      "shares": 83,
+      "cost_basis": 8565.599746704102,
+      "entry_score": 7.8,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 8621.895009391785
     }
   },
-  "last_run_date": "2026-05-07",
+  "last_run_date": "2026-05-08",
   "cumulative_pnl": 0.0
 }

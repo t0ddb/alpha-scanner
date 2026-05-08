@@ -136,5 +136,98 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-05-08",
+    "mode": "scheme_m",
+    "entries": [
+      {
+        "ticker": "ON",
+        "score": 7.8,
+        "entry_price": 103.19999694824219,
+        "shares": 83,
+        "cost": 8565.6,
+        "skip_reason": "Full"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "STX",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "WDC",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "IRDM",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "PWR",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "ONTO",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 6,
+    "open_value": 49827.86,
+    "open_unrealized_pnl": 949.12,
+    "realized_cumulative_pnl": 0.0,
+    "total_pnl": 949.12,
+    "positions": [
+      {
+        "ticker": "STX",
+        "shares": 10,
+        "entry_price": 766.4400024414062,
+        "current_price": 782.6400146484375,
+        "unrealized_pnl": 162.0,
+        "unrealized_pnl_pct": 0.0211
+      },
+      {
+        "ticker": "IRDM",
+        "shares": 206,
+        "entry_price": 40.189998626708984,
+        "current_price": 41.459999084472656,
+        "unrealized_pnl": 261.62,
+        "unrealized_pnl_pct": 0.0316
+      },
+      {
+        "ticker": "WDC",
+        "shares": 17,
+        "entry_price": 463.9100036621094,
+        "current_price": 480.0,
+        "unrealized_pnl": 273.53,
+        "unrealized_pnl_pct": 0.0347
+      },
+      {
+        "ticker": "PWR",
+        "shares": 11,
+        "entry_price": 750.72998046875,
+        "current_price": 745.0,
+        "unrealized_pnl": -63.03,
+        "unrealized_pnl_pct": -0.0076
+      },
+      {
+        "ticker": "ONTO",
+        "shares": 30,
+        "entry_price": 274.1700134277344,
+        "current_price": 284.6700134277344,
+        "unrealized_pnl": 315.0,
+        "unrealized_pnl_pct": 0.0383
+      },
+      {
+        "ticker": "ON",
+        "shares": 83,
+        "entry_price": 103.19999694824219,
+        "current_price": 103.19999694824219,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]
