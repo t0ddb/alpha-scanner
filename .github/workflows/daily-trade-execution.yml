@@ -140,12 +140,31 @@ jobs:
             echo "No state changes to commit."
           else
             git commit -m "Automated trade execution $(date -u +%Y-%m-%d)"
+            # Retry the push up to 3 times. Belt-and-suspenders against
+            # concurrent-push races (e.g. manual workflow_dispatch firing
+            # while the cron is also running). The live workflow runs at
+            # 4:35 PM ET, 5 min after this paper workflow at 4:30, which
+            # is the primary defense; this is the safety net.
+            #
             # Rebase in case the daily-backfill workflow pushed the DB
             # around the same time. If rebase hits a conflict on the
             # binary DB, prefer our fresh write (this run scored live
             # EOD data that backfill won't yet have).
-            git pull --rebase -X ours || git rebase --abort
-            git push
+            attempts=0
+            until [ $attempts -ge 3 ]; do
+              git pull --rebase -X ours || git rebase --abort
+              if git push; then
+                echo "Push succeeded on attempt $((attempts + 1))."
+                break
+              fi
+              attempts=$((attempts + 1))
+              echo "Push attempt $attempts failed (likely concurrent push). Retrying in 10s..."
+              sleep 10
+            done
+            if [ $attempts -ge 3 ]; then
+              echo "ERROR: All 3 push attempts failed. Local state preserved on runner but lost when runner is destroyed."
+              exit 1
+            fi
           fi
 
       - name: Verify DB advanced to today
