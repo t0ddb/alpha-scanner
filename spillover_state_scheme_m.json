@@ -53,8 +53,17 @@
       "entry_score": 7.8,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 8621.895009391785
+    },
+    "VIAV": {
+      "entry_date": "2026-05-11",
+      "entry_price": 54.93000030517578,
+      "shares": 166,
+      "cost_basis": 9118.38005065918,
+      "entry_score": 9.4,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9168.105542554855
     }
   },
-  "last_run_date": "2026-05-08",
+  "last_run_date": "2026-05-11",
   "cumulative_pnl": 0.0
 }

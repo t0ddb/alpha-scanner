@@ -229,5 +229,106 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-05-11",
+    "mode": "scheme_m",
+    "entries": [
+      {
+        "ticker": "VIAV",
+        "score": 9.4,
+        "entry_price": 54.93000030517578,
+        "shares": 166,
+        "cost": 9118.38,
+        "skip_reason": "Full"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "STX",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "IRDM",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "WDC",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "PWR",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "ON",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 7,
+    "open_value": 61238.19,
+    "open_unrealized_pnl": 3241.07,
+    "realized_cumulative_pnl": 0.0,
+    "total_pnl": 3241.07,
+    "positions": [
+      {
+        "ticker": "STX",
+        "shares": 10,
+        "entry_price": 766.4400024414062,
+        "current_price": 834.010009765625,
+        "unrealized_pnl": 675.7,
+        "unrealized_pnl_pct": 0.0882
+      },
+      {
+        "ticker": "IRDM",
+        "shares": 206,
+        "entry_price": 40.189998626708984,
+        "current_price": 43.150001525878906,
+        "unrealized_pnl": 609.76,
+        "unrealized_pnl_pct": 0.0737
+      },
+      {
+        "ticker": "WDC",
+        "shares": 17,
+        "entry_price": 463.9100036621094,
+        "current_price": 515.8300170898438,
+        "unrealized_pnl": 882.64,
+        "unrealized_pnl_pct": 0.1119
+      },
+      {
+        "ticker": "PWR",
+        "shares": 11,
+        "entry_price": 750.72998046875,
+        "current_price": 781.3800048828125,
+        "unrealized_pnl": 337.15,
+        "unrealized_pnl_pct": 0.0408
+      },
+      {
+        "ticker": "ONTO",
+        "shares": 30,
+        "entry_price": 274.1700134277344,
+        "current_price": 287.5199890136719,
+        "unrealized_pnl": 400.5,
+        "unrealized_pnl_pct": 0.0487
+      },
+      {
+        "ticker": "ON",
+        "shares": 83,
+        "entry_price": 103.19999694824219,
+        "current_price": 107.23999786376953,
+        "unrealized_pnl": 335.32,
+        "unrealized_pnl_pct": 0.0391
+      },
+      {
+        "ticker": "VIAV",
+        "shares": 166,
+        "entry_price": 54.93000030517578,
+        "current_price": 54.93000030517578,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]

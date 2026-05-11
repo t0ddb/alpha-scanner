@@ -238,6 +238,31 @@
       "score_at_entry": 9.9,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "3d4b6748-6dbe-4f9e-92c8-c215078b1c40"
+    },
+    {
+      "ticker": "COHU",
+      "side": "sell",
+      "date": "2026-05-11",
+      "price": 52.3,
+      "qty": 198.0,
+      "proceeds": 10355.4,
+      "pnl": 1384.02,
+      "pnl_pct": 15.43,
+      "score_at_exit": 4.4,
+      "reason": "Score exit (score 4.4 < 5.0)",
+      "hold_days": 19,
+      "score_at_entry": 8.9
+    },
+    {
+      "ticker": "SNDK",
+      "side": "buy",
+      "date": "2026-05-11",
+      "price": 1543.5,
+      "qty": 6.0,
+      "cost_basis": 9261.0,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "cc0a857c-e172-4e71-b433-8ea21c83ba92"
     }
   ]
 }

@@ -467,5 +467,81 @@
         "unrealized_pnl_pct": -0.0512
       }
     ]
+  },
+  {
+    "date": "2026-05-11",
+    "mode": "paper",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "STX",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 7,
+    "open_value": 77515.4,
+    "open_unrealized_pnl": 12649.64,
+    "realized_cumulative_pnl": 0.0,
+    "total_pnl": 12649.64,
+    "positions": [
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1255.8599853515625,
+        "current_price": 1547.56005859375,
+        "unrealized_pnl": 2041.9,
+        "unrealized_pnl_pct": 0.2323
+      },
+      {
+        "ticker": "STX",
+        "shares": 12,
+        "entry_price": 738.5399780273438,
+        "current_price": 834.010009765625,
+        "unrealized_pnl": 1145.64,
+        "unrealized_pnl_pct": 0.1293
+      },
+      {
+        "ticker": "WOLF",
+        "shares": 264,
+        "entry_price": 35.939998626708984,
+        "current_price": 50.310001373291016,
+        "unrealized_pnl": 3793.68,
+        "unrealized_pnl_pct": 0.3998
+      },
+      {
+        "ticker": "AAOI",
+        "shares": 55,
+        "entry_price": 172.97999572753906,
+        "current_price": 184.89999389648438,
+        "unrealized_pnl": 655.6,
+        "unrealized_pnl_pct": 0.0689
+      },
+      {
+        "ticker": "NVTS",
+        "shares": 598,
+        "entry_price": 15.920000076293945,
+        "current_price": 22.649999618530273,
+        "unrealized_pnl": 4024.54,
+        "unrealized_pnl_pct": 0.4227
+      },
+      {
+        "ticker": "VRT",
+        "shares": 28,
+        "entry_price": 330.9700012207031,
+        "current_price": 367.9200134277344,
+        "unrealized_pnl": 1034.6,
+        "unrealized_pnl_pct": 0.1116
+      },
+      {
+        "ticker": "PWR",
+        "shares": 12,
+        "entry_price": 785.239990234375,
+        "current_price": 781.3800048828125,
+        "unrealized_pnl": -46.32,
+        "unrealized_pnl_pct": -0.0049
+      }
+    ]
   }
 ]
