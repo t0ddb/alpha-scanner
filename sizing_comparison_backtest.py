@@ -79,6 +79,15 @@ class StrategyConfig:
     # the entry filter requires). Both default to 0 = no extra gating.
     swap_score_gap: float = 0.0
     swap_min_persistence: int = 0
+    # Exit persistence (whipsaw-protection, 2026-05): require the score
+    # to have been below `exit_threshold` for this many CONSECUTIVE
+    # trading days (including today) before firing the exit. Default 1
+    # = current behavior (exit on first day below). Higher values give
+    # positions more rope before flushing on a single-day score dip.
+    # If insufficient history (rare; very young positions or DB gaps),
+    # the conservative choice is "don't exit" — wait for more data.
+    # Does not affect stop-loss exits.
+    exit_persistence_days: int = 1
 
 
 STRATEGY_A = StrategyConfig(
@@ -491,7 +500,30 @@ class PortfolioSimulator:
                 # Update trailing high-water mark
                 pos.max_close_since_entry = max(pos.max_close_since_entry, close)
                 score = scores.get(ticker, 0)
+
+                # Score-based exit with optional N-day persistence filter.
+                # exit_persistence_days=1 (default) preserves current
+                # behavior (exit on first day below). N>1 requires N
+                # consecutive days (incl. today) all < exit_threshold.
+                # Insufficient history or missing prior scores → don't
+                # exit (conservative). Stop-loss path unaffected.
+                score_exit_fires = False
                 if score < cfg.exit_threshold:
+                    persist_n = max(1, cfg.exit_persistence_days)
+                    score_exit_fires = True
+                    for back in range(1, persist_n):
+                        prior_idx = i - back
+                        if prior_idx < 0:
+                            score_exit_fires = False
+                            break
+                        prior_str = days[prior_idx].strftime("%Y-%m-%d")
+                        prior_scores = self.daily_scores.get(prior_str, {})
+                        prior_score = prior_scores.get(ticker)
+                        if prior_score is None or prior_score >= cfg.exit_threshold:
+                            score_exit_fires = False
+                            break
+
+                if score_exit_fires:
                     to_exit.append((ticker, "score_exit"))
                 else:
                     # Check stop loss using daily low (more realistic)
@@ -1766,6 +1798,76 @@ def print_swap_gap_sweep(sweep_results: list[dict], baseline: dict | None = None
     print()
 
 
+def print_exit_persistence_sweep(
+    sweep_results: list[dict],
+    baseline: dict | None = None,
+    scheme_label: str = "Scheme C",
+):
+    """Output: Exit-with-persistence sweep summary table (2D grid)."""
+    print("\n" + "=" * 140)
+    print(f"  EXIT PERSISTENCE SWEEP — {scheme_label} "
+          f"(Entry=9.0/p=3, 12-Max, 8.3% sizing, -20% stop)")
+    print("=" * 140)
+
+    header = (
+        f"\n  {'Exit Thr':>9s} | {'Persist':>7s} | {'Return':>9s} | "
+        f"{'Max DD':>8s} | {'Sharpe':>6s} | {'Sortino':>7s} | "
+        f"{'Win Rate':>8s} | {'Trades':>6s} | {'Avg Hold':>8s} | "
+        f"{'Path Std':>9s} | {'Path Range':>10s}"
+    )
+    print(header)
+    print("  " + "-" * 158)
+
+    baseline_exit_label = "4.5" if scheme_label == "Scheme M" else "5.0"
+    if baseline is not None:
+        print(
+            f"  {'BASELINE':>9s} | {'<' + baseline_exit_label + '/1':>7s} | "
+            f"{baseline['return']:>+8.1f}% | {baseline['max_dd']:>+7.1f}% | "
+            f"{baseline['sharpe']:>6.2f} | {baseline['sortino']:>7.2f} | "
+            f"{baseline['win_rate']:>7.1f}% | {baseline['total_trades']:>6d} | "
+            f"{baseline['avg_hold_days']:>7.1f}d | "
+            f"{baseline.get('path_std', 0.0):>8.1f}% | "
+            f"{baseline.get('path_range', 0.0):>9.1f}%"
+        )
+        print("  " + "-" * 158)
+
+    best_sharpe_idx = max(range(len(sweep_results)),
+                          key=lambda i: sweep_results[i]["sharpe"])
+
+    for i, r in enumerate(sweep_results):
+        marker = "  ◀ BEST" if i == best_sharpe_idx else ""
+        print(
+            f"  {r['threshold']:>9.1f} | {r['persist']:>7d} | "
+            f"{r['return']:>+8.1f}% | {r['max_dd']:>+7.1f}% | "
+            f"{r['sharpe']:>6.2f} | {r['sortino']:>7.2f} | "
+            f"{r['win_rate']:>7.1f}% | {r['total_trades']:>6d} | "
+            f"{r['avg_hold_days']:>7.1f}d | "
+            f"{r.get('path_std', 0.0):>8.1f}% | "
+            f"{r.get('path_range', 0.0):>9.1f}%{marker}"
+        )
+
+    print()
+    best = sweep_results[best_sharpe_idx]
+    print(f"  Peak Sharpe: {best['sharpe']:.2f} at exit < {best['threshold']:.1f} "
+          f"with {best['persist']}-day persistence "
+          f"(return={best['return']:+.1f}%, DD={best['max_dd']:+.1f}%, "
+          f"trades={best['total_trades']})")
+    if baseline is not None:
+        print(f"  Baseline (exit < {baseline_exit_label} / 1-day): "
+              f"Sharpe={baseline['sharpe']:.2f}, "
+              f"return={baseline['return']:+.1f}%, "
+              f"trades={baseline['total_trades']}")
+        print(f"  Δ vs baseline:                  "
+              f"Sharpe={best['sharpe'] - baseline['sharpe']:+.2f}, "
+              f"return={best['return'] - baseline['return']:+.1f}pp, "
+              f"trades={best['total_trades'] - baseline['total_trades']:+d}")
+    print()
+    print("  Persist=N means today AND N-1 prior days all < threshold "
+          "(N=1 = current behavior).")
+    print("  Stop-loss exits unaffected; persistence only gates score_exit.")
+    print()
+
+
 # ============================================================
 # MAIN
 # ============================================================
@@ -1798,6 +1900,17 @@ def main():
                              "'gap1,gap2,...:persist1,persist2,...' "
                              "(e.g. '1.5,2.0,2.5,3.0:3,5,7,10'). 2D grid over "
                              "score-gap × min-persistence on swap-at-cap variant.")
+    parser.add_argument("--sweep-exit-persistence", type=str, default=None,
+                        help="Exit-with-persistence sweep. Format: "
+                             "'threshold1,threshold2,...:persist1,persist2,...' "
+                             "(e.g. '6,7:2,3,5'). 2D grid over exit threshold × "
+                             "consecutive-days-below required to fire. Baseline "
+                             "(current live config) shown alongside.")
+    parser.add_argument("--price-period", type=str, default="2y",
+                        help="yfinance period for fetching price history "
+                             "(default 2y). Use 3y or 5y to widen the "
+                             "trading_days window so --path-starts > 10 "
+                             "and --start cutoffs further back are honored.")
     parser.add_argument("--score-source", type=str, default="sqlite",
                         help="Score source: 'sqlite' (default; Scheme C from DB) "
                              "or 'parquet:<path>' (e.g. parquet:backtest_results/scheme_i_plus_scores.parquet)")
@@ -1820,9 +1933,9 @@ def main():
     print(f"  Date range: {score_df['date'].min().strftime('%Y-%m-%d')} to "
           f"{score_df['date'].max().strftime('%Y-%m-%d')}")
 
-    print("\n  Fetching price data from yfinance (2y)...")
+    print(f"\n  Fetching price data from yfinance ({args.price_period})...")
     cfg = load_config()
-    price_data = fetch_all(cfg, period="2y", verbose=False)
+    price_data = fetch_all(cfg, period=args.price_period, verbose=False)
     print(f"  {len(price_data)} tickers fetched")
 
     trading_days = get_trading_days(price_data)
@@ -2407,6 +2520,130 @@ def main():
                 print(f", path std={path_std:.1f}%, done", flush=True)
 
         print_swap_gap_sweep(swap_results, baseline=baseline)
+
+    # ── EXIT PERSISTENCE SWEEP (2D grid: threshold × persistence) ──
+    if args.sweep_exit_persistence:
+        try:
+            thr_str, persist_str = args.sweep_exit_persistence.split(":", 1)
+        except ValueError:
+            raise SystemExit(
+                "--sweep-exit-persistence must be 'thresholds:persists' "
+                "(e.g. '6,7:2,3,5')"
+            )
+        ep_thresholds = sorted(float(v.strip()) for v in thr_str.split(","))
+        ep_persists = sorted(int(v.strip()) for v in persist_str.split(","))
+
+        print("\n" + "=" * 140)
+        print(f"  RUNNING EXIT PERSISTENCE SWEEP ({scheme_label}): "
+              f"thresholds={ep_thresholds}, persists={ep_persists}")
+        print("=" * 140)
+
+        # Baseline: current production exit rule. Scheme M uses 4.5;
+        # all others use 5.0 (current Scheme C production).
+        baseline_exit = 4.5 if scheme_label == "Scheme M" else 5.0
+        # For Scheme M the production entry threshold is also lower (7.5 vs 9.0)
+        baseline_entry = 7.5 if scheme_label == "Scheme M" else 9.0
+        baseline_strat = StrategyConfig(
+            name=f"Baseline-Exit{baseline_exit}",
+            max_positions=12,
+            sizing_mode="fixed_pct",
+            fixed_position_pct=0.083,
+            min_entry_pct=0.05,
+            trim_enabled=False,
+            entry_protection_days=7,
+            entry_threshold=baseline_entry,
+            exit_threshold=baseline_exit,
+            stop_loss=StopLossConfig(type="fixed", value=0.20),
+            persistence_days=PERSISTENCE_DAYS,
+            exit_persistence_days=1,
+        )
+        # Compute path-dependency start dates once (reused across baseline + variants)
+        ep_start_candidates = []
+        if not args.no_path_test:
+            ep_start_candidates = compute_path_start_dates(
+                score_df, daily_scores, args.path_starts,
+                persistence_days=PERSISTENCE_DAYS,
+            )
+
+        def _run_with_path_dep(strat: StrategyConfig) -> dict:
+            """Run primary + N path-dep starts; return metrics + path stats."""
+            sim = PortfolioSimulator(
+                config=strat, daily_scores=daily_scores,
+                price_data=price_data, trading_days=trading_days,
+                start_date=args.start, end_date=args.end,
+            )
+            result = sim.run()
+            metrics = compute_metrics(result)
+            avg_hold = (
+                np.mean([t.hold_days for t in result.trades])
+                if result.trades else 0.0
+            )
+            path_returns: list[float] = []
+            if ep_start_candidates:
+                for start in ep_start_candidates:
+                    psim = PortfolioSimulator(
+                        config=strat, daily_scores=daily_scores,
+                        price_data=price_data, trading_days=trading_days,
+                        start_date=start, end_date=args.end,
+                    )
+                    presult = psim.run()
+                    path_returns.append(compute_metrics(presult)["total_return"])
+            return {
+                "return": metrics["total_return"],
+                "max_dd": metrics["max_drawdown"],
+                "sharpe": metrics["sharpe"],
+                "sortino": metrics["sortino"],
+                "win_rate": metrics["win_rate"],
+                "total_trades": metrics["total_trades"],
+                "avg_hold_days": float(avg_hold),
+                "path_std": float(np.std(path_returns)) if len(path_returns) > 1 else 0.0,
+                "path_range": float(np.ptp(path_returns)) if path_returns else 0.0,
+                "path_returns": path_returns,
+            }
+
+        print(f"    baseline (exit < {baseline_exit}, 1-day, entry {baseline_entry})...",
+              end="", flush=True)
+        baseline_ep = _run_with_path_dep(baseline_strat)
+        print(f" {baseline_ep['return']:+.1f}%, "
+              f"trades={baseline_ep['total_trades']}, "
+              f"Sharpe={baseline_ep['sharpe']:.2f}, "
+              f"path std={baseline_ep['path_std']:.1f}%", flush=True)
+
+        ep_sweep_results: list[dict] = []
+        for threshold in ep_thresholds:
+            for persist in ep_persists:
+                strat = StrategyConfig(
+                    name=f"Exit{threshold:.1f}-p{persist}",
+                    max_positions=12,
+                    sizing_mode="fixed_pct",
+                    fixed_position_pct=0.083,
+                    min_entry_pct=0.05,
+                    trim_enabled=False,
+                    entry_protection_days=7,
+                    entry_threshold=baseline_entry,
+                    exit_threshold=threshold,
+                    stop_loss=StopLossConfig(type="fixed", value=0.20),
+                    persistence_days=PERSISTENCE_DAYS,
+                    exit_persistence_days=persist,
+                )
+                print(f"    exit<{threshold:.1f} persist={persist}...",
+                      end="", flush=True)
+                stats = _run_with_path_dep(strat)
+                ep_sweep_results.append({
+                    "threshold": threshold,
+                    "persist": persist,
+                    **stats,
+                })
+                print(f" {stats['return']:+.1f}%, "
+                      f"trades={stats['total_trades']}, "
+                      f"avg-hold={stats['avg_hold_days']:.1f}d, "
+                      f"path std={stats['path_std']:.1f}%, done",
+                      flush=True)
+
+        print_exit_persistence_sweep(
+            ep_sweep_results, baseline=baseline_ep,
+            scheme_label=scheme_label,
+        )
 
     # ── Done ──
     print("\n" + "=" * 80)

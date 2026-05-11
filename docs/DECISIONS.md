@@ -310,3 +310,91 @@ StrategyConfig). Re-runnable with one command if observations later
 warrant.
 
 **Status:** Active. No live config change.
+
+---
+
+## 2026-05-11 — Exit-with-persistence: no robust edge for either scheme
+
+**Decision:** Keep current exit rules unchanged for both schemes:
+  - Scheme C (live + paper): exit < 5.0, 1-day (immediate)
+  - Scheme M (shadow): exit < 4.5, 1-day (immediate)
+
+Reject all tested exit-with-persistence variants. No live config change.
+
+**Rationale:** Tested "tighter exit threshold + persistence filter"
+as an alternative to today's immediate-exit rule. Hypothesis: a
+position scoring 7.9 (e.g., today's BE) looks like dead capital but
+isn't an exit candidate under the current 5.0 rule. A tighter exit
+(< 6 or < 7) with N-day persistence would catch weakening positions
+earlier while avoiding single-day-dip whipsaws.
+
+Grid tested: exit threshold × persistence_days = {6.0, 7.0} × {2, 3, 5}.
+6-config 2D sweep per scheme, on the historical backtest DB.
+
+**Evidence (sizing_comparison_backtest.py with new
+`exit_persistence_days` field + `--sweep-exit-persistence` flag):**
+
+**Scheme C** (entry 9.0, 2y default window, 10 path starts):
+
+| Exit | Persist | Return | Sharpe | Win % | Trades |
+|---|---|---|---|---|---|
+| < 5.0 / 1 (live) | — | +837.8% | 2.45 | 60.0% | 80 |
+| < 7.0 / 5 (best) | — | +833.4% | 2.46 | 70.1% | 77 |
+
+Best Scheme C variant is statistical noise vs baseline (+0.01 Sharpe).
+Lower persistence values (2, 3) destroy returns by 40-60% under tighter
+thresholds. No actionable improvement.
+
+**Scheme M** initial result (2y window, 10 path starts) showed an
+apparent strong edge:
+  Best variant `< 6.0 / persist=3`: +2289.6% / Sharpe 2.49 vs
+  baseline +1697.0% / Sharpe 2.37 — gap of +593pp / +0.12 Sharpe.
+
+However, follow-up rigor testing showed the edge was a measurement
+artifact:
+
+| Window / Method | Baseline Sharpe | Variant Sharpe | ΔSharpe | ΔReturn |
+|---|---|---|---|---|
+| 3y full + 20 paths (most rigorous) | 2.09 | 2.03 | **−0.06** | +227pp |
+| 2y default + 10 paths (initial) | 2.37 | 2.49 | +0.12 | +593pp |
+| 16mo recent regime (2025-01+) | 2.13 | 2.32 | +0.19 | +87pp |
+
+With the most rigorous measurement (3y history, 20 staggered starts),
+the variant's Sharpe goes mildly NEGATIVE relative to baseline. The
+initial +0.12 Sharpe was a function of (a) the under-sampled 10 starts
+and (b) the favorable May-2024 start date that the 2y price-fetch
+window forced. Across the three windows, variant Sharpe is stable
+(~2.0-2.5) but baseline Sharpe is similarly stable — the apparent
+"gap" was sampling variance, not a real edge.
+
+**Mechanistic explanation** (recorded for future re-analyses): The
+strategy compounds via long-tail outliers. A tighter exit catches
+weakening positions earlier — superficially attractive — but trades
+this for shorter holding periods that truncate winners before they
+compound. The persistence filter (2, 3, 5 days) modulates how
+aggressively this truncation happens, but doesn't fix the underlying
+issue. 5-day persistence with < 7.0 threshold approximates the current
+< 5.0 / 1-day rule's behavior on real exits and produces statistically
+indistinguishable results.
+
+**Methodology lesson:** Default 2y price-period + 10 path starts on
+the backtester is insufficient for evaluating rule changes. The 2y
+fetch limits `trading_days` such that `compute_path_start_dates`
+caps at ~10 candidates regardless of `--path-starts`. Added
+`--price-period` flag (default still 2y) — pass `--price-period 3y`
+(or larger) to widen the start-date window and let `--path-starts`
+take effect. Any future rule-change validation should use 3y+ data
+and at least 20 path starts as the minimum bar.
+
+**Spillover tracker remains the empirical follow-up** for the
+underlying path-dependency concern (capacity-skipped tickers
+outperforming holdings). After ~3-4 weeks of accumulation it'll
+give direct evidence rather than snapshot intuition or
+backtest-artifact noise.
+
+**Commit:** Sweep machinery added — `exit_persistence_days` field on
+StrategyConfig, simulator exit logic updated, `--sweep-exit-persistence`
+and `--price-period` CLI flags, dedicated 2D-grid sweep block with
+shared path-dep helper.
+
+**Status:** Active. No live config change.
