@@ -62,8 +62,17 @@
       "entry_score": 9.4,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9168.105542554855
+    },
+    "CIEN": {
+      "entry_date": "2026-05-12",
+      "entry_price": 577.1500244140625,
+      "shares": 15,
+      "cost_basis": 8657.250366210938,
+      "entry_score": 9.4,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 8805.15672913208
     }
   },
-  "last_run_date": "2026-05-11",
+  "last_run_date": "2026-05-12",
   "cumulative_pnl": 0.0
 }

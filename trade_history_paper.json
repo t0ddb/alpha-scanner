@@ -263,6 +263,45 @@
       "score_at_entry": 9.9,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "cc0a857c-e172-4e71-b433-8ea21c83ba92"
+    },
+    {
+      "ticker": "COHU",
+      "side": "sell",
+      "date": "2026-05-12",
+      "price": 49.33,
+      "qty": 198.0,
+      "proceeds": 9767.34,
+      "pnl": 795.96,
+      "pnl_pct": 8.87,
+      "score_at_exit": 3.8,
+      "reason": "Score exit (score 3.8 < 5.0)",
+      "hold_days": 20,
+      "score_at_entry": 8.9
+    },
+    {
+      "ticker": "FORM",
+      "side": "sell",
+      "date": "2026-05-12",
+      "price": 132.02,
+      "qty": 66.0,
+      "proceeds": 8713.32,
+      "pnl": 469.56,
+      "pnl_pct": 5.7,
+      "score_at_exit": 4.3,
+      "reason": "Score exit (score 4.3 < 5.0)",
+      "hold_days": 32,
+      "score_at_entry": 9.8
+    },
+    {
+      "ticker": "STX",
+      "side": "buy",
+      "date": "2026-05-12",
+      "price": 808.965,
+      "qty": 11.0,
+      "cost_basis": 8898.61,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "15573fcc-73bd-4b82-9262-72c76dbb4a02"
     }
   ]
 }
