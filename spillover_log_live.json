@@ -194,5 +194,41 @@
         "unrealized_pnl_pct": 0.1698
       }
     ]
+  },
+  {
+    "date": "2026-05-12",
+    "mode": "live",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "SNDK",
+        "reason": "intended $483 too small for share price $1452.02"
+      },
+      {
+        "ticker": "STX",
+        "reason": "intended $483 too small for share price $808.79"
+      },
+      {
+        "ticker": "WDC",
+        "reason": "intended $483 too small for share price $488.74"
+      }
+    ],
+    "open_positions": 1,
+    "open_value": 491.6,
+    "open_unrealized_pnl": 61.4,
+    "realized_cumulative_pnl": 0.0,
+    "total_pnl": 61.4,
+    "positions": [
+      {
+        "ticker": "AXTI",
+        "shares": 4,
+        "entry_price": 107.55000305175781,
+        "current_price": 122.9000015258789,
+        "unrealized_pnl": 61.4,
+        "unrealized_pnl_pct": 0.1427
+      }
+    ]
   }
 ]
