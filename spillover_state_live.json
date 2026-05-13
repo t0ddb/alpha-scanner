@@ -8,8 +8,17 @@
       "entry_score": 9.9,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 450.18453
+    },
+    "WDC": {
+      "entry_date": "2026-05-13",
+      "entry_price": 494.0899963378906,
+      "shares": 1,
+      "cost_basis": 494.0899963378906,
+      "entry_score": 9.3,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 518.7101600000001
     }
   },
-  "last_run_date": "2026-05-12",
+  "last_run_date": "2026-05-13",
   "cumulative_pnl": 0.0
 }
