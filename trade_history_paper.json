@@ -302,6 +302,34 @@
       "score_at_entry": 9.9,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "15573fcc-73bd-4b82-9262-72c76dbb4a02"
+    },
+    {
+      "ticker": "COHU",
+      "side": "sell",
+      "date": "2026-05-13",
+      "price": 48.15,
+      "qty": 198.0,
+      "proceeds": 9533.7,
+      "pnl": 562.32,
+      "pnl_pct": 6.27,
+      "score_at_exit": 4.2,
+      "reason": "Score exit (score 4.2 < 5.0)",
+      "hold_days": 21,
+      "score_at_entry": 8.9
+    },
+    {
+      "ticker": "FORM",
+      "side": "sell",
+      "date": "2026-05-13",
+      "price": 129.48,
+      "qty": 66.0,
+      "proceeds": 8545.68,
+      "pnl": 301.92,
+      "pnl_pct": 3.66,
+      "score_at_exit": 4.3,
+      "reason": "Score exit (score 4.3 < 5.0)",
+      "hold_days": 33,
+      "score_at_entry": 9.8
     }
   ]
 }

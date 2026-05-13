@@ -36,15 +36,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 8308.61287053604
     },
-    "ONTO": {
-      "entry_date": "2026-05-07",
-      "entry_price": 274.1700134277344,
-      "shares": 30,
-      "cost_basis": 8225.100402832031,
-      "entry_score": 7.7,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 8308.61287053604
-    },
     "ON": {
       "entry_date": "2026-05-08",
       "entry_price": 103.19999694824219,
@@ -71,8 +62,26 @@
       "entry_score": 9.4,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 8805.15672913208
+    },
+    "BKSY": {
+      "entry_date": "2026-05-13",
+      "entry_price": 41.150001525878906,
+      "shares": 226,
+      "cost_basis": 9299.900344848633,
+      "entry_score": 8.7,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9338.316596474457
+    },
+    "MU": {
+      "entry_date": "2026-05-13",
+      "entry_price": 803.6300048828125,
+      "shares": 11,
+      "cost_basis": 8839.930053710938,
+      "entry_score": 7.95,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9338.316596474457
     }
   },
-  "last_run_date": "2026-05-12",
-  "cumulative_pnl": 0.0
+  "last_run_date": "2026-05-13",
+  "cumulative_pnl": 84.0
 }

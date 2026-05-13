@@ -614,5 +614,76 @@
         "unrealized_pnl_pct": -0.0247
       }
     ]
+  },
+  {
+    "date": "2026-05-13",
+    "mode": "paper",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 7,
+    "open_value": 81039.73,
+    "open_unrealized_pnl": 16173.97,
+    "realized_cumulative_pnl": 0.0,
+    "total_pnl": 16173.97,
+    "positions": [
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1255.8599853515625,
+        "current_price": 1447.22998046875,
+        "unrealized_pnl": 1339.59,
+        "unrealized_pnl_pct": 0.1524
+      },
+      {
+        "ticker": "STX",
+        "shares": 12,
+        "entry_price": 738.5399780273438,
+        "current_price": 817.3499755859375,
+        "unrealized_pnl": 945.72,
+        "unrealized_pnl_pct": 0.1067
+      },
+      {
+        "ticker": "WOLF",
+        "shares": 264,
+        "entry_price": 35.939998626708984,
+        "current_price": 62.599998474121094,
+        "unrealized_pnl": 7038.24,
+        "unrealized_pnl_pct": 0.7418
+      },
+      {
+        "ticker": "AAOI",
+        "shares": 55,
+        "entry_price": 172.97999572753906,
+        "current_price": 223.10000610351562,
+        "unrealized_pnl": 2756.6,
+        "unrealized_pnl_pct": 0.2897
+      },
+      {
+        "ticker": "NVTS",
+        "shares": 598,
+        "entry_price": 15.920000076293945,
+        "current_price": 21.170000076293945,
+        "unrealized_pnl": 3139.5,
+        "unrealized_pnl_pct": 0.3298
+      },
+      {
+        "ticker": "VRT",
+        "shares": 28,
+        "entry_price": 330.9700012207031,
+        "current_price": 369.989990234375,
+        "unrealized_pnl": 1092.56,
+        "unrealized_pnl_pct": 0.1179
+      },
+      {
+        "ticker": "PWR",
+        "shares": 12,
+        "entry_price": 785.239990234375,
+        "current_price": 773.719970703125,
+        "unrealized_pnl": -138.24,
+        "unrealized_pnl_pct": -0.0147
+      }
+    ]
   }
 ]

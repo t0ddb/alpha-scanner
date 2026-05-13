@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "ticker": "ONTO",
+    "entry_date": "2026-05-07",
+    "exit_date": "2026-05-13",
+    "entry_price": 274.1700134277344,
+    "exit_price": 276.9700012207031,
+    "shares": 30,
+    "pnl": 84.0,
+    "pnl_pct": 0.0102,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 7.7,
+    "intended_slot_dollars": 8308.61287053604
+  }
+]
