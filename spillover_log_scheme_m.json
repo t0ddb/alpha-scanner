@@ -583,5 +583,186 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-05-14",
+    "mode": "scheme_m",
+    "entries": [
+      {
+        "ticker": "LUNR",
+        "score": 8.85,
+        "entry_price": 36.52000045776367,
+        "shares": 254,
+        "cost": 9276.08,
+        "skip_reason": "Full"
+      },
+      {
+        "ticker": "COHR",
+        "score": 8.4,
+        "entry_price": 404.94000244140625,
+        "shares": 22,
+        "cost": 8908.68,
+        "skip_reason": "Full"
+      },
+      {
+        "ticker": "AMD",
+        "score": 8.25,
+        "entry_price": 449.70001220703125,
+        "shares": 20,
+        "cost": 8994.0,
+        "skip_reason": "Full"
+      },
+      {
+        "ticker": "PUMP",
+        "score": 8.1,
+        "entry_price": 16.979999542236328,
+        "shares": 548,
+        "cost": 9305.04,
+        "skip_reason": "Full"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "VIAV",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "BKSY",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "CIEN",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "WDC",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "STX",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "PWR",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "ON",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 13,
+    "open_value": 116066.2,
+    "open_unrealized_pnl": 3013.3,
+    "realized_cumulative_pnl": 84.0,
+    "total_pnl": 3097.3,
+    "positions": [
+      {
+        "ticker": "STX",
+        "shares": 10,
+        "entry_price": 766.4400024414062,
+        "current_price": 804.760009765625,
+        "unrealized_pnl": 383.2,
+        "unrealized_pnl_pct": 0.05
+      },
+      {
+        "ticker": "IRDM",
+        "shares": 206,
+        "entry_price": 40.189998626708984,
+        "current_price": 43.43000030517578,
+        "unrealized_pnl": 667.44,
+        "unrealized_pnl_pct": 0.0806
+      },
+      {
+        "ticker": "WDC",
+        "shares": 17,
+        "entry_price": 463.9100036621094,
+        "current_price": 489.1499938964844,
+        "unrealized_pnl": 429.08,
+        "unrealized_pnl_pct": 0.0544
+      },
+      {
+        "ticker": "PWR",
+        "shares": 11,
+        "entry_price": 750.72998046875,
+        "current_price": 780.0800170898438,
+        "unrealized_pnl": 322.85,
+        "unrealized_pnl_pct": 0.0391
+      },
+      {
+        "ticker": "ON",
+        "shares": 83,
+        "entry_price": 103.19999694824219,
+        "current_price": 118.37000274658203,
+        "unrealized_pnl": 1259.11,
+        "unrealized_pnl_pct": 0.147
+      },
+      {
+        "ticker": "VIAV",
+        "shares": 166,
+        "entry_price": 54.93000030517578,
+        "current_price": 53.11000061035156,
+        "unrealized_pnl": -302.12,
+        "unrealized_pnl_pct": -0.0331
+      },
+      {
+        "ticker": "CIEN",
+        "shares": 15,
+        "entry_price": 577.1500244140625,
+        "current_price": 591.5700073242188,
+        "unrealized_pnl": 216.3,
+        "unrealized_pnl_pct": 0.025
+      },
+      {
+        "ticker": "BKSY",
+        "shares": 226,
+        "entry_price": 41.150001525878906,
+        "current_price": 42.65999984741211,
+        "unrealized_pnl": 341.26,
+        "unrealized_pnl_pct": 0.0367
+      },
+      {
+        "ticker": "MU",
+        "shares": 11,
+        "entry_price": 803.6300048828125,
+        "current_price": 776.010009765625,
+        "unrealized_pnl": -303.82,
+        "unrealized_pnl_pct": -0.0344
+      },
+      {
+        "ticker": "LUNR",
+        "shares": 254,
+        "entry_price": 36.52000045776367,
+        "current_price": 36.52000045776367,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "COHR",
+        "shares": 22,
+        "entry_price": 404.94000244140625,
+        "current_price": 404.94000244140625,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "AMD",
+        "shares": 20,
+        "entry_price": 449.70001220703125,
+        "current_price": 449.70001220703125,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "PUMP",
+        "shares": 548,
+        "entry_price": 16.979999542236328,
+        "current_price": 16.979999542236328,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]

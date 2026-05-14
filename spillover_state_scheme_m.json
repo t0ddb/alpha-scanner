@@ -80,8 +80,44 @@
       "entry_score": 7.95,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9338.316596474457
+    },
+    "LUNR": {
+      "entry_date": "2026-05-14",
+      "entry_price": 36.52000045776367,
+      "shares": 254,
+      "cost_basis": 9276.080116271973,
+      "entry_score": 8.85,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9306.43441439209
+    },
+    "COHR": {
+      "entry_date": "2026-05-14",
+      "entry_price": 404.94000244140625,
+      "shares": 22,
+      "cost_basis": 8908.680053710938,
+      "entry_score": 8.4,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9306.43441439209
+    },
+    "AMD": {
+      "entry_date": "2026-05-14",
+      "entry_price": 449.70001220703125,
+      "shares": 20,
+      "cost_basis": 8994.000244140625,
+      "entry_score": 8.25,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9306.43441439209
+    },
+    "PUMP": {
+      "entry_date": "2026-05-14",
+      "entry_price": 16.979999542236328,
+      "shares": 548,
+      "cost_basis": 9305.039749145508,
+      "entry_score": 8.1,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9306.43441439209
     }
   },
-  "last_run_date": "2026-05-13",
+  "last_run_date": "2026-05-14",
   "cumulative_pnl": 84.0
 }

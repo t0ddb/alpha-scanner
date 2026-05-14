@@ -260,6 +260,21 @@
       "score_at_entry": 9.9,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "15573fcc-73bd-4b82-9262-72c76dbb4a02"
+    },
+    {
+      "ticker": "FORM",
+      "side": "sell",
+      "date": "2026-05-14",
+      "price": 127.99,
+      "qty": 66.0,
+      "proceeds": 8447.34,
+      "pnl": 203.58,
+      "pnl_pct": 2.47,
+      "score_at_exit": 3.7,
+      "reason": "Score exit (score 3.7 < 5.0)",
+      "hold_days": 34,
+      "score_at_entry": 9.8,
+      "alpaca_order_id": "c97898b2-f917-4e70-8f20-27e0412c0787"
     }
   ]
 }
