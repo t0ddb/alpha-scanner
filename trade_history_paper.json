@@ -240,20 +240,6 @@
       "alpaca_order_id": "3d4b6748-6dbe-4f9e-92c8-c215078b1c40"
     },
     {
-      "ticker": "COHU",
-      "side": "sell",
-      "date": "2026-05-11",
-      "price": 52.3,
-      "qty": 198.0,
-      "proceeds": 10355.4,
-      "pnl": 1384.02,
-      "pnl_pct": 15.43,
-      "score_at_exit": 4.4,
-      "reason": "Score exit (score 4.4 < 5.0)",
-      "hold_days": 19,
-      "score_at_entry": 8.9
-    },
-    {
       "ticker": "SNDK",
       "side": "buy",
       "date": "2026-05-11",
@@ -265,34 +251,6 @@
       "alpaca_order_id": "cc0a857c-e172-4e71-b433-8ea21c83ba92"
     },
     {
-      "ticker": "COHU",
-      "side": "sell",
-      "date": "2026-05-12",
-      "price": 49.33,
-      "qty": 198.0,
-      "proceeds": 9767.34,
-      "pnl": 795.96,
-      "pnl_pct": 8.87,
-      "score_at_exit": 3.8,
-      "reason": "Score exit (score 3.8 < 5.0)",
-      "hold_days": 20,
-      "score_at_entry": 8.9
-    },
-    {
-      "ticker": "FORM",
-      "side": "sell",
-      "date": "2026-05-12",
-      "price": 132.02,
-      "qty": 66.0,
-      "proceeds": 8713.32,
-      "pnl": 469.56,
-      "pnl_pct": 5.7,
-      "score_at_exit": 4.3,
-      "reason": "Score exit (score 4.3 < 5.0)",
-      "hold_days": 32,
-      "score_at_entry": 9.8
-    },
-    {
       "ticker": "STX",
       "side": "buy",
       "date": "2026-05-12",
@@ -302,34 +260,6 @@
       "score_at_entry": 9.9,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "15573fcc-73bd-4b82-9262-72c76dbb4a02"
-    },
-    {
-      "ticker": "COHU",
-      "side": "sell",
-      "date": "2026-05-13",
-      "price": 48.15,
-      "qty": 198.0,
-      "proceeds": 9533.7,
-      "pnl": 562.32,
-      "pnl_pct": 6.27,
-      "score_at_exit": 4.2,
-      "reason": "Score exit (score 4.2 < 5.0)",
-      "hold_days": 21,
-      "score_at_entry": 8.9
-    },
-    {
-      "ticker": "FORM",
-      "side": "sell",
-      "date": "2026-05-13",
-      "price": 129.48,
-      "qty": 66.0,
-      "proceeds": 8545.68,
-      "pnl": 301.92,
-      "pnl_pct": 3.66,
-      "score_at_exit": 4.3,
-      "reason": "Score exit (score 4.3 < 5.0)",
-      "hold_days": 33,
-      "score_at_entry": 9.8
     }
   ]
 }

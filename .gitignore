@@ -26,6 +26,12 @@ breakout_tracker_C3_*.db-wal
 breakout_tracker.db.*.bak
 breakout_tracker.db.pre-*.bak
 
+# Pre-change local backups of state-file JSONs (timestamped, e.g.
+# created during one-shot phantom-sell cleanup). Keep on disk for safety,
+# never commit.
+trade_history_*.json.bak.*
+wash_sale_log_*.json.bak.*
+
 # Python
 __pycache__/
 *.pyc

@@ -1071,21 +1071,53 @@ def execute_exits(
     today: date,
     dry_run: bool,
 ) -> None:
-    """Submit sell orders and log them."""
+    """Submit sell orders and log them.
+
+    Order of operations matters: the GTC stop loss reserves the position's
+    shares as ``held_for_orders`` at Alpaca. A market SELL submitted while
+    the stop is still open is rejected with "insufficient qty available
+    for order" (Alpaca code 40310000). We therefore cancel the stop FIRST,
+    wait a beat for the cancellation to propagate (Alpaca cancel is fast
+    but async), then submit the sell.
+
+    log_sell and wash-sale recording are guarded on actual order success
+    — a None order_id means the API rejected the order and we should
+    NOT write a phantom sell record into trade_history.
+    """
+    import time
+
     for e in exits:
         action = "[DRY RUN] " if dry_run else ""
         print(f"  {action}SELL  {e['ticker']:<6s} {e['qty']:>6.0f} shares @ ${e['current_price']:>8.2f}  "
               f"{e['reason']:<35s} P&L: {'+' if e['unrealized_pnl'] >= 0 else ''}${e['unrealized_pnl']:>9,.0f} "
               f"({e['unrealized_pnl_pct']:+.1f}%)")
 
+        # 1. Cancel the GTC stop FIRST so the shares are no longer
+        #    "held_for_orders" when the sell hits Alpaca.
+        canceled = cancel_stop_orders_for_ticker(
+            client, e["ticker"], dry_run=dry_run,
+        )
+
+        # 2. Brief pause so the cancel can propagate before we submit
+        #    the new order. Empirically Alpaca needs <1s; 2s is safe.
+        if canceled > 0 and not dry_run:
+            time.sleep(2)
+
+        # 3. Submit the market sell.
         order_id = submit_market_order(
             client, e["ticker"], e["qty"], OrderSide.SELL, dry_run=dry_run
         )
 
-        # Cancel the GTC stop order (no longer needed — we're selling via score exit)
-        cancel_stop_orders_for_ticker(client, e["ticker"], dry_run=dry_run)
+        # 4. Guard side-effects on actual order acceptance. dry_run is a
+        #    success-equivalent for state-tracking; a None order_id in
+        #    live mode means the order was rejected.
+        if not dry_run and order_id is None:
+            print(f"  [WARN] {e['ticker']} sell was REJECTED by Alpaca — "
+                  f"no trade record written, no wash-sale recorded. "
+                  f"Position remains held; tomorrow's run will retry.")
+            continue
 
-        # Record wash sale if losing
+        # Record wash sale if losing (only on confirmed sells).
         if e["unrealized_pnl"] < 0:
             wash_sale_tracker.record_loss_exit(e["ticker"], today, e["unrealized_pnl"])
             until = (wash_sale_tracker.get_blocked_tickers(today)
@@ -1093,7 +1125,7 @@ def execute_exits(
                      .get("cooldown_until", "?"))
             print(f"                                         → Wash sale recorded: blocked until {until}")
 
-        # Trade log
+        # Trade log (only on confirmed sells).
         if not dry_run:
             buy_date = trade_log.get_last_buy_date(e["ticker"])
             hold_days = 0

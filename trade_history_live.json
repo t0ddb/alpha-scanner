@@ -155,20 +155,6 @@
       "alpaca_order_id": "fa3a9571-c307-48f6-823a-411e9e2844a5"
     },
     {
-      "ticker": "FORM",
-      "side": "sell",
-      "date": "2026-05-12",
-      "price": 132.02,
-      "qty": 3.0,
-      "proceeds": 396.06,
-      "pnl": -6.24,
-      "pnl_pct": -1.55,
-      "score_at_exit": 4.3,
-      "reason": "Score exit (score 4.3 < 5.0)",
-      "hold_days": 14,
-      "score_at_entry": 9.8
-    },
-    {
       "ticker": "AXTI",
       "side": "buy",
       "date": "2026-05-12",
@@ -178,20 +164,6 @@
       "score_at_entry": 9.9,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "3c23de12-0155-4a2a-837a-070fa33a8c1e"
-    },
-    {
-      "ticker": "FORM",
-      "side": "sell",
-      "date": "2026-05-13",
-      "price": 129.48,
-      "qty": 3.0,
-      "proceeds": 388.44,
-      "pnl": -13.86,
-      "pnl_pct": -3.45,
-      "score_at_exit": 4.3,
-      "reason": "Score exit (score 4.3 < 5.0)",
-      "hold_days": 15,
-      "score_at_entry": 9.8
     }
   ]
 }
