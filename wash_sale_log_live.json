@@ -1,4 +1,10 @@
 {
-  "cooldowns": {},
+  "cooldowns": {
+    "FORM": {
+      "cooldown_until": "2026-06-13",
+      "exit_date": "2026-05-14",
+      "loss_amount": -18.33
+    }
+  },
   "violations": []
 }
