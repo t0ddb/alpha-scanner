@@ -179,6 +179,21 @@
       "hold_days": 16,
       "score_at_entry": 9.8,
       "alpaca_order_id": "117dc028-3cfa-4fbe-8c80-65832e4be5bf"
+    },
+    {
+      "ticker": "IRDM",
+      "side": "sell",
+      "date": "2026-05-15",
+      "price": 42.0,
+      "qty": 11.0,
+      "proceeds": 462.0,
+      "pnl": 50.6,
+      "pnl_pct": 12.3,
+      "score_at_exit": 4.5,
+      "reason": "Score exit (score 4.5 < 5.0)",
+      "hold_days": 17,
+      "score_at_entry": 9.9,
+      "alpaca_order_id": "a358b647-e9a4-4d5b-bdb4-243150c9c00d"
     }
   ]
 }
