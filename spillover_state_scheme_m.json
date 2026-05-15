@@ -116,8 +116,35 @@
       "entry_score": 8.1,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9306.43441439209
+    },
+    "HUT": {
+      "entry_date": "2026-05-15",
+      "entry_price": 102.47000122070312,
+      "shares": 88,
+      "cost_basis": 9017.360107421875,
+      "entry_score": 7.95,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9034.7381808918
+    },
+    "AKT-USD": {
+      "entry_date": "2026-05-15",
+      "entry_price": 0.7379999756813049,
+      "shares": 12242,
+      "cost_basis": 9034.595702290535,
+      "entry_score": 7.9,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9034.7381808918
+    },
+    "SEI": {
+      "entry_date": "2026-05-15",
+      "entry_price": 78.58000183105469,
+      "shares": 114,
+      "cost_basis": 8958.120208740234,
+      "entry_score": 7.65,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9034.7381808918
     }
   },
-  "last_run_date": "2026-05-14",
+  "last_run_date": "2026-05-15",
   "cumulative_pnl": 84.0
 }
