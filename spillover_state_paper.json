@@ -62,8 +62,17 @@
       "entry_score": 9.3,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 10045.6726
+    },
+    "LUNR": {
+      "entry_date": "2026-05-18",
+      "entry_price": 33.59000015258789,
+      "shares": 282,
+      "cost_basis": 9472.380043029785,
+      "entry_score": 9.6,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9497.12311
     }
   },
-  "last_run_date": "2026-05-15",
+  "last_run_date": "2026-05-18",
   "cumulative_pnl": 0.0
 }

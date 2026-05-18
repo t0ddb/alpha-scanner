@@ -827,5 +827,93 @@
         "unrealized_pnl_pct": -0.0194
       }
     ]
+  },
+  {
+    "date": "2026-05-18",
+    "mode": "paper",
+    "entries": [
+      {
+        "ticker": "LUNR",
+        "score": 9.6,
+        "entry_price": 33.59000015258789,
+        "shares": 282,
+        "cost": 9472.38,
+        "skip_reason": "Full"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 8,
+    "open_value": 82842.69,
+    "open_unrealized_pnl": 8504.55,
+    "realized_cumulative_pnl": 0.0,
+    "total_pnl": 8504.55,
+    "positions": [
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1255.8599853515625,
+        "current_price": 1333.010009765625,
+        "unrealized_pnl": 540.05,
+        "unrealized_pnl_pct": 0.0614
+      },
+      {
+        "ticker": "STX",
+        "shares": 12,
+        "entry_price": 738.5399780273438,
+        "current_price": 740.8400268554688,
+        "unrealized_pnl": 27.6,
+        "unrealized_pnl_pct": 0.0031
+      },
+      {
+        "ticker": "WOLF",
+        "shares": 264,
+        "entry_price": 35.939998626708984,
+        "current_price": 59.349998474121094,
+        "unrealized_pnl": 6180.24,
+        "unrealized_pnl_pct": 0.6514
+      },
+      {
+        "ticker": "AAOI",
+        "shares": 55,
+        "entry_price": 172.97999572753906,
+        "current_price": 173.25999450683594,
+        "unrealized_pnl": 15.4,
+        "unrealized_pnl_pct": 0.0016
+      },
+      {
+        "ticker": "NVTS",
+        "shares": 598,
+        "entry_price": 15.920000076293945,
+        "current_price": 19.670000076293945,
+        "unrealized_pnl": 2242.5,
+        "unrealized_pnl_pct": 0.2356
+      },
+      {
+        "ticker": "VRT",
+        "shares": 28,
+        "entry_price": 330.9700012207031,
+        "current_price": 339.7300109863281,
+        "unrealized_pnl": 245.28,
+        "unrealized_pnl_pct": 0.0265
+      },
+      {
+        "ticker": "PWR",
+        "shares": 12,
+        "entry_price": 785.239990234375,
+        "current_price": 723.030029296875,
+        "unrealized_pnl": -746.52,
+        "unrealized_pnl_pct": -0.0792
+      },
+      {
+        "ticker": "LUNR",
+        "shares": 282,
+        "entry_price": 33.59000015258789,
+        "current_price": 33.59000015258789,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]
