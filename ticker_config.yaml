@@ -62,6 +62,7 @@ sectors:
           AXTI: AXT Inc
           VIAV: Viavi Solutions
           POET: POET Technologies
+          LASR: nLIGHT Inc
 
       power_energy:
         name: Power & Energy
@@ -171,15 +172,23 @@ sectors:
           IFNNY: Infineon Technologies
 
       semi_equipment:
-        name: Semiconductor Equipment / Foundry
-        note: Next-gen fab and lithography plays (GAA/2nm)
+        name: Semiconductor Equipment
+        note: Wafer-processing tools and supply chain (lithography, deposition, etch, metrology, subsystems)
         tickers:
-          TSM: Taiwan Semiconductor
-          TSEM: Tower Semiconductor
           ASML: ASML Holdings
           LRCX: Lam Research
           AMAT: Applied Materials
           KLAC: KLA Corporation
+          UCTT: Ultra Clean Holdings
+          VECO: Veeco Instruments
+
+      foundries:
+        name: Foundries
+        note: Pure-play semiconductor manufacturers (chip fabs for fabless customers)
+        tickers:
+          TSM: Taiwan Semiconductor
+          TSEM: Tower Semiconductor
+          GFS: GlobalFoundries
 
       semi_test:
         name: Semiconductor Test / Burn-In
