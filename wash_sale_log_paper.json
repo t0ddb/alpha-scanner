@@ -1,0 +1,10 @@
+{
+  "cooldowns": {
+    "COHU": {
+      "cooldown_until": "2026-06-18",
+      "exit_date": "2026-05-19",
+      "loss_amount": -502.92
+    }
+  },
+  "violations": []
+}

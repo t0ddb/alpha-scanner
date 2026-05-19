@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "ticker": "VRT",
+    "entry_date": "2026-05-04",
+    "exit_date": "2026-05-19",
+    "entry_price": 330.9700012207031,
+    "exit_price": 322.6300048828125,
+    "shares": 28,
+    "pnl": -233.52,
+    "pnl_pct": -0.0252,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.0,
+    "intended_slot_dollars": 9520.58306
+  }
+]

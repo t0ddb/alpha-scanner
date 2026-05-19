@@ -45,15 +45,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9520.58306
     },
-    "VRT": {
-      "entry_date": "2026-05-04",
-      "entry_price": 330.9700012207031,
-      "shares": 28,
-      "cost_basis": 9267.160034179688,
-      "entry_score": 9.0,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9520.58306
-    },
     "PWR": {
       "entry_date": "2026-05-06",
       "entry_price": 785.239990234375,
@@ -73,6 +64,6 @@
       "intended_slot_dollars": 9497.12311
     }
   },
-  "last_run_date": "2026-05-18",
-  "cumulative_pnl": 0.0
+  "last_run_date": "2026-05-19",
+  "cumulative_pnl": -233.52
 }

@@ -290,6 +290,32 @@
       "hold_days": 35,
       "score_at_entry": 9.8,
       "alpaca_order_id": "3ca6923b-5095-44ab-937c-447a006b87fc"
+    },
+    {
+      "ticker": "COHU",
+      "side": "sell",
+      "date": "2026-05-19",
+      "price": 42.77,
+      "qty": 198.0,
+      "proceeds": 8468.46,
+      "pnl": -502.92,
+      "pnl_pct": -5.61,
+      "score_at_exit": 4.3,
+      "reason": "Score exit (score 4.3 < 5.0)",
+      "hold_days": 27,
+      "score_at_entry": 8.9,
+      "alpaca_order_id": "445204ad-ffd9-44ac-8511-87b5ea881e9c"
+    },
+    {
+      "ticker": "WOLF",
+      "side": "buy",
+      "date": "2026-05-19",
+      "price": 59.2,
+      "qty": 161.0,
+      "cost_basis": 9531.2,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "acd06b97-f220-40aa-b3b0-e619982c69e5"
     }
   ]
 }

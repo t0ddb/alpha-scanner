@@ -915,5 +915,83 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-05-19",
+    "mode": "paper",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "VRT",
+        "entry_price": 330.9700012207031,
+        "exit_price": 322.6300048828125,
+        "exit_score": 4.3
+      }
+    ],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 7,
+    "open_value": 72779.92,
+    "open_unrealized_pnl": 7708.94,
+    "realized_cumulative_pnl": -233.52,
+    "total_pnl": 7475.42,
+    "positions": [
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1255.8599853515625,
+        "current_price": 1383.2900390625,
+        "unrealized_pnl": 892.01,
+        "unrealized_pnl_pct": 0.1015
+      },
+      {
+        "ticker": "STX",
+        "shares": 12,
+        "entry_price": 738.5399780273438,
+        "current_price": 733.3499755859375,
+        "unrealized_pnl": -62.28,
+        "unrealized_pnl_pct": -0.007
+      },
+      {
+        "ticker": "WOLF",
+        "shares": 264,
+        "entry_price": 35.939998626708984,
+        "current_price": 58.83000183105469,
+        "unrealized_pnl": 6042.96,
+        "unrealized_pnl_pct": 0.6369
+      },
+      {
+        "ticker": "AAOI",
+        "shares": 55,
+        "entry_price": 172.97999572753906,
+        "current_price": 171.3300018310547,
+        "unrealized_pnl": -90.75,
+        "unrealized_pnl_pct": -0.0095
+      },
+      {
+        "ticker": "NVTS",
+        "shares": 598,
+        "entry_price": 15.920000076293945,
+        "current_price": 19.43000030517578,
+        "unrealized_pnl": 2098.98,
+        "unrealized_pnl_pct": 0.2205
+      },
+      {
+        "ticker": "PWR",
+        "shares": 12,
+        "entry_price": 785.239990234375,
+        "current_price": 714.1300048828125,
+        "unrealized_pnl": -853.32,
+        "unrealized_pnl_pct": -0.0906
+      },
+      {
+        "ticker": "LUNR",
+        "shares": 282,
+        "entry_price": 33.59000015258789,
+        "current_price": 32.459999084472656,
+        "unrealized_pnl": -318.66,
+        "unrealized_pnl_pct": -0.0336
+      }
+    ]
   }
 ]
