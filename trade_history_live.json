@@ -205,6 +205,21 @@
       "score_at_entry": 9.6,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "9d4d8938-ff57-419f-b13e-6193716c1dc8"
+    },
+    {
+      "ticker": "VRT",
+      "side": "sell",
+      "date": "2026-05-19",
+      "price": 321.8,
+      "qty": 1.0,
+      "proceeds": 321.8,
+      "pnl": 8.05,
+      "pnl_pct": 2.57,
+      "score_at_exit": 4.3,
+      "reason": "Score exit (score 4.3 < 5.0)",
+      "hold_days": 20,
+      "score_at_entry": 9.4,
+      "alpaca_order_id": "23711bd9-5040-41f2-bccb-0b564cae59f6"
     }
   ]
 }
