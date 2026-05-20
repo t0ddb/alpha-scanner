@@ -2294,5 +2294,198 @@
         "unrealized_pnl_pct": -0.1282
       }
     ]
+  },
+  {
+    "date": "2026-05-20",
+    "entries": [],
+    "exits": [],
+    "skipped": [
+      {
+        "ticker": "WOLF",
+        "score": 7.55,
+        "reason": "persistence failed (priors [7.5, 7.5, 7.5])"
+      },
+      {
+        "ticker": "KEEL",
+        "score": 8.45,
+        "reason": "persistence failed (priors [7.7, 7.5, 6.6])"
+      },
+      {
+        "ticker": "AMD",
+        "score": 7.6,
+        "reason": "persistence failed (priors [7.0, 8.0, 8.0])"
+      },
+      {
+        "ticker": "MU",
+        "score": 8.1,
+        "reason": "persistence failed (priors [7.0, 7.2, 6.9])"
+      },
+      {
+        "ticker": "ON",
+        "score": 8.45,
+        "reason": "persistence failed (priors [7.2, 7.2, 8.1])"
+      },
+      {
+        "ticker": "IRDM",
+        "score": 8.65,
+        "reason": "persistence failed (priors [8.6, 8.3, 6.2])"
+      },
+      {
+        "ticker": "PURR",
+        "score": 7.6,
+        "reason": "persistence failed (priors [7.8, 5.7, 5.7])"
+      },
+      {
+        "ticker": "SPIR",
+        "score": 7.55,
+        "reason": "persistence failed (priors [6.4, 6.0, 6.2])"
+      },
+      {
+        "ticker": "HUT",
+        "score": 8.05,
+        "reason": "persistence failed (priors [8.1, 7.0, 8.0])"
+      },
+      {
+        "ticker": "VECO",
+        "score": 8.35,
+        "reason": "only 0 prior days available"
+      },
+      {
+        "ticker": "BKSY",
+        "score": 8.4,
+        "reason": "persistence failed (priors [8.8, 8.2, 6.8])"
+      },
+      {
+        "ticker": "PL",
+        "score": 7.85,
+        "reason": "persistence failed (priors [7.5, 8.2, 7.3])"
+      },
+      {
+        "ticker": "CIEN",
+        "score": 7.65,
+        "reason": "persistence failed (priors [7.4, 7.1, 7.7])"
+      },
+      {
+        "ticker": "GFS",
+        "score": 8.1,
+        "reason": "only 0 prior days available"
+      },
+      {
+        "ticker": "STX",
+        "score": 9.05,
+        "reason": "portfolio full"
+      },
+      {
+        "ticker": "LUNR",
+        "score": 9.0,
+        "reason": "portfolio full"
+      },
+      {
+        "ticker": "BW",
+        "score": 8.85,
+        "reason": "portfolio full"
+      },
+      {
+        "ticker": "WDC",
+        "score": 8.75,
+        "reason": "portfolio full"
+      },
+      {
+        "ticker": "VIAV",
+        "score": 7.65,
+        "reason": "portfolio full"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 5,
+    "equity": 104481.43,
+    "cash": 1635.22,
+    "positions_count": 12,
+    "positions": [
+      {
+        "ticker": "ARM",
+        "shares": 39,
+        "entry_price": 211.17999267578125,
+        "current_price": 256.7300109863281,
+        "unrealized_pnl_pct": 0.2157
+      },
+      {
+        "ticker": "FORM",
+        "shares": 60,
+        "entry_price": 137.3699951171875,
+        "current_price": 125.30999755859375,
+        "unrealized_pnl_pct": -0.0878
+      },
+      {
+        "ticker": "MRVL",
+        "shares": 50,
+        "entry_price": 164.9499969482422,
+        "current_price": 186.8000030517578,
+        "unrealized_pnl_pct": 0.1325
+      },
+      {
+        "ticker": "TSEM",
+        "shares": 38,
+        "entry_price": 218.00999450683594,
+        "current_price": 264.4800109863281,
+        "unrealized_pnl_pct": 0.2132
+      },
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1187.0,
+        "current_price": 1392.56005859375,
+        "unrealized_pnl_pct": 0.1732
+      },
+      {
+        "ticker": "AAOI",
+        "shares": 45,
+        "entry_price": 183.50999450683594,
+        "current_price": 165.25999450683594,
+        "unrealized_pnl_pct": -0.0994
+      },
+      {
+        "ticker": "BE",
+        "shares": 28,
+        "entry_price": 290.5199890136719,
+        "current_price": 282.30999755859375,
+        "unrealized_pnl_pct": -0.0283
+      },
+      {
+        "ticker": "STM",
+        "shares": 149,
+        "entry_price": 55.75,
+        "current_price": 64.93000030517578,
+        "unrealized_pnl_pct": 0.1647
+      },
+      {
+        "ticker": "AXTI",
+        "shares": 86,
+        "entry_price": 96.0,
+        "current_price": 104.61000061035156,
+        "unrealized_pnl_pct": 0.0897
+      },
+      {
+        "ticker": "VRT",
+        "shares": 25,
+        "entry_price": 328.30999755859375,
+        "current_price": 315.6700134277344,
+        "unrealized_pnl_pct": -0.0385
+      },
+      {
+        "ticker": "LITE",
+        "shares": 8,
+        "entry_price": 949.9299926757812,
+        "current_price": 868.0700073242188,
+        "unrealized_pnl_pct": -0.0862
+      },
+      {
+        "ticker": "AEHR",
+        "shares": 89,
+        "entry_price": 93.06999969482422,
+        "current_price": 82.33999633789062,
+        "unrealized_pnl_pct": -0.1153
+      }
+    ]
   }
 ]
