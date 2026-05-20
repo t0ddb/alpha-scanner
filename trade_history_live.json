@@ -220,6 +220,17 @@
       "hold_days": 20,
       "score_at_entry": 9.4,
       "alpaca_order_id": "23711bd9-5040-41f2-bccb-0b564cae59f6"
+    },
+    {
+      "ticker": "TSEM",
+      "side": "buy",
+      "date": "2026-05-20",
+      "price": 264.68,
+      "qty": 1.0,
+      "cost_basis": 264.68,
+      "score_at_entry": 9.8,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "4e299839-8c1b-4857-bf10-d8d7b80b0126"
     }
   ]
 }
