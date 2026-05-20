@@ -398,3 +398,76 @@ and `--price-period` CLI flags, dedicated 2D-grid sweep block with
 shared path-dep helper.
 
 **Status:** Active. No live config change.
+
+---
+
+## 2026-05-19 — Backfill: don't overwrite trade-exec scores; drop tickers missing target-date data
+
+**Decision:** `backfill_subsector.py` now:
+  1. Skips any target_date that already has scores in `ticker_scores`
+     (trade-exec is authoritative for live decisions; backfill only fills
+     genuine gaps).
+  2. Excludes individual tickers from a target-date's slice when their
+     last available row pre-dates the target. If > 5% of the universe is
+     missing target-date data, the entire date is aborted.
+  3. Logs skip counts + partial-coverage warnings in the summary.
+
+**Rationale:** Investigation of an unexpected LUNR live entry on
+2026-05-18 traced to backfill corruption of Friday 2026-05-15's score:
+
+  - Friday 4:30 PM ET trade-exec wrote LUNR_5/15 = 7.10 from full data
+    (last close $33.89, −7.2% intraday).
+  - Monday backfill (`--frequency 1`) processed target_date=5/15. Its
+    yfinance fetch at 5:07 PM ET Monday was missing LUNR's 5/15 bar.
+    `slice_data_to_date` silently used 5/14 as the most-recent row but
+    keyed the resulting score (9.60) to "2026-05-15" → overwrote 7.10.
+  - Monday EOD live trade-exec saw the corrupted history, persistence
+    filter passed (5/15 now showed 9.60 ≥ 9.0), LUNR became a buy
+    candidate with the highest score in the queue and took the open
+    capacity slot ahead of SNDK.
+
+  Walked back through DB snapshots in git history to confirm the score
+  flipped from 7.10 → 9.60 between Friday's commit and Monday's
+  backfill commit. Reproduced both values with current yfinance data
+  by toggling whether 5/15's row is present in the slice — confirming
+  the data-gap-during-slice hypothesis.
+
+  Cross-checked IRDM's 5/15 exit-trigger score (4.50) against the same
+  test: 4.50 reproduces from full data through 5/15, and Monday's
+  backfill did NOT change IRDM's 5/15 value across snapshots. IRDM's
+  exit was legitimate momentum reversal, not a data artifact.
+
+**Evidence (verified):**
+  - `slice_data_to_date(data, 2026-05-15)` with full universe data
+    returns LUNR with last row = 5/14 (when LUNR's data has a 5/15 gap)
+    → score 9.60 keyed to 2026-05-15 (wrong).
+  - With LUNR's 5/15 bar present → last row = 5/15, score 7.10 (right).
+  - DB had 7.10 in Friday's commit, 9.60 in Monday backfill commit,
+    stable 9.60 thereafter.
+
+**Implementation:**
+  - `slice_data_to_date()` return signature changed to
+    `tuple[dict, list[str]]` — returns slice plus list of tickers
+    excluded due to last-row date mismatch.
+  - New helper `date_already_scored(conn, date_str) -> int` queries the
+    ticker_scores row count for the date; non-zero → skip.
+  - Main loop in `run_backfill` gates each date on:
+    - Already-scored check (skip if >0)
+    - Coverage abort if missing_pct > 5%
+    - Partial-coverage warning (logged but date proceeds) if 0 < missing_pct ≤ 5%
+  - Summary line prints skipped_already_scored, skipped_missing_data,
+    and partial-coverage example dates.
+
+**Pre-existing corruption:** The DB still holds LUNR_5/15 = 9.60
+(incorrect; Friday's value was 7.10). Impact is small and decaying:
+the 5/15 row only affects persistence checks within a 4-day window,
+which expires after today's run (5/19). Did not repair retroactively
+because (a) the entry has already happened and (b) the repair logic
+would require either re-fetching historical data or carefully walking
+the DB snapshot history per ticker. Filed as a known minor data
+artifact rather than acted on.
+
+**Commit:** Code in `backfill_subsector.py`; smoke test passed
+(`--dates 2026-05-15,2026-05-14` skipped both as already-scored).
+
+**Status:** Active. No live config change.

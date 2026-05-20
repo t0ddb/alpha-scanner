@@ -52,18 +52,54 @@ def slice_data_to_date(
     data: dict[str, pd.DataFrame],
     target_date: pd.Timestamp,
     min_bars: int = 252,
-) -> dict[str, pd.DataFrame]:
+) -> tuple[dict[str, pd.DataFrame], list[str]]:
     """
     Slice all DataFrames to only include data up to target_date.
     Requires at least min_bars of data for meaningful indicator calculation.
+
+    Returns (sliced, missing_tickers) where missing_tickers is the list of
+    tickers EXCLUDED from the slice because their last available row does
+    NOT match target_date. This guards against the silent-corruption bug
+    documented in DECISIONS.md 2026-05-19: if yfinance has an intermittent
+    data gap for ticker T at target_date, scoring T with its (target_date-1)
+    bar and keying the result to target_date would write a stale score
+    that misrepresents the day's actual indicator state. We'd rather drop T
+    from this target_date entirely than write a misleading score.
     """
-    sliced = {}
+    sliced: dict[str, pd.DataFrame] = {}
+    missing: list[str] = []
+    target_norm = pd.Timestamp(target_date).normalize()
     for ticker, df in data.items():
         mask = df.index <= target_date
         sub = df[mask]
-        if len(sub) >= min_bars:
-            sliced[ticker] = sub
-    return sliced
+        if len(sub) < min_bars:
+            continue
+        # Verify the slice's last row actually corresponds to target_date.
+        last_norm = sub.index[-1].normalize()
+        # Normalize tz so we compare apples to apples.
+        if last_norm.tz is not None and target_norm.tz is None:
+            cmp_target = target_norm.tz_localize(last_norm.tz)
+        elif last_norm.tz is None and target_norm.tz is not None:
+            cmp_target = target_norm.tz_convert(None)
+        else:
+            cmp_target = target_norm
+        if last_norm != cmp_target:
+            missing.append(ticker)
+            continue
+        sliced[ticker] = sub
+    return sliced, missing
+
+
+def date_already_scored(conn, date_str: str) -> int:
+    """
+    Return the number of tickers already scored for `date_str` in the DB.
+    Used by the backfill to skip dates the trade-executor has populated.
+    Trade-exec is the source of truth for live decisions; backfill only
+    fills genuine gaps (typically dates where trade-exec failed to commit).
+    """
+    cur = conn.cursor()
+    cur.execute("SELECT COUNT(*) FROM ticker_scores WHERE date = ?", (date_str,))
+    return int(cur.fetchone()[0] or 0)
 
 
 def get_backfill_dates(
@@ -169,17 +205,65 @@ def run_backfill(
     errors = 0
     start_time = time.time()
 
+    skipped_already_scored = 0
+    skipped_missing_data = 0
+    coverage_warned: list[str] = []  # (date_str, n_missing)
+    # Threshold above which we abort a date because the slice has too many
+    # tickers with missing target-date data. 5% of the universe (~9 tickers
+    # of 184) is plenty — at that point the cross-sectional RS percentile
+    # is materially distorted by absent peers, so the surviving tickers'
+    # scores can't be trusted as a same-day comparison.
+    MISSING_ABORT_PCT = 0.05
+
     for i, target_date in enumerate(dates):
         date_str = target_date.strftime("%Y-%m-%d")
 
         try:
-            # Slice data to this date
-            sliced = slice_data_to_date(data, target_date)
+            # ── Option 3 guard: don't overwrite trade-exec-written scores ──
+            # If the date already has scores in the DB, the trade-executor
+            # (or a prior backfill) already populated it. Trade-exec is the
+            # source of truth for live decisions — backfill only fills
+            # genuine gaps. Skipping prevents the LUNR-2026-05-15-style
+            # silent overwrite documented in DECISIONS.md.
+            existing = date_already_scored(conn, date_str)
+            if existing > 0:
+                if verbose:
+                    print(f"  [{i+1}/{len(dates)}] {date_str} — already scored "
+                          f"({existing} tickers); preserving prior value (no overwrite).")
+                skipped_already_scored += 1
+                continue
+
+            # ── Option 2 guard: only score tickers that actually have data
+            # for the target date. slice_data_to_date now returns a list of
+            # tickers it excluded because their last row pre-dates the
+            # target — see DECISIONS.md 2026-05-19 for the LUNR case study.
+            sliced, missing = slice_data_to_date(data, target_date)
 
             if len(sliced) < 10:
                 if verbose:
-                    print(f"  [{i+1}/{len(dates)}] {date_str} — skipped (only {len(sliced)} tickers)")
+                    print(f"  [{i+1}/{len(dates)}] {date_str} — skipped "
+                          f"(only {len(sliced)} tickers with data)")
                 continue
+
+            # Abort the date if too many tickers are missing target-date
+            # bars — partial coverage distorts cross-sectional RS rankings.
+            total_eligible = len(sliced) + len(missing)
+            if missing and total_eligible > 0:
+                missing_pct = len(missing) / total_eligible
+                if missing_pct > MISSING_ABORT_PCT:
+                    print(f"  [{i+1}/{len(dates)}] {date_str} — ABORTED: "
+                          f"{len(missing)} of {total_eligible} tickers "
+                          f"({missing_pct:.1%}) have data ending before target. "
+                          f"Cross-sectional RS would be distorted. "
+                          f"Missing examples: {missing[:5]}")
+                    skipped_missing_data += 1
+                    continue
+                else:
+                    coverage_warned.append((date_str, len(missing)))
+                    if verbose:
+                        print(f"  [{i+1}/{len(dates)}] {date_str} — note: "
+                              f"{len(missing)} ticker(s) missing target-date data "
+                              f"({', '.join(missing[:10])}{', …' if len(missing) > 10 else ''})")
 
             # Score all tickers with sliced data
             results = score_all(sliced, cfg)
@@ -249,7 +333,15 @@ def run_backfill(
     print(f"\n{'='*80}")
     print(f"  BACKFILL COMPLETE")
     print(f"{'='*80}")
-    print(f"  Dates processed: {len(dates)}")
+    print(f"  Dates processed:        {len(dates)}")
+    print(f"    Skipped (already scored, no overwrite): {skipped_already_scored}")
+    print(f"    Aborted (too much missing data):        {skipped_missing_data}")
+    print(f"    Coverage warnings (partial missing):    {len(coverage_warned)}")
+    if coverage_warned:
+        # Show a few examples
+        examples = ", ".join(f"{d} ({n} missing)" for d, n in coverage_warned[:5])
+        more = f" + {len(coverage_warned)-5} more" if len(coverage_warned) > 5 else ""
+        print(f"      e.g., {examples}{more}")
     print(f"  Errors: {errors}")
     print(f"  Time: {elapsed:.1f}s ({elapsed/60:.1f} min)")
     print()
