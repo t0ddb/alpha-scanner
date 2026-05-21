@@ -8,14 +8,6 @@
       "cost_basis": 8236.019714355469,
       "sequence_tags": "BONUS: last_two=cmf\u2192rs (+0.4; last-2 mean +72% (n=58))|BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=2 (+0.5; 2-led-Ich mean +76% (n=218))"
     },
-    "FORM": {
-      "entry_date": "2026-05-01",
-      "entry_price": 137.3699951171875,
-      "shares": 60,
-      "entry_score": 9.45,
-      "cost_basis": 8242.19970703125,
-      "sequence_tags": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))|BONUS: last_two=dtf\u2192roc (+0.5; last-2 mean +118% (n=55))"
-    },
     "MRVL": {
       "entry_date": "2026-05-01",
       "entry_price": 164.9499969482422,
@@ -95,9 +87,17 @@
       "entry_score": 7.95,
       "cost_basis": 8283.229972839355,
       "sequence_tags": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
+    },
+    "IRDM": {
+      "entry_date": "2026-05-21",
+      "entry_price": 45.70000076293945,
+      "shares": 205,
+      "entry_score": 9.45,
+      "cost_basis": 9368.500156402588,
+      "sequence_tags": "BONUS: first_three_pat=ich\u2192cmf\u2192dtf (+0.4; first-3 mean +75% (n=60))"
     }
   },
-  "cash": 1635.2216415405273,
+  "cash": -53.27851486206055,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-05-20"
+  "last_run_date": "2026-05-21"
 }

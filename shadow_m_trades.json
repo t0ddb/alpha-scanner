@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "ticker": "FORM",
+    "entry_date": "2026-05-01",
+    "exit_date": "2026-05-21",
+    "entry_price": 137.3699951171875,
+    "exit_price": 128.0,
+    "shares": 60,
+    "pnl": -562.2,
+    "pnl_pct": -0.0682,
+    "exit_reason": "score_exit",
+    "entry_score": 9.45,
+    "sequence_tags_at_entry": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))|BONUS: last_two=dtf\u2192roc (+0.5; last-2 mean +118% (n=55))"
+  }
+]

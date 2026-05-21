@@ -1081,5 +1081,89 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-05-21",
+    "mode": "paper",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "TSEM",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 8,
+    "open_value": 91475.95,
+    "open_unrealized_pnl": 16883.69,
+    "realized_cumulative_pnl": -233.52,
+    "total_pnl": 16650.17,
+    "positions": [
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1255.8599853515625,
+        "current_price": 1542.239990234375,
+        "unrealized_pnl": 2004.66,
+        "unrealized_pnl_pct": 0.228
+      },
+      {
+        "ticker": "STX",
+        "shares": 12,
+        "entry_price": 738.5399780273438,
+        "current_price": 810.4600219726562,
+        "unrealized_pnl": 863.04,
+        "unrealized_pnl_pct": 0.0974
+      },
+      {
+        "ticker": "WOLF",
+        "shares": 264,
+        "entry_price": 35.939998626708984,
+        "current_price": 69.5,
+        "unrealized_pnl": 8859.84,
+        "unrealized_pnl_pct": 0.9338
+      },
+      {
+        "ticker": "AAOI",
+        "shares": 55,
+        "entry_price": 172.97999572753906,
+        "current_price": 176.80999755859375,
+        "unrealized_pnl": 210.65,
+        "unrealized_pnl_pct": 0.0221
+      },
+      {
+        "ticker": "NVTS",
+        "shares": 598,
+        "entry_price": 15.920000076293945,
+        "current_price": 24.3799991607666,
+        "unrealized_pnl": 5059.08,
+        "unrealized_pnl_pct": 0.5314
+      },
+      {
+        "ticker": "PWR",
+        "shares": 12,
+        "entry_price": 785.239990234375,
+        "current_price": 716.9099731445312,
+        "unrealized_pnl": -819.96,
+        "unrealized_pnl_pct": -0.087
+      },
+      {
+        "ticker": "LUNR",
+        "shares": 282,
+        "entry_price": 33.59000015258789,
+        "current_price": 34.2400016784668,
+        "unrealized_pnl": 183.3,
+        "unrealized_pnl_pct": 0.0194
+      },
+      {
+        "ticker": "TSEM",
+        "shares": 36,
+        "entry_price": 264.4800109863281,
+        "current_price": 279.010009765625,
+        "unrealized_pnl": 523.08,
+        "unrealized_pnl_pct": 0.0549
+      }
+    ]
   }
 ]

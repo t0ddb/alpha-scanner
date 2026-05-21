@@ -1490,5 +1490,177 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-05-21",
+    "mode": "scheme_m",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "STX",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "BW",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "BKSY",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "LUNR",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "WDC",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 17,
+    "open_value": 150316.3,
+    "open_unrealized_pnl": 1550.14,
+    "realized_cumulative_pnl": 84.0,
+    "total_pnl": 1634.14,
+    "positions": [
+      {
+        "ticker": "STX",
+        "shares": 10,
+        "entry_price": 766.4400024414062,
+        "current_price": 810.4600219726562,
+        "unrealized_pnl": 440.2,
+        "unrealized_pnl_pct": 0.0574
+      },
+      {
+        "ticker": "IRDM",
+        "shares": 206,
+        "entry_price": 40.189998626708984,
+        "current_price": 45.70000076293945,
+        "unrealized_pnl": 1135.06,
+        "unrealized_pnl_pct": 0.1371
+      },
+      {
+        "ticker": "WDC",
+        "shares": 17,
+        "entry_price": 463.9100036621094,
+        "current_price": 486.4599914550781,
+        "unrealized_pnl": 383.35,
+        "unrealized_pnl_pct": 0.0486
+      },
+      {
+        "ticker": "PWR",
+        "shares": 11,
+        "entry_price": 750.72998046875,
+        "current_price": 716.9099731445312,
+        "unrealized_pnl": -372.02,
+        "unrealized_pnl_pct": -0.045
+      },
+      {
+        "ticker": "ON",
+        "shares": 83,
+        "entry_price": 103.19999694824219,
+        "current_price": 109.61000061035156,
+        "unrealized_pnl": 532.03,
+        "unrealized_pnl_pct": 0.0621
+      },
+      {
+        "ticker": "VIAV",
+        "shares": 166,
+        "entry_price": 54.93000030517578,
+        "current_price": 48.97999954223633,
+        "unrealized_pnl": -987.7,
+        "unrealized_pnl_pct": -0.1083
+      },
+      {
+        "ticker": "CIEN",
+        "shares": 15,
+        "entry_price": 577.1500244140625,
+        "current_price": 587.22998046875,
+        "unrealized_pnl": 151.2,
+        "unrealized_pnl_pct": 0.0175
+      },
+      {
+        "ticker": "BKSY",
+        "shares": 226,
+        "entry_price": 41.150001525878906,
+        "current_price": 44.650001525878906,
+        "unrealized_pnl": 791.0,
+        "unrealized_pnl_pct": 0.0851
+      },
+      {
+        "ticker": "MU",
+        "shares": 11,
+        "entry_price": 803.6300048828125,
+        "current_price": 762.0999755859375,
+        "unrealized_pnl": -456.83,
+        "unrealized_pnl_pct": -0.0517
+      },
+      {
+        "ticker": "LUNR",
+        "shares": 254,
+        "entry_price": 36.52000045776367,
+        "current_price": 34.2400016784668,
+        "unrealized_pnl": -579.12,
+        "unrealized_pnl_pct": -0.0624
+      },
+      {
+        "ticker": "COHR",
+        "shares": 22,
+        "entry_price": 404.94000244140625,
+        "current_price": 378.0,
+        "unrealized_pnl": -592.68,
+        "unrealized_pnl_pct": -0.0665
+      },
+      {
+        "ticker": "AMD",
+        "shares": 20,
+        "entry_price": 449.70001220703125,
+        "current_price": 449.5899963378906,
+        "unrealized_pnl": -2.2,
+        "unrealized_pnl_pct": -0.0002
+      },
+      {
+        "ticker": "PUMP",
+        "shares": 548,
+        "entry_price": 16.979999542236328,
+        "current_price": 17.440000534057617,
+        "unrealized_pnl": 252.08,
+        "unrealized_pnl_pct": 0.0271
+      },
+      {
+        "ticker": "HUT",
+        "shares": 88,
+        "entry_price": 102.47000122070312,
+        "current_price": 105.26000213623047,
+        "unrealized_pnl": 245.52,
+        "unrealized_pnl_pct": 0.0272
+      },
+      {
+        "ticker": "AKT-USD",
+        "shares": 12242,
+        "entry_price": 0.7379999756813049,
+        "current_price": 0.7850000262260437,
+        "unrealized_pnl": 575.37,
+        "unrealized_pnl_pct": 0.0637
+      },
+      {
+        "ticker": "SEI",
+        "shares": 114,
+        "entry_price": 78.58000183105469,
+        "current_price": 73.43000030517578,
+        "unrealized_pnl": -587.1,
+        "unrealized_pnl_pct": -0.0655
+      },
+      {
+        "ticker": "BW",
+        "shares": 454,
+        "entry_price": 19.170000076293945,
+        "current_price": 20.540000915527344,
+        "unrealized_pnl": 621.98,
+        "unrealized_pnl_pct": 0.0715
+      }
+    ]
   }
 ]
