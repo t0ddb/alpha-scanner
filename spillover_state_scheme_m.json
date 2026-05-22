@@ -152,8 +152,17 @@
       "entry_score": 8.85,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 8703.303348451233
+    },
+    "KEEL": {
+      "entry_date": "2026-05-22",
+      "entry_price": 4.809999942779541,
+      "shares": 2005,
+      "cost_basis": 9644.04988527298,
+      "entry_score": 9.1,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9644.411625413513
     }
   },
-  "last_run_date": "2026-05-21",
+  "last_run_date": "2026-05-22",
   "cumulative_pnl": 84.0
 }

@@ -71,8 +71,44 @@
       "entry_score": 9.8,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9704.262060000001
+    },
+    "BW": {
+      "entry_date": "2026-05-22",
+      "entry_price": 19.040000915527344,
+      "shares": 566,
+      "cost_basis": 10776.640518188477,
+      "entry_score": 9.6,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 10790.52207
+    },
+    "INTC": {
+      "entry_date": "2026-05-22",
+      "entry_price": 119.83999633789062,
+      "shares": 90,
+      "cost_basis": 10785.599670410156,
+      "entry_score": 9.5,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 10790.52207
+    },
+    "PANW": {
+      "entry_date": "2026-05-22",
+      "entry_price": 260.5799865722656,
+      "shares": 41,
+      "cost_basis": 10683.77944946289,
+      "entry_score": 9.3,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 10790.52207
+    },
+    "SPIR": {
+      "entry_date": "2026-05-22",
+      "entry_price": 21.15999984741211,
+      "shares": 509,
+      "cost_basis": 10770.439922332764,
+      "entry_score": 9.2,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 10790.52207
     }
   },
-  "last_run_date": "2026-05-21",
+  "last_run_date": "2026-05-22",
   "cumulative_pnl": -233.52
 }
