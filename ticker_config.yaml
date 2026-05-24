@@ -63,6 +63,7 @@ sectors:
           VIAV: Viavi Solutions
           POET: POET Technologies
           LASR: nLIGHT Inc
+          CRDO: Credo Technology
 
       power_energy:
         name: Power & Energy
@@ -78,6 +79,8 @@ sectors:
           PSIX: Power Solutions International
           LBRT: Liberty Energy
           PUMP: ProPetro Holding
+          TE: TE Connectivity
+          HUBB: Hubbell
 
       datacenter_infra:
         name: Data Center Infrastructure
@@ -88,6 +91,7 @@ sectors:
           IRM: Iron Mountain
           AMT: American Tower
           FLNC: Fluence Energy
+          SMCI: Super Micro Computer
 
       alt_ai_compute:
         name: Alternative AI Compute / GPU Hosts
@@ -106,6 +110,7 @@ sectors:
           CLSK: CleanSpark
           WYFI: Whitefiber
           KEEL: Keel Infrastructure
+          NBIS: Nebius Group
 
       hyperscalers:
         name: Hyperscalers
@@ -160,6 +165,7 @@ sectors:
           MBLY: Mobileye
           KTOS: Kratos Defense
           AVAV: AeroVironment
+          OSS: One Stop Systems
 
       power_semis:
         name: Power Semiconductors (GaN/SiC)
@@ -237,6 +243,14 @@ sectors:
           EXK: Endeavour Silver
           SIL: Global X Silver Miners ETF
 
+      copper_miners:
+        name: Copper Miners
+        note: Industrial-metals exposure tied to AI capex / electrification / grid build-out
+        tickers:
+          FCX: Freeport-McMoRan
+          SCCO: Southern Copper
+          TECK: Teck Resources
+
   # -----------------------------------------------------------
   # CRYPTO
   # -----------------------------------------------------------
@@ -288,6 +302,8 @@ sectors:
           ROK: Rockwell Automation
           EMR: Emerson Electric
           ABBNY: ABB Ltd
+          SYM: Symbotic
+          OUST: Ouster
 
       subsea_robotics:
         name: Subsea / Ocean Robotics

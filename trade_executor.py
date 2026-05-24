@@ -1368,6 +1368,7 @@ SUBSECTOR_CODES: dict[str, str] = {
     "Gold Miners":                          "GM",
     "Silver Miners":                        "SM",
     "Gold & Silver — Direct Exposure":      "GS",
+    "Copper Miners":                        "CU",
     # eVTOL & Drones
     "eVTOL / Urban Air Mobility":           "EV",
     # Quantum
