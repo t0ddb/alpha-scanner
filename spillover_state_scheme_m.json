@@ -161,8 +161,44 @@
       "entry_score": 9.1,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9644.411625413513
+    },
+    "VECO": {
+      "entry_date": "2026-05-25",
+      "entry_price": 59.54999923706055,
+      "shares": 161,
+      "cost_basis": 9587.549877166748,
+      "entry_score": 8.35,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9644.411625413513
+    },
+    "SPIR": {
+      "entry_date": "2026-05-25",
+      "entry_price": 21.15999984741211,
+      "shares": 455,
+      "cost_basis": 9627.79993057251,
+      "entry_score": 8.3,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9644.411625413513
+    },
+    "GFS": {
+      "entry_date": "2026-05-25",
+      "entry_price": 85.63999938964844,
+      "shares": 112,
+      "cost_basis": 9591.679931640625,
+      "entry_score": 8.1,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9644.411625413513
+    },
+    "PL": {
+      "entry_date": "2026-05-25",
+      "entry_price": 44.349998474121094,
+      "shares": 217,
+      "cost_basis": 9623.949668884277,
+      "entry_score": 7.8,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9644.411625413513
     }
   },
-  "last_run_date": "2026-05-22",
+  "last_run_date": "2026-05-25",
   "cumulative_pnl": 84.0
 }

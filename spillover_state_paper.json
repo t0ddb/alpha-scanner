@@ -107,8 +107,35 @@
       "entry_score": 9.2,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 10790.52207
+    },
+    "KEEL": {
+      "entry_date": "2026-05-25",
+      "entry_price": 4.809999942779541,
+      "shares": 2244,
+      "cost_basis": 10793.63987159729,
+      "entry_score": 9.8,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 10794.80404
+    },
+    "AMD": {
+      "entry_date": "2026-05-25",
+      "entry_price": 467.510009765625,
+      "shares": 23,
+      "cost_basis": 10752.730224609375,
+      "entry_score": 9.5,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 10794.80404
+    },
+    "IRDM": {
+      "entry_date": "2026-05-25",
+      "entry_price": 48.84000015258789,
+      "shares": 221,
+      "cost_basis": 10793.640033721924,
+      "entry_score": 9.2,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 10794.80404
     }
   },
-  "last_run_date": "2026-05-22",
+  "last_run_date": "2026-05-25",
   "cumulative_pnl": -233.52
 }
