@@ -316,6 +316,32 @@
       "score_at_entry": 9.9,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "acd06b97-f220-40aa-b3b0-e619982c69e5"
+    },
+    {
+      "ticker": "GLW",
+      "side": "sell",
+      "date": "2026-05-26",
+      "price": 196.7545,
+      "qty": 52.0,
+      "proceeds": 10231.23,
+      "pnl": 1534.23,
+      "pnl_pct": 17.64,
+      "score_at_exit": 4.6,
+      "reason": "Score exit (score 4.6 < 5.0)",
+      "hold_days": 36,
+      "score_at_entry": 8.8,
+      "alpaca_order_id": "7f51af66-1bcc-4e25-b029-8246226eb387"
+    },
+    {
+      "ticker": "BW",
+      "side": "buy",
+      "date": "2026-05-26",
+      "price": 19.65,
+      "qty": 460.0,
+      "cost_basis": 9039.0,
+      "score_at_entry": 9.8,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "353cba05-707c-4cef-806b-2cc8d91675e2"
     }
   ]
 }

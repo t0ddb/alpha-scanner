@@ -2120,5 +2120,270 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-05-26",
+    "mode": "scheme_m",
+    "entries": [
+      {
+        "ticker": "NVTS",
+        "score": 7.75,
+        "entry_price": 31.790000915527344,
+        "shares": 311,
+        "cost": 9886.69,
+        "skip_reason": "Full"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "BW",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "STX",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "BKSY",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "KEEL",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "ON",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "AMD",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "MU",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "HUT",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "LUNR",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "GFS",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "SPIR",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "VECO",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "WDC",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "PL",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 23,
+    "open_value": 221770.72,
+    "open_unrealized_pnl": 15042.84,
+    "realized_cumulative_pnl": 84.0,
+    "total_pnl": 15126.84,
+    "positions": [
+      {
+        "ticker": "STX",
+        "shares": 10,
+        "entry_price": 766.4400024414062,
+        "current_price": 845.760009765625,
+        "unrealized_pnl": 793.2,
+        "unrealized_pnl_pct": 0.1035
+      },
+      {
+        "ticker": "IRDM",
+        "shares": 206,
+        "entry_price": 40.189998626708984,
+        "current_price": 50.15999984741211,
+        "unrealized_pnl": 2053.82,
+        "unrealized_pnl_pct": 0.2481
+      },
+      {
+        "ticker": "WDC",
+        "shares": 17,
+        "entry_price": 463.9100036621094,
+        "current_price": 524.6500244140625,
+        "unrealized_pnl": 1032.58,
+        "unrealized_pnl_pct": 0.1309
+      },
+      {
+        "ticker": "PWR",
+        "shares": 11,
+        "entry_price": 750.72998046875,
+        "current_price": 742.1799926757812,
+        "unrealized_pnl": -94.05,
+        "unrealized_pnl_pct": -0.0114
+      },
+      {
+        "ticker": "ON",
+        "shares": 83,
+        "entry_price": 103.19999694824219,
+        "current_price": 127.0,
+        "unrealized_pnl": 1975.4,
+        "unrealized_pnl_pct": 0.2306
+      },
+      {
+        "ticker": "VIAV",
+        "shares": 166,
+        "entry_price": 54.93000030517578,
+        "current_price": 53.790000915527344,
+        "unrealized_pnl": -189.24,
+        "unrealized_pnl_pct": -0.0208
+      },
+      {
+        "ticker": "CIEN",
+        "shares": 15,
+        "entry_price": 577.1500244140625,
+        "current_price": 602.3900146484375,
+        "unrealized_pnl": 378.6,
+        "unrealized_pnl_pct": 0.0437
+      },
+      {
+        "ticker": "BKSY",
+        "shares": 226,
+        "entry_price": 41.150001525878906,
+        "current_price": 48.77000045776367,
+        "unrealized_pnl": 1722.12,
+        "unrealized_pnl_pct": 0.1852
+      },
+      {
+        "ticker": "MU",
+        "shares": 11,
+        "entry_price": 803.6300048828125,
+        "current_price": 895.8800048828125,
+        "unrealized_pnl": 1014.75,
+        "unrealized_pnl_pct": 0.1148
+      },
+      {
+        "ticker": "LUNR",
+        "shares": 254,
+        "entry_price": 36.52000045776367,
+        "current_price": 34.86000061035156,
+        "unrealized_pnl": -421.64,
+        "unrealized_pnl_pct": -0.0455
+      },
+      {
+        "ticker": "COHR",
+        "shares": 22,
+        "entry_price": 404.94000244140625,
+        "current_price": 381.3500061035156,
+        "unrealized_pnl": -518.98,
+        "unrealized_pnl_pct": -0.0583
+      },
+      {
+        "ticker": "AMD",
+        "shares": 20,
+        "entry_price": 449.70001220703125,
+        "current_price": 503.8900146484375,
+        "unrealized_pnl": 1083.8,
+        "unrealized_pnl_pct": 0.1205
+      },
+      {
+        "ticker": "PUMP",
+        "shares": 548,
+        "entry_price": 16.979999542236328,
+        "current_price": 16.8700008392334,
+        "unrealized_pnl": -60.28,
+        "unrealized_pnl_pct": -0.0065
+      },
+      {
+        "ticker": "HUT",
+        "shares": 88,
+        "entry_price": 102.47000122070312,
+        "current_price": 112.54000091552734,
+        "unrealized_pnl": 886.16,
+        "unrealized_pnl_pct": 0.0983
+      },
+      {
+        "ticker": "AKT-USD",
+        "shares": 12242,
+        "entry_price": 0.7379999756813049,
+        "current_price": 0.8930000066757202,
+        "unrealized_pnl": 1897.51,
+        "unrealized_pnl_pct": 0.21
+      },
+      {
+        "ticker": "SEI",
+        "shares": 114,
+        "entry_price": 78.58000183105469,
+        "current_price": 75.37000274658203,
+        "unrealized_pnl": -365.94,
+        "unrealized_pnl_pct": -0.0409
+      },
+      {
+        "ticker": "BW",
+        "shares": 454,
+        "entry_price": 19.170000076293945,
+        "current_price": 19.649999618530273,
+        "unrealized_pnl": 217.92,
+        "unrealized_pnl_pct": 0.025
+      },
+      {
+        "ticker": "KEEL",
+        "shares": 2005,
+        "entry_price": 4.809999942779541,
+        "current_price": 5.130000114440918,
+        "unrealized_pnl": 641.6,
+        "unrealized_pnl_pct": 0.0665
+      },
+      {
+        "ticker": "VECO",
+        "shares": 161,
+        "entry_price": 59.54999923706055,
+        "current_price": 62.47999954223633,
+        "unrealized_pnl": 471.73,
+        "unrealized_pnl_pct": 0.0492
+      },
+      {
+        "ticker": "SPIR",
+        "shares": 455,
+        "entry_price": 21.15999984741211,
+        "current_price": 23.75,
+        "unrealized_pnl": 1178.45,
+        "unrealized_pnl_pct": 0.1224
+      },
+      {
+        "ticker": "GFS",
+        "shares": 112,
+        "entry_price": 85.63999938964844,
+        "current_price": 89.95999908447266,
+        "unrealized_pnl": 483.84,
+        "unrealized_pnl_pct": 0.0504
+      },
+      {
+        "ticker": "PL",
+        "shares": 217,
+        "entry_price": 44.349998474121094,
+        "current_price": 48.31999969482422,
+        "unrealized_pnl": 861.49,
+        "unrealized_pnl_pct": 0.0895
+      },
+      {
+        "ticker": "NVTS",
+        "shares": 311,
+        "entry_price": 31.790000915527344,
+        "current_price": 31.790000915527344,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]
