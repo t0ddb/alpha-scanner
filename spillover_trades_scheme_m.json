@@ -12,5 +12,33 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 7.7,
     "intended_slot_dollars": 8308.61287053604
+  },
+  {
+    "ticker": "PUMP",
+    "entry_date": "2026-05-14",
+    "exit_date": "2026-05-27",
+    "entry_price": 16.979999542236328,
+    "exit_price": 15.8100004196167,
+    "shares": 548,
+    "pnl": -641.16,
+    "pnl_pct": -0.0689,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 8.1,
+    "intended_slot_dollars": 9306.43441439209
+  },
+  {
+    "ticker": "SEI",
+    "entry_date": "2026-05-15",
+    "exit_date": "2026-05-27",
+    "entry_price": 78.58000183105469,
+    "exit_price": 71.48999786376953,
+    "shares": 114,
+    "pnl": -808.26,
+    "pnl_pct": -0.0902,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 7.65,
+    "intended_slot_dollars": 9034.7381808918
   }
 ]

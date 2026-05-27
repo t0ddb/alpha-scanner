@@ -108,15 +108,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9306.43441439209
     },
-    "PUMP": {
-      "entry_date": "2026-05-14",
-      "entry_price": 16.979999542236328,
-      "shares": 548,
-      "cost_basis": 9305.039749145508,
-      "entry_score": 8.1,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9306.43441439209
-    },
     "HUT": {
       "entry_date": "2026-05-15",
       "entry_price": 102.47000122070312,
@@ -132,15 +123,6 @@
       "shares": 12242,
       "cost_basis": 9034.595702290535,
       "entry_score": 7.9,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9034.7381808918
-    },
-    "SEI": {
-      "entry_date": "2026-05-15",
-      "entry_price": 78.58000183105469,
-      "shares": 114,
-      "cost_basis": 8958.120208740234,
-      "entry_score": 7.65,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9034.7381808918
     },
@@ -206,8 +188,35 @@
       "entry_score": 7.75,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9898.098503712463
+    },
+    "POET": {
+      "entry_date": "2026-05-27",
+      "entry_price": 13.279999732971191,
+      "shares": 723,
+      "cost_basis": 9601.439806938171,
+      "entry_score": 9.75,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9607.208925613022
+    },
+    "RKLB": {
+      "entry_date": "2026-05-27",
+      "entry_price": 150.22999572753906,
+      "shares": 63,
+      "cost_basis": 9464.489730834961,
+      "entry_score": 9.35,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9607.208925613022
+    },
+    "RDW": {
+      "entry_date": "2026-05-27",
+      "entry_price": 24.0,
+      "shares": 400,
+      "cost_basis": 9600.0,
+      "entry_score": 7.9,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9607.208925613022
     }
   },
-  "last_run_date": "2026-05-26",
-  "cumulative_pnl": 84.0
+  "last_run_date": "2026-05-27",
+  "cumulative_pnl": -1365.42
 }

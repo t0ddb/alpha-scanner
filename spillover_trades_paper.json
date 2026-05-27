@@ -12,5 +12,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.0,
     "intended_slot_dollars": 9520.58306
+  },
+  {
+    "ticker": "PWR",
+    "entry_date": "2026-05-06",
+    "exit_date": "2026-05-27",
+    "entry_price": 785.239990234375,
+    "exit_price": 733.6199951171875,
+    "shares": 12,
+    "pnl": -619.44,
+    "pnl_pct": -0.0657,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.3,
+    "intended_slot_dollars": 10045.6726
   }
 ]

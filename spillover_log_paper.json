@@ -1672,5 +1672,249 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-05-27",
+    "mode": "paper",
+    "entries": [
+      {
+        "ticker": "BKSY",
+        "score": 9.8,
+        "entry_price": 51.0,
+        "shares": 213,
+        "cost": 10863.0,
+        "skip_reason": "Full"
+      },
+      {
+        "ticker": "RDW",
+        "score": 9.8,
+        "entry_price": 24.0,
+        "shares": 453,
+        "cost": 10872.0,
+        "skip_reason": "Full"
+      },
+      {
+        "ticker": "RKLB",
+        "score": 9.8,
+        "entry_price": 150.22999572753906,
+        "shares": 72,
+        "cost": 10816.56,
+        "skip_reason": "Full"
+      },
+      {
+        "ticker": "DDOG",
+        "score": 9.3,
+        "entry_price": 221.80999755859375,
+        "shares": 49,
+        "cost": 10868.69,
+        "skip_reason": "Full"
+      }
+    ],
+    "exits": [
+      {
+        "ticker": "PWR",
+        "entry_price": 785.239990234375,
+        "exit_price": 733.6199951171875,
+        "exit_score": 4.7
+      }
+    ],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "IRDM",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "TSEM",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "KEEL",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "LUNR",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "NVTS",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "SPIR",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "AMD",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "INTC",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "CRWD",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 19,
+    "open_value": 220765.48,
+    "open_unrealized_pnl": 26074.58,
+    "realized_cumulative_pnl": -852.96,
+    "total_pnl": 25221.62,
+    "positions": [
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1255.8599853515625,
+        "current_price": 1589.93994140625,
+        "unrealized_pnl": 2338.56,
+        "unrealized_pnl_pct": 0.266
+      },
+      {
+        "ticker": "STX",
+        "shares": 12,
+        "entry_price": 738.5399780273438,
+        "current_price": 870.6599731445312,
+        "unrealized_pnl": 1585.44,
+        "unrealized_pnl_pct": 0.1789
+      },
+      {
+        "ticker": "WOLF",
+        "shares": 264,
+        "entry_price": 35.939998626708984,
+        "current_price": 63.2599983215332,
+        "unrealized_pnl": 7212.48,
+        "unrealized_pnl_pct": 0.7602
+      },
+      {
+        "ticker": "AAOI",
+        "shares": 55,
+        "entry_price": 172.97999572753906,
+        "current_price": 179.8300018310547,
+        "unrealized_pnl": 376.75,
+        "unrealized_pnl_pct": 0.0396
+      },
+      {
+        "ticker": "NVTS",
+        "shares": 598,
+        "entry_price": 15.920000076293945,
+        "current_price": 28.8799991607666,
+        "unrealized_pnl": 7750.08,
+        "unrealized_pnl_pct": 0.8141
+      },
+      {
+        "ticker": "LUNR",
+        "shares": 282,
+        "entry_price": 33.59000015258789,
+        "current_price": 40.34000015258789,
+        "unrealized_pnl": 1903.5,
+        "unrealized_pnl_pct": 0.201
+      },
+      {
+        "ticker": "TSEM",
+        "shares": 36,
+        "entry_price": 264.4800109863281,
+        "current_price": 277.7900085449219,
+        "unrealized_pnl": 479.16,
+        "unrealized_pnl_pct": 0.0503
+      },
+      {
+        "ticker": "BW",
+        "shares": 566,
+        "entry_price": 19.040000915527344,
+        "current_price": 19.399999618530273,
+        "unrealized_pnl": 203.76,
+        "unrealized_pnl_pct": 0.0189
+      },
+      {
+        "ticker": "INTC",
+        "shares": 90,
+        "entry_price": 119.83999633789062,
+        "current_price": 121.7699966430664,
+        "unrealized_pnl": 173.7,
+        "unrealized_pnl_pct": 0.0161
+      },
+      {
+        "ticker": "PANW",
+        "shares": 41,
+        "entry_price": 260.5799865722656,
+        "current_price": 248.47000122070312,
+        "unrealized_pnl": -496.51,
+        "unrealized_pnl_pct": -0.0465
+      },
+      {
+        "ticker": "SPIR",
+        "shares": 509,
+        "entry_price": 21.15999984741211,
+        "current_price": 25.479999542236328,
+        "unrealized_pnl": 2198.88,
+        "unrealized_pnl_pct": 0.2042
+      },
+      {
+        "ticker": "KEEL",
+        "shares": 2244,
+        "entry_price": 4.809999942779541,
+        "current_price": 5.505000114440918,
+        "unrealized_pnl": 1559.58,
+        "unrealized_pnl_pct": 0.1445
+      },
+      {
+        "ticker": "AMD",
+        "shares": 23,
+        "entry_price": 467.510009765625,
+        "current_price": 495.5400085449219,
+        "unrealized_pnl": 644.69,
+        "unrealized_pnl_pct": 0.06
+      },
+      {
+        "ticker": "IRDM",
+        "shares": 221,
+        "entry_price": 48.84000015258789,
+        "current_price": 51.38999938964844,
+        "unrealized_pnl": 563.55,
+        "unrealized_pnl_pct": 0.0522
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 16,
+        "entry_price": 671.5499877929688,
+        "current_price": 645.3599853515625,
+        "unrealized_pnl": -419.04,
+        "unrealized_pnl_pct": -0.039
+      },
+      {
+        "ticker": "BKSY",
+        "shares": 213,
+        "entry_price": 51.0,
+        "current_price": 51.0,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "RDW",
+        "shares": 453,
+        "entry_price": 24.0,
+        "current_price": 24.0,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "RKLB",
+        "shares": 72,
+        "entry_price": 150.22999572753906,
+        "current_price": 150.22999572753906,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "DDOG",
+        "shares": 49,
+        "entry_price": 221.80999755859375,
+        "current_price": 221.80999755859375,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]
