@@ -40,5 +40,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 7.65,
     "intended_slot_dollars": 9034.7381808918
+  },
+  {
+    "ticker": "AKT-USD",
+    "entry_date": "2026-05-15",
+    "exit_date": "2026-05-28",
+    "entry_price": 0.7379999756813049,
+    "exit_price": 0.800000011920929,
+    "shares": 12242,
+    "pnl": 759.0,
+    "pnl_pct": 0.084,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 7.9,
+    "intended_slot_dollars": 9034.7381808918
   }
 ]

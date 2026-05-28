@@ -11,5 +11,18 @@
     "exit_reason": "score_exit",
     "entry_score": 9.45,
     "sequence_tags_at_entry": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))|BONUS: last_two=dtf\u2192roc (+0.5; last-2 mean +118% (n=55))"
+  },
+  {
+    "ticker": "LITE",
+    "entry_date": "2026-05-01",
+    "exit_date": "2026-05-28",
+    "entry_price": 949.9299926757812,
+    "exit_price": 860.6199951171875,
+    "shares": 8,
+    "pnl": -714.48,
+    "pnl_pct": -0.094,
+    "exit_reason": "score_exit",
+    "entry_score": 8.0,
+    "sequence_tags_at_entry": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
   }
 ]

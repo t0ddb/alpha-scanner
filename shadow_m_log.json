@@ -3588,5 +3588,243 @@
         "unrealized_pnl_pct": 0.1245
       }
     ]
+  },
+  {
+    "date": "2026-05-28",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "LITE",
+        "entry_price": 949.9299926757812,
+        "exit_price": 860.6199951171875,
+        "exit_score": 4.35
+      }
+    ],
+    "skipped": [
+      {
+        "ticker": "WOLF",
+        "score": 7.55,
+        "reason": "persistence failed (priors [7.5, 7.5, 7.5])"
+      },
+      {
+        "ticker": "BTDR",
+        "score": 7.75,
+        "reason": "persistence failed (priors [7.0, 6.3, 6.5])"
+      },
+      {
+        "ticker": "INTC",
+        "score": 8.0,
+        "reason": "persistence failed (priors [8.0, 8.3, 7.2])"
+      },
+      {
+        "ticker": "COHU",
+        "score": 7.7,
+        "reason": "persistence failed (priors [7.5, 5.7, 6.6])"
+      },
+      {
+        "ticker": "COHR",
+        "score": 7.7,
+        "reason": "persistence failed (priors [8.4, 7.2, 7.8])"
+      },
+      {
+        "ticker": "IFNNY",
+        "score": 8.2,
+        "reason": "persistence failed (priors [8.2, 8.5, 7.0])"
+      },
+      {
+        "ticker": "CIFR",
+        "score": 7.7,
+        "reason": "persistence failed (priors [8.1, 7.3, 7.2])"
+      },
+      {
+        "ticker": "CORZ",
+        "score": 7.75,
+        "reason": "persistence failed (priors [7.9, 7.4, 7.4])"
+      },
+      {
+        "ticker": "LRCX",
+        "score": 7.95,
+        "reason": "persistence failed (priors [7.8, 8.0, 7.2])"
+      },
+      {
+        "ticker": "POET",
+        "score": 9.85,
+        "reason": "insufficient cash ($6832 < $9132)"
+      },
+      {
+        "ticker": "ON",
+        "score": 9.6,
+        "reason": "insufficient cash ($6832 < $9132)"
+      },
+      {
+        "ticker": "STX",
+        "score": 9.15,
+        "reason": "insufficient cash ($6832 < $9132)"
+      },
+      {
+        "ticker": "HUT",
+        "score": 9.1,
+        "reason": "insufficient cash ($6832 < $9132)"
+      },
+      {
+        "ticker": "MU",
+        "score": 9.0,
+        "reason": "insufficient cash ($6832 < $9132)"
+      },
+      {
+        "ticker": "NBIS",
+        "score": 8.85,
+        "reason": "insufficient cash ($6832 < $9132)"
+      },
+      {
+        "ticker": "LUNR",
+        "score": 8.55,
+        "reason": "insufficient cash ($6832 < $9132)"
+      },
+      {
+        "ticker": "BW",
+        "score": 8.5,
+        "reason": "insufficient cash ($6832 < $9132)"
+      },
+      {
+        "ticker": "RDW",
+        "score": 8.5,
+        "reason": "insufficient cash ($6832 < $9132)"
+      },
+      {
+        "ticker": "OUST",
+        "score": 8.45,
+        "reason": "insufficient cash ($6832 < $9132)"
+      },
+      {
+        "ticker": "PL",
+        "score": 8.45,
+        "reason": "insufficient cash ($6832 < $9132)"
+      },
+      {
+        "ticker": "KEEL",
+        "score": 8.3,
+        "reason": "insufficient cash ($6832 < $9132)"
+      },
+      {
+        "ticker": "BKSY",
+        "score": 8.2,
+        "reason": "insufficient cash ($6832 < $9132)"
+      },
+      {
+        "ticker": "AMD",
+        "score": 8.15,
+        "reason": "insufficient cash ($6832 < $9132)"
+      },
+      {
+        "ticker": "RKLB",
+        "score": 8.1,
+        "reason": "insufficient cash ($6832 < $9132)"
+      },
+      {
+        "ticker": "NVTS",
+        "score": 7.9,
+        "reason": "insufficient cash ($6832 < $9132)"
+      },
+      {
+        "ticker": "WDC",
+        "score": 7.9,
+        "reason": "insufficient cash ($6832 < $9132)"
+      },
+      {
+        "ticker": "SPIR",
+        "score": 7.8,
+        "reason": "insufficient cash ($6832 < $9132)"
+      },
+      {
+        "ticker": "GFS",
+        "score": 7.5,
+        "reason": "insufficient cash ($6832 < $9132)"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 19,
+    "equity": 115395.53,
+    "cash": 6831.68,
+    "positions_count": 11,
+    "positions": [
+      {
+        "ticker": "ARM",
+        "shares": 39,
+        "entry_price": 211.17999267578125,
+        "current_price": 335.2699890136719,
+        "unrealized_pnl_pct": 0.5876
+      },
+      {
+        "ticker": "MRVL",
+        "shares": 50,
+        "entry_price": 164.9499969482422,
+        "current_price": 204.8300018310547,
+        "unrealized_pnl_pct": 0.2418
+      },
+      {
+        "ticker": "TSEM",
+        "shares": 38,
+        "entry_price": 218.00999450683594,
+        "current_price": 275.5,
+        "unrealized_pnl_pct": 0.2637
+      },
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1187.0,
+        "current_price": 1641.6400146484375,
+        "unrealized_pnl_pct": 0.383
+      },
+      {
+        "ticker": "AAOI",
+        "shares": 45,
+        "entry_price": 183.50999450683594,
+        "current_price": 169.02000427246094,
+        "unrealized_pnl_pct": -0.079
+      },
+      {
+        "ticker": "BE",
+        "shares": 28,
+        "entry_price": 290.5199890136719,
+        "current_price": 290.010009765625,
+        "unrealized_pnl_pct": -0.0018
+      },
+      {
+        "ticker": "STM",
+        "shares": 149,
+        "entry_price": 55.75,
+        "current_price": 69.44999694824219,
+        "unrealized_pnl_pct": 0.2457
+      },
+      {
+        "ticker": "AXTI",
+        "shares": 86,
+        "entry_price": 96.0,
+        "current_price": 115.69999694824219,
+        "unrealized_pnl_pct": 0.2052
+      },
+      {
+        "ticker": "VRT",
+        "shares": 25,
+        "entry_price": 328.30999755859375,
+        "current_price": 314.17999267578125,
+        "unrealized_pnl_pct": -0.043
+      },
+      {
+        "ticker": "AEHR",
+        "shares": 89,
+        "entry_price": 93.06999969482422,
+        "current_price": 99.98999786376953,
+        "unrealized_pnl_pct": 0.0744
+      },
+      {
+        "ticker": "IRDM",
+        "shares": 205,
+        "entry_price": 45.70000076293945,
+        "current_price": 51.2599983215332,
+        "unrealized_pnl_pct": 0.1217
+      }
+    ]
   }
 ]

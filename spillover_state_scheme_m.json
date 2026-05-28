@@ -117,15 +117,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9034.7381808918
     },
-    "AKT-USD": {
-      "entry_date": "2026-05-15",
-      "entry_price": 0.7379999756813049,
-      "shares": 12242,
-      "cost_basis": 9034.595702290535,
-      "entry_score": 7.9,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9034.7381808918
-    },
     "BW": {
       "entry_date": "2026-05-20",
       "entry_price": 19.170000076293945,
@@ -215,8 +206,26 @@
       "entry_score": 7.9,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9607.208925613022
+    },
+    "NBIS": {
+      "entry_date": "2026-05-28",
+      "entry_price": 226.33999633789062,
+      "shares": 42,
+      "cost_basis": 9506.279846191406,
+      "entry_score": 8.85,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 9612.44766923523
+    },
+    "OUST": {
+      "entry_date": "2026-05-28",
+      "entry_price": 42.33000183105469,
+      "shares": 227,
+      "cost_basis": 9608.910415649414,
+      "entry_score": 8.45,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 9612.44766923523
     }
   },
-  "last_run_date": "2026-05-27",
-  "cumulative_pnl": -1365.42
+  "last_run_date": "2026-05-28",
+  "cumulative_pnl": -606.42
 }

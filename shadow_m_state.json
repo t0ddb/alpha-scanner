@@ -72,14 +72,6 @@
       "cost_basis": 8207.749938964844,
       "sequence_tags": "PENALTY: first_three_pat=ich\u2192dtf\u2192roc (-0.3; first-3 mean +12% (n=81))|PENALTY: first_two_pair=ich\u2192dtf (-0.2; first-2 mean +22.5% (n=211))"
     },
-    "LITE": {
-      "entry_date": "2026-05-01",
-      "entry_price": 949.9299926757812,
-      "shares": 8,
-      "entry_score": 8.0,
-      "cost_basis": 7599.43994140625,
-      "sequence_tags": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
-    },
     "AEHR": {
       "entry_date": "2026-05-01",
       "entry_price": 93.06999969482422,
@@ -97,7 +89,7 @@
       "sequence_tags": "BONUS: first_three_pat=ich\u2192cmf\u2192dtf (+0.4; first-3 mean +75% (n=60))"
     }
   },
-  "cash": -53.27851486206055,
+  "cash": 6831.681446075439,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-05-27"
+  "last_run_date": "2026-05-28"
 }
