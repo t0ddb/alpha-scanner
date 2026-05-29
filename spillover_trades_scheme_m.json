@@ -54,5 +54,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 7.9,
     "intended_slot_dollars": 9034.7381808918
+  },
+  {
+    "ticker": "VIAV",
+    "entry_date": "2026-05-11",
+    "exit_date": "2026-05-29",
+    "entry_price": 54.93000030517578,
+    "exit_price": 48.560001373291016,
+    "shares": 166,
+    "pnl": -1057.42,
+    "pnl_pct": -0.116,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.4,
+    "intended_slot_dollars": 9168.105542554855
   }
 ]

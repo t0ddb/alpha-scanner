@@ -26,5 +26,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.3,
     "intended_slot_dollars": 10045.6726
+  },
+  {
+    "ticker": "AAOI",
+    "entry_date": "2026-05-04",
+    "exit_date": "2026-05-29",
+    "entry_price": 172.97999572753906,
+    "exit_price": 158.41000366210938,
+    "shares": 55,
+    "pnl": -801.35,
+    "pnl_pct": -0.0842,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.5,
+    "intended_slot_dollars": 9520.58306
   }
 ]

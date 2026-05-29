@@ -45,15 +45,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 8621.895009391785
     },
-    "VIAV": {
-      "entry_date": "2026-05-11",
-      "entry_price": 54.93000030517578,
-      "shares": 166,
-      "cost_basis": 9118.38005065918,
-      "entry_score": 9.4,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9168.105542554855
-    },
     "CIEN": {
       "entry_date": "2026-05-12",
       "entry_price": 577.1500244140625,
@@ -224,8 +215,26 @@
       "entry_score": 8.45,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 9612.44766923523
+    },
+    "INTC": {
+      "entry_date": "2026-05-29",
+      "entry_price": 114.68000030517578,
+      "shares": 82,
+      "cost_basis": 9403.760025024414,
+      "entry_score": 8.6,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 9450.88574090004
+    },
+    "IFNNY": {
+      "entry_date": "2026-05-29",
+      "entry_price": 95.58999633789062,
+      "shares": 98,
+      "cost_basis": 9367.819641113281,
+      "entry_score": 8.3,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 9450.88574090004
     }
   },
-  "last_run_date": "2026-05-28",
-  "cumulative_pnl": -606.42
+  "last_run_date": "2026-05-29",
+  "cumulative_pnl": -1663.84
 }

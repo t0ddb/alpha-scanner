@@ -27,15 +27,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9520.58306
     },
-    "AAOI": {
-      "entry_date": "2026-05-04",
-      "entry_price": 172.97999572753906,
-      "shares": 55,
-      "cost_basis": 9513.899765014648,
-      "entry_score": 9.5,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9520.58306
-    },
     "NVTS": {
       "entry_date": "2026-05-04",
       "entry_price": 15.920000076293945,
@@ -179,8 +170,26 @@
       "entry_score": 9.3,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 10929.1744
+    },
+    "OUST": {
+      "entry_date": "2026-05-29",
+      "entry_price": 46.04999923706055,
+      "shares": 231,
+      "cost_basis": 10637.549823760986,
+      "entry_score": 9.6,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 10651.69544
+    },
+    "MU": {
+      "entry_date": "2026-05-29",
+      "entry_price": 971.0,
+      "shares": 10,
+      "cost_basis": 9710.0,
+      "entry_score": 9.5,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 10651.69544
     }
   },
-  "last_run_date": "2026-05-28",
-  "cumulative_pnl": -852.96
+  "last_run_date": "2026-05-29",
+  "cumulative_pnl": -1654.31
 }
