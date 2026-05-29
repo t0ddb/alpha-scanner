@@ -231,6 +231,69 @@
       "score_at_entry": 9.8,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "4e299839-8c1b-4857-bf10-d8d7b80b0126"
+    },
+    {
+      "ticker": "AAOI",
+      "side": "sell",
+      "date": "2026-05-29",
+      "price": 157.05,
+      "qty": 3.0,
+      "proceeds": 471.15,
+      "pnl": 46.98,
+      "pnl_pct": 11.08,
+      "score_at_exit": 4.4,
+      "reason": "Score exit (score 4.4 < 5.0)",
+      "hold_days": 31,
+      "score_at_entry": 9.5,
+      "alpaca_order_id": "b5536cb5-b7c2-43a7-8d43-3c36a0969e0c"
+    },
+    {
+      "ticker": "BE",
+      "side": "sell",
+      "date": "2026-05-29",
+      "price": 281.6,
+      "qty": 1.0,
+      "proceeds": 281.6,
+      "pnl": -14.13,
+      "pnl_pct": -4.78,
+      "score_at_exit": 4.9,
+      "reason": "Score exit (score 4.9 < 5.0)",
+      "hold_days": 30,
+      "score_at_entry": 9.9,
+      "alpaca_order_id": "d5c073c1-7b8c-483b-a1de-72652abc8382"
+    },
+    {
+      "ticker": "BKSY",
+      "side": "buy",
+      "date": "2026-05-29",
+      "price": 48.44,
+      "qty": 8.0,
+      "cost_basis": 387.52,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "c7230695-135e-4570-a18b-60bdac11f8d7"
+    },
+    {
+      "ticker": "KEEL",
+      "side": "buy",
+      "date": "2026-05-29",
+      "price": 5.695,
+      "qty": 63.0,
+      "cost_basis": 358.79,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "ecb53c86-c67a-4d4a-829c-564d44d97fa8"
+    },
+    {
+      "ticker": "NBIS",
+      "side": "buy",
+      "date": "2026-05-29",
+      "price": 230.22,
+      "qty": 1.0,
+      "cost_basis": 230.22,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "ba3ffdac-1a5e-47a6-91b0-f59e03b0c5f4"
     }
   ]
 }

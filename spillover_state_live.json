@@ -125,8 +125,17 @@
       "entry_score": 9.3,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 551.17063
+    },
+    "OUST": {
+      "entry_date": "2026-05-29",
+      "entry_price": 46.04999923706055,
+      "shares": 11,
+      "cost_basis": 506.549991607666,
+      "entry_score": 9.6,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 527.5081600000001
     }
   },
-  "last_run_date": "2026-05-28",
+  "last_run_date": "2026-05-29",
   "cumulative_pnl": 0.0
 }

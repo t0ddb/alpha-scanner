@@ -1,5 +1,10 @@
 {
   "cooldowns": {
+    "BE": {
+      "cooldown_until": "2026-06-28",
+      "exit_date": "2026-05-29",
+      "loss_amount": -14.13
+    },
     "FORM": {
       "cooldown_until": "2026-06-13",
       "exit_date": "2026-05-14",
