@@ -134,8 +134,17 @@
       "entry_score": 9.6,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 527.5081600000001
+    },
+    "CLSK": {
+      "entry_date": "2026-06-01",
+      "entry_price": 18.809999465942383,
+      "shares": 27,
+      "cost_basis": 507.86998558044434,
+      "entry_score": 9.3,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 523.3473700000001
     }
   },
-  "last_run_date": "2026-05-29",
+  "last_run_date": "2026-06-01",
   "cumulative_pnl": 0.0
 }

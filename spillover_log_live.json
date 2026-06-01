@@ -1404,5 +1404,182 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-06-01",
+    "mode": "live",
+    "entries": [
+      {
+        "ticker": "CLSK",
+        "score": 9.3,
+        "entry_price": 18.809999465942383,
+        "shares": 27,
+        "cost": 507.87,
+        "skip_reason": "Full"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "AMD",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "INTC",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "MU",
+        "reason": "intended $523 too small for share price $1035.50"
+      },
+      {
+        "ticker": "SNDK",
+        "reason": "intended $523 too small for share price $1761.43"
+      },
+      {
+        "ticker": "CRWD",
+        "reason": "intended $523 too small for share price $782.17"
+      },
+      {
+        "ticker": "RDW",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 16,
+    "open_value": 8076.43,
+    "open_unrealized_pnl": 137.0,
+    "realized_cumulative_pnl": 0.0,
+    "total_pnl": 137.0,
+    "positions": [
+      {
+        "ticker": "AXTI",
+        "shares": 4,
+        "entry_price": 107.55000305175781,
+        "current_price": 109.55000305175781,
+        "unrealized_pnl": 8.0,
+        "unrealized_pnl_pct": 0.0186
+      },
+      {
+        "ticker": "WDC",
+        "shares": 1,
+        "entry_price": 494.0899963378906,
+        "current_price": 546.2000122070312,
+        "unrealized_pnl": 52.11,
+        "unrealized_pnl_pct": 0.1055
+      },
+      {
+        "ticker": "BW",
+        "shares": 28,
+        "entry_price": 19.040000915527344,
+        "current_price": 17.010000228881836,
+        "unrealized_pnl": -56.84,
+        "unrealized_pnl_pct": -0.1066
+      },
+      {
+        "ticker": "INTC",
+        "shares": 4,
+        "entry_price": 119.83999633789062,
+        "current_price": 109.33000183105469,
+        "unrealized_pnl": -42.04,
+        "unrealized_pnl_pct": -0.0877
+      },
+      {
+        "ticker": "PANW",
+        "shares": 2,
+        "entry_price": 260.5799865722656,
+        "current_price": 300.4800109863281,
+        "unrealized_pnl": 79.8,
+        "unrealized_pnl_pct": 0.1531
+      },
+      {
+        "ticker": "SPIR",
+        "shares": 25,
+        "entry_price": 21.15999984741211,
+        "current_price": 20.559999465942383,
+        "unrealized_pnl": -15.0,
+        "unrealized_pnl_pct": -0.0284
+      },
+      {
+        "ticker": "KEEL",
+        "shares": 114,
+        "entry_price": 4.809999942779541,
+        "current_price": 6.099999904632568,
+        "unrealized_pnl": 147.06,
+        "unrealized_pnl_pct": 0.2682
+      },
+      {
+        "ticker": "AMD",
+        "shares": 1,
+        "entry_price": 467.510009765625,
+        "current_price": 510.1300048828125,
+        "unrealized_pnl": 42.62,
+        "unrealized_pnl_pct": 0.0912
+      },
+      {
+        "ticker": "IRDM",
+        "shares": 11,
+        "entry_price": 48.84000015258789,
+        "current_price": 47.810001373291016,
+        "unrealized_pnl": -11.33,
+        "unrealized_pnl_pct": -0.0211
+      },
+      {
+        "ticker": "BKSY",
+        "shares": 10,
+        "entry_price": 51.0,
+        "current_price": 42.380001068115234,
+        "unrealized_pnl": -86.2,
+        "unrealized_pnl_pct": -0.169
+      },
+      {
+        "ticker": "RDW",
+        "shares": 22,
+        "entry_price": 24.0,
+        "current_price": 20.68000030517578,
+        "unrealized_pnl": -73.04,
+        "unrealized_pnl_pct": -0.1383
+      },
+      {
+        "ticker": "RKLB",
+        "shares": 3,
+        "entry_price": 150.22999572753906,
+        "current_price": 122.38999938964844,
+        "unrealized_pnl": -83.52,
+        "unrealized_pnl_pct": -0.1853
+      },
+      {
+        "ticker": "DDOG",
+        "shares": 2,
+        "entry_price": 221.80999755859375,
+        "current_price": 277.489990234375,
+        "unrealized_pnl": 111.36,
+        "unrealized_pnl_pct": 0.251
+      },
+      {
+        "ticker": "NBIS",
+        "shares": 2,
+        "entry_price": 226.33999633789062,
+        "current_price": 264.510009765625,
+        "unrealized_pnl": 76.34,
+        "unrealized_pnl_pct": 0.1686
+      },
+      {
+        "ticker": "OUST",
+        "shares": 11,
+        "entry_price": 46.04999923706055,
+        "current_price": 44.93000030517578,
+        "unrealized_pnl": -12.32,
+        "unrealized_pnl_pct": -0.0243
+      },
+      {
+        "ticker": "CLSK",
+        "shares": 27,
+        "entry_price": 18.809999465942383,
+        "current_price": 18.809999465942383,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]

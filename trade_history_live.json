@@ -294,6 +294,69 @@
       "score_at_entry": 9.9,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "ba3ffdac-1a5e-47a6-91b0-f59e03b0c5f4"
+    },
+    {
+      "ticker": "AEHR",
+      "side": "sell",
+      "date": "2026-06-01",
+      "price": 93.8,
+      "qty": 5.0,
+      "proceeds": 469.0,
+      "pnl": 59.6,
+      "pnl_pct": 14.56,
+      "score_at_exit": 4.4,
+      "reason": "Score exit (score 4.4 < 5.0)",
+      "hold_days": 34,
+      "score_at_entry": 9.8,
+      "alpaca_order_id": "9f59e1ea-9489-461f-9e4d-b0a1ca17e8f7"
+    },
+    {
+      "ticker": "VIAV",
+      "side": "sell",
+      "date": "2026-06-01",
+      "price": 47.48,
+      "qty": 8.0,
+      "proceeds": 379.84,
+      "pnl": -48.32,
+      "pnl_pct": -11.29,
+      "score_at_exit": 3.2,
+      "reason": "Score exit (score 3.2 < 5.0)",
+      "hold_days": 32,
+      "score_at_entry": 9.9,
+      "alpaca_order_id": "a877b14e-e872-4425-850a-f571b56f422a"
+    },
+    {
+      "ticker": "NBIS",
+      "side": "buy",
+      "date": "2026-06-01",
+      "price": 266.7,
+      "qty": 2.0,
+      "cost_basis": 533.4,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "9c31d6e0-7e24-4508-a7b4-846dfffc251a"
+    },
+    {
+      "ticker": "SPIR",
+      "side": "buy",
+      "date": "2026-06-01",
+      "price": 20.555,
+      "qty": 17.0,
+      "cost_basis": 349.44,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "67ceb173-fe40-4295-a456-b1d2d674fdb1"
+    },
+    {
+      "ticker": "OUST",
+      "side": "buy",
+      "date": "2026-06-01",
+      "price": 44.94,
+      "qty": 7.0,
+      "cost_basis": 314.58,
+      "score_at_entry": 9.6,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "2379c9c2-4f4e-4a5c-8e1c-45df2b5047b3"
     }
   ]
 }
