@@ -64,14 +64,6 @@
       "cost_basis": 8256.0,
       "sequence_tags": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
     },
-    "VRT": {
-      "entry_date": "2026-05-01",
-      "entry_price": 328.30999755859375,
-      "shares": 25,
-      "entry_score": 8.05,
-      "cost_basis": 8207.749938964844,
-      "sequence_tags": "PENALTY: first_three_pat=ich\u2192dtf\u2192roc (-0.3; first-3 mean +12% (n=81))|PENALTY: first_two_pair=ich\u2192dtf (-0.2; first-2 mean +22.5% (n=211))"
-    },
     "AEHR": {
       "entry_date": "2026-05-01",
       "entry_price": 93.06999969482422,
@@ -87,9 +79,17 @@
       "entry_score": 9.45,
       "cost_basis": 9368.500156402588,
       "sequence_tags": "BONUS: first_three_pat=ich\u2192cmf\u2192dtf (+0.4; first-3 mean +75% (n=60))"
+    },
+    "SPIR": {
+      "entry_date": "2026-06-01",
+      "entry_price": 20.559999465942383,
+      "shares": 476,
+      "entry_score": 9.6,
+      "cost_basis": 9786.559745788574,
+      "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))"
     }
   },
-  "cash": 6831.681446075439,
+  "cash": 5129.872066497803,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-05-29"
+  "last_run_date": "2026-06-01"
 }

@@ -342,6 +342,58 @@
       "score_at_entry": 9.8,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "353cba05-707c-4cef-806b-2cc8d91675e2"
+    },
+    {
+      "ticker": "AEHR",
+      "side": "sell",
+      "date": "2026-06-01",
+      "price": 93.8,
+      "qty": 98.0,
+      "proceeds": 9192.4,
+      "pnl": 903.7,
+      "pnl_pct": 10.9,
+      "score_at_exit": 4.4,
+      "reason": "Score exit (score 4.4 < 5.0)",
+      "hold_days": 47,
+      "score_at_entry": 9.2,
+      "alpaca_order_id": "3c356afe-9ef8-431d-a84e-0b72d1196eb7"
+    },
+    {
+      "ticker": "VIAV",
+      "side": "sell",
+      "date": "2026-06-01",
+      "price": 47.35,
+      "qty": 198.0,
+      "proceeds": 9375.3,
+      "pnl": 1073.97,
+      "pnl_pct": 12.94,
+      "score_at_exit": 3.2,
+      "reason": "Score exit (score 3.2 < 5.0)",
+      "hold_days": 52,
+      "score_at_entry": 9.8,
+      "alpaca_order_id": "708bbf61-566d-4695-9628-a04d66ad47db"
+    },
+    {
+      "ticker": "KEEL",
+      "side": "buy",
+      "date": "2026-06-01",
+      "price": 6.1,
+      "qty": 1551.0,
+      "cost_basis": 9461.1,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "3a6ce65d-6958-4baa-9a64-ad32e1f0515a"
+    },
+    {
+      "ticker": "NBIS",
+      "side": "buy",
+      "date": "2026-06-01",
+      "price": 266.7,
+      "qty": 35.0,
+      "cost_basis": 9334.5,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "f0a0fe78-43ab-484d-a37f-607d61638a84"
     }
   ]
 }

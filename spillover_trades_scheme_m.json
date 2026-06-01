@@ -68,5 +68,33 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.4,
     "intended_slot_dollars": 9168.105542554855
+  },
+  {
+    "ticker": "PWR",
+    "entry_date": "2026-05-07",
+    "exit_date": "2026-06-01",
+    "entry_price": 750.72998046875,
+    "exit_price": 687.47998046875,
+    "shares": 11,
+    "pnl": -695.75,
+    "pnl_pct": -0.0843,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 8.2,
+    "intended_slot_dollars": 8308.61287053604
+  },
+  {
+    "ticker": "NVTS",
+    "entry_date": "2026-05-26",
+    "exit_date": "2026-06-01",
+    "entry_price": 31.790000915527344,
+    "exit_price": 24.860000610351562,
+    "shares": 311,
+    "pnl": -2155.23,
+    "pnl_pct": -0.218,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 7.75,
+    "intended_slot_dollars": 9898.098503712463
   }
 ]

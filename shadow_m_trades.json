@@ -24,5 +24,18 @@
     "exit_reason": "score_exit",
     "entry_score": 8.0,
     "sequence_tags_at_entry": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
+  },
+  {
+    "ticker": "VRT",
+    "entry_date": "2026-05-01",
+    "exit_date": "2026-06-01",
+    "entry_price": 328.30999755859375,
+    "exit_price": 323.3900146484375,
+    "shares": 25,
+    "pnl": -123.0,
+    "pnl_pct": -0.015,
+    "exit_reason": "score_exit",
+    "entry_score": 8.05,
+    "sequence_tags_at_entry": "PENALTY: first_three_pat=ich\u2192dtf\u2192roc (-0.3; first-3 mean +12% (n=81))|PENALTY: first_two_pair=ich\u2192dtf (-0.2; first-2 mean +22.5% (n=211))"
   }
 ]

@@ -27,15 +27,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 8308.61287053604
     },
-    "PWR": {
-      "entry_date": "2026-05-07",
-      "entry_price": 750.72998046875,
-      "shares": 11,
-      "cost_basis": 8258.02978515625,
-      "entry_score": 8.2,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 8308.61287053604
-    },
     "ON": {
       "entry_date": "2026-05-08",
       "entry_price": 103.19999694824219,
@@ -162,15 +153,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9644.411625413513
     },
-    "NVTS": {
-      "entry_date": "2026-05-26",
-      "entry_price": 31.790000915527344,
-      "shares": 311,
-      "cost_basis": 9886.690284729004,
-      "entry_score": 7.75,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9898.098503712463
-    },
     "POET": {
       "entry_date": "2026-05-27",
       "entry_price": 13.279999732971191,
@@ -233,8 +215,17 @@
       "entry_score": 8.3,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 9450.88574090004
+    },
+    "CORZ": {
+      "entry_date": "2026-06-01",
+      "entry_price": 28.549999237060547,
+      "shares": 343,
+      "cost_basis": 9792.649738311768,
+      "entry_score": 8.1,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 9797.010668665314
     }
   },
-  "last_run_date": "2026-05-29",
-  "cumulative_pnl": -1663.84
+  "last_run_date": "2026-06-01",
+  "cumulative_pnl": -4514.82
 }
