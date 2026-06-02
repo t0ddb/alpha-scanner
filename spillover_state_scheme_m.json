@@ -224,8 +224,17 @@
       "entry_score": 8.1,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 9797.010668665314
+    },
+    "BTDR": {
+      "entry_date": "2026-06-02",
+      "entry_price": 18.760000228881836,
+      "shares": 564,
+      "cost_basis": 10580.640129089355,
+      "entry_score": 7.75,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 10594.319054964066
     }
   },
-  "last_run_date": "2026-06-01",
+  "last_run_date": "2026-06-02",
   "cumulative_pnl": -4514.82
 }
