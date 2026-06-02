@@ -143,8 +143,35 @@
       "entry_score": 9.3,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 523.3473700000001
+    },
+    "PURR": {
+      "entry_date": "2026-06-02",
+      "entry_price": 10.970000267028809,
+      "shares": 52,
+      "cost_basis": 570.440013885498,
+      "entry_score": 9.6,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 574.3226500000001
+    },
+    "BTDR": {
+      "entry_date": "2026-06-02",
+      "entry_price": 18.760000228881836,
+      "shares": 30,
+      "cost_basis": 562.8000068664551,
+      "entry_score": 9.5,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 574.3226500000001
+    },
+    "HUT": {
+      "entry_date": "2026-06-02",
+      "entry_price": 133.02000427246094,
+      "shares": 4,
+      "cost_basis": 532.0800170898438,
+      "entry_score": 9.5,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 574.3226500000001
     }
   },
-  "last_run_date": "2026-06-01",
+  "last_run_date": "2026-06-02",
   "cumulative_pnl": 0.0
 }
