@@ -394,6 +394,32 @@
       "score_at_entry": 9.9,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "f0a0fe78-43ab-484d-a37f-607d61638a84"
+    },
+    {
+      "ticker": "BW",
+      "side": "sell",
+      "date": "2026-06-03",
+      "price": 17.68,
+      "qty": 460.0,
+      "proceeds": 8132.8,
+      "pnl": -718.8,
+      "pnl_pct": -8.12,
+      "score_at_exit": 4.7,
+      "reason": "Score exit (score 4.7 < 5.0)",
+      "hold_days": 8,
+      "score_at_entry": 9.8,
+      "alpaca_order_id": "ee62fe00-e72a-4ad2-982d-db40f4177f28"
+    },
+    {
+      "ticker": "MU",
+      "side": "buy",
+      "date": "2026-06-03",
+      "price": 1056.53,
+      "qty": 7.0,
+      "cost_basis": 7395.71,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "6ae4cdf5-5ae2-4d96-b7ee-e026fac44fad"
     }
   ]
 }

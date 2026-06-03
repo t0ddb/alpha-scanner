@@ -40,5 +40,61 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.5,
     "intended_slot_dollars": 9520.58306
+  },
+  {
+    "ticker": "BW",
+    "entry_date": "2026-05-22",
+    "exit_date": "2026-06-03",
+    "entry_price": 19.040000915527344,
+    "exit_price": 17.68000030517578,
+    "shares": 566,
+    "pnl": -769.76,
+    "pnl_pct": -0.0714,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.6,
+    "intended_slot_dollars": 10790.52207
+  },
+  {
+    "ticker": "BKSY",
+    "entry_date": "2026-05-27",
+    "exit_date": "2026-06-03",
+    "entry_price": 51.0,
+    "exit_price": 37.47999954223633,
+    "shares": 213,
+    "pnl": -2879.76,
+    "pnl_pct": -0.2651,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.8,
+    "intended_slot_dollars": 10892.08668
+  },
+  {
+    "ticker": "RDW",
+    "entry_date": "2026-05-27",
+    "exit_date": "2026-06-03",
+    "entry_price": 24.0,
+    "exit_price": 18.6200008392334,
+    "shares": 453,
+    "pnl": -2437.14,
+    "pnl_pct": -0.2242,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.8,
+    "intended_slot_dollars": 10892.08668
+  },
+  {
+    "ticker": "RKLB",
+    "entry_date": "2026-05-27",
+    "exit_date": "2026-06-03",
+    "entry_price": 150.22999572753906,
+    "exit_price": 114.69999694824219,
+    "shares": 72,
+    "pnl": -2558.16,
+    "pnl_pct": -0.2365,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.8,
+    "intended_slot_dollars": 10892.08668
   }
 ]

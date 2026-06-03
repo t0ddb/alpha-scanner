@@ -54,15 +54,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9704.262060000001
     },
-    "BW": {
-      "entry_date": "2026-05-22",
-      "entry_price": 19.040000915527344,
-      "shares": 566,
-      "cost_basis": 10776.640518188477,
-      "entry_score": 9.6,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 10790.52207
-    },
     "INTC": {
       "entry_date": "2026-05-22",
       "entry_price": 119.83999633789062,
@@ -125,33 +116,6 @@
       "entry_score": 9.2,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 11356.01767
-    },
-    "BKSY": {
-      "entry_date": "2026-05-27",
-      "entry_price": 51.0,
-      "shares": 213,
-      "cost_basis": 10863.0,
-      "entry_score": 9.8,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 10892.08668
-    },
-    "RDW": {
-      "entry_date": "2026-05-27",
-      "entry_price": 24.0,
-      "shares": 453,
-      "cost_basis": 10872.0,
-      "entry_score": 9.8,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 10892.08668
-    },
-    "RKLB": {
-      "entry_date": "2026-05-27",
-      "entry_price": 150.22999572753906,
-      "shares": 72,
-      "cost_basis": 10816.559692382812,
-      "entry_score": 9.8,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 10892.08668
     },
     "DDOG": {
       "entry_date": "2026-05-27",
@@ -224,8 +188,17 @@
       "entry_score": 9.5,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 11819.01906
+    },
+    "RDW": {
+      "entry_date": "2026-06-03",
+      "entry_price": 18.6200008392334,
+      "shares": 615,
+      "cost_basis": 11451.30051612854,
+      "entry_score": 9.3,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 11466.95381
     }
   },
-  "last_run_date": "2026-06-02",
-  "cumulative_pnl": -1654.31
+  "last_run_date": "2026-06-03",
+  "cumulative_pnl": -10299.13
 }

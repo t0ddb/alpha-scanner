@@ -1,5 +1,10 @@
 {
   "cooldowns": {
+    "BW": {
+      "cooldown_until": "2026-07-03",
+      "exit_date": "2026-06-03",
+      "loss_amount": -718.8
+    },
     "COHU": {
       "cooldown_until": "2026-06-18",
       "exit_date": "2026-05-19",
