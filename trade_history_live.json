@@ -357,6 +357,32 @@
       "score_at_entry": 9.6,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "2379c9c2-4f4e-4a5c-8e1c-45df2b5047b3"
+    },
+    {
+      "ticker": "BKSY",
+      "side": "sell",
+      "date": "2026-06-03",
+      "price": 37.81,
+      "qty": 8.0,
+      "proceeds": 302.48,
+      "pnl": -63.6,
+      "pnl_pct": -17.37,
+      "score_at_exit": 4.3,
+      "reason": "Score exit (score 4.3 < 5.0)",
+      "hold_days": 5,
+      "score_at_entry": 9.9,
+      "alpaca_order_id": "301a836f-2444-4218-9e6b-92b2f0e43e03"
+    },
+    {
+      "ticker": "BTDR",
+      "side": "buy",
+      "date": "2026-06-03",
+      "price": 19.7,
+      "qty": 16.0,
+      "cost_basis": 315.2,
+      "score_at_entry": 9.6,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "1cdee970-dc57-4461-ae93-137169f40048"
     }
   ]
 }

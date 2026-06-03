@@ -1798,5 +1798,216 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-06-03",
+    "mode": "live",
+    "entries": [
+      {
+        "ticker": "RDW",
+        "score": 9.3,
+        "entry_price": 18.6200008392334,
+        "shares": 29,
+        "cost": 539.98,
+        "skip_reason": "Full"
+      }
+    ],
+    "exits": [
+      {
+        "ticker": "BW",
+        "entry_price": 19.040000915527344,
+        "exit_price": 17.68000030517578,
+        "exit_score": 4.7
+      }
+    ],
+    "stops_fired": [
+      {
+        "ticker": "BKSY",
+        "entry_price": 51.0,
+        "stop_price": 40.8,
+        "exit_price": 37.47999954223633
+      },
+      {
+        "ticker": "RDW",
+        "entry_price": 24.0,
+        "stop_price": 19.2,
+        "exit_price": 18.6200008392334
+      },
+      {
+        "ticker": "RKLB",
+        "entry_price": 150.22999572753906,
+        "stop_price": 120.18,
+        "exit_price": 114.69999694824219
+      }
+    ],
+    "skipped_dup": [
+      {
+        "ticker": "MU",
+        "reason": "intended_slot_dollars <= 0"
+      },
+      {
+        "ticker": "HUT",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "CRWD",
+        "reason": "intended $546 too small for share price $747.61"
+      },
+      {
+        "ticker": "PANW",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "AMD",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "SNDK",
+        "reason": "intended $546 too small for share price $1831.50"
+      },
+      {
+        "ticker": "INTC",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "PURR",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 16,
+    "open_value": 8449.63,
+    "open_unrealized_pnl": 326.71,
+    "realized_cumulative_pnl": -398.23,
+    "total_pnl": -71.52,
+    "positions": [
+      {
+        "ticker": "AXTI",
+        "shares": 4,
+        "entry_price": 107.55000305175781,
+        "current_price": 106.69999694824219,
+        "unrealized_pnl": -3.4,
+        "unrealized_pnl_pct": -0.0079
+      },
+      {
+        "ticker": "WDC",
+        "shares": 1,
+        "entry_price": 494.0899963378906,
+        "current_price": 594.1099853515625,
+        "unrealized_pnl": 100.02,
+        "unrealized_pnl_pct": 0.2024
+      },
+      {
+        "ticker": "INTC",
+        "shares": 4,
+        "entry_price": 119.83999633789062,
+        "current_price": 112.70999908447266,
+        "unrealized_pnl": -28.52,
+        "unrealized_pnl_pct": -0.0595
+      },
+      {
+        "ticker": "PANW",
+        "shares": 2,
+        "entry_price": 260.5799865722656,
+        "current_price": 280.42999267578125,
+        "unrealized_pnl": 39.7,
+        "unrealized_pnl_pct": 0.0762
+      },
+      {
+        "ticker": "SPIR",
+        "shares": 25,
+        "entry_price": 21.15999984741211,
+        "current_price": 19.040000915527344,
+        "unrealized_pnl": -53.0,
+        "unrealized_pnl_pct": -0.1002
+      },
+      {
+        "ticker": "KEEL",
+        "shares": 114,
+        "entry_price": 4.809999942779541,
+        "current_price": 6.150000095367432,
+        "unrealized_pnl": 152.76,
+        "unrealized_pnl_pct": 0.2786
+      },
+      {
+        "ticker": "AMD",
+        "shares": 1,
+        "entry_price": 467.510009765625,
+        "current_price": 542.52001953125,
+        "unrealized_pnl": 75.01,
+        "unrealized_pnl_pct": 0.1604
+      },
+      {
+        "ticker": "IRDM",
+        "shares": 11,
+        "entry_price": 48.84000015258789,
+        "current_price": 48.970001220703125,
+        "unrealized_pnl": 1.43,
+        "unrealized_pnl_pct": 0.0027
+      },
+      {
+        "ticker": "DDOG",
+        "shares": 2,
+        "entry_price": 221.80999755859375,
+        "current_price": 250.3300018310547,
+        "unrealized_pnl": 57.04,
+        "unrealized_pnl_pct": 0.1286
+      },
+      {
+        "ticker": "NBIS",
+        "shares": 2,
+        "entry_price": 226.33999633789062,
+        "current_price": 251.67999267578125,
+        "unrealized_pnl": 50.68,
+        "unrealized_pnl_pct": 0.112
+      },
+      {
+        "ticker": "OUST",
+        "shares": 11,
+        "entry_price": 46.04999923706055,
+        "current_price": 43.959999084472656,
+        "unrealized_pnl": -22.99,
+        "unrealized_pnl_pct": -0.0454
+      },
+      {
+        "ticker": "CLSK",
+        "shares": 27,
+        "entry_price": 18.809999465942383,
+        "current_price": 17.610000610351562,
+        "unrealized_pnl": -32.4,
+        "unrealized_pnl_pct": -0.0638
+      },
+      {
+        "ticker": "PURR",
+        "shares": 52,
+        "entry_price": 10.970000267028809,
+        "current_price": 10.369999885559082,
+        "unrealized_pnl": -31.2,
+        "unrealized_pnl_pct": -0.0547
+      },
+      {
+        "ticker": "BTDR",
+        "shares": 30,
+        "entry_price": 18.760000228881836,
+        "current_price": 19.709999084472656,
+        "unrealized_pnl": 28.5,
+        "unrealized_pnl_pct": 0.0506
+      },
+      {
+        "ticker": "HUT",
+        "shares": 4,
+        "entry_price": 133.02000427246094,
+        "current_price": 131.2899932861328,
+        "unrealized_pnl": -6.92,
+        "unrealized_pnl_pct": -0.013
+      },
+      {
+        "ticker": "RDW",
+        "shares": 29,
+        "entry_price": 18.6200008392334,
+        "current_price": 18.6200008392334,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]
