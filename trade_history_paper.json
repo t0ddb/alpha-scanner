@@ -420,6 +420,32 @@
       "score_at_entry": 9.9,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "6ae4cdf5-5ae2-4d96-b7ee-e026fac44fad"
+    },
+    {
+      "ticker": "CIEN",
+      "side": "sell",
+      "date": "2026-06-04",
+      "price": 533.4,
+      "qty": 17.0,
+      "proceeds": 9067.8,
+      "pnl": 509.83,
+      "pnl_pct": 5.96,
+      "score_at_exit": 4.9,
+      "reason": "Score exit (score 4.9 < 5.0)",
+      "hold_days": 43,
+      "score_at_entry": 9.0,
+      "alpaca_order_id": "a22eecd8-5ce6-46a7-9451-d0d1f7c448a6"
+    },
+    {
+      "ticker": "RDW",
+      "side": "buy",
+      "date": "2026-06-04",
+      "price": 21.54,
+      "qty": 463.0,
+      "cost_basis": 9973.02,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "6d2f9e29-fcd9-487f-bfcc-4db88f7db99e"
     }
   ]
 }

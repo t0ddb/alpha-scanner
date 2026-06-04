@@ -4731,5 +4731,226 @@
         "unrealized_pnl_pct": -0.0739
       }
     ]
+  },
+  {
+    "date": "2026-06-04",
+    "entries": [],
+    "exits": [],
+    "skipped": [
+      {
+        "ticker": "KEEL",
+        "score": 7.65,
+        "reason": "persistence failed (priors [7.2, 7.8, 7.8])"
+      },
+      {
+        "ticker": "NVTS",
+        "score": 8.1,
+        "reason": "persistence failed (priors [7.6, 7.8, 7.5])"
+      },
+      {
+        "ticker": "AMD",
+        "score": 7.95,
+        "reason": "persistence failed (priors [7.6, 7.8, 7.4])"
+      },
+      {
+        "ticker": "WOLF",
+        "score": 7.8,
+        "reason": "persistence failed (priors [8.3, 7.3, 8.0])"
+      },
+      {
+        "ticker": "OSS",
+        "score": 8.25,
+        "reason": "persistence failed (priors [8.9, 7.0, 6.8])"
+      },
+      {
+        "ticker": "COHU",
+        "score": 9.1,
+        "reason": "persistence failed (priors [9.1, 9.1, 7.0])"
+      },
+      {
+        "ticker": "POET",
+        "score": 8.85,
+        "reason": "persistence failed (priors [8.2, 6.4, 6.5])"
+      },
+      {
+        "ticker": "RIOT",
+        "score": 8.2,
+        "reason": "persistence failed (priors [7.8, 7.7, 6.5])"
+      },
+      {
+        "ticker": "VECO",
+        "score": 7.6,
+        "reason": "persistence failed (priors [7.7, 6.8, 6.3])"
+      },
+      {
+        "ticker": "PL",
+        "score": 8.0,
+        "reason": "persistence failed (priors [7.2, 7.2, 7.2])"
+      },
+      {
+        "ticker": "COHR",
+        "score": 7.85,
+        "reason": "persistence failed (priors [7.8, 7.0, 6.1])"
+      },
+      {
+        "ticker": "KLAC",
+        "score": 7.7,
+        "reason": "persistence failed (priors [7.7, 7.6, 6.8])"
+      },
+      {
+        "ticker": "ON",
+        "score": 10.1,
+        "reason": "insufficient cash ($5130 < $10067)"
+      },
+      {
+        "ticker": "OUST",
+        "score": 9.0,
+        "reason": "insufficient cash ($5130 < $10067)"
+      },
+      {
+        "ticker": "MU",
+        "score": 8.95,
+        "reason": "insufficient cash ($5130 < $10067)"
+      },
+      {
+        "ticker": "LUNR",
+        "score": 8.75,
+        "reason": "insufficient cash ($5130 < $10067)"
+      },
+      {
+        "ticker": "RDW",
+        "score": 8.7,
+        "reason": "insufficient cash ($5130 < $10067)"
+      },
+      {
+        "ticker": "WDC",
+        "score": 8.65,
+        "reason": "insufficient cash ($5130 < $10067)"
+      },
+      {
+        "ticker": "STX",
+        "score": 8.55,
+        "reason": "insufficient cash ($5130 < $10067)"
+      },
+      {
+        "ticker": "HUT",
+        "score": 8.5,
+        "reason": "insufficient cash ($5130 < $10067)"
+      },
+      {
+        "ticker": "IFNNY",
+        "score": 8.35,
+        "reason": "insufficient cash ($5130 < $10067)"
+      },
+      {
+        "ticker": "NBIS",
+        "score": 8.25,
+        "reason": "insufficient cash ($5130 < $10067)"
+      },
+      {
+        "ticker": "GFS",
+        "score": 7.9,
+        "reason": "insufficient cash ($5130 < $10067)"
+      },
+      {
+        "ticker": "LRCX",
+        "score": 7.9,
+        "reason": "insufficient cash ($5130 < $10067)"
+      },
+      {
+        "ticker": "CORZ",
+        "score": 7.7,
+        "reason": "insufficient cash ($5130 < $10067)"
+      },
+      {
+        "ticker": "BTDR",
+        "score": 7.5,
+        "reason": "insufficient cash ($5130 < $10067)"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 14,
+    "equity": 127211.27,
+    "cash": 5129.87,
+    "positions_count": 11,
+    "positions": [
+      {
+        "ticker": "ARM",
+        "shares": 39,
+        "entry_price": 211.17999267578125,
+        "current_price": 393.44000244140625,
+        "unrealized_pnl_pct": 0.8631
+      },
+      {
+        "ticker": "MRVL",
+        "shares": 50,
+        "entry_price": 164.9499969482422,
+        "current_price": 316.42999267578125,
+        "unrealized_pnl_pct": 0.9183
+      },
+      {
+        "ticker": "TSEM",
+        "shares": 38,
+        "entry_price": 218.00999450683594,
+        "current_price": 261.30999755859375,
+        "unrealized_pnl_pct": 0.1986
+      },
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1187.0,
+        "current_price": 1759.6800537109375,
+        "unrealized_pnl_pct": 0.4825
+      },
+      {
+        "ticker": "AAOI",
+        "shares": 45,
+        "entry_price": 183.50999450683594,
+        "current_price": 202.88999938964844,
+        "unrealized_pnl_pct": 0.1056
+      },
+      {
+        "ticker": "BE",
+        "shares": 28,
+        "entry_price": 290.5199890136719,
+        "current_price": 291.3699951171875,
+        "unrealized_pnl_pct": 0.0029
+      },
+      {
+        "ticker": "STM",
+        "shares": 149,
+        "entry_price": 55.75,
+        "current_price": 78.36000061035156,
+        "unrealized_pnl_pct": 0.4056
+      },
+      {
+        "ticker": "AXTI",
+        "shares": 86,
+        "entry_price": 96.0,
+        "current_price": 105.98999786376953,
+        "unrealized_pnl_pct": 0.1041
+      },
+      {
+        "ticker": "AEHR",
+        "shares": 89,
+        "entry_price": 93.06999969482422,
+        "current_price": 116.58000183105469,
+        "unrealized_pnl_pct": 0.2526
+      },
+      {
+        "ticker": "IRDM",
+        "shares": 205,
+        "entry_price": 45.70000076293945,
+        "current_price": 52.06999969482422,
+        "unrealized_pnl_pct": 0.1394
+      },
+      {
+        "ticker": "SPIR",
+        "shares": 476,
+        "entry_price": 20.559999465942383,
+        "current_price": 20.040000915527344,
+        "unrealized_pnl_pct": -0.0253
+      }
+    ]
   }
 ]

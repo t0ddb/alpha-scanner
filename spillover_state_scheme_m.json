@@ -224,8 +224,17 @@
       "entry_score": 7.55,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 10492.161611996842
+    },
+    "LRCX": {
+      "entry_date": "2026-06-04",
+      "entry_price": 336.4100036621094,
+      "shares": 31,
+      "cost_basis": 10428.71011352539,
+      "entry_score": 7.9,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 10596.698987416457
     }
   },
-  "last_run_date": "2026-06-03",
+  "last_run_date": "2026-06-04",
   "cumulative_pnl": -8905.21
 }
