@@ -124,5 +124,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 7.9,
     "intended_slot_dollars": 9607.208925613022
+  },
+  {
+    "ticker": "PL",
+    "entry_date": "2026-05-25",
+    "exit_date": "2026-06-05",
+    "entry_price": 44.349998474121094,
+    "exit_price": 32.220001220703125,
+    "shares": 217,
+    "pnl": -2632.21,
+    "pnl_pct": -0.2735,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 7.8,
+    "intended_slot_dollars": 9644.411625413513
   }
 ]
