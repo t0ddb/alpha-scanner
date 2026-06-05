@@ -108,15 +108,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 523.3473700000001
     },
-    "PURR": {
-      "entry_date": "2026-06-02",
-      "entry_price": 10.970000267028809,
-      "shares": 52,
-      "cost_basis": 570.440013885498,
-      "entry_score": 9.6,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 574.3226500000001
-    },
     "BTDR": {
       "entry_date": "2026-06-02",
       "entry_price": 18.760000228881836,
@@ -154,6 +145,6 @@
       "intended_slot_dollars": 563.64719
     }
   },
-  "last_run_date": "2026-06-04",
-  "cumulative_pnl": -398.23
+  "last_run_date": "2026-06-05",
+  "cumulative_pnl": -525.11
 }
