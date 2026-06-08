@@ -138,5 +138,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 7.8,
     "intended_slot_dollars": 9644.411625413513
+  },
+  {
+    "ticker": "BW",
+    "entry_date": "2026-05-20",
+    "exit_date": "2026-06-08",
+    "entry_price": 19.170000076293945,
+    "exit_price": 15.880000114440918,
+    "shares": 454,
+    "pnl": -1493.66,
+    "pnl_pct": -0.1716,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 8.85,
+    "intended_slot_dollars": 8703.303348451233
   }
 ]

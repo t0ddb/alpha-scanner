@@ -40,14 +40,6 @@
       "cost_basis": 8257.949752807617,
       "sequence_tags": "BONUS: first_three_pat=ich\u2192rs\u2192dtf (+0.5; first-3 mean +115% (n=79))|BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
     },
-    "BE": {
-      "entry_date": "2026-05-01",
-      "entry_price": 290.5199890136719,
-      "shares": 28,
-      "entry_score": 8.45,
-      "cost_basis": 8134.5596923828125,
-      "sequence_tags": ""
-    },
     "STM": {
       "entry_date": "2026-05-01",
       "entry_price": 55.75,
@@ -87,9 +79,17 @@
       "entry_score": 9.6,
       "cost_basis": 9786.559745788574,
       "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))"
+    },
+    "ON": {
+      "entry_date": "2026-06-08",
+      "entry_price": 120.9000015258789,
+      "shares": 79,
+      "entry_score": 10.5,
+      "cost_basis": 9551.100120544434,
+      "sequence_tags": "BONUS: last_two=dtf\u2192rs (+0.3; last-2 mean +59% (n=277))|BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
     }
   },
-  "cash": 5129.872066497803,
+  "cash": 2678.732151031494,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-06-05"
+  "last_run_date": "2026-06-08"
 }

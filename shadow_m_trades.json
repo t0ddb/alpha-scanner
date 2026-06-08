@@ -37,5 +37,18 @@
     "exit_reason": "score_exit",
     "entry_score": 8.05,
     "sequence_tags_at_entry": "PENALTY: first_three_pat=ich\u2192dtf\u2192roc (-0.3; first-3 mean +12% (n=81))|PENALTY: first_two_pair=ich\u2192dtf (-0.2; first-2 mean +22.5% (n=211))"
+  },
+  {
+    "ticker": "BE",
+    "entry_date": "2026-05-01",
+    "exit_date": "2026-06-08",
+    "entry_price": 290.5199890136719,
+    "exit_price": 253.57000732421875,
+    "shares": 28,
+    "pnl": -1034.6,
+    "pnl_pct": -0.1272,
+    "exit_reason": "score_exit",
+    "entry_score": 8.45,
+    "sequence_tags_at_entry": ""
   }
 ]

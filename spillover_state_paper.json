@@ -197,8 +197,17 @@
       "entry_score": 9.3,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 11414.59575
+    },
+    "PURR": {
+      "entry_date": "2026-06-08",
+      "entry_price": 8.920000076293945,
+      "shares": 1163,
+      "cost_basis": 10373.960088729858,
+      "entry_score": 9.2,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 10375.67562
     }
   },
-  "last_run_date": "2026-06-05",
+  "last_run_date": "2026-06-08",
   "cumulative_pnl": -12927.01
 }

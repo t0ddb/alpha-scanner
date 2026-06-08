@@ -99,15 +99,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9034.7381808918
     },
-    "BW": {
-      "entry_date": "2026-05-20",
-      "entry_price": 19.170000076293945,
-      "shares": 454,
-      "cost_basis": 8703.180034637451,
-      "entry_score": 8.85,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 8703.303348451233
-    },
     "KEEL": {
       "entry_date": "2026-05-22",
       "entry_price": 4.809999942779541,
@@ -242,8 +233,17 @@
       "entry_score": 7.8,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 9306.35354687767
+    },
+    "WOLF": {
+      "entry_date": "2026-06-08",
+      "entry_price": 55.41999816894531,
+      "shares": 172,
+      "cost_basis": 9532.239685058594,
+      "entry_score": 8.4,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 9583.291681306076
     }
   },
-  "last_run_date": "2026-06-05",
-  "cumulative_pnl": -11537.42
+  "last_run_date": "2026-06-08",
+  "cumulative_pnl": -13031.08
 }

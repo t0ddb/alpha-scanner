@@ -446,6 +446,28 @@
       "score_at_entry": 9.9,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "6d2f9e29-fcd9-487f-bfcc-4db88f7db99e"
+    },
+    {
+      "ticker": "NBIS",
+      "side": "buy",
+      "date": "2026-06-08",
+      "price": 217.8,
+      "qty": 37.0,
+      "cost_basis": 8058.6,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "a97381ee-f874-4a50-bffe-37ba60fc6cf5"
+    },
+    {
+      "ticker": "ON",
+      "side": "buy",
+      "date": "2026-06-08",
+      "price": 120.885,
+      "qty": 63.0,
+      "cost_basis": 7615.76,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "3bbb2915-4710-422f-9ff5-26fbc5d5c1ea"
     }
   ]
 }
