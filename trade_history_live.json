@@ -383,6 +383,17 @@
       "score_at_entry": 9.6,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "1cdee970-dc57-4461-ae93-137169f40048"
+    },
+    {
+      "ticker": "NBIS",
+      "side": "buy",
+      "date": "2026-06-08",
+      "price": 217.8,
+      "qty": 2.0,
+      "cost_basis": 435.6,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "99bb391a-291e-45b2-9695-5a6c8ed1cae1"
     }
   ]
 }
