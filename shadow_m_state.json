@@ -72,14 +72,6 @@
       "cost_basis": 9368.500156402588,
       "sequence_tags": "BONUS: first_three_pat=ich\u2192cmf\u2192dtf (+0.4; first-3 mean +75% (n=60))"
     },
-    "SPIR": {
-      "entry_date": "2026-06-01",
-      "entry_price": 20.559999465942383,
-      "shares": 476,
-      "entry_score": 9.6,
-      "cost_basis": 9786.559745788574,
-      "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))"
-    },
     "ON": {
       "entry_date": "2026-06-08",
       "entry_price": 120.9000015258789,
@@ -87,9 +79,17 @@
       "entry_score": 10.5,
       "cost_basis": 9551.100120544434,
       "sequence_tags": "BONUS: last_two=dtf\u2192rs (+0.3; last-2 mean +59% (n=277))|BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
+    },
+    "COHU": {
+      "entry_date": "2026-06-09",
+      "entry_price": 54.9900016784668,
+      "shares": 164,
+      "entry_score": 10.6,
+      "cost_basis": 9018.360275268555,
+      "sequence_tags": "BONUS: first_two_pair=atr\u2192ich (+0.4; first-2 mean +93% (n=66))|BONUS: last_two=dtf\u2192roc (+0.5; last-2 mean +118% (n=55))|BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
     }
   },
-  "cash": 2678.732151031494,
+  "cash": 1400.1319847106934,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-06-08"
+  "last_run_date": "2026-06-09"
 }

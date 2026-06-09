@@ -110,5 +110,33 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.6,
     "intended_slot_dollars": 11819.01906
+  },
+  {
+    "ticker": "LUNR",
+    "entry_date": "2026-05-18",
+    "exit_date": "2026-06-09",
+    "entry_price": 33.59000015258789,
+    "exit_price": 27.469999313354492,
+    "shares": 282,
+    "pnl": -1725.84,
+    "pnl_pct": -0.1822,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.6,
+    "intended_slot_dollars": 9497.12311
+  },
+  {
+    "ticker": "SPIR",
+    "entry_date": "2026-05-22",
+    "exit_date": "2026-06-09",
+    "entry_price": 21.15999984741211,
+    "exit_price": 16.260000228881836,
+    "shares": 509,
+    "pnl": -2494.1,
+    "pnl_pct": -0.2316,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.2,
+    "intended_slot_dollars": 10790.52207
   }
 ]

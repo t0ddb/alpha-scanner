@@ -36,24 +36,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 8621.895009391785
     },
-    "CIEN": {
-      "entry_date": "2026-05-12",
-      "entry_price": 577.1500244140625,
-      "shares": 15,
-      "cost_basis": 8657.250366210938,
-      "entry_score": 9.4,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 8805.15672913208
-    },
-    "BKSY": {
-      "entry_date": "2026-05-13",
-      "entry_price": 41.150001525878906,
-      "shares": 226,
-      "cost_basis": 9299.900344848633,
-      "entry_score": 8.7,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9338.316596474457
-    },
     "MU": {
       "entry_date": "2026-05-13",
       "entry_price": 803.6300048828125,
@@ -62,15 +44,6 @@
       "entry_score": 7.95,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9338.316596474457
-    },
-    "LUNR": {
-      "entry_date": "2026-05-14",
-      "entry_price": 36.52000045776367,
-      "shares": 254,
-      "cost_basis": 9276.080116271973,
-      "entry_score": 8.85,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9306.43441439209
     },
     "COHR": {
       "entry_date": "2026-05-14",
@@ -117,15 +90,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9644.411625413513
     },
-    "SPIR": {
-      "entry_date": "2026-05-25",
-      "entry_price": 21.15999984741211,
-      "shares": 455,
-      "cost_basis": 9627.79993057251,
-      "entry_score": 8.3,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9644.411625413513
-    },
     "GFS": {
       "entry_date": "2026-05-25",
       "entry_price": 85.63999938964844,
@@ -134,15 +98,6 @@
       "entry_score": 8.1,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9644.411625413513
-    },
-    "POET": {
-      "entry_date": "2026-05-27",
-      "entry_price": 13.279999732971191,
-      "shares": 723,
-      "cost_basis": 9601.439806938171,
-      "entry_score": 9.75,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9607.208925613022
     },
     "NBIS": {
       "entry_date": "2026-05-28",
@@ -244,6 +199,6 @@
       "intended_slot_dollars": 9583.291681306076
     }
   },
-  "last_run_date": "2026-06-08",
-  "cumulative_pnl": -13031.08
+  "last_run_date": "2026-06-09",
+  "cumulative_pnl": -23588.16
 }

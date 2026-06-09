@@ -50,5 +50,18 @@
     "exit_reason": "score_exit",
     "entry_score": 8.45,
     "sequence_tags_at_entry": ""
+  },
+  {
+    "ticker": "SPIR",
+    "entry_date": "2026-06-01",
+    "exit_date": "2026-06-09",
+    "entry_price": 20.559999465942383,
+    "exit_price": 16.260000228881836,
+    "shares": 476,
+    "pnl": -2046.8,
+    "pnl_pct": -0.2091,
+    "exit_reason": "stop_loss",
+    "entry_score": 9.6,
+    "sequence_tags_at_entry": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))"
   }
 ]

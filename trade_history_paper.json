@@ -468,6 +468,54 @@
       "score_at_entry": 9.9,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "3bbb2915-4710-422f-9ff5-26fbc5d5c1ea"
+    },
+    {
+      "ticker": "AXTI",
+      "side": "sell",
+      "date": "2026-06-09",
+      "price": 79.4,
+      "qty": 108.0,
+      "proceeds": 8575.2,
+      "pnl": 680.62,
+      "pnl_pct": 8.62,
+      "score_at_exit": 4.9,
+      "reason": "Score exit (score 4.9 < 5.0)",
+      "hold_days": 50,
+      "score_at_entry": 9.2,
+      "alpaca_order_id": "630e8ae2-fb26-474c-bb9d-1b0f36ea2af4"
+    },
+    {
+      "ticker": "BTDR",
+      "side": "buy",
+      "date": "2026-06-09",
+      "price": 17.41,
+      "qty": 463.0,
+      "cost_basis": 8060.83,
+      "score_at_entry": 9.6,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "ce914f71-5258-477e-8eb5-10f2fdfde816"
+    },
+    {
+      "ticker": "KEEL",
+      "side": "buy",
+      "date": "2026-06-09",
+      "price": 5.425,
+      "qty": 1484.0,
+      "cost_basis": 8050.7,
+      "score_at_entry": 9.5,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "d3a8807f-0e38-4bbb-86b2-43363437dfb1"
+    },
+    {
+      "ticker": "NVTS",
+      "side": "buy",
+      "date": "2026-06-09",
+      "price": 22.88,
+      "qty": 351.0,
+      "cost_basis": 8030.88,
+      "score_at_entry": 9.5,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "1b86a5cb-8f9d-451f-905f-72c43ee14a52"
     }
   ]
 }

@@ -36,15 +36,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9520.58306
     },
-    "LUNR": {
-      "entry_date": "2026-05-18",
-      "entry_price": 33.59000015258789,
-      "shares": 282,
-      "cost_basis": 9472.380043029785,
-      "entry_score": 9.6,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9497.12311
-    },
     "TSEM": {
       "entry_date": "2026-05-20",
       "entry_price": 264.4800109863281,
@@ -69,15 +60,6 @@
       "shares": 41,
       "cost_basis": 10683.77944946289,
       "entry_score": 9.3,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 10790.52207
-    },
-    "SPIR": {
-      "entry_date": "2026-05-22",
-      "entry_price": 21.15999984741211,
-      "shares": 509,
-      "cost_basis": 10770.439922332764,
-      "entry_score": 9.2,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 10790.52207
     },
@@ -208,6 +190,6 @@
       "intended_slot_dollars": 10375.67562
     }
   },
-  "last_run_date": "2026-06-08",
-  "cumulative_pnl": -12927.01
+  "last_run_date": "2026-06-09",
+  "cumulative_pnl": -17146.95
 }
