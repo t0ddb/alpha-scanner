@@ -68,5 +68,33 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.6,
     "intended_slot_dollars": 574.3226500000001
+  },
+  {
+    "ticker": "AXTI",
+    "entry_date": "2026-05-05",
+    "exit_date": "2026-06-09",
+    "entry_price": 107.55000305175781,
+    "exit_price": 78.36000061035156,
+    "shares": 4,
+    "pnl": -116.76,
+    "pnl_pct": -0.2714,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.9,
+    "intended_slot_dollars": 450.18453
+  },
+  {
+    "ticker": "SPIR",
+    "entry_date": "2026-05-22",
+    "exit_date": "2026-06-09",
+    "entry_price": 21.15999984741211,
+    "exit_price": 16.260000228881836,
+    "shares": 25,
+    "pnl": -122.5,
+    "pnl_pct": -0.2316,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.2,
+    "intended_slot_dollars": 548.03655
   }
 ]

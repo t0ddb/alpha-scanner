@@ -394,6 +394,17 @@
       "score_at_entry": 9.9,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "99bb391a-291e-45b2-9695-5a6c8ed1cae1"
+    },
+    {
+      "ticker": "ON",
+      "side": "buy",
+      "date": "2026-06-09",
+      "price": 116.0,
+      "qty": 3.0,
+      "cost_basis": 348.0,
+      "score_at_entry": 9.5,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "d4f75350-5720-47ef-aae8-e3e3415da146"
     }
   ]
 }

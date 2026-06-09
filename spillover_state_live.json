@@ -1,14 +1,5 @@
 {
   "positions": {
-    "AXTI": {
-      "entry_date": "2026-05-05",
-      "entry_price": 107.55000305175781,
-      "shares": 4,
-      "cost_basis": 430.20001220703125,
-      "entry_score": 9.9,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 450.18453
-    },
     "WDC": {
       "entry_date": "2026-05-13",
       "entry_price": 494.0899963378906,
@@ -33,15 +24,6 @@
       "shares": 2,
       "cost_basis": 521.1599731445312,
       "entry_score": 9.3,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 548.03655
-    },
-    "SPIR": {
-      "entry_date": "2026-05-22",
-      "entry_price": 21.15999984741211,
-      "shares": 25,
-      "cost_basis": 528.9999961853027,
-      "entry_score": 9.2,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 548.03655
     },
@@ -163,6 +145,6 @@
       "intended_slot_dollars": 505.43846
     }
   },
-  "last_run_date": "2026-06-08",
-  "cumulative_pnl": -525.11
+  "last_run_date": "2026-06-09",
+  "cumulative_pnl": -764.37
 }
