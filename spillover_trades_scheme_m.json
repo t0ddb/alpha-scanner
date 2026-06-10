@@ -222,5 +222,33 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.75,
     "intended_slot_dollars": 9607.208925613022
+  },
+  {
+    "ticker": "RDW",
+    "entry_date": "2026-06-03",
+    "exit_date": "2026-06-10",
+    "entry_price": 18.6200008392334,
+    "exit_price": 14.869999885559082,
+    "shares": 563,
+    "pnl": -2111.25,
+    "pnl_pct": -0.2014,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 7.55,
+    "intended_slot_dollars": 10492.161611996842
+  },
+  {
+    "ticker": "WOLF",
+    "entry_date": "2026-06-08",
+    "exit_date": "2026-06-10",
+    "entry_price": 55.41999816894531,
+    "exit_price": 43.41999816894531,
+    "shares": 172,
+    "pnl": -2064.0,
+    "pnl_pct": -0.2165,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 8.4,
+    "intended_slot_dollars": 9583.291681306076
   }
 ]

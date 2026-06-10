@@ -63,5 +63,18 @@
     "exit_reason": "stop_loss",
     "entry_score": 9.6,
     "sequence_tags_at_entry": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))"
+  },
+  {
+    "ticker": "AAOI",
+    "entry_date": "2026-05-01",
+    "exit_date": "2026-06-10",
+    "entry_price": 183.50999450683594,
+    "exit_price": 175.1300048828125,
+    "shares": 45,
+    "pnl": -377.1,
+    "pnl_pct": -0.0457,
+    "exit_reason": "score_exit",
+    "entry_score": 8.45,
+    "sequence_tags_at_entry": "BONUS: first_three_pat=ich\u2192rs\u2192dtf (+0.5; first-3 mean +115% (n=79))|BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
   }
 ]

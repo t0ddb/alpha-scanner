@@ -5334,5 +5334,227 @@
         "unrealized_pnl_pct": -0.1198
       }
     ]
+  },
+  {
+    "date": "2026-06-10",
+    "mode": "scheme_m",
+    "entries": [
+      {
+        "ticker": "RDW",
+        "score": 8.1,
+        "entry_price": 14.869999885559082,
+        "shares": 601,
+        "cost": 8936.87,
+        "skip_reason": "No Cash"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [
+      {
+        "ticker": "RDW",
+        "entry_price": 18.6200008392334,
+        "stop_price": 14.9,
+        "exit_price": 14.869999885559082
+      },
+      {
+        "ticker": "WOLF",
+        "entry_price": 55.41999816894531,
+        "stop_price": 44.34,
+        "exit_price": 43.41999816894531
+      }
+    ],
+    "skipped_dup": [
+      {
+        "ticker": "HUT",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "IFNNY",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "OUST",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "NVTS",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 21,
+    "open_value": 189904.82,
+    "open_unrealized_pnl": -3269.02,
+    "realized_cumulative_pnl": -27763.41,
+    "total_pnl": -31032.43,
+    "positions": [
+      {
+        "ticker": "STX",
+        "shares": 10,
+        "entry_price": 766.4400024414062,
+        "current_price": 815.989990234375,
+        "unrealized_pnl": 495.5,
+        "unrealized_pnl_pct": 0.0646
+      },
+      {
+        "ticker": "IRDM",
+        "shares": 206,
+        "entry_price": 40.189998626708984,
+        "current_price": 45.61000061035156,
+        "unrealized_pnl": 1116.52,
+        "unrealized_pnl_pct": 0.1349
+      },
+      {
+        "ticker": "WDC",
+        "shares": 17,
+        "entry_price": 463.9100036621094,
+        "current_price": 490.0899963378906,
+        "unrealized_pnl": 445.06,
+        "unrealized_pnl_pct": 0.0564
+      },
+      {
+        "ticker": "ON",
+        "shares": 83,
+        "entry_price": 103.19999694824219,
+        "current_price": 110.16999816894531,
+        "unrealized_pnl": 578.51,
+        "unrealized_pnl_pct": 0.0675
+      },
+      {
+        "ticker": "MU",
+        "shares": 11,
+        "entry_price": 803.6300048828125,
+        "current_price": 891.8800048828125,
+        "unrealized_pnl": 970.75,
+        "unrealized_pnl_pct": 0.1098
+      },
+      {
+        "ticker": "COHR",
+        "shares": 22,
+        "entry_price": 404.94000244140625,
+        "current_price": 354.7699890136719,
+        "unrealized_pnl": -1103.74,
+        "unrealized_pnl_pct": -0.1239
+      },
+      {
+        "ticker": "AMD",
+        "shares": 20,
+        "entry_price": 449.70001220703125,
+        "current_price": 452.3999938964844,
+        "unrealized_pnl": 54.0,
+        "unrealized_pnl_pct": 0.006
+      },
+      {
+        "ticker": "HUT",
+        "shares": 88,
+        "entry_price": 102.47000122070312,
+        "current_price": 105.68000030517578,
+        "unrealized_pnl": 282.48,
+        "unrealized_pnl_pct": 0.0313
+      },
+      {
+        "ticker": "KEEL",
+        "shares": 2005,
+        "entry_price": 4.809999942779541,
+        "current_price": 5.25,
+        "unrealized_pnl": 882.2,
+        "unrealized_pnl_pct": 0.0915
+      },
+      {
+        "ticker": "VECO",
+        "shares": 161,
+        "entry_price": 59.54999923706055,
+        "current_price": 65.94000244140625,
+        "unrealized_pnl": 1028.79,
+        "unrealized_pnl_pct": 0.1073
+      },
+      {
+        "ticker": "GFS",
+        "shares": 112,
+        "entry_price": 85.63999938964844,
+        "current_price": 74.81999969482422,
+        "unrealized_pnl": -1211.84,
+        "unrealized_pnl_pct": -0.1263
+      },
+      {
+        "ticker": "NBIS",
+        "shares": 42,
+        "entry_price": 226.33999633789062,
+        "current_price": 211.69000244140625,
+        "unrealized_pnl": -615.3,
+        "unrealized_pnl_pct": -0.0647
+      },
+      {
+        "ticker": "OUST",
+        "shares": 227,
+        "entry_price": 42.33000183105469,
+        "current_price": 38.38999938964844,
+        "unrealized_pnl": -894.38,
+        "unrealized_pnl_pct": -0.0931
+      },
+      {
+        "ticker": "INTC",
+        "shares": 82,
+        "entry_price": 114.68000030517578,
+        "current_price": 107.04000091552734,
+        "unrealized_pnl": -626.48,
+        "unrealized_pnl_pct": -0.0666
+      },
+      {
+        "ticker": "IFNNY",
+        "shares": 98,
+        "entry_price": 95.58999633789062,
+        "current_price": 86.36000061035156,
+        "unrealized_pnl": -904.54,
+        "unrealized_pnl_pct": -0.0966
+      },
+      {
+        "ticker": "CORZ",
+        "shares": 343,
+        "entry_price": 28.549999237060547,
+        "current_price": 25.690000534057617,
+        "unrealized_pnl": -980.98,
+        "unrealized_pnl_pct": -0.1002
+      },
+      {
+        "ticker": "BTDR",
+        "shares": 564,
+        "entry_price": 18.760000228881836,
+        "current_price": 16.100000381469727,
+        "unrealized_pnl": -1500.24,
+        "unrealized_pnl_pct": -0.1418
+      },
+      {
+        "ticker": "LRCX",
+        "shares": 31,
+        "entry_price": 336.4100036621094,
+        "current_price": 321.79998779296875,
+        "unrealized_pnl": -452.91,
+        "unrealized_pnl_pct": -0.0434
+      },
+      {
+        "ticker": "COHU",
+        "shares": 186,
+        "entry_price": 49.810001373291016,
+        "current_price": 54.470001220703125,
+        "unrealized_pnl": 866.76,
+        "unrealized_pnl_pct": 0.0936
+      },
+      {
+        "ticker": "NVTS",
+        "shares": 371,
+        "entry_price": 25.079999923706055,
+        "current_price": 20.5,
+        "unrealized_pnl": -1699.18,
+        "unrealized_pnl_pct": -0.1826
+      },
+      {
+        "ticker": "RDW",
+        "shares": 601,
+        "entry_price": 14.869999885559082,
+        "current_price": 14.869999885559082,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]

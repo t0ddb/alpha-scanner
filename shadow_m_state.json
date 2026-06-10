@@ -32,14 +32,6 @@
       "cost_basis": 8309.0,
       "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=2 (+0.5; 2-led-Ich mean +76% (n=218))"
     },
-    "AAOI": {
-      "entry_date": "2026-05-01",
-      "entry_price": 183.50999450683594,
-      "shares": 45,
-      "entry_score": 8.45,
-      "cost_basis": 8257.949752807617,
-      "sequence_tags": "BONUS: first_three_pat=ich\u2192rs\u2192dtf (+0.5; first-3 mean +115% (n=79))|BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
-    },
     "STM": {
       "entry_date": "2026-05-01",
       "entry_price": 55.75,
@@ -87,9 +79,17 @@
       "entry_score": 10.6,
       "cost_basis": 9018.360275268555,
       "sequence_tags": "BONUS: first_two_pair=atr\u2192ich (+0.4; first-2 mean +93% (n=66))|BONUS: last_two=dtf\u2192roc (+0.5; last-2 mean +118% (n=55))|BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
+    },
+    "NBIS": {
+      "entry_date": "2026-06-10",
+      "entry_price": 211.69000244140625,
+      "shares": 42,
+      "entry_score": 8.75,
+      "cost_basis": 8890.980102539062,
+      "sequence_tags": "BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))"
     }
   },
-  "cash": 1400.1319847106934,
+  "cash": 390.00210189819336,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-06-09"
+  "last_run_date": "2026-06-10"
 }
