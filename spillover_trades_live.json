@@ -96,5 +96,61 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.2,
     "intended_slot_dollars": 548.03655
+  },
+  {
+    "ticker": "WDC",
+    "entry_date": "2026-05-13",
+    "exit_date": "2026-06-10",
+    "entry_price": 494.0899963378906,
+    "exit_price": 490.0899963378906,
+    "shares": 1,
+    "pnl": -4.0,
+    "pnl_pct": -0.0081,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.3,
+    "intended_slot_dollars": 518.7101600000001
+  },
+  {
+    "ticker": "CLSK",
+    "entry_date": "2026-06-01",
+    "exit_date": "2026-06-10",
+    "entry_price": 18.809999465942383,
+    "exit_price": 14.899999618530273,
+    "shares": 27,
+    "pnl": -105.57,
+    "pnl_pct": -0.2079,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.3,
+    "intended_slot_dollars": 523.3473700000001
+  },
+  {
+    "ticker": "HUT",
+    "entry_date": "2026-06-02",
+    "exit_date": "2026-06-10",
+    "entry_price": 133.02000427246094,
+    "exit_price": 105.68000030517578,
+    "shares": 4,
+    "pnl": -109.36,
+    "pnl_pct": -0.2055,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.5,
+    "intended_slot_dollars": 574.3226500000001
+  },
+  {
+    "ticker": "RDW",
+    "entry_date": "2026-06-03",
+    "exit_date": "2026-06-10",
+    "entry_price": 18.6200008392334,
+    "exit_price": 14.869999885559082,
+    "shares": 29,
+    "pnl": -108.75,
+    "pnl_pct": -0.2014,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.3,
+    "intended_slot_dollars": 546.06696
   }
 ]

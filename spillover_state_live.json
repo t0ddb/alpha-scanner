@@ -1,14 +1,5 @@
 {
   "positions": {
-    "WDC": {
-      "entry_date": "2026-05-13",
-      "entry_price": 494.0899963378906,
-      "shares": 1,
-      "cost_basis": 494.0899963378906,
-      "entry_score": 9.3,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 518.7101600000001
-    },
     "INTC": {
       "entry_date": "2026-05-22",
       "entry_price": 119.83999633789062,
@@ -81,15 +72,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 527.5081600000001
     },
-    "CLSK": {
-      "entry_date": "2026-06-01",
-      "entry_price": 18.809999465942383,
-      "shares": 27,
-      "cost_basis": 507.86998558044434,
-      "entry_score": 9.3,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 523.3473700000001
-    },
     "BTDR": {
       "entry_date": "2026-06-02",
       "entry_price": 18.760000228881836,
@@ -98,24 +80,6 @@
       "entry_score": 9.5,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 574.3226500000001
-    },
-    "HUT": {
-      "entry_date": "2026-06-02",
-      "entry_price": 133.02000427246094,
-      "shares": 4,
-      "cost_basis": 532.0800170898438,
-      "entry_score": 9.5,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 574.3226500000001
-    },
-    "RDW": {
-      "entry_date": "2026-06-03",
-      "entry_price": 18.6200008392334,
-      "shares": 29,
-      "cost_basis": 539.9800243377686,
-      "entry_score": 9.3,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 546.06696
     },
     "IFNNY": {
       "entry_date": "2026-06-04",
@@ -145,6 +109,6 @@
       "intended_slot_dollars": 505.43846
     }
   },
-  "last_run_date": "2026-06-09",
-  "cumulative_pnl": -764.37
+  "last_run_date": "2026-06-10",
+  "cumulative_pnl": -1092.05
 }
