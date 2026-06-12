@@ -107,8 +107,26 @@
       "entry_score": 9.2,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 505.43846
+    },
+    "CRDO": {
+      "entry_date": "2026-06-12",
+      "entry_price": 250.80999755859375,
+      "shares": 1,
+      "cost_basis": 250.80999755859375,
+      "entry_score": 9.8,
+      "skip_reason_at_entry": "Cap Hit",
+      "intended_slot_dollars": 495.06429
+    },
+    "VECO": {
+      "entry_date": "2026-06-12",
+      "entry_price": 77.4800033569336,
+      "shares": 6,
+      "cost_basis": 464.88002014160156,
+      "entry_score": 9.5,
+      "skip_reason_at_entry": "Cap Hit",
+      "intended_slot_dollars": 495.06429
     }
   },
-  "last_run_date": "2026-06-11",
+  "last_run_date": "2026-06-12",
   "cumulative_pnl": -1092.05
 }
