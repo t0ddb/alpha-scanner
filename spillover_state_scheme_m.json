@@ -188,8 +188,17 @@
       "entry_score": 8.1,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 8950.13695077324
+    },
+    "CRDO": {
+      "entry_date": "2026-06-12",
+      "entry_price": 250.80999755859375,
+      "shares": 40,
+      "cost_basis": 10032.39990234375,
+      "entry_score": 9.65,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 10108.581106344223
     }
   },
-  "last_run_date": "2026-06-11",
+  "last_run_date": "2026-06-12",
   "cumulative_pnl": -27763.41
 }

@@ -161,8 +161,17 @@
       "entry_score": 9.2,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 10375.67562
+    },
+    "VECO": {
+      "entry_date": "2026-06-12",
+      "entry_price": 77.4800033569336,
+      "shares": 134,
+      "cost_basis": 10382.320449829102,
+      "entry_score": 9.5,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 10457.21067
     }
   },
-  "last_run_date": "2026-06-11",
+  "last_run_date": "2026-06-12",
   "cumulative_pnl": -24119.1
 }
