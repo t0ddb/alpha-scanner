@@ -197,8 +197,17 @@
       "entry_score": 9.65,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 10108.581106344223
+    },
+    "TWST": {
+      "entry_date": "2026-06-15",
+      "entry_price": 80.79000091552734,
+      "shares": 133,
+      "cost_basis": 10745.070121765137,
+      "entry_score": 7.6,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 10817.159070428084
     }
   },
-  "last_run_date": "2026-06-12",
+  "last_run_date": "2026-06-15",
   "cumulative_pnl": -27763.41
 }

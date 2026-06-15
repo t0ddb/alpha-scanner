@@ -81,15 +81,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 10794.80404
     },
-    "IRDM": {
-      "entry_date": "2026-05-25",
-      "entry_price": 48.84000015258789,
-      "shares": 221,
-      "cost_basis": 10793.640033721924,
-      "entry_score": 9.2,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 10794.80404
-    },
     "CRWD": {
       "entry_date": "2026-05-26",
       "entry_price": 671.5499877929688,
@@ -170,8 +161,26 @@
       "entry_score": 9.5,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 10457.21067
+    },
+    "COHU": {
+      "entry_date": "2026-06-15",
+      "entry_price": 64.05000305175781,
+      "shares": 171,
+      "cost_basis": 10952.550521850586,
+      "entry_score": 9.8,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 10995.61258
+    },
+    "UCTT": {
+      "entry_date": "2026-06-15",
+      "entry_price": 113.55000305175781,
+      "shares": 96,
+      "cost_basis": 10900.80029296875,
+      "entry_score": 9.2,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 10995.61258
     }
   },
-  "last_run_date": "2026-06-12",
-  "cumulative_pnl": -24119.1
+  "last_run_date": "2026-06-15",
+  "cumulative_pnl": -24881.55
 }
