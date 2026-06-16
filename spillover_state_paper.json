@@ -179,8 +179,17 @@
       "entry_score": 9.2,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 10995.61258
+    },
+    "HUT": {
+      "entry_date": "2026-06-16",
+      "entry_price": 121.4800033569336,
+      "shares": 88,
+      "cost_basis": 10690.240295410156,
+      "entry_score": 9.5,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 10714.26499
     }
   },
-  "last_run_date": "2026-06-15",
+  "last_run_date": "2026-06-16",
   "cumulative_pnl": -24881.55
 }

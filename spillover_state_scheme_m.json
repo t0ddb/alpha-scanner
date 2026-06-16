@@ -206,8 +206,26 @@
       "entry_score": 7.6,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 10817.159070428084
+    },
+    "UCTT": {
+      "entry_date": "2026-06-16",
+      "entry_price": 109.30999755859375,
+      "shares": 92,
+      "cost_basis": 10056.519775390625,
+      "entry_score": 8.1,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 10161.221719033814
+    },
+    "SMH": {
+      "entry_date": "2026-06-16",
+      "entry_price": 616.0,
+      "shares": 16,
+      "cost_basis": 9856.0,
+      "entry_score": 7.6,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 10161.221719033814
     }
   },
-  "last_run_date": "2026-06-15",
+  "last_run_date": "2026-06-16",
   "cumulative_pnl": -27763.41
 }
