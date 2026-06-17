@@ -224,8 +224,26 @@
       "entry_score": 7.6,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 10161.221719033814
+    },
+    "KLAC": {
+      "entry_date": "2026-06-17",
+      "entry_price": 238.72999572753906,
+      "shares": 43,
+      "cost_basis": 10265.38981628418,
+      "entry_score": 8.2,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 10381.603445822144
+    },
+    "ONTO": {
+      "entry_date": "2026-06-17",
+      "entry_price": 318.9200134277344,
+      "shares": 32,
+      "cost_basis": 10205.4404296875,
+      "entry_score": 7.6,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 10381.603445822144
     }
   },
-  "last_run_date": "2026-06-16",
+  "last_run_date": "2026-06-17",
   "cumulative_pnl": -27763.41
 }

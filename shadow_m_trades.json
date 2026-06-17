@@ -76,5 +76,18 @@
     "exit_reason": "score_exit",
     "entry_score": 8.45,
     "sequence_tags_at_entry": "BONUS: first_three_pat=ich\u2192rs\u2192dtf (+0.5; first-3 mean +115% (n=79))|BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
+  },
+  {
+    "ticker": "AXTI",
+    "entry_date": "2026-05-01",
+    "exit_date": "2026-06-17",
+    "entry_price": 96.0,
+    "exit_price": 92.11000061035156,
+    "shares": 86,
+    "pnl": -334.54,
+    "pnl_pct": -0.0405,
+    "exit_reason": "score_exit",
+    "entry_score": 8.3,
+    "sequence_tags_at_entry": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
   }
 ]

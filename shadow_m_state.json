@@ -40,14 +40,6 @@
       "cost_basis": 8306.75,
       "sequence_tags": "PENALTY: first_three_pat=ich\u2192roc\u2192cmf (-0.5; first-3 mean -5% (n=64) \u2014 only neg-mean pattern)|PENALTY: last_two=atr\u2192rs (-0.3; last-2 mean +6.4% (n=69))"
     },
-    "AXTI": {
-      "entry_date": "2026-05-01",
-      "entry_price": 96.0,
-      "shares": 86,
-      "entry_score": 8.3,
-      "cost_basis": 8256.0,
-      "sequence_tags": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
-    },
     "AEHR": {
       "entry_date": "2026-05-01",
       "entry_price": 93.06999969482422,
@@ -89,7 +81,7 @@
       "sequence_tags": "BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))"
     }
   },
-  "cash": 390.00210189819336,
+  "cash": 8311.462154388428,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-06-16"
+  "last_run_date": "2026-06-17"
 }

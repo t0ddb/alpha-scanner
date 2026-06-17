@@ -188,8 +188,26 @@
       "entry_score": 9.5,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 10714.26499
+    },
+    "AEHR": {
+      "entry_date": "2026-06-17",
+      "entry_price": 112.62000274658203,
+      "shares": 97,
+      "cost_basis": 10924.140266418457,
+      "entry_score": 9.5,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 11003.809659999999
+    },
+    "WDC": {
+      "entry_date": "2026-06-17",
+      "entry_price": 712.1300048828125,
+      "shares": 15,
+      "cost_basis": 10681.950073242188,
+      "entry_score": 9.5,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 11003.809659999999
     }
   },
-  "last_run_date": "2026-06-16",
+  "last_run_date": "2026-06-17",
   "cumulative_pnl": -24881.55
 }
