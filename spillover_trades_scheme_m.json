@@ -250,5 +250,19 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 8.4,
     "intended_slot_dollars": 9583.291681306076
+  },
+  {
+    "ticker": "RDW",
+    "entry_date": "2026-06-10",
+    "exit_date": "2026-06-18",
+    "entry_price": 14.869999885559082,
+    "exit_price": 14.350000381469727,
+    "shares": 601,
+    "pnl": -312.52,
+    "pnl_pct": -0.035,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 8.1,
+    "intended_slot_dollars": 8950.13695077324
   }
 ]

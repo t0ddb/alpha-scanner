@@ -5226,5 +5226,236 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-06-18",
+    "mode": "paper",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "DDOG",
+        "entry_price": 221.80999755859375,
+        "exit_price": 223.0,
+        "exit_score": 4.3
+      }
+    ],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "VECO",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "AEHR",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "AMD",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "COHU",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "HUT",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "INTC",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "WDC",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "UCTT",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 22,
+    "open_value": 265679.29,
+    "open_unrealized_pnl": 36403.66,
+    "realized_cumulative_pnl": -24823.24,
+    "total_pnl": 11580.42,
+    "positions": [
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1255.8599853515625,
+        "current_price": 2184.75,
+        "unrealized_pnl": 6502.23,
+        "unrealized_pnl_pct": 0.7396
+      },
+      {
+        "ticker": "STX",
+        "shares": 12,
+        "entry_price": 738.5399780273438,
+        "current_price": 1070.22998046875,
+        "unrealized_pnl": 3980.28,
+        "unrealized_pnl_pct": 0.4491
+      },
+      {
+        "ticker": "WOLF",
+        "shares": 264,
+        "entry_price": 35.939998626708984,
+        "current_price": 57.40999984741211,
+        "unrealized_pnl": 5668.08,
+        "unrealized_pnl_pct": 0.5974
+      },
+      {
+        "ticker": "NVTS",
+        "shares": 598,
+        "entry_price": 15.920000076293945,
+        "current_price": 24.020000457763672,
+        "unrealized_pnl": 4843.8,
+        "unrealized_pnl_pct": 0.5088
+      },
+      {
+        "ticker": "TSEM",
+        "shares": 36,
+        "entry_price": 264.4800109863281,
+        "current_price": 286.739990234375,
+        "unrealized_pnl": 801.36,
+        "unrealized_pnl_pct": 0.0842
+      },
+      {
+        "ticker": "INTC",
+        "shares": 90,
+        "entry_price": 119.83999633789062,
+        "current_price": 133.99000549316406,
+        "unrealized_pnl": 1273.5,
+        "unrealized_pnl_pct": 0.1181
+      },
+      {
+        "ticker": "PANW",
+        "shares": 41,
+        "entry_price": 260.5799865722656,
+        "current_price": 287.7799987792969,
+        "unrealized_pnl": 1115.2,
+        "unrealized_pnl_pct": 0.1044
+      },
+      {
+        "ticker": "KEEL",
+        "shares": 2244,
+        "entry_price": 4.809999942779541,
+        "current_price": 6.289999961853027,
+        "unrealized_pnl": 3321.12,
+        "unrealized_pnl_pct": 0.3077
+      },
+      {
+        "ticker": "AMD",
+        "shares": 23,
+        "entry_price": 467.510009765625,
+        "current_price": 537.3699951171875,
+        "unrealized_pnl": 1606.78,
+        "unrealized_pnl_pct": 0.1494
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 16,
+        "entry_price": 671.5499877929688,
+        "current_price": 684.8599853515625,
+        "unrealized_pnl": 212.96,
+        "unrealized_pnl_pct": 0.0198
+      },
+      {
+        "ticker": "NBIS",
+        "shares": 48,
+        "entry_price": 226.33999633789062,
+        "current_price": 286.69000244140625,
+        "unrealized_pnl": 2896.8,
+        "unrealized_pnl_pct": 0.2666
+      },
+      {
+        "ticker": "OUST",
+        "shares": 231,
+        "entry_price": 46.04999923706055,
+        "current_price": 46.56999969482422,
+        "unrealized_pnl": 120.12,
+        "unrealized_pnl_pct": 0.0113
+      },
+      {
+        "ticker": "MU",
+        "shares": 10,
+        "entry_price": 971.0,
+        "current_price": 1133.989990234375,
+        "unrealized_pnl": 1629.9,
+        "unrealized_pnl_pct": 0.1679
+      },
+      {
+        "ticker": "BTDR",
+        "shares": 630,
+        "entry_price": 18.760000228881836,
+        "current_price": 17.93000030517578,
+        "unrealized_pnl": -522.9,
+        "unrealized_pnl_pct": -0.0442
+      },
+      {
+        "ticker": "IFNNY",
+        "shares": 115,
+        "entry_price": 99.08999633789062,
+        "current_price": 95.2300033569336,
+        "unrealized_pnl": -443.9,
+        "unrealized_pnl_pct": -0.039
+      },
+      {
+        "ticker": "PURR",
+        "shares": 1163,
+        "entry_price": 8.920000076293945,
+        "current_price": 9.279999732971191,
+        "unrealized_pnl": 418.68,
+        "unrealized_pnl_pct": 0.0404
+      },
+      {
+        "ticker": "VECO",
+        "shares": 134,
+        "entry_price": 77.4800033569336,
+        "current_price": 79.6500015258789,
+        "unrealized_pnl": 290.78,
+        "unrealized_pnl_pct": 0.028
+      },
+      {
+        "ticker": "COHU",
+        "shares": 171,
+        "entry_price": 64.05000305175781,
+        "current_price": 69.4000015258789,
+        "unrealized_pnl": 914.85,
+        "unrealized_pnl_pct": 0.0835
+      },
+      {
+        "ticker": "UCTT",
+        "shares": 96,
+        "entry_price": 113.55000305175781,
+        "current_price": 121.27999877929688,
+        "unrealized_pnl": 742.08,
+        "unrealized_pnl_pct": 0.0681
+      },
+      {
+        "ticker": "HUT",
+        "shares": 88,
+        "entry_price": 121.4800033569336,
+        "current_price": 124.44000244140625,
+        "unrealized_pnl": 260.48,
+        "unrealized_pnl_pct": 0.0244
+      },
+      {
+        "ticker": "AEHR",
+        "shares": 97,
+        "entry_price": 112.62000274658203,
+        "current_price": 115.30000305175781,
+        "unrealized_pnl": 259.96,
+        "unrealized_pnl_pct": 0.0238
+      },
+      {
+        "ticker": "WDC",
+        "shares": 15,
+        "entry_price": 712.1300048828125,
+        "current_price": 746.22998046875,
+        "unrealized_pnl": 511.5,
+        "unrealized_pnl_pct": 0.0479
+      }
+    ]
   }
 ]

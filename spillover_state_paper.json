@@ -90,15 +90,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 11356.01767
     },
-    "DDOG": {
-      "entry_date": "2026-05-27",
-      "entry_price": 221.80999755859375,
-      "shares": 49,
-      "cost_basis": 10868.689880371094,
-      "entry_score": 9.3,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 10892.08668
-    },
     "NBIS": {
       "entry_date": "2026-05-28",
       "entry_price": 226.33999633789062,
@@ -208,6 +199,6 @@
       "intended_slot_dollars": 11003.809659999999
     }
   },
-  "last_run_date": "2026-06-17",
-  "cumulative_pnl": -24881.55
+  "last_run_date": "2026-06-18",
+  "cumulative_pnl": -24823.24
 }

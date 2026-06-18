@@ -194,5 +194,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.2,
     "intended_slot_dollars": 10794.80404
+  },
+  {
+    "ticker": "DDOG",
+    "entry_date": "2026-05-27",
+    "exit_date": "2026-06-18",
+    "entry_price": 221.80999755859375,
+    "exit_price": 223.0,
+    "shares": 49,
+    "pnl": 58.31,
+    "pnl_pct": 0.0054,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.3,
+    "intended_slot_dollars": 10892.08668
   }
 ]
