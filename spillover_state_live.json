@@ -143,8 +143,26 @@
       "entry_score": 9.5,
       "skip_reason_at_entry": "Cap Hit",
       "intended_slot_dollars": 519.4281100000001
+    },
+    "WYFI": {
+      "entry_date": "2026-06-19",
+      "entry_price": 38.4900016784668,
+      "shares": 14,
+      "cost_basis": 538.8600234985352,
+      "entry_score": 9.5,
+      "skip_reason_at_entry": "Cap Hit",
+      "intended_slot_dollars": 542.0422900000001
+    },
+    "TWST": {
+      "entry_date": "2026-06-19",
+      "entry_price": 87.55999755859375,
+      "shares": 6,
+      "cost_basis": 525.3599853515625,
+      "entry_score": 9.3,
+      "skip_reason_at_entry": "Cap Hit",
+      "intended_slot_dollars": 542.0422900000001
     }
   },
-  "last_run_date": "2026-06-18",
+  "last_run_date": "2026-06-19",
   "cumulative_pnl": -1127.62
 }
