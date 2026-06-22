@@ -264,5 +264,19 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 8.1,
     "intended_slot_dollars": 8950.13695077324
+  },
+  {
+    "ticker": "IRDM",
+    "entry_date": "2026-05-07",
+    "exit_date": "2026-06-22",
+    "entry_price": 40.189998626708984,
+    "exit_price": 43.29999923706055,
+    "shares": 206,
+    "pnl": 640.66,
+    "pnl_pct": 0.0774,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 8.65,
+    "intended_slot_dollars": 8308.61287053604
   }
 ]

@@ -81,15 +81,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 10794.80404
     },
-    "CRWD": {
-      "entry_date": "2026-05-26",
-      "entry_price": 671.5499877929688,
-      "shares": 16,
-      "cost_basis": 10744.7998046875,
-      "entry_score": 9.2,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 11356.01767
-    },
     "NBIS": {
       "entry_date": "2026-05-28",
       "entry_price": 226.33999633789062,
@@ -217,6 +208,6 @@
       "intended_slot_dollars": 11417.099030000001
     }
   },
-  "last_run_date": "2026-06-19",
-  "cumulative_pnl": -24823.24
+  "last_run_date": "2026-06-22",
+  "cumulative_pnl": -24761.0
 }

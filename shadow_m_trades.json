@@ -89,5 +89,18 @@
     "exit_reason": "score_exit",
     "entry_score": 8.3,
     "sequence_tags_at_entry": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
+  },
+  {
+    "ticker": "IRDM",
+    "entry_date": "2026-05-21",
+    "exit_date": "2026-06-22",
+    "entry_price": 45.70000076293945,
+    "exit_price": 43.29999923706055,
+    "shares": 205,
+    "pnl": -492.0,
+    "pnl_pct": -0.0525,
+    "exit_reason": "score_exit",
+    "entry_score": 9.45,
+    "sequence_tags_at_entry": "BONUS: first_three_pat=ich\u2192cmf\u2192dtf (+0.4; first-3 mean +75% (n=60))"
   }
 ]

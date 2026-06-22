@@ -208,5 +208,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.3,
     "intended_slot_dollars": 10892.08668
+  },
+  {
+    "ticker": "CRWD",
+    "entry_date": "2026-05-26",
+    "exit_date": "2026-06-22",
+    "entry_price": 671.5499877929688,
+    "exit_price": 675.4400024414062,
+    "shares": 16,
+    "pnl": 62.24,
+    "pnl_pct": 0.0058,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.2,
+    "intended_slot_dollars": 11356.01767
   }
 ]

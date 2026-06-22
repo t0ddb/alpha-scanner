@@ -9,15 +9,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 8308.61287053604
     },
-    "IRDM": {
-      "entry_date": "2026-05-07",
-      "entry_price": 40.189998626708984,
-      "shares": 206,
-      "cost_basis": 8279.13971710205,
-      "entry_score": 8.65,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 8308.61287053604
-    },
     "WDC": {
       "entry_date": "2026-05-07",
       "entry_price": 463.9100036621094,
@@ -260,8 +251,26 @@
       "entry_score": 7.9,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 10935.456689161301
+    },
+    "FORM": {
+      "entry_date": "2026-06-22",
+      "entry_price": 156.66000366210938,
+      "shares": 70,
+      "cost_basis": 10966.200256347656,
+      "entry_score": 8.3,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 11014.505909011077
+    },
+    "RIOT": {
+      "entry_date": "2026-06-22",
+      "entry_price": 28.6299991607666,
+      "shares": 384,
+      "cost_basis": 10993.919677734375,
+      "entry_score": 7.5,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 11014.505909011077
     }
   },
-  "last_run_date": "2026-06-19",
-  "cumulative_pnl": -28075.93
+  "last_run_date": "2026-06-22",
+  "cumulative_pnl": -27435.27
 }
