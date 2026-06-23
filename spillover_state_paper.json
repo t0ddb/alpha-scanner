@@ -36,15 +36,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9520.58306
     },
-    "TSEM": {
-      "entry_date": "2026-05-20",
-      "entry_price": 264.4800109863281,
-      "shares": 36,
-      "cost_basis": 9521.280395507812,
-      "entry_score": 9.8,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9704.262060000001
-    },
     "INTC": {
       "entry_date": "2026-05-22",
       "entry_price": 119.83999633789062,
@@ -126,15 +117,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 11414.59575
     },
-    "PURR": {
-      "entry_date": "2026-06-08",
-      "entry_price": 8.920000076293945,
-      "shares": 1163,
-      "cost_basis": 10373.960088729858,
-      "entry_score": 9.2,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 10375.67562
-    },
     "VECO": {
       "entry_date": "2026-06-12",
       "entry_price": 77.4800033569336,
@@ -208,6 +190,6 @@
       "intended_slot_dollars": 11417.099030000001
     }
   },
-  "last_run_date": "2026-06-22",
-  "cumulative_pnl": -24761.0
+  "last_run_date": "2026-06-23",
+  "cumulative_pnl": -25014.02
 }

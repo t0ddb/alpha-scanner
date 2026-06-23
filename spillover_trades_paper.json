@@ -222,5 +222,33 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.2,
     "intended_slot_dollars": 11356.01767
+  },
+  {
+    "ticker": "TSEM",
+    "entry_date": "2026-05-20",
+    "exit_date": "2026-06-23",
+    "entry_price": 264.4800109863281,
+    "exit_price": 282.6499938964844,
+    "shares": 36,
+    "pnl": 654.12,
+    "pnl_pct": 0.0687,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.8,
+    "intended_slot_dollars": 9704.262060000001
+  },
+  {
+    "ticker": "PURR",
+    "entry_date": "2026-06-08",
+    "exit_date": "2026-06-23",
+    "entry_price": 8.920000076293945,
+    "exit_price": 8.140000343322754,
+    "shares": 1163,
+    "pnl": -907.14,
+    "pnl_pct": -0.0874,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.2,
+    "intended_slot_dollars": 10375.67562
   }
 ]
