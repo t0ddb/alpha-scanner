@@ -180,5 +180,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.3,
     "intended_slot_dollars": 544.64268
+  },
+  {
+    "ticker": "PURR",
+    "entry_date": "2026-06-08",
+    "exit_date": "2026-06-23",
+    "entry_price": 8.920000076293945,
+    "exit_price": 8.140000343322754,
+    "shares": 56,
+    "pnl": -43.68,
+    "pnl_pct": -0.0874,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.2,
+    "intended_slot_dollars": 505.43846
   }
 ]

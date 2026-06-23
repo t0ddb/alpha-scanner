@@ -405,6 +405,21 @@
       "score_at_entry": 9.5,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "d4f75350-5720-47ef-aae8-e3e3415da146"
+    },
+    {
+      "ticker": "TSEM",
+      "side": "sell",
+      "date": "2026-06-23",
+      "price": 285.2984,
+      "qty": 1.0,
+      "proceeds": 285.3,
+      "pnl": 25.3,
+      "pnl_pct": 9.73,
+      "score_at_exit": 4.3,
+      "reason": "Score exit (score 4.3 < 5.0)",
+      "hold_days": 34,
+      "score_at_entry": 9.8,
+      "alpaca_order_id": "7a96054e-eae1-4dd1-8d34-8602b413fd4e"
     }
   ]
 }
