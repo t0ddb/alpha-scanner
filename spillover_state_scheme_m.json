@@ -162,15 +162,6 @@
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 9306.35354687767
     },
-    "NVTS": {
-      "entry_date": "2026-06-05",
-      "entry_price": 25.079999923706055,
-      "shares": 371,
-      "cost_basis": 9304.679971694946,
-      "entry_score": 7.8,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 9306.35354687767
-    },
     "CRDO": {
       "entry_date": "2026-06-12",
       "entry_price": 250.80999755859375,
@@ -280,6 +271,6 @@
       "intended_slot_dollars": 10090.718176924132
     }
   },
-  "last_run_date": "2026-06-23",
-  "cumulative_pnl": -27435.27
+  "last_run_date": "2026-06-24",
+  "cumulative_pnl": -29943.23
 }

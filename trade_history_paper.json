@@ -542,6 +542,17 @@
       "score_at_entry": 9.8,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "8f2cc4af-35d3-4130-9566-9d9bd7cca6e9"
+    },
+    {
+      "ticker": "VECO",
+      "side": "buy",
+      "date": "2026-06-24",
+      "price": 71.14,
+      "qty": 91.0,
+      "cost_basis": 6473.74,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "4f78b8d8-f82d-4999-93dd-22d25e31cd01"
     }
   ]
 }

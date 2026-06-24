@@ -278,5 +278,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 8.65,
     "intended_slot_dollars": 8308.61287053604
+  },
+  {
+    "ticker": "NVTS",
+    "entry_date": "2026-06-05",
+    "exit_date": "2026-06-24",
+    "entry_price": 25.079999923706055,
+    "exit_price": 18.31999969482422,
+    "shares": 371,
+    "pnl": -2507.96,
+    "pnl_pct": -0.2695,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 7.8,
+    "intended_slot_dollars": 9306.35354687767
   }
 ]
