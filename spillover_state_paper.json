@@ -27,15 +27,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9520.58306
     },
-    "NVTS": {
-      "entry_date": "2026-05-04",
-      "entry_price": 15.920000076293945,
-      "shares": 598,
-      "cost_basis": 9520.16004562378,
-      "entry_score": 9.5,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9520.58306
-    },
     "INTC": {
       "entry_date": "2026-05-22",
       "entry_price": 119.83999633789062,
@@ -190,6 +181,6 @@
       "intended_slot_dollars": 11417.099030000001
     }
   },
-  "last_run_date": "2026-06-24",
-  "cumulative_pnl": -25014.02
+  "last_run_date": "2026-06-25",
+  "cumulative_pnl": -23949.58
 }
