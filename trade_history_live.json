@@ -420,6 +420,43 @@
       "hold_days": 34,
       "score_at_entry": 9.8,
       "alpaca_order_id": "7a96054e-eae1-4dd1-8d34-8602b413fd4e"
+    },
+    {
+      "ticker": "NVTS",
+      "side": "sell",
+      "date": "2026-06-25",
+      "price": 17.69,
+      "qty": 26.0,
+      "proceeds": 459.94,
+      "pnl": 56.42,
+      "pnl_pct": 13.98,
+      "score_at_exit": 4.9,
+      "reason": "Score exit (score 4.9 < 5.0)",
+      "hold_days": 58,
+      "score_at_entry": 9.9,
+      "alpaca_order_id": "1eb16bdb-13a9-49e8-8023-710fb84fb18b"
+    },
+    {
+      "ticker": "COHU",
+      "side": "buy",
+      "date": "2026-06-25",
+      "price": 67.38,
+      "qty": 5.0,
+      "cost_basis": 336.9,
+      "score_at_entry": 9.6,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "83ef0e23-f226-45e7-9fce-97ca3ccbc166"
+    },
+    {
+      "ticker": "CRDO",
+      "side": "buy",
+      "date": "2026-06-25",
+      "price": 268.13,
+      "qty": 2.0,
+      "cost_basis": 536.26,
+      "score_at_entry": 9.6,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "1455486d-feb5-4f66-a948-f38b3770de9b"
     }
   ]
 }
