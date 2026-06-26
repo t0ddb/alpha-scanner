@@ -292,5 +292,19 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 7.8,
     "intended_slot_dollars": 9306.35354687767
+  },
+  {
+    "ticker": "ON",
+    "entry_date": "2026-05-08",
+    "exit_date": "2026-06-26",
+    "entry_price": 103.19999694824219,
+    "exit_price": 90.6500015258789,
+    "shares": 83,
+    "pnl": -1041.65,
+    "pnl_pct": -0.1216,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 7.8,
+    "intended_slot_dollars": 8621.895009391785
   }
 ]

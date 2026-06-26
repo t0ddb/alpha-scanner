@@ -102,5 +102,18 @@
     "exit_reason": "score_exit",
     "entry_score": 9.45,
     "sequence_tags_at_entry": "BONUS: first_three_pat=ich\u2192cmf\u2192dtf (+0.4; first-3 mean +75% (n=60))"
+  },
+  {
+    "ticker": "ON",
+    "entry_date": "2026-06-08",
+    "exit_date": "2026-06-26",
+    "entry_price": 120.9000015258789,
+    "exit_price": 90.6500015258789,
+    "shares": 79,
+    "pnl": -2389.75,
+    "pnl_pct": -0.2502,
+    "exit_reason": "stop_loss",
+    "entry_score": 10.5,
+    "sequence_tags_at_entry": "BONUS: last_two=dtf\u2192rs (+0.3; last-2 mean +59% (n=277))|BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
   }
 ]

@@ -6621,5 +6621,201 @@
         "unrealized_pnl_pct": 0.1038
       }
     ]
+  },
+  {
+    "date": "2026-06-26",
+    "mode": "paper",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "COHU",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "INTC",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "WDC",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "WYFI",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "UCTT",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 20,
+    "open_value": 225367.13,
+    "open_unrealized_pnl": 13475.86,
+    "realized_cumulative_pnl": -23949.58,
+    "total_pnl": -10473.72,
+    "positions": [
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1255.8599853515625,
+        "current_price": 2090.7099609375,
+        "unrealized_pnl": 5843.95,
+        "unrealized_pnl_pct": 0.6648
+      },
+      {
+        "ticker": "STX",
+        "shares": 12,
+        "entry_price": 738.5399780273438,
+        "current_price": 899.9000244140625,
+        "unrealized_pnl": 1936.32,
+        "unrealized_pnl_pct": 0.2185
+      },
+      {
+        "ticker": "WOLF",
+        "shares": 264,
+        "entry_price": 35.939998626708984,
+        "current_price": 45.970001220703125,
+        "unrealized_pnl": 2647.92,
+        "unrealized_pnl_pct": 0.2791
+      },
+      {
+        "ticker": "INTC",
+        "shares": 90,
+        "entry_price": 119.83999633789062,
+        "current_price": 128.32000732421875,
+        "unrealized_pnl": 763.2,
+        "unrealized_pnl_pct": 0.0708
+      },
+      {
+        "ticker": "PANW",
+        "shares": 41,
+        "entry_price": 260.5799865722656,
+        "current_price": 304.20001220703125,
+        "unrealized_pnl": 1788.42,
+        "unrealized_pnl_pct": 0.1674
+      },
+      {
+        "ticker": "KEEL",
+        "shares": 2244,
+        "entry_price": 4.809999942779541,
+        "current_price": 6.03000020980835,
+        "unrealized_pnl": 2737.68,
+        "unrealized_pnl_pct": 0.2536
+      },
+      {
+        "ticker": "AMD",
+        "shares": 23,
+        "entry_price": 467.510009765625,
+        "current_price": 521.5800170898438,
+        "unrealized_pnl": 1243.61,
+        "unrealized_pnl_pct": 0.1157
+      },
+      {
+        "ticker": "NBIS",
+        "shares": 48,
+        "entry_price": 226.33999633789062,
+        "current_price": 240.3000030517578,
+        "unrealized_pnl": 670.08,
+        "unrealized_pnl_pct": 0.0617
+      },
+      {
+        "ticker": "OUST",
+        "shares": 231,
+        "entry_price": 46.04999923706055,
+        "current_price": 42.02000045776367,
+        "unrealized_pnl": -930.93,
+        "unrealized_pnl_pct": -0.0875
+      },
+      {
+        "ticker": "MU",
+        "shares": 10,
+        "entry_price": 971.0,
+        "current_price": 1132.3299560546875,
+        "unrealized_pnl": 1613.3,
+        "unrealized_pnl_pct": 0.1661
+      },
+      {
+        "ticker": "BTDR",
+        "shares": 630,
+        "entry_price": 18.760000228881836,
+        "current_price": 17.149999618530273,
+        "unrealized_pnl": -1014.3,
+        "unrealized_pnl_pct": -0.0858
+      },
+      {
+        "ticker": "IFNNY",
+        "shares": 115,
+        "entry_price": 99.08999633789062,
+        "current_price": 88.45999908447266,
+        "unrealized_pnl": -1222.45,
+        "unrealized_pnl_pct": -0.1073
+      },
+      {
+        "ticker": "VECO",
+        "shares": 134,
+        "entry_price": 77.4800033569336,
+        "current_price": 70.94999694824219,
+        "unrealized_pnl": -875.02,
+        "unrealized_pnl_pct": -0.0843
+      },
+      {
+        "ticker": "COHU",
+        "shares": 171,
+        "entry_price": 64.05000305175781,
+        "current_price": 64.08000183105469,
+        "unrealized_pnl": 5.13,
+        "unrealized_pnl_pct": 0.0005
+      },
+      {
+        "ticker": "UCTT",
+        "shares": 96,
+        "entry_price": 113.55000305175781,
+        "current_price": 118.81999969482422,
+        "unrealized_pnl": 505.92,
+        "unrealized_pnl_pct": 0.0464
+      },
+      {
+        "ticker": "HUT",
+        "shares": 88,
+        "entry_price": 121.4800033569336,
+        "current_price": 123.0199966430664,
+        "unrealized_pnl": 135.52,
+        "unrealized_pnl_pct": 0.0127
+      },
+      {
+        "ticker": "AEHR",
+        "shares": 97,
+        "entry_price": 112.62000274658203,
+        "current_price": 91.80999755859375,
+        "unrealized_pnl": -2018.57,
+        "unrealized_pnl_pct": -0.1848
+      },
+      {
+        "ticker": "WDC",
+        "shares": 15,
+        "entry_price": 712.1300048828125,
+        "current_price": 586.4500122070312,
+        "unrealized_pnl": -1885.2,
+        "unrealized_pnl_pct": -0.1765
+      },
+      {
+        "ticker": "WYFI",
+        "shares": 296,
+        "entry_price": 38.4900016784668,
+        "current_price": 38.27000045776367,
+        "unrealized_pnl": -65.12,
+        "unrealized_pnl_pct": -0.0057
+      },
+      {
+        "ticker": "TWST",
+        "shares": 130,
+        "entry_price": 87.55999755859375,
+        "current_price": 99.83999633789062,
+        "unrealized_pnl": 1596.4,
+        "unrealized_pnl_pct": 0.1402
+      }
+    ]
   }
 ]
