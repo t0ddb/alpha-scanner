@@ -72,15 +72,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 563.64719
     },
-    "ON": {
-      "entry_date": "2026-06-08",
-      "entry_price": 120.9000015258789,
-      "shares": 4,
-      "cost_basis": 483.6000061035156,
-      "entry_score": 9.9,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 505.43846
-    },
     "CRDO": {
       "entry_date": "2026-06-12",
       "entry_price": 250.80999755859375,
@@ -154,6 +145,6 @@
       "intended_slot_dollars": 542.0422900000001
     }
   },
-  "last_run_date": "2026-06-25",
-  "cumulative_pnl": -1171.3
+  "last_run_date": "2026-06-26",
+  "cumulative_pnl": -1292.3
 }
