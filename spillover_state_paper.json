@@ -90,15 +90,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 10651.69544
     },
-    "BTDR": {
-      "entry_date": "2026-06-02",
-      "entry_price": 18.760000228881836,
-      "shares": 630,
-      "cost_basis": 11818.800144195557,
-      "entry_score": 9.5,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 11819.01906
-    },
     "IFNNY": {
       "entry_date": "2026-06-04",
       "entry_price": 99.08999633789062,
@@ -179,8 +170,17 @@
       "entry_score": 9.3,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 11417.099030000001
+    },
+    "AMAT": {
+      "entry_date": "2026-06-29",
+      "entry_price": 694.6400146484375,
+      "shares": 14,
+      "cost_basis": 9724.960205078125,
+      "entry_score": 9.3,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 10146.33998
     }
   },
-  "last_run_date": "2026-06-26",
-  "cumulative_pnl": -23949.58
+  "last_run_date": "2026-06-29",
+  "cumulative_pnl": -25776.58
 }

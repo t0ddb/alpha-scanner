@@ -260,8 +260,17 @@
       "entry_score": 8.5,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 10090.718176924132
+    },
+    "TER": {
+      "entry_date": "2026-06-29",
+      "entry_price": 463.2099914550781,
+      "shares": 21,
+      "cost_basis": 9727.40982055664,
+      "entry_score": 8.4,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 9839.470980931092
     }
   },
-  "last_run_date": "2026-06-26",
+  "last_run_date": "2026-06-29",
   "cumulative_pnl": -30984.88
 }

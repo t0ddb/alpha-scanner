@@ -564,6 +564,32 @@
       "score_at_entry": 9.6,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "a8addf21-e18a-4dee-8c57-0858a794238c"
+    },
+    {
+      "ticker": "BTDR",
+      "side": "sell",
+      "date": "2026-06-29",
+      "price": 15.83,
+      "qty": 463.0,
+      "proceeds": 7329.29,
+      "pnl": -750.06,
+      "pnl_pct": -9.28,
+      "score_at_exit": 4.9,
+      "reason": "Score exit (score 4.9 < 5.0)",
+      "hold_days": 20,
+      "score_at_entry": 9.6,
+      "alpaca_order_id": "856811eb-c8b0-4ffb-8394-f1e6e660c338"
+    },
+    {
+      "ticker": "INTC",
+      "side": "buy",
+      "date": "2026-06-29",
+      "price": 131.31,
+      "qty": 56.0,
+      "cost_basis": 7353.36,
+      "score_at_entry": 9.8,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "352f558b-8a32-4786-83b7-341bb232ab89"
     }
   ]
 }
