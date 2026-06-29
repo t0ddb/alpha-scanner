@@ -1,10 +1,5 @@
 {
   "cooldowns": {
-    "BE": {
-      "cooldown_until": "2026-06-28",
-      "exit_date": "2026-05-29",
-      "loss_amount": -14.13
-    },
     "BKSY": {
       "cooldown_until": "2026-07-03",
       "exit_date": "2026-06-03",

@@ -54,15 +54,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 527.5081600000001
     },
-    "BTDR": {
-      "entry_date": "2026-06-02",
-      "entry_price": 18.760000228881836,
-      "shares": 30,
-      "cost_basis": 562.8000068664551,
-      "entry_score": 9.5,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 574.3226500000001
-    },
     "IFNNY": {
       "entry_date": "2026-06-04",
       "entry_price": 99.08999633789062,
@@ -145,6 +136,6 @@
       "intended_slot_dollars": 542.0422900000001
     }
   },
-  "last_run_date": "2026-06-26",
-  "cumulative_pnl": -1292.3
+  "last_run_date": "2026-06-29",
+  "cumulative_pnl": -1379.3
 }
