@@ -134,8 +134,17 @@
       "entry_score": 9.3,
       "skip_reason_at_entry": "Cap Hit",
       "intended_slot_dollars": 542.0422900000001
+    },
+    "MKSI": {
+      "entry_date": "2026-06-30",
+      "entry_price": 444.79998779296875,
+      "shares": 1,
+      "cost_basis": 444.79998779296875,
+      "entry_score": 9.0,
+      "skip_reason_at_entry": "Cap Hit",
+      "intended_slot_dollars": 487.56026
     }
   },
-  "last_run_date": "2026-06-29",
+  "last_run_date": "2026-06-30",
   "cumulative_pnl": -1379.3
 }
