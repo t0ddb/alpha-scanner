@@ -306,5 +306,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 7.8,
     "intended_slot_dollars": 8621.895009391785
+  },
+  {
+    "ticker": "BTDR",
+    "entry_date": "2026-06-02",
+    "exit_date": "2026-06-30",
+    "entry_price": 18.760000228881836,
+    "exit_price": 15.869999885559082,
+    "shares": 564,
+    "pnl": -1629.96,
+    "pnl_pct": -0.1541,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 7.75,
+    "intended_slot_dollars": 10594.319054964066
   }
 ]
