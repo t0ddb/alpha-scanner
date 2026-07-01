@@ -1,0 +1,262 @@
+================================================================================
+  ALPHA SCANNER — QUARTERLY SYSTEM REVIEW
+  Label: 2026-Q3
+  Run date: 2026-07-01 16:23
+  Lookback: 12 months
+================================================================================
+
+  Loading config and fetching price data...
+  197 tickers fetched
+
+  Collecting indicator events (Section 1)...
+  44 test dates, ~196 tickers
+  Window: 2025-05-16 -> 2026-04-01
+    [10/44] 2025-07-23
+    [20/44] 2025-10-02
+    [30/44] 2025-12-12
+    [40/44] 2026-02-26
+
+================================================================================
+  SECTION 1: INDICATOR EDGE VALIDATION
+  (63-day forward return, SPY-adjusted, fired vs not-fired)
+================================================================================
+
+  8,536 ticker-date observations
+
+  Indicator                 Original     Current       Delta     Fired            Status
+  --------------------------------------------------------------------------------------
+  Relative Strength          +13.31%     +25.28%     +11.97%      2115           [WATCH]
+  Ichimoku Cloud             +10.89%     +16.69%      +5.80%      3802           [WATCH]
+  Higher Lows                 +7.73%      +4.21%      -3.52%      1177           [WATCH]
+  Rate of Change              +6.84%     +12.12%      +5.28%      4194           [WATCH]
+  Chaikin Money Flow          +6.57%      +2.54%      -4.03%      3992           [WATCH]
+  Dual-TF RS                  +5.20%     +24.59%     +19.39%      1351           [WATCH]
+  ATR Expansion               +4.58%      +9.66%      +5.08%      2871           [WATCH]
+
+  DROPPED INDICATORS — should they be reconsidered?
+  --------------------------------------------------------------------------------------
+  MA Alignment                -9.30%     +13.77%     +23.07%      4770          [ACTION]
+  Near 52w High               -3.30%      -0.64%      +2.66%       703         [HEALTHY]
+  Volume Spike                +0.72%      +6.38%      +5.66%       295           [WATCH]
+  BB Squeeze                  +0.38%      +1.96%      +1.58%      6437         [HEALTHY]
+  MACD Crossover              +0.95%      -1.53%      -2.48%      4424           [WATCH]
+  ADX Trend                   +2.66%      +6.78%      +4.12%      3811           [WATCH]
+
+  NOTES:
+    - MA Alignment (currently dropped): edge is now +13.77% — candidate for re-inclusion if persists
+    - Volume Spike (currently dropped): edge is now +6.38% — candidate for re-inclusion if persists
+    - ADX Trend (currently dropped): edge is now +6.78% — candidate for re-inclusion if persists
+
+  STATUS: [ACTION]
+
+================================================================================
+  SECTION 2: WEIGHT CALIBRATION
+================================================================================
+
+  Indicator               Current Wt        Edge   Edge Rank   Wt Rank    Aligned?
+  --------------------------------------------------------------------------------
+  Relative Strength           3.00 pt     +25.28%          1#        1#   [HEALTHY]
+  Ichimoku Cloud              2.50 pt     +16.69%          3#        2#   [HEALTHY]
+  Higher Lows                 2.00 pt      +4.21%          6#        3#     [WATCH]
+  Rate of Change              1.50 pt     +12.12%          4#        4#   [HEALTHY]
+  Chaikin Money Flow          1.00 pt      +2.54%          7#        5#     [WATCH]
+  Dual-TF RS                  0.00 pt     +24.59%          2#        7#     [WATCH]
+  ATR Expansion               0.50 pt      +9.66%          5#        6#   [HEALTHY]
+
+  SUGGESTED WEIGHTS (proportional to current edges — informational only):
+  ------------------------------------------------------------
+  Indicator                  Current     Suggested       Delta
+  ------------------------------------------------------------
+  Relative Strength           3.00 pt        2.79 pt      -0.21
+  Ichimoku Cloud              2.50 pt        1.84 pt      -0.66
+  Higher Lows                 2.00 pt        0.46 pt      -1.54
+  Rate of Change              1.50 pt        1.34 pt      -0.16
+  Chaikin Money Flow          1.00 pt        0.28 pt      -0.72
+  Dual-TF RS                  0.00 pt        2.72 pt      +2.72
+  ATR Expansion               0.50 pt        1.07 pt      +0.57
+
+  STATUS: [WATCH]
+
+================================================================================
+  SECTION 3: ENTRY/EXIT THRESHOLD GRID (last 12 months)
+================================================================================
+
+
+  [DIAGNOSTIC] Max concurrent positions: 20
+  [DIAGNOSTIC] Avg concurrent positions: 6.1
+  [DIAGNOSTIC] Days at max capacity (cash < $1,000): 206
+  [DIAGNOSTIC] Signals skipped due to insufficient cash: 783
+    >=9.5 / <5: +265.2% return, 113 trades, 54.0% WR, -23.5% DD
+
+  [DIAGNOSTIC] Max concurrent positions: 21
+  [DIAGNOSTIC] Avg concurrent positions: 5.5
+  [DIAGNOSTIC] Days at max capacity (cash < $1,000): 210
+  [DIAGNOSTIC] Signals skipped due to insufficient cash: 814
+    >=9.5 / <6: +268.1% return, 135 trades, 51.9% WR, -26.1% DD
+
+  [DIAGNOSTIC] Max concurrent positions: 20
+  [DIAGNOSTIC] Avg concurrent positions: 5.0
+  [DIAGNOSTIC] Days at max capacity (cash < $1,000): 200
+  [DIAGNOSTIC] Signals skipped due to insufficient cash: 810
+    >=9.5 / <7: +274.7% return, 147 trades, 49.7% WR, -25.9% DD
+
+  [DIAGNOSTIC] Max concurrent positions: 19
+  [DIAGNOSTIC] Avg concurrent positions: 6.3
+  [DIAGNOSTIC] Days at max capacity (cash < $1,000): 250
+  [DIAGNOSTIC] Signals skipped due to insufficient cash: 1873
+    >=9.0 / <5: +258.0% return, 126 trades, 50.0% WR, -21.9% DD
+
+  [DIAGNOSTIC] Max concurrent positions: 22
+  [DIAGNOSTIC] Avg concurrent positions: 5.7
+  [DIAGNOSTIC] Days at max capacity (cash < $1,000): 247
+  [DIAGNOSTIC] Signals skipped due to insufficient cash: 1918
+    >=9.0 / <6: +270.6% return, 153 trades, 51.6% WR, -26.3% DD
+
+  [DIAGNOSTIC] Max concurrent positions: 20
+  [DIAGNOSTIC] Avg concurrent positions: 5.4
+  [DIAGNOSTIC] Days at max capacity (cash < $1,000): 250
+  [DIAGNOSTIC] Signals skipped due to insufficient cash: 1877
+    >=9.0 / <7: +250.8% return, 171 trades, 50.9% WR, -25.9% DD
+
+  [DIAGNOSTIC] Max concurrent positions: 23
+  [DIAGNOSTIC] Avg concurrent positions: 6.5
+  [DIAGNOSTIC] Days at max capacity (cash < $1,000): 252
+  [DIAGNOSTIC] Signals skipped due to insufficient cash: 2718
+    >=8.5 / <5: +267.5% return, 133 trades, 50.4% WR, -22.5% DD
+
+  [DIAGNOSTIC] Max concurrent positions: 22
+  [DIAGNOSTIC] Avg concurrent positions: 5.7
+  [DIAGNOSTIC] Days at max capacity (cash < $1,000): 251
+  [DIAGNOSTIC] Signals skipped due to insufficient cash: 2832
+    >=8.5 / <6: +251.0% return, 156 trades, 50.6% WR, -26.3% DD
+
+  [DIAGNOSTIC] Max concurrent positions: 20
+  [DIAGNOSTIC] Avg concurrent positions: 5.4
+  [DIAGNOSTIC] Days at max capacity (cash < $1,000): 251
+  [DIAGNOSTIC] Signals skipped due to insufficient cash: 2789
+    >=8.5 / <7: +251.5% return, 172 trades, 51.2% WR, -25.8% DD
+
+  Entry   Exit        Return     Alpha    Max DD     Win %    Trades    Ret/DD
+  ----------------------------------------------------------------------------
+  >=9.5   <5         +265.2%   +224.6%    -23.5%     54.0%       113    11.30x
+  >=9.5   <6         +268.1%   +227.5%    -26.1%     51.9%       135    10.29x
+  >=9.5   <7         +274.7%   +234.1%    -25.9%     49.7%       147    10.59x
+  >=9.0   <5         +258.0%   +217.4%    -21.9%     50.0%       126    11.77x
+  >=9.0   <6         +270.6%   +230.0%    -26.3%     51.6%       153    10.29x
+  >=9.0   <7         +250.8%   +210.2%    -25.9%     50.9%       171     9.70x
+  >=8.5   <5         +267.5%   +226.8%    -22.5%     50.4%       133    11.91x
+  >=8.5   <6         +251.0%   +210.3%    -26.3%     50.6%       156     9.55x
+  >=8.5   <7         +251.5%   +210.8%    -25.8%     51.2%       172     9.73x
+
+  CURRENT CONFIG:     Entry >=9.5 / Exit <5
+  BEST THIS QUARTER:  Entry >=9.5 / Exit <7 (+274.7% return)
+  Current config rank: #5 of 9
+
+  STATUS: [WATCH]
+
+================================================================================
+  SECTION 4: LIVE vs BACKTEST COMPARISON
+================================================================================
+
+  Total orders recorded: 47
+    Buys:  31
+    Sells: 11
+  Period: 2026-04-10 -> 2026-06-29
+
+  NOTE: round-trip matching not yet implemented — will activate automatically once >=10 completed round-trips are logged.
+
+  STATUS: [SKIP]
+
+================================================================================
+  SECTION 5: UNIVERSE REVIEW
+================================================================================
+
+  Total tickers in config:   195
+  Successfully fetched data: 196
+  Failed to fetch:           0  (0.0%)
+
+  NEVER-SCORED TICKERS (avg <= 2.0, max < 6.0 over 12mo):
+  ----------------------------------------------------------------------
+  Ticker    Subsector                            Avg     Max     >=6
+  ----------------------------------------------------------------------
+  SYM       Industrial Robotics & Automati      0.0     0.0       0
+  ADBE      Enterprise AI Apps                  0.3     2.5       0
+  EH        eVTOL / Urban Air Mobility          0.4     3.9       0
+  WDAY      Enterprise AI Apps                  0.5     3.5       0
+  NOW       AI Software / DevTools              0.5     2.7       0
+  CRM       Enterprise AI Apps                  0.5     4.2       0
+  INTU      Enterprise AI Apps                  0.5     2.7       0
+  SYK       Surgical / Medical Robotics         0.5     3.5       0
+  AMT       Data Center Infrastructure          0.6     4.6       0
+  MASI      ?                                   0.6     3.0       0
+  SSNLF     Chips — Memory                      0.7     3.5       0
+  AI        Enterprise AI Apps                  0.7     5.0       0
+  MBLY      Physical AI / Robotics              0.8     5.0       0
+  SDGR      Healthcare AI                       0.8     5.9       0
+  ISRG      Surgical / Medical Robotics         0.8     5.3       0
+    ... and 22 more
+
+  SUBSECTORS WITH <4 TICKERS (breadth signals unreliable):
+  ------------------------------------------------------------
+    Foundries                                 3 tickers
+    Copper Miners                             3 tickers
+
+  STATUS: [WATCH]
+
+================================================================================
+  SECTION 6: STATE MACHINE HEALTH (last 12 months)
+================================================================================
+
+  State Transitions Summary:
+  ------------------------------------------------------------
+    Total transitions:              368
+    Quiet -> Emerging:               92
+    Emerging -> Confirmed:           48
+    Emerging -> Quiet (failed):      43
+    Confirmed -> Fading:             93
+    Fading -> Confirmed (revival):   50
+    Fading -> Quiet:                 42
+    Emerging confirmation rate:      52.7%
+
+  Forward Returns by State (63-day, SPY-adjusted):
+  ------------------------------------------------------------
+    NOTE: state-based forward returns require per-date ticker replays.
+    Current baseline run logs the transition counts only.
+    Next quarter will compare transition counts and confirm rates to baseline.
+
+  Parameter Check:
+  ------------------------------------------------------------
+    Breadth trigger (0.5):     configured — OK
+    Confirm days (3):           configured — OK
+    Fade cool days (5):       configured — OK
+
+  STATUS: [HEALTHY]
+
+================================================================================
+  QUARTERLY REVIEW — EXECUTIVE SUMMARY
+  Period: 2025-06-30 -> 2026-07-01
+================================================================================
+
+  Section                     Status          Notes
+  ----------------------------------------------------------------------
+  1. Indicator Edge           [ACTION]        2/13 healthy
+  2. Weight Calibration       [WATCH]         Rank alignment with current edges
+  3. Entry/Exit Thresholds    [WATCH]         Current config rank #5
+  4. Live vs Backtest         [SKIP]          47 orders recorded
+  5. Universe Health          [WATCH]         0 fetch failures, 37 dormant tickers
+  6. State Machine            [HEALTHY]       368 transitions
+
+  OVERALL SYSTEM HEALTH: [ACTION]
+
+  RECOMMENDED ACTIONS:
+  ----------------------------------------------------------------------
+    - 1. Indicator Edge: investigate and prepare a change
+    - 2. Weight Calibration: monitor next quarter
+    - 3. Entry/Exit Thresholds: monitor next quarter
+    - 5. Universe Health: monitor next quarter
+
+  NEXT REVIEW DATE: 2026-10-01
+================================================================================
+
+  Saved review to: /home/runner/work/alpha-scanner/alpha-scanner/quarterly_reviews/review_2026_Q3.txt
+  History log:     /home/runner/work/alpha-scanner/alpha-scanner/quarterly_reviews/review_history.json

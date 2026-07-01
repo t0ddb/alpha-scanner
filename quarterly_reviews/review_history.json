@@ -10,5 +10,17 @@
     "thresholds": "healthy",
     "universe": "healthy",
     "weight_calibration": "watch"
+  },
+  "2026-Q3": {
+    "date": "2026-07-01",
+    "indicator_edge": "action_needed",
+    "live_vs_backtest": "skip",
+    "overall": "action_needed",
+    "period_end": "2026-07-01",
+    "period_start": "2025-06-30",
+    "state_machine": "healthy",
+    "thresholds": "watch",
+    "universe": "watch",
+    "weight_calibration": "watch"
   }
 }
