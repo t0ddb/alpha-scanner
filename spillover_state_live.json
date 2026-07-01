@@ -108,15 +108,6 @@
       "skip_reason_at_entry": "Cap Hit",
       "intended_slot_dollars": 503.36761
     },
-    "AEHR": {
-      "entry_date": "2026-06-17",
-      "entry_price": 112.62000274658203,
-      "shares": 4,
-      "cost_basis": 450.4800109863281,
-      "entry_score": 9.5,
-      "skip_reason_at_entry": "Cap Hit",
-      "intended_slot_dollars": 519.4281100000001
-    },
     "WYFI": {
       "entry_date": "2026-06-19",
       "entry_price": 38.4900016784668,
@@ -145,6 +136,6 @@
       "intended_slot_dollars": 487.56026
     }
   },
-  "last_run_date": "2026-06-30",
-  "cumulative_pnl": -1379.3
+  "last_run_date": "2026-07-01",
+  "cumulative_pnl": -1492.08
 }

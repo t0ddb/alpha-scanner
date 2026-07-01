@@ -457,6 +457,32 @@
       "score_at_entry": 9.6,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "1455486d-feb5-4f66-a948-f38b3770de9b"
+    },
+    {
+      "ticker": "STM",
+      "side": "sell",
+      "date": "2026-07-01",
+      "price": 70.72,
+      "qty": 8.0,
+      "proceeds": 565.76,
+      "pnl": 141.76,
+      "pnl_pct": 33.43,
+      "score_at_exit": 4.4,
+      "reason": "Score exit (score 4.4 < 5.0)",
+      "hold_days": 63,
+      "score_at_entry": 9.9,
+      "alpaca_order_id": "7f72aec3-04d4-41a2-81da-3c84b96c9f63"
+    },
+    {
+      "ticker": "INTC",
+      "side": "buy",
+      "date": "2026-07-01",
+      "price": 127.05,
+      "qty": 3.0,
+      "cost_basis": 381.15,
+      "score_at_entry": 9.8,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "2eacc7c7-f32b-4aa7-b4d2-9498b8e2b03e"
     }
   ]
 }
