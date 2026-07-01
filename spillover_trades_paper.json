@@ -278,5 +278,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.5,
     "intended_slot_dollars": 11819.01906
+  },
+  {
+    "ticker": "AEHR",
+    "entry_date": "2026-06-17",
+    "exit_date": "2026-07-01",
+    "entry_price": 112.62000274658203,
+    "exit_price": 84.42500305175781,
+    "shares": 97,
+    "pnl": -2734.91,
+    "pnl_pct": -0.2504,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.5,
+    "intended_slot_dollars": 11003.809659999999
   }
 ]

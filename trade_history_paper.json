@@ -590,6 +590,32 @@
       "score_at_entry": 9.8,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "352f558b-8a32-4786-83b7-341bb232ab89"
+    },
+    {
+      "ticker": "STM",
+      "side": "sell",
+      "date": "2026-07-01",
+      "price": 70.72,
+      "qty": 137.0,
+      "proceeds": 9688.64,
+      "pnl": 2679.72,
+      "pnl_pct": 38.23,
+      "score_at_exit": 4.4,
+      "reason": "Score exit (score 4.4 < 5.0)",
+      "hold_days": 69,
+      "score_at_entry": 9.8,
+      "alpaca_order_id": "8bcd2215-43cf-43c4-9c50-dc8db4155c4d"
+    },
+    {
+      "ticker": "COHU",
+      "side": "buy",
+      "date": "2026-07-01",
+      "price": 69.075,
+      "qty": 138.0,
+      "cost_basis": 9532.35,
+      "score_at_entry": 9.5,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "647c9c06-3335-4d80-9f94-6178c4bbb561"
     }
   ]
 }

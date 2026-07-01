@@ -320,5 +320,61 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 7.75,
     "intended_slot_dollars": 10594.319054964066
+  },
+  {
+    "ticker": "CORZ",
+    "entry_date": "2026-06-01",
+    "exit_date": "2026-07-01",
+    "entry_price": 28.549999237060547,
+    "exit_price": 23.709999084472656,
+    "shares": 343,
+    "pnl": -1660.12,
+    "pnl_pct": -0.1695,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 8.1,
+    "intended_slot_dollars": 9797.010668665314
+  },
+  {
+    "ticker": "CIFR",
+    "entry_date": "2026-06-19",
+    "exit_date": "2026-07-01",
+    "entry_price": 29.18000030517578,
+    "exit_price": 22.84000015258789,
+    "shares": 374,
+    "pnl": -2371.16,
+    "pnl_pct": -0.2173,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 9.15,
+    "intended_slot_dollars": 10935.456689161301
+  },
+  {
+    "ticker": "CLSK",
+    "entry_date": "2026-06-19",
+    "exit_date": "2026-07-01",
+    "entry_price": 17.239999771118164,
+    "exit_price": 13.619999885559082,
+    "shares": 634,
+    "pnl": -2295.08,
+    "pnl_pct": -0.21,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 8.05,
+    "intended_slot_dollars": 10935.456689161301
+  },
+  {
+    "ticker": "WULF",
+    "entry_date": "2026-06-19",
+    "exit_date": "2026-07-01",
+    "entry_price": 28.979999542236328,
+    "exit_price": 23.579999923706055,
+    "shares": 377,
+    "pnl": -2035.8,
+    "pnl_pct": -0.1863,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 7.9,
+    "intended_slot_dollars": 10935.456689161301
   }
 ]

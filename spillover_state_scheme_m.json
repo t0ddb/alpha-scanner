@@ -117,15 +117,6 @@
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 9450.88574090004
     },
-    "CORZ": {
-      "entry_date": "2026-06-01",
-      "entry_price": 28.549999237060547,
-      "shares": 343,
-      "cost_basis": 9792.649738311768,
-      "entry_score": 8.1,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 9797.010668665314
-    },
     "LRCX": {
       "entry_date": "2026-06-04",
       "entry_price": 336.4100036621094,
@@ -198,33 +189,6 @@
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 10381.603445822144
     },
-    "CIFR": {
-      "entry_date": "2026-06-19",
-      "entry_price": 29.18000030517578,
-      "shares": 374,
-      "cost_basis": 10913.320114135742,
-      "entry_score": 9.15,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 10935.456689161301
-    },
-    "CLSK": {
-      "entry_date": "2026-06-19",
-      "entry_price": 17.239999771118164,
-      "shares": 634,
-      "cost_basis": 10930.159854888916,
-      "entry_score": 8.05,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 10935.456689161301
-    },
-    "WULF": {
-      "entry_date": "2026-06-19",
-      "entry_price": 28.979999542236328,
-      "shares": 377,
-      "cost_basis": 10925.459827423096,
-      "entry_score": 7.9,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 10935.456689161301
-    },
     "FORM": {
       "entry_date": "2026-06-22",
       "entry_price": 156.66000366210938,
@@ -280,6 +244,6 @@
       "intended_slot_dollars": 10305.780541067505
     }
   },
-  "last_run_date": "2026-06-30",
-  "cumulative_pnl": -32614.84
+  "last_run_date": "2026-07-01",
+  "cumulative_pnl": -40977.0
 }
