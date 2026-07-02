@@ -27,15 +27,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9338.316596474457
     },
-    "COHR": {
-      "entry_date": "2026-05-14",
-      "entry_price": 404.94000244140625,
-      "shares": 22,
-      "cost_basis": 8908.680053710938,
-      "entry_score": 8.4,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9306.43441439209
-    },
     "AMD": {
       "entry_date": "2026-05-14",
       "entry_price": 449.70001220703125,
@@ -72,15 +63,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9644.411625413513
     },
-    "GFS": {
-      "entry_date": "2026-05-25",
-      "entry_price": 85.63999938964844,
-      "shares": 112,
-      "cost_basis": 9591.679931640625,
-      "entry_score": 8.1,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9644.411625413513
-    },
     "NBIS": {
       "entry_date": "2026-05-28",
       "entry_price": 226.33999633789062,
@@ -105,15 +87,6 @@
       "shares": 82,
       "cost_basis": 9403.760025024414,
       "entry_score": 8.6,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 9450.88574090004
-    },
-    "IFNNY": {
-      "entry_date": "2026-05-29",
-      "entry_price": 95.58999633789062,
-      "shares": 98,
-      "cost_basis": 9367.819641113281,
-      "entry_score": 8.3,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 9450.88574090004
     },
@@ -189,24 +162,6 @@
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 10381.603445822144
     },
-    "FORM": {
-      "entry_date": "2026-06-22",
-      "entry_price": 156.66000366210938,
-      "shares": 70,
-      "cost_basis": 10966.200256347656,
-      "entry_score": 8.3,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 11014.505909011077
-    },
-    "RIOT": {
-      "entry_date": "2026-06-22",
-      "entry_price": 28.6299991607666,
-      "shares": 384,
-      "cost_basis": 10993.919677734375,
-      "entry_score": 7.5,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 11014.505909011077
-    },
     "MKSI": {
       "entry_date": "2026-06-23",
       "entry_price": 389.1700134277344,
@@ -215,24 +170,6 @@
       "entry_score": 8.5,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 10090.718176924132
-    },
-    "TER": {
-      "entry_date": "2026-06-29",
-      "entry_price": 463.2099914550781,
-      "shares": 21,
-      "cost_basis": 9727.40982055664,
-      "entry_score": 8.4,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 9839.470980931092
-    },
-    "GLW": {
-      "entry_date": "2026-06-30",
-      "entry_price": 255.42999267578125,
-      "shares": 40,
-      "cost_basis": 10217.19970703125,
-      "entry_score": 8.0,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 10305.780541067505
     },
     "PANW": {
       "entry_date": "2026-06-30",
@@ -244,6 +181,6 @@
       "intended_slot_dollars": 10305.780541067505
     }
   },
-  "last_run_date": "2026-07-01",
-  "cumulative_pnl": -40977.0
+  "last_run_date": "2026-07-02",
+  "cumulative_pnl": -54367.58
 }

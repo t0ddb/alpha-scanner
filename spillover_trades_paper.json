@@ -292,5 +292,61 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.5,
     "intended_slot_dollars": 11003.809659999999
+  },
+  {
+    "ticker": "STX",
+    "entry_date": "2026-05-04",
+    "exit_date": "2026-07-02",
+    "entry_price": 738.5399780273438,
+    "exit_price": 820.1599731445312,
+    "shares": 12,
+    "pnl": 979.44,
+    "pnl_pct": 0.1105,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.9,
+    "intended_slot_dollars": 9520.58306
+  },
+  {
+    "ticker": "VECO",
+    "entry_date": "2026-06-12",
+    "exit_date": "2026-07-02",
+    "entry_price": 77.4800033569336,
+    "exit_price": 57.4900016784668,
+    "shares": 134,
+    "pnl": -2678.66,
+    "pnl_pct": -0.258,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.5,
+    "intended_slot_dollars": 10457.21067
+  },
+  {
+    "ticker": "HUT",
+    "entry_date": "2026-06-16",
+    "exit_date": "2026-07-02",
+    "entry_price": 121.4800033569336,
+    "exit_price": 97.13999938964844,
+    "shares": 88,
+    "pnl": -2141.92,
+    "pnl_pct": -0.2004,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.5,
+    "intended_slot_dollars": 10714.26499
+  },
+  {
+    "ticker": "WDC",
+    "entry_date": "2026-06-17",
+    "exit_date": "2026-07-02",
+    "entry_price": 712.1300048828125,
+    "exit_price": 539.0,
+    "shares": 15,
+    "pnl": -2596.95,
+    "pnl_pct": -0.2431,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.5,
+    "intended_slot_dollars": 11003.809659999999
   }
 ]

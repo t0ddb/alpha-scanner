@@ -9,15 +9,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9520.58306
     },
-    "STX": {
-      "entry_date": "2026-05-04",
-      "entry_price": 738.5399780273438,
-      "shares": 12,
-      "cost_basis": 8862.479736328125,
-      "entry_score": 9.9,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9520.58306
-    },
     "WOLF": {
       "entry_date": "2026-05-04",
       "entry_price": 35.939998626708984,
@@ -99,15 +90,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 11414.59575
     },
-    "VECO": {
-      "entry_date": "2026-06-12",
-      "entry_price": 77.4800033569336,
-      "shares": 134,
-      "cost_basis": 10382.320449829102,
-      "entry_score": 9.5,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 10457.21067
-    },
     "COHU": {
       "entry_date": "2026-06-15",
       "entry_price": 64.05000305175781,
@@ -125,24 +107,6 @@
       "entry_score": 9.2,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 10995.61258
-    },
-    "HUT": {
-      "entry_date": "2026-06-16",
-      "entry_price": 121.4800033569336,
-      "shares": 88,
-      "cost_basis": 10690.240295410156,
-      "entry_score": 9.5,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 10714.26499
-    },
-    "WDC": {
-      "entry_date": "2026-06-17",
-      "entry_price": 712.1300048828125,
-      "shares": 15,
-      "cost_basis": 10681.950073242188,
-      "entry_score": 9.5,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 11003.809659999999
     },
     "WYFI": {
       "entry_date": "2026-06-19",
@@ -181,6 +145,6 @@
       "intended_slot_dollars": 10621.526600000001
     }
   },
-  "last_run_date": "2026-07-01",
-  "cumulative_pnl": -28511.49
+  "last_run_date": "2026-07-02",
+  "cumulative_pnl": -34949.58
 }

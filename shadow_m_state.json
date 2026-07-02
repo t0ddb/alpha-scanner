@@ -16,14 +16,6 @@
       "cost_basis": 8247.49984741211,
       "sequence_tags": "BONUS: first_two_pair=roc\u2192atr (+0.5; first-2 mean +95% (n=116))|BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))"
     },
-    "TSEM": {
-      "entry_date": "2026-05-01",
-      "entry_price": 218.00999450683594,
-      "shares": 38,
-      "entry_score": 9.2,
-      "cost_basis": 8284.379791259766,
-      "sequence_tags": "BONUS: n_led_ich=2 (+0.5; 2-led-Ich mean +76% (n=218))|BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))|PENALTY: first_two_pair=roc\u2192cmf (-0.3; first-2 mean +10.6% (n=93))"
-    },
     "SNDK": {
       "entry_date": "2026-05-01",
       "entry_price": 1187.0,
@@ -39,14 +31,6 @@
       "entry_score": 8.45,
       "cost_basis": 8306.75,
       "sequence_tags": "PENALTY: first_three_pat=ich\u2192roc\u2192cmf (-0.5; first-3 mean -5% (n=64) \u2014 only neg-mean pattern)|PENALTY: last_two=atr\u2192rs (-0.3; last-2 mean +6.4% (n=69))"
-    },
-    "AEHR": {
-      "entry_date": "2026-05-01",
-      "entry_price": 93.06999969482422,
-      "shares": 89,
-      "entry_score": 7.95,
-      "cost_basis": 8283.229972839355,
-      "sequence_tags": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
     },
     "COHU": {
       "entry_date": "2026-06-09",
@@ -79,9 +63,25 @@
       "entry_score": 9.1,
       "cost_basis": 9505.599975585938,
       "sequence_tags": "BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
+    },
+    "PANW": {
+      "entry_date": "2026-07-02",
+      "entry_price": 348.05999755859375,
+      "shares": 24,
+      "entry_score": 9.25,
+      "cost_basis": 8353.43994140625,
+      "sequence_tags": "BONUS: n_led_ich=2 (+0.5; 2-led-Ich mean +76% (n=218))"
+    },
+    "TWST": {
+      "entry_date": "2026-07-02",
+      "entry_price": 99.23999786376953,
+      "shares": 85,
+      "entry_score": 8.95,
+      "cost_basis": 8435.39981842041,
+      "sequence_tags": ""
     }
   },
-  "cash": 3950.112060546875,
+  "cash": 1711.6123352050781,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-07-01"
+  "last_run_date": "2026-07-02"
 }

@@ -115,5 +115,31 @@
     "exit_reason": "stop_loss",
     "entry_score": 10.5,
     "sequence_tags_at_entry": "BONUS: last_two=dtf\u2192rs (+0.3; last-2 mean +59% (n=277))|BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
+  },
+  {
+    "ticker": "TSEM",
+    "entry_date": "2026-05-01",
+    "exit_date": "2026-07-02",
+    "entry_price": 218.00999450683594,
+    "exit_price": 219.0500030517578,
+    "shares": 38,
+    "pnl": 39.52,
+    "pnl_pct": 0.0048,
+    "exit_reason": "score_exit",
+    "entry_score": 9.2,
+    "sequence_tags_at_entry": "BONUS: n_led_ich=2 (+0.5; 2-led-Ich mean +76% (n=218))|BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))|PENALTY: first_two_pair=roc\u2192cmf (-0.3; first-2 mean +10.6% (n=93))"
+  },
+  {
+    "ticker": "AEHR",
+    "entry_date": "2026-05-01",
+    "exit_date": "2026-07-02",
+    "entry_price": 93.06999969482422,
+    "exit_price": 69.95999908447266,
+    "shares": 89,
+    "pnl": -2056.79,
+    "pnl_pct": -0.2483,
+    "exit_reason": "stop_loss",
+    "entry_score": 7.95,
+    "sequence_tags_at_entry": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
   }
 ]

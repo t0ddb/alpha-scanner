@@ -616,6 +616,43 @@
       "score_at_entry": 9.5,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "647c9c06-3335-4d80-9f94-6178c4bbb561"
+    },
+    {
+      "ticker": "STX",
+      "side": "sell",
+      "date": "2026-07-02",
+      "price": 826.0,
+      "qty": 11.0,
+      "proceeds": 9086.0,
+      "pnl": 28.27,
+      "pnl_pct": 0.31,
+      "score_at_exit": 4.9,
+      "reason": "Score exit (score 4.9 < 5.0)",
+      "hold_days": 51,
+      "score_at_entry": 9.9,
+      "alpaca_order_id": "d300be2a-0920-4730-bebc-01f52ffc4c6a"
+    },
+    {
+      "ticker": "TWST",
+      "side": "buy",
+      "date": "2026-07-02",
+      "price": 99.19,
+      "qty": 78.0,
+      "cost_basis": 7736.82,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "dce95dba-4241-494b-8ddb-a34c7e0a5af0"
+    },
+    {
+      "ticker": "OUST",
+      "side": "buy",
+      "date": "2026-07-02",
+      "price": 49.88,
+      "qty": 152.0,
+      "cost_basis": 7581.76,
+      "score_at_entry": 9.8,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "9156aaa7-11e0-47e5-88a4-99922777c4d2"
     }
   ]
 }
