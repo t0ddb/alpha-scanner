@@ -236,5 +236,33 @@
     "skip_reason_at_entry": "Cap Hit",
     "entry_score": 9.5,
     "intended_slot_dollars": 519.4281100000001
+  },
+  {
+    "ticker": "VECO",
+    "entry_date": "2026-06-12",
+    "exit_date": "2026-07-02",
+    "entry_price": 77.4800033569336,
+    "exit_price": 57.4900016784668,
+    "shares": 6,
+    "pnl": -119.94,
+    "pnl_pct": -0.258,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Cap Hit",
+    "entry_score": 9.5,
+    "intended_slot_dollars": 495.06429
+  },
+  {
+    "ticker": "HUT",
+    "entry_date": "2026-06-16",
+    "exit_date": "2026-07-02",
+    "entry_price": 121.4800033569336,
+    "exit_price": 97.13999938964844,
+    "shares": 4,
+    "pnl": -97.36,
+    "pnl_pct": -0.2004,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Cap Hit",
+    "entry_score": 9.5,
+    "intended_slot_dollars": 503.36761
   }
 ]

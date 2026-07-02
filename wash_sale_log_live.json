@@ -4,11 +4,6 @@
       "cooldown_until": "2026-07-03",
       "exit_date": "2026-06-03",
       "loss_amount": -63.6
-    },
-    "VIAV": {
-      "cooldown_until": "2026-07-01",
-      "exit_date": "2026-06-01",
-      "loss_amount": -48.32
     }
   },
   "violations": []

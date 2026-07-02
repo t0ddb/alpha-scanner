@@ -483,6 +483,17 @@
       "score_at_entry": 9.8,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "2eacc7c7-f32b-4aa7-b4d2-9498b8e2b03e"
+    },
+    {
+      "ticker": "TWST",
+      "side": "buy",
+      "date": "2026-07-02",
+      "price": 99.19,
+      "qty": 4.0,
+      "cost_basis": 396.76,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "8e7dea07-ed05-4d5d-ba1d-3933de18677e"
     }
   ]
 }
