@@ -653,6 +653,28 @@
       "score_at_entry": 9.8,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "9156aaa7-11e0-47e5-88a4-99922777c4d2"
+    },
+    {
+      "ticker": "TWST",
+      "side": "buy",
+      "date": "2026-07-03",
+      "price": 99.19,
+      "qty": 78.0,
+      "cost_basis": 7736.82,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "a774c4fa-5cff-4bc4-8dc5-a678d2b9dd46"
+    },
+    {
+      "ticker": "OUST",
+      "side": "buy",
+      "date": "2026-07-03",
+      "price": 49.88,
+      "qty": 151.0,
+      "cost_basis": 7531.88,
+      "score_at_entry": 9.8,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "892a4f1d-ef3c-4853-a565-47ea4029b6d8"
     }
   ]
 }

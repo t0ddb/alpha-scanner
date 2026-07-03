@@ -8766,5 +8766,139 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-07-03",
+    "entries": [],
+    "exits": [],
+    "skipped": [
+      {
+        "ticker": "AMAT",
+        "score": 7.95,
+        "reason": "persistence failed (priors [8.0, 8.1, 7.5])"
+      },
+      {
+        "ticker": "CRWD",
+        "score": 7.6,
+        "reason": "persistence failed (priors [7.6, 9.1, 6.7])"
+      },
+      {
+        "ticker": "OUST",
+        "score": 8.5,
+        "reason": "insufficient cash ($1712 < $8032)"
+      },
+      {
+        "ticker": "KLAC",
+        "score": 7.95,
+        "reason": "insufficient cash ($1712 < $8032)"
+      },
+      {
+        "ticker": "ONTO",
+        "score": 7.95,
+        "reason": "insufficient cash ($1712 < $8032)"
+      },
+      {
+        "ticker": "CRDO",
+        "score": 7.8,
+        "reason": "insufficient cash ($1712 < $8032)"
+      },
+      {
+        "ticker": "INTC",
+        "score": 7.8,
+        "reason": "insufficient cash ($1712 < $8032)"
+      },
+      {
+        "ticker": "MU",
+        "score": 7.8,
+        "reason": "insufficient cash ($1712 < $8032)"
+      },
+      {
+        "ticker": "MKSI",
+        "score": 7.65,
+        "reason": "insufficient cash ($1712 < $8032)"
+      },
+      {
+        "ticker": "LRCX",
+        "score": 7.6,
+        "reason": "insufficient cash ($1712 < $8032)"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 8,
+    "equity": 101497.34,
+    "cash": 1711.61,
+    "positions_count": 10,
+    "positions": [
+      {
+        "ticker": "ARM",
+        "shares": 39,
+        "entry_price": 211.17999267578125,
+        "current_price": 315.2799987792969,
+        "unrealized_pnl_pct": 0.4929
+      },
+      {
+        "ticker": "MRVL",
+        "shares": 50,
+        "entry_price": 164.9499969482422,
+        "current_price": 245.2899932861328,
+        "unrealized_pnl_pct": 0.4871
+      },
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1187.0,
+        "current_price": 1745.0,
+        "unrealized_pnl_pct": 0.4701
+      },
+      {
+        "ticker": "STM",
+        "shares": 149,
+        "entry_price": 55.75,
+        "current_price": 68.3499984741211,
+        "unrealized_pnl_pct": 0.226
+      },
+      {
+        "ticker": "COHU",
+        "shares": 164,
+        "entry_price": 54.9900016784668,
+        "current_price": 59.27000045776367,
+        "unrealized_pnl_pct": 0.0778
+      },
+      {
+        "ticker": "NBIS",
+        "shares": 42,
+        "entry_price": 211.69000244140625,
+        "current_price": 215.6199951171875,
+        "unrealized_pnl_pct": 0.0186
+      },
+      {
+        "ticker": "HUT",
+        "shares": 90,
+        "entry_price": 121.04000091552734,
+        "current_price": 97.13999938964844,
+        "unrealized_pnl_pct": -0.1975
+      },
+      {
+        "ticker": "UCTT",
+        "shares": 80,
+        "entry_price": 118.81999969482422,
+        "current_price": 106.4800033569336,
+        "unrealized_pnl_pct": -0.1039
+      },
+      {
+        "ticker": "PANW",
+        "shares": 24,
+        "entry_price": 348.05999755859375,
+        "current_price": 348.05999755859375,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "TWST",
+        "shares": 85,
+        "entry_price": 99.23999786376953,
+        "current_price": 99.23999786376953,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]
