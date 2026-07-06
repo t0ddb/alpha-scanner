@@ -264,5 +264,19 @@
     "skip_reason_at_entry": "Cap Hit",
     "entry_score": 9.5,
     "intended_slot_dollars": 503.36761
+  },
+  {
+    "ticker": "NBIS",
+    "entry_date": "2026-05-28",
+    "exit_date": "2026-07-06",
+    "entry_price": 226.33999633789062,
+    "exit_price": 213.02000427246094,
+    "shares": 2,
+    "pnl": -26.64,
+    "pnl_pct": -0.0588,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.3,
+    "intended_slot_dollars": 551.17063
   }
 ]
