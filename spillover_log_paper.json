@@ -7775,5 +7775,156 @@
         "unrealized_pnl_pct": -0.1781
       }
     ]
+  },
+  {
+    "date": "2026-07-06",
+    "mode": "paper",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "NBIS",
+        "entry_price": 226.33999633789062,
+        "exit_price": 213.02000427246094,
+        "exit_score": 4.9
+      }
+    ],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "AMAT",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "PANW",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 15,
+    "open_value": 163746.07,
+    "open_unrealized_pnl": 6123.69,
+    "realized_cumulative_pnl": -35588.94,
+    "total_pnl": -29465.25,
+    "positions": [
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1255.8599853515625,
+        "current_price": 1744.4300537109375,
+        "unrealized_pnl": 3419.99,
+        "unrealized_pnl_pct": 0.389
+      },
+      {
+        "ticker": "WOLF",
+        "shares": 264,
+        "entry_price": 35.939998626708984,
+        "current_price": 39.470001220703125,
+        "unrealized_pnl": 931.92,
+        "unrealized_pnl_pct": 0.0982
+      },
+      {
+        "ticker": "INTC",
+        "shares": 90,
+        "entry_price": 119.83999633789062,
+        "current_price": 122.19999694824219,
+        "unrealized_pnl": 212.4,
+        "unrealized_pnl_pct": 0.0197
+      },
+      {
+        "ticker": "PANW",
+        "shares": 41,
+        "entry_price": 260.5799865722656,
+        "current_price": 357.5299987792969,
+        "unrealized_pnl": 3974.95,
+        "unrealized_pnl_pct": 0.3721
+      },
+      {
+        "ticker": "KEEL",
+        "shares": 2244,
+        "entry_price": 4.809999942779541,
+        "current_price": 4.840000152587891,
+        "unrealized_pnl": 67.32,
+        "unrealized_pnl_pct": 0.0062
+      },
+      {
+        "ticker": "AMD",
+        "shares": 23,
+        "entry_price": 467.510009765625,
+        "current_price": 552.0499877929688,
+        "unrealized_pnl": 1944.42,
+        "unrealized_pnl_pct": 0.1808
+      },
+      {
+        "ticker": "OUST",
+        "shares": 231,
+        "entry_price": 46.04999923706055,
+        "current_price": 49.83000183105469,
+        "unrealized_pnl": 873.18,
+        "unrealized_pnl_pct": 0.0821
+      },
+      {
+        "ticker": "MU",
+        "shares": 10,
+        "entry_price": 971.0,
+        "current_price": 984.75,
+        "unrealized_pnl": 137.5,
+        "unrealized_pnl_pct": 0.0142
+      },
+      {
+        "ticker": "IFNNY",
+        "shares": 115,
+        "entry_price": 99.08999633789062,
+        "current_price": 87.80999755859375,
+        "unrealized_pnl": -1297.2,
+        "unrealized_pnl_pct": -0.1138
+      },
+      {
+        "ticker": "COHU",
+        "shares": 171,
+        "entry_price": 64.05000305175781,
+        "current_price": 58.70000076293945,
+        "unrealized_pnl": -914.85,
+        "unrealized_pnl_pct": -0.0835
+      },
+      {
+        "ticker": "UCTT",
+        "shares": 96,
+        "entry_price": 113.55000305175781,
+        "current_price": 105.52999877929688,
+        "unrealized_pnl": -769.92,
+        "unrealized_pnl_pct": -0.0706
+      },
+      {
+        "ticker": "WYFI",
+        "shares": 296,
+        "entry_price": 38.4900016784668,
+        "current_price": 35.540000915527344,
+        "unrealized_pnl": -873.2,
+        "unrealized_pnl_pct": -0.0766
+      },
+      {
+        "ticker": "TWST",
+        "shares": 130,
+        "entry_price": 87.55999755859375,
+        "current_price": 99.93000030517578,
+        "unrealized_pnl": 1608.1,
+        "unrealized_pnl_pct": 0.1413
+      },
+      {
+        "ticker": "AMAT",
+        "shares": 14,
+        "entry_price": 694.6400146484375,
+        "current_price": 592.7899780273438,
+        "unrealized_pnl": -1425.9,
+        "unrealized_pnl_pct": -0.1466
+      },
+      {
+        "ticker": "MKSI",
+        "shares": 23,
+        "entry_price": 444.79998779296875,
+        "current_price": 368.05999755859375,
+        "unrealized_pnl": -1765.02,
+        "unrealized_pnl_pct": -0.1725
+      }
+    ]
   }
 ]

@@ -54,15 +54,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 10794.80404
     },
-    "NBIS": {
-      "entry_date": "2026-05-28",
-      "entry_price": 226.33999633789062,
-      "shares": 48,
-      "cost_basis": 10864.31982421875,
-      "entry_score": 9.3,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 10929.1744
-    },
     "OUST": {
       "entry_date": "2026-05-29",
       "entry_price": 46.04999923706055,
@@ -145,6 +136,6 @@
       "intended_slot_dollars": 10621.526600000001
     }
   },
-  "last_run_date": "2026-07-03",
-  "cumulative_pnl": -34949.58
+  "last_run_date": "2026-07-06",
+  "cumulative_pnl": -35588.94
 }

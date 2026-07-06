@@ -675,6 +675,21 @@
       "score_at_entry": 9.8,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "892a4f1d-ef3c-4853-a565-47ea4029b6d8"
+    },
+    {
+      "ticker": "NBIS",
+      "side": "sell",
+      "date": "2026-07-06",
+      "price": 213.0,
+      "qty": 37.0,
+      "proceeds": 7881.0,
+      "pnl": -416.1,
+      "pnl_pct": -5.02,
+      "score_at_exit": 4.9,
+      "reason": "Score exit (score 4.9 < 5.0)",
+      "hold_days": 28,
+      "score_at_entry": 9.9,
+      "alpaca_order_id": "e45e0052-a506-4165-a831-1cf4939792e8"
     }
   ]
 }

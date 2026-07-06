@@ -5,10 +5,10 @@
       "exit_date": "2026-06-29",
       "loss_amount": -750.06
     },
-    "BW": {
-      "cooldown_until": "2026-07-03",
-      "exit_date": "2026-06-03",
-      "loss_amount": -718.8
+    "NBIS": {
+      "cooldown_until": "2026-08-05",
+      "exit_date": "2026-07-06",
+      "loss_amount": -416.1
     }
   },
   "violations": []

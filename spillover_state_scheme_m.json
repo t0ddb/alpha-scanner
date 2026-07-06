@@ -179,8 +179,26 @@
       "entry_score": 7.8,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 10305.780541067505
+    },
+    "CRWD": {
+      "entry_date": "2026-07-06",
+      "entry_price": 199.3800048828125,
+      "shares": 43,
+      "cost_basis": 8573.340209960938,
+      "entry_score": 8.7,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 8581.699492139434
+    },
+    "AMAT": {
+      "entry_date": "2026-07-06",
+      "entry_price": 592.7899780273438,
+      "shares": 14,
+      "cost_basis": 8299.059692382812,
+      "entry_score": 7.95,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 8581.699492139434
     }
   },
-  "last_run_date": "2026-07-03",
+  "last_run_date": "2026-07-06",
   "cumulative_pnl": -54367.58
 }
