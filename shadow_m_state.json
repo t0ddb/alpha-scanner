@@ -48,22 +48,6 @@
       "cost_basis": 8890.980102539062,
       "sequence_tags": "BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))"
     },
-    "HUT": {
-      "entry_date": "2026-06-22",
-      "entry_price": 121.04000091552734,
-      "shares": 90,
-      "entry_score": 10.35,
-      "cost_basis": 10893.600082397461,
-      "sequence_tags": "BONUS: first_two_pair=atr\u2192ich (+0.4; first-2 mean +93% (n=66))|BONUS: last_two=dtf\u2192roc (+0.5; last-2 mean +118% (n=55))|BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
-    },
-    "UCTT": {
-      "entry_date": "2026-06-26",
-      "entry_price": 118.81999969482422,
-      "shares": 80,
-      "entry_score": 9.1,
-      "cost_basis": 9505.599975585938,
-      "sequence_tags": "BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
-    },
     "PANW": {
       "entry_date": "2026-07-02",
       "entry_price": 348.05999755859375,
@@ -79,9 +63,25 @@
       "entry_score": 8.95,
       "cost_basis": 8435.39981842041,
       "sequence_tags": ""
+    },
+    "CRWD": {
+      "entry_date": "2026-07-07",
+      "entry_price": 194.6199951171875,
+      "shares": 40,
+      "entry_score": 8.95,
+      "cost_basis": 7784.7998046875,
+      "sequence_tags": "BONUS: first_three_pat=ich\u2192rs\u2192dtf (+0.5; first-3 mean +115% (n=79))|BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
+    },
+    "CRDO": {
+      "entry_date": "2026-07-07",
+      "entry_price": 246.39999389648438,
+      "shares": 32,
+      "entry_score": 8.7,
+      "cost_basis": 7884.7998046875,
+      "sequence_tags": "BONUS: first_two_pair=atr\u2192ich (+0.4; first-2 mean +93% (n=66))|BONUS: last_two=dtf\u2192rs (+0.3; last-2 mean +59% (n=277))|BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
     }
   },
-  "cash": 1711.6123352050781,
+  "cash": 2011.012435913086,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-07-06"
+  "last_run_date": "2026-07-07"
 }

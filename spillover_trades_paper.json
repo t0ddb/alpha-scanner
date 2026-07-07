@@ -362,5 +362,61 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.3,
     "intended_slot_dollars": 10929.1744
+  },
+  {
+    "ticker": "COHU",
+    "entry_date": "2026-06-15",
+    "exit_date": "2026-07-07",
+    "entry_price": 64.05000305175781,
+    "exit_price": 50.970001220703125,
+    "shares": 171,
+    "pnl": -2236.68,
+    "pnl_pct": -0.2042,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.8,
+    "intended_slot_dollars": 10995.61258
+  },
+  {
+    "ticker": "UCTT",
+    "entry_date": "2026-06-15",
+    "exit_date": "2026-07-07",
+    "entry_price": 113.55000305175781,
+    "exit_price": 90.77999877929688,
+    "shares": 96,
+    "pnl": -2185.92,
+    "pnl_pct": -0.2005,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.2,
+    "intended_slot_dollars": 10995.61258
+  },
+  {
+    "ticker": "AMAT",
+    "entry_date": "2026-06-29",
+    "exit_date": "2026-07-07",
+    "entry_price": 694.6400146484375,
+    "exit_price": 554.5,
+    "shares": 14,
+    "pnl": -1961.96,
+    "pnl_pct": -0.2017,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.3,
+    "intended_slot_dollars": 10146.33998
+  },
+  {
+    "ticker": "MKSI",
+    "entry_date": "2026-06-30",
+    "exit_date": "2026-07-07",
+    "entry_price": 444.79998779296875,
+    "exit_price": 349.57000732421875,
+    "shares": 23,
+    "pnl": -2190.29,
+    "pnl_pct": -0.2141,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.0,
+    "intended_slot_dollars": 10621.526600000001
   }
 ]

@@ -690,6 +690,17 @@
       "hold_days": 28,
       "score_at_entry": 9.9,
       "alpaca_order_id": "e45e0052-a506-4165-a831-1cf4939792e8"
+    },
+    {
+      "ticker": "PANW",
+      "side": "buy",
+      "date": "2026-07-07",
+      "price": 337.045,
+      "qty": 8.0,
+      "cost_basis": 2696.36,
+      "score_at_entry": 9.8,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "8a83846d-bc6d-4dd1-a3b9-b55e030208d7"
     }
   ]
 }

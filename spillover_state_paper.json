@@ -81,24 +81,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 11414.59575
     },
-    "COHU": {
-      "entry_date": "2026-06-15",
-      "entry_price": 64.05000305175781,
-      "shares": 171,
-      "cost_basis": 10952.550521850586,
-      "entry_score": 9.8,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 10995.61258
-    },
-    "UCTT": {
-      "entry_date": "2026-06-15",
-      "entry_price": 113.55000305175781,
-      "shares": 96,
-      "cost_basis": 10900.80029296875,
-      "entry_score": 9.2,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 10995.61258
-    },
     "WYFI": {
       "entry_date": "2026-06-19",
       "entry_price": 38.4900016784668,
@@ -116,26 +98,8 @@
       "entry_score": 9.3,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 11417.099030000001
-    },
-    "AMAT": {
-      "entry_date": "2026-06-29",
-      "entry_price": 694.6400146484375,
-      "shares": 14,
-      "cost_basis": 9724.960205078125,
-      "entry_score": 9.3,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 10146.33998
-    },
-    "MKSI": {
-      "entry_date": "2026-06-30",
-      "entry_price": 444.79998779296875,
-      "shares": 23,
-      "cost_basis": 10230.399719238281,
-      "entry_score": 9.0,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 10621.526600000001
     }
   },
-  "last_run_date": "2026-07-06",
-  "cumulative_pnl": -35588.94
+  "last_run_date": "2026-07-07",
+  "cumulative_pnl": -44163.79
 }

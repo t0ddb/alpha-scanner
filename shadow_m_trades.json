@@ -141,5 +141,31 @@
     "exit_reason": "stop_loss",
     "entry_score": 7.95,
     "sequence_tags_at_entry": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
+  },
+  {
+    "ticker": "HUT",
+    "entry_date": "2026-06-22",
+    "exit_date": "2026-07-07",
+    "entry_price": 121.04000091552734,
+    "exit_price": 96.73999786376953,
+    "shares": 90,
+    "pnl": -2187.0,
+    "pnl_pct": -0.2008,
+    "exit_reason": "stop_loss",
+    "entry_score": 10.35,
+    "sequence_tags_at_entry": "BONUS: first_two_pair=atr\u2192ich (+0.4; first-2 mean +93% (n=66))|BONUS: last_two=dtf\u2192roc (+0.5; last-2 mean +118% (n=55))|BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
+  },
+  {
+    "ticker": "UCTT",
+    "entry_date": "2026-06-26",
+    "exit_date": "2026-07-07",
+    "entry_price": 118.81999969482422,
+    "exit_price": 90.77999877929688,
+    "shares": 80,
+    "pnl": -2243.2,
+    "pnl_pct": -0.236,
+    "exit_reason": "stop_loss",
+    "entry_score": 9.1,
+    "sequence_tags_at_entry": "BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
   }
 ]
