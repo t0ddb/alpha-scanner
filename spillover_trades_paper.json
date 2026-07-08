@@ -418,5 +418,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.0,
     "intended_slot_dollars": 10621.526600000001
+  },
+  {
+    "ticker": "IFNNY",
+    "entry_date": "2026-06-04",
+    "exit_date": "2026-07-08",
+    "entry_price": 99.08999633789062,
+    "exit_price": 81.16999816894531,
+    "shares": 115,
+    "pnl": -2060.8,
+    "pnl_pct": -0.1808,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.3,
+    "intended_slot_dollars": 11414.59575
   }
 ]

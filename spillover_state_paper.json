@@ -72,15 +72,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 10651.69544
     },
-    "IFNNY": {
-      "entry_date": "2026-06-04",
-      "entry_price": 99.08999633789062,
-      "shares": 115,
-      "cost_basis": 11395.349578857422,
-      "entry_score": 9.3,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 11414.59575
-    },
     "WYFI": {
       "entry_date": "2026-06-19",
       "entry_price": 38.4900016784668,
@@ -100,6 +91,6 @@
       "intended_slot_dollars": 11417.099030000001
     }
   },
-  "last_run_date": "2026-07-07",
-  "cumulative_pnl": -44163.79
+  "last_run_date": "2026-07-08",
+  "cumulative_pnl": -46224.59
 }
