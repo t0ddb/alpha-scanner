@@ -6123,5 +6123,96 @@
         "unrealized_pnl_pct": 0.0396
       }
     ]
+  },
+  {
+    "date": "2026-07-08",
+    "mode": "live",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "IFNNY",
+        "entry_price": 99.08999633789062,
+        "exit_price": 81.16999816894531,
+        "exit_score": 4.9
+      }
+    ],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "PANW",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 8,
+    "open_value": 3906.23,
+    "open_unrealized_pnl": 68.28,
+    "realized_cumulative_pnl": -2116.57,
+    "total_pnl": -2048.29,
+    "positions": [
+      {
+        "ticker": "INTC",
+        "shares": 4,
+        "entry_price": 119.83999633789062,
+        "current_price": 110.23999786376953,
+        "unrealized_pnl": -38.4,
+        "unrealized_pnl_pct": -0.0801
+      },
+      {
+        "ticker": "PANW",
+        "shares": 2,
+        "entry_price": 260.5799865722656,
+        "current_price": 320.5899963378906,
+        "unrealized_pnl": 120.02,
+        "unrealized_pnl_pct": 0.2303
+      },
+      {
+        "ticker": "KEEL",
+        "shares": 114,
+        "entry_price": 4.809999942779541,
+        "current_price": 4.559999942779541,
+        "unrealized_pnl": -28.5,
+        "unrealized_pnl_pct": -0.052
+      },
+      {
+        "ticker": "AMD",
+        "shares": 1,
+        "entry_price": 467.510009765625,
+        "current_price": 517.405029296875,
+        "unrealized_pnl": 49.9,
+        "unrealized_pnl_pct": 0.1067
+      },
+      {
+        "ticker": "OUST",
+        "shares": 11,
+        "entry_price": 46.04999923706055,
+        "current_price": 43.40999984741211,
+        "unrealized_pnl": -29.04,
+        "unrealized_pnl_pct": -0.0573
+      },
+      {
+        "ticker": "CRDO",
+        "shares": 1,
+        "entry_price": 250.80999755859375,
+        "current_price": 258.69000244140625,
+        "unrealized_pnl": 7.88,
+        "unrealized_pnl_pct": 0.0314
+      },
+      {
+        "ticker": "WYFI",
+        "shares": 14,
+        "entry_price": 38.4900016784668,
+        "current_price": 36.7400016784668,
+        "unrealized_pnl": -24.5,
+        "unrealized_pnl_pct": -0.0455
+      },
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 89.37999725341797,
+        "unrealized_pnl": 10.92,
+        "unrealized_pnl_pct": 0.0208
+      }
+    ]
   }
 ]
