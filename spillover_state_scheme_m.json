@@ -45,15 +45,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9034.7381808918
     },
-    "KEEL": {
-      "entry_date": "2026-05-22",
-      "entry_price": 4.809999942779541,
-      "shares": 2005,
-      "cost_basis": 9644.04988527298,
-      "entry_score": 9.1,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9644.411625413513
-    },
     "VECO": {
       "entry_date": "2026-05-25",
       "entry_price": 59.54999923706055,
@@ -197,8 +188,17 @@
       "entry_score": 7.95,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 8581.699492139434
+    },
+    "WYFI": {
+      "entry_date": "2026-07-09",
+      "entry_price": 38.84000015258789,
+      "shares": 217,
+      "cost_basis": 8428.280033111572,
+      "entry_score": 7.75,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 8433.957702189637
     }
   },
-  "last_run_date": "2026-07-08",
-  "cumulative_pnl": -54367.58
+  "last_run_date": "2026-07-09",
+  "cumulative_pnl": -54307.43
 }

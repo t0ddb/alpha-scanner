@@ -474,5 +474,19 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 8.0,
     "intended_slot_dollars": 10305.780541067505
+  },
+  {
+    "ticker": "KEEL",
+    "entry_date": "2026-05-22",
+    "exit_date": "2026-07-09",
+    "entry_price": 4.809999942779541,
+    "exit_price": 4.840000152587891,
+    "shares": 2005,
+    "pnl": 60.15,
+    "pnl_pct": 0.0062,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.1,
+    "intended_slot_dollars": 9644.411625413513
   }
 ]

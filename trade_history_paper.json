@@ -701,6 +701,17 @@
       "score_at_entry": 9.8,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "8a83846d-bc6d-4dd1-a3b9-b55e030208d7"
+    },
+    {
+      "ticker": "WYFI",
+      "side": "buy",
+      "date": "2026-07-09",
+      "price": 38.83,
+      "qty": 88.0,
+      "cost_basis": 3417.04,
+      "score_at_entry": 9.5,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "840b5a83-c2d9-4c7c-8fc2-b722b0773243"
     }
   ]
 }
