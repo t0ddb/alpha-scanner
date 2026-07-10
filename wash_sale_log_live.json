@@ -1,5 +1,10 @@
 {
   "cooldowns": {
+    "INTC": {
+      "cooldown_until": "2026-08-09",
+      "exit_date": "2026-07-10",
+      "loss_amount": -58.14
+    },
     "NBIS": {
       "cooldown_until": "2026-08-05",
       "exit_date": "2026-07-06",

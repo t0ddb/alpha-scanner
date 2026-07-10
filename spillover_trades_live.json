@@ -334,5 +334,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.3,
     "intended_slot_dollars": 563.64719
+  },
+  {
+    "ticker": "INTC",
+    "entry_date": "2026-05-22",
+    "exit_date": "2026-07-10",
+    "entry_price": 119.83999633789062,
+    "exit_price": 109.83999633789062,
+    "shares": 4,
+    "pnl": -40.0,
+    "pnl_pct": -0.0834,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.5,
+    "intended_slot_dollars": 548.03655
   }
 ]

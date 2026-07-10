@@ -1,14 +1,5 @@
 {
   "positions": {
-    "INTC": {
-      "entry_date": "2026-05-22",
-      "entry_price": 119.83999633789062,
-      "shares": 4,
-      "cost_basis": 479.3599853515625,
-      "entry_score": 9.5,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 548.03655
-    },
     "PANW": {
       "entry_date": "2026-05-22",
       "entry_price": 260.5799865722656,
@@ -71,8 +62,26 @@
       "entry_score": 9.3,
       "skip_reason_at_entry": "Cap Hit",
       "intended_slot_dollars": 542.0422900000001
+    },
+    "ILMN": {
+      "entry_date": "2026-07-10",
+      "entry_price": 190.1999969482422,
+      "shares": 2,
+      "cost_basis": 380.3999938964844,
+      "entry_score": 9.3,
+      "skip_reason_at_entry": "Cap Hit",
+      "intended_slot_dollars": 413.70105000000007
+    },
+    "DDOG": {
+      "entry_date": "2026-07-10",
+      "entry_price": 257.5400085449219,
+      "shares": 1,
+      "cost_basis": 257.5400085449219,
+      "entry_score": 9.1,
+      "skip_reason_at_entry": "Cap Hit",
+      "intended_slot_dollars": 413.70105000000007
     }
   },
-  "last_run_date": "2026-07-09",
-  "cumulative_pnl": -2116.57
+  "last_run_date": "2026-07-10",
+  "cumulative_pnl": -2156.57
 }
