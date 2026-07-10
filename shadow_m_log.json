@@ -9416,5 +9416,144 @@
         "unrealized_pnl_pct": 0.0781
       }
     ]
+  },
+  {
+    "date": "2026-07-10",
+    "entries": [],
+    "exits": [],
+    "skipped": [
+      {
+        "ticker": "OUST",
+        "score": 7.65,
+        "reason": "persistence failed (priors [8.2, 7.0, 7.0])"
+      },
+      {
+        "ticker": "AMD",
+        "score": 8.1,
+        "reason": "persistence failed (priors [7.5, 7.6, 6.7])"
+      },
+      {
+        "ticker": "ILMN",
+        "score": 7.55,
+        "reason": "persistence failed (priors [7.0, 7.3, 7.8])"
+      },
+      {
+        "ticker": "AMAT",
+        "score": 7.7,
+        "reason": "persistence failed (priors [7.5, 7.5, 7.3])"
+      },
+      {
+        "ticker": "MKSI",
+        "score": 7.8,
+        "reason": "persistence failed (priors [7.9, 7.3, 6.3])"
+      },
+      {
+        "ticker": "UCTT",
+        "score": 7.6,
+        "reason": "persistence failed (priors [7.8, 8.0, 5.8])"
+      },
+      {
+        "ticker": "IRDM",
+        "score": 7.8,
+        "reason": "persistence failed (priors [7.0, 5.5, 4.9])"
+      },
+      {
+        "ticker": "ANET",
+        "score": 7.5,
+        "reason": "persistence failed (priors [7.1, 7.0, 5.7])"
+      },
+      {
+        "ticker": "ONTO",
+        "score": 8.2,
+        "reason": "persistence failed (priors [8.0, 8.1, 6.8])"
+      },
+      {
+        "ticker": "GEV",
+        "score": 7.7,
+        "reason": "persistence failed (priors [7.2, 7.2, 7.2])"
+      },
+      {
+        "ticker": "WYFI",
+        "score": 7.55,
+        "reason": "insufficient cash ($2011 < $7927)"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 1,
+    "equity": 100172.18,
+    "cash": 2011.01,
+    "positions_count": 10,
+    "positions": [
+      {
+        "ticker": "ARM",
+        "shares": 39,
+        "entry_price": 211.17999267578125,
+        "current_price": 323.3900146484375,
+        "unrealized_pnl_pct": 0.5313
+      },
+      {
+        "ticker": "MRVL",
+        "shares": 50,
+        "entry_price": 164.9499969482422,
+        "current_price": 235.80999755859375,
+        "unrealized_pnl_pct": 0.4296
+      },
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1187.0,
+        "current_price": 1915.9200439453125,
+        "unrealized_pnl_pct": 0.6141
+      },
+      {
+        "ticker": "STM",
+        "shares": 149,
+        "entry_price": 55.75,
+        "current_price": 71.45999908447266,
+        "unrealized_pnl_pct": 0.2818
+      },
+      {
+        "ticker": "COHU",
+        "shares": 164,
+        "entry_price": 54.9900016784668,
+        "current_price": 56.16999816894531,
+        "unrealized_pnl_pct": 0.0215
+      },
+      {
+        "ticker": "NBIS",
+        "shares": 42,
+        "entry_price": 211.69000244140625,
+        "current_price": 219.64999389648438,
+        "unrealized_pnl_pct": 0.0376
+      },
+      {
+        "ticker": "PANW",
+        "shares": 24,
+        "entry_price": 348.05999755859375,
+        "current_price": 325.9100036621094,
+        "unrealized_pnl_pct": -0.0636
+      },
+      {
+        "ticker": "TWST",
+        "shares": 85,
+        "entry_price": 99.23999786376953,
+        "current_price": 90.63500213623047,
+        "unrealized_pnl_pct": -0.0867
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 40,
+        "entry_price": 194.6199951171875,
+        "current_price": 187.17999267578125,
+        "unrealized_pnl_pct": -0.0382
+      },
+      {
+        "ticker": "CRDO",
+        "shares": 32,
+        "entry_price": 246.39999389648438,
+        "current_price": 257.7900085449219,
+        "unrealized_pnl_pct": 0.0462
+      }
+    ]
   }
 ]

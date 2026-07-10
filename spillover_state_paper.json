@@ -9,24 +9,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9520.58306
     },
-    "WOLF": {
-      "entry_date": "2026-05-04",
-      "entry_price": 35.939998626708984,
-      "shares": 264,
-      "cost_basis": 9488.159637451172,
-      "entry_score": 9.9,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9520.58306
-    },
-    "INTC": {
-      "entry_date": "2026-05-22",
-      "entry_price": 119.83999633789062,
-      "shares": 90,
-      "cost_basis": 10785.599670410156,
-      "entry_score": 9.5,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 10790.52207
-    },
     "PANW": {
       "entry_date": "2026-05-22",
       "entry_price": 260.5799865722656,
@@ -91,6 +73,6 @@
       "intended_slot_dollars": 11417.099030000001
     }
   },
-  "last_run_date": "2026-07-09",
-  "cumulative_pnl": -46224.59
+  "last_run_date": "2026-07-10",
+  "cumulative_pnl": -47296.19
 }

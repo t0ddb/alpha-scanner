@@ -712,6 +712,28 @@
       "score_at_entry": 9.5,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "840b5a83-c2d9-4c7c-8fc2-b722b0773243"
+    },
+    {
+      "ticker": "ILMN",
+      "side": "buy",
+      "date": "2026-07-10",
+      "price": 190.22,
+      "qty": 19.0,
+      "cost_basis": 3614.18,
+      "score_at_entry": 9.3,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "be805c91-efc9-4ec7-89da-5db9565be7c0"
+    },
+    {
+      "ticker": "DDOG",
+      "side": "buy",
+      "date": "2026-07-10",
+      "price": 257.45,
+      "qty": 12.0,
+      "cost_basis": 3089.4,
+      "score_at_entry": 9.1,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "fdeddaa0-e466-46bc-bda2-03037ab1e697"
     }
   ]
 }

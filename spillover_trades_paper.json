@@ -432,5 +432,33 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.3,
     "intended_slot_dollars": 11414.59575
+  },
+  {
+    "ticker": "WOLF",
+    "entry_date": "2026-05-04",
+    "exit_date": "2026-07-10",
+    "entry_price": 35.939998626708984,
+    "exit_price": 35.290000915527344,
+    "shares": 264,
+    "pnl": -171.6,
+    "pnl_pct": -0.0181,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.9,
+    "intended_slot_dollars": 9520.58306
+  },
+  {
+    "ticker": "INTC",
+    "entry_date": "2026-05-22",
+    "exit_date": "2026-07-10",
+    "entry_price": 119.83999633789062,
+    "exit_price": 109.83999633789062,
+    "shares": 90,
+    "pnl": -900.0,
+    "pnl_pct": -0.0834,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.5,
+    "intended_slot_dollars": 10790.52207
   }
 ]
