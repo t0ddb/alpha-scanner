@@ -550,6 +550,80 @@
       "hold_days": 71,
       "score_at_entry": 9.9,
       "alpaca_order_id": "3cd9bcda-2b39-40f2-b2bb-c7254e1bab48"
+    },
+    {
+      "ticker": "ARM",
+      "side": "sell",
+      "date": "2026-07-13",
+      "price": 298.22,
+      "qty": 2.0,
+      "proceeds": 596.44,
+      "pnl": 202.44,
+      "pnl_pct": 51.38,
+      "score_at_exit": 3.0,
+      "reason": "Score exit (score 3.0 < 5.0)",
+      "hold_days": 76,
+      "score_at_entry": 9.9,
+      "alpaca_order_id": "cf7036ca-bf68-459a-b891-83d729a68936"
+    },
+    {
+      "ticker": "MRVL",
+      "side": "sell",
+      "date": "2026-07-13",
+      "price": 216.19,
+      "qty": 3.0,
+      "proceeds": 648.57,
+      "pnl": 187.08,
+      "pnl_pct": 40.54,
+      "score_at_exit": 3.0,
+      "reason": "Score exit (score 3.0 < 5.0)",
+      "hold_days": 76,
+      "score_at_entry": 9.9,
+      "alpaca_order_id": "5a12217e-4cf8-43ac-be6a-448f391412b9"
+    },
+    {
+      "ticker": "PANW",
+      "side": "buy",
+      "date": "2026-07-13",
+      "price": 330.31,
+      "qty": 1.0,
+      "cost_basis": 330.31,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "74175fe5-9468-4eee-85f1-5a61a6627901"
+    },
+    {
+      "ticker": "WYFI",
+      "side": "buy",
+      "date": "2026-07-13",
+      "price": 36.21,
+      "qty": 10.0,
+      "cost_basis": 362.1,
+      "score_at_entry": 9.5,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "d597930c-b2cc-4e4b-a595-81fb8d2e6281"
+    },
+    {
+      "ticker": "ILMN",
+      "side": "buy",
+      "date": "2026-07-13",
+      "price": 190.15,
+      "qty": 2.0,
+      "cost_basis": 380.3,
+      "score_at_entry": 9.3,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "e3bb477c-909a-4e32-b328-f62a37082a29"
+    },
+    {
+      "ticker": "DDOG",
+      "side": "buy",
+      "date": "2026-07-13",
+      "price": 260.22,
+      "qty": 1.0,
+      "cost_basis": 260.22,
+      "score_at_entry": 9.1,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "81a1ca6a-5782-4f3b-9ef7-478f37e51969"
     }
   ]
 }

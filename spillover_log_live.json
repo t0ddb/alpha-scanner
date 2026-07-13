@@ -6422,5 +6422,97 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-07-13",
+    "mode": "live",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "AMD",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 9,
+    "open_value": 4059.74,
+    "open_unrealized_pnl": 63.21,
+    "realized_cumulative_pnl": -2156.57,
+    "total_pnl": -2093.36,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 2,
+        "entry_price": 260.5799865722656,
+        "current_price": 330.29998779296875,
+        "unrealized_pnl": 139.44,
+        "unrealized_pnl_pct": 0.2676
+      },
+      {
+        "ticker": "KEEL",
+        "shares": 114,
+        "entry_price": 4.809999942779541,
+        "current_price": 4.360000133514404,
+        "unrealized_pnl": -51.3,
+        "unrealized_pnl_pct": -0.0936
+      },
+      {
+        "ticker": "AMD",
+        "shares": 1,
+        "entry_price": 467.510009765625,
+        "current_price": 534.3900146484375,
+        "unrealized_pnl": 66.88,
+        "unrealized_pnl_pct": 0.1431
+      },
+      {
+        "ticker": "OUST",
+        "shares": 11,
+        "entry_price": 46.04999923706055,
+        "current_price": 40.029998779296875,
+        "unrealized_pnl": -66.22,
+        "unrealized_pnl_pct": -0.1307
+      },
+      {
+        "ticker": "CRDO",
+        "shares": 1,
+        "entry_price": 250.80999755859375,
+        "current_price": 236.8800048828125,
+        "unrealized_pnl": -13.93,
+        "unrealized_pnl_pct": -0.0555
+      },
+      {
+        "ticker": "WYFI",
+        "shares": 14,
+        "entry_price": 38.4900016784668,
+        "current_price": 36.290000915527344,
+        "unrealized_pnl": -30.8,
+        "unrealized_pnl_pct": -0.0572
+      },
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 90.3499984741211,
+        "unrealized_pnl": 16.74,
+        "unrealized_pnl_pct": 0.0319
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 190.0500030517578,
+        "unrealized_pnl": -0.3,
+        "unrealized_pnl_pct": -0.0008
+      },
+      {
+        "ticker": "DDOG",
+        "shares": 1,
+        "entry_price": 257.5400085449219,
+        "current_price": 260.239990234375,
+        "unrealized_pnl": 2.7,
+        "unrealized_pnl_pct": 0.0105
+      }
+    ]
   }
 ]
