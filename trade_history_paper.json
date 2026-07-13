@@ -734,6 +734,36 @@
       "score_at_entry": 9.1,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "fdeddaa0-e466-46bc-bda2-03037ab1e697"
+    },
+    {
+      "ticker": "ARM",
+      "side": "sell",
+      "date": "2026-07-13",
+      "price": 298.22,
+      "qty": 31.0,
+      "proceeds": 9244.82,
+      "pnl": 3100.95,
+      "pnl_pct": 50.47,
+      "score_at_exit": 3.0,
+      "reason": "Score exit (score 3.0 < 5.0)",
+      "hold_days": 77,
+      "score_at_entry": 9.9,
+      "alpaca_order_id": "999cdd05-95c8-45b2-ac89-706c77c6e56b"
+    },
+    {
+      "ticker": "MRVL",
+      "side": "sell",
+      "date": "2026-07-13",
+      "price": 216.19,
+      "qty": 57.0,
+      "proceeds": 12322.83,
+      "pnl": 3771.69,
+      "pnl_pct": 44.11,
+      "score_at_exit": 3.0,
+      "reason": "Score exit (score 3.0 < 5.0)",
+      "hold_days": 84,
+      "score_at_entry": 9.2,
+      "alpaca_order_id": "c33bf60f-4bfb-45c9-a5d4-0d56b0cbcf2a"
     }
   ]
 }

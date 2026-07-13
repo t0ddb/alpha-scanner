@@ -45,15 +45,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9034.7381808918
     },
-    "VECO": {
-      "entry_date": "2026-05-25",
-      "entry_price": 59.54999923706055,
-      "shares": 161,
-      "cost_basis": 9587.549877166748,
-      "entry_score": 8.35,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9644.411625413513
-    },
     "NBIS": {
       "entry_date": "2026-05-28",
       "entry_price": 226.33999633789062,
@@ -199,6 +190,6 @@
       "intended_slot_dollars": 8433.957702189637
     }
   },
-  "last_run_date": "2026-07-10",
-  "cumulative_pnl": -54307.43
+  "last_run_date": "2026-07-13",
+  "cumulative_pnl": -54917.62
 }

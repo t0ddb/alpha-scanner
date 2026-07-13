@@ -488,5 +488,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.1,
     "intended_slot_dollars": 9644.411625413513
+  },
+  {
+    "ticker": "VECO",
+    "entry_date": "2026-05-25",
+    "exit_date": "2026-07-13",
+    "entry_price": 59.54999923706055,
+    "exit_price": 55.7599983215332,
+    "shares": 161,
+    "pnl": -610.19,
+    "pnl_pct": -0.0636,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 8.35,
+    "intended_slot_dollars": 9644.411625413513
   }
 ]

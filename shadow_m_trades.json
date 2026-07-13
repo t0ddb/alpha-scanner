@@ -167,5 +167,18 @@
     "exit_reason": "stop_loss",
     "entry_score": 9.1,
     "sequence_tags_at_entry": "BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
+  },
+  {
+    "ticker": "ARM",
+    "entry_date": "2026-05-01",
+    "exit_date": "2026-07-13",
+    "entry_price": 211.17999267578125,
+    "exit_price": 298.989990234375,
+    "shares": 39,
+    "pnl": 3424.59,
+    "pnl_pct": 0.4158,
+    "exit_reason": "score_exit",
+    "entry_score": 9.5,
+    "sequence_tags_at_entry": "BONUS: last_two=cmf\u2192rs (+0.4; last-2 mean +72% (n=58))|BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=2 (+0.5; 2-led-Ich mean +76% (n=218))"
   }
 ]
