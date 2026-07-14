@@ -624,6 +624,28 @@
       "score_at_entry": 9.1,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "81a1ca6a-5782-4f3b-9ef7-478f37e51969"
+    },
+    {
+      "ticker": "CRWD",
+      "side": "buy",
+      "date": "2026-07-14",
+      "price": 210.775,
+      "qty": 2.0,
+      "cost_basis": 421.55,
+      "score_at_entry": 9.5,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "f2ce4163-0aaa-45fa-a63d-01902b554c6b"
+    },
+    {
+      "ticker": "SNOW",
+      "side": "buy",
+      "date": "2026-07-14",
+      "price": 276.04,
+      "qty": 1.0,
+      "cost_basis": 276.04,
+      "score_at_entry": 9.1,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "a39eb283-a3de-485d-986d-8b32617b64a7"
     }
   ]
 }
