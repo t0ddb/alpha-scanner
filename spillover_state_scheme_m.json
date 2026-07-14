@@ -36,24 +36,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 9306.43441439209
     },
-    "HUT": {
-      "entry_date": "2026-05-15",
-      "entry_price": 102.47000122070312,
-      "shares": 88,
-      "cost_basis": 9017.360107421875,
-      "entry_score": 7.95,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9034.7381808918
-    },
-    "NBIS": {
-      "entry_date": "2026-05-28",
-      "entry_price": 226.33999633789062,
-      "shares": 42,
-      "cost_basis": 9506.279846191406,
-      "entry_score": 8.85,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 9612.44766923523
-    },
     "OUST": {
       "entry_date": "2026-05-28",
       "entry_price": 42.33000183105469,
@@ -114,15 +96,6 @@
       "shares": 92,
       "cost_basis": 10056.519775390625,
       "entry_score": 8.1,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 10161.221719033814
-    },
-    "SMH": {
-      "entry_date": "2026-06-16",
-      "entry_price": 616.0,
-      "shares": 16,
-      "cost_basis": 9856.0,
-      "entry_score": 7.6,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 10161.221719033814
     },
@@ -190,6 +163,6 @@
       "intended_slot_dollars": 8433.957702189637
     }
   },
-  "last_run_date": "2026-07-13",
-  "cumulative_pnl": -54917.62
+  "last_run_date": "2026-07-14",
+  "cumulative_pnl": -56887.48
 }

@@ -9680,5 +9680,114 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-07-14",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "NBIS",
+        "entry_price": 211.69000244140625,
+        "exit_price": 194.08999633789062,
+        "exit_score": 4.3
+      }
+    ],
+    "skipped": [
+      {
+        "ticker": "S",
+        "score": 8.3,
+        "reason": "persistence failed (priors [7.8, 6.3, 6.3])"
+      },
+      {
+        "ticker": "DDOG",
+        "score": 7.9,
+        "reason": "persistence failed (priors [7.8, 7.3, 7.4])"
+      },
+      {
+        "ticker": "ILMN",
+        "score": 9.0,
+        "reason": "persistence failed (priors [8.2, 7.5, 7.0])"
+      },
+      {
+        "ticker": "AMAT",
+        "score": 8.1,
+        "reason": "persistence failed (priors [7.3, 7.7, 7.5])"
+      },
+      {
+        "ticker": "GEV",
+        "score": 7.85,
+        "reason": "persistence failed (priors [7.5, 7.7, 7.2])"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 0,
+    "equity": 96049.08,
+    "cash": 13948.47,
+    "positions_count": 9,
+    "positions": [
+      {
+        "ticker": "MRVL",
+        "shares": 50,
+        "entry_price": 164.9499969482422,
+        "current_price": 222.44000244140625,
+        "unrealized_pnl_pct": 0.3485
+      },
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1187.0,
+        "current_price": 1757.8199462890625,
+        "unrealized_pnl_pct": 0.4809
+      },
+      {
+        "ticker": "STM",
+        "shares": 149,
+        "entry_price": 55.75,
+        "current_price": 70.12999725341797,
+        "unrealized_pnl_pct": 0.2579
+      },
+      {
+        "ticker": "COHU",
+        "shares": 164,
+        "entry_price": 54.9900016784668,
+        "current_price": 55.779998779296875,
+        "unrealized_pnl_pct": 0.0144
+      },
+      {
+        "ticker": "PANW",
+        "shares": 24,
+        "entry_price": 348.05999755859375,
+        "current_price": 352.8900146484375,
+        "unrealized_pnl_pct": 0.0139
+      },
+      {
+        "ticker": "TWST",
+        "shares": 85,
+        "entry_price": 99.23999786376953,
+        "current_price": 92.52999877929688,
+        "unrealized_pnl_pct": -0.0676
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 40,
+        "entry_price": 194.6199951171875,
+        "current_price": 210.72999572753906,
+        "unrealized_pnl_pct": 0.0828
+      },
+      {
+        "ticker": "CRDO",
+        "shares": 32,
+        "entry_price": 246.39999389648438,
+        "current_price": 236.17999267578125,
+        "unrealized_pnl_pct": -0.0415
+      },
+      {
+        "ticker": "WYFI",
+        "shares": 217,
+        "entry_price": 36.290000915527344,
+        "current_price": 31.1299991607666,
+        "unrealized_pnl_pct": -0.1422
+      }
+    ]
   }
 ]

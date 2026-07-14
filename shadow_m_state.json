@@ -32,14 +32,6 @@
       "cost_basis": 9018.360275268555,
       "sequence_tags": "BONUS: first_two_pair=atr\u2192ich (+0.4; first-2 mean +93% (n=66))|BONUS: last_two=dtf\u2192roc (+0.5; last-2 mean +118% (n=55))|BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
     },
-    "NBIS": {
-      "entry_date": "2026-06-10",
-      "entry_price": 211.69000244140625,
-      "shares": 42,
-      "entry_score": 8.75,
-      "cost_basis": 8890.980102539062,
-      "sequence_tags": "BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))"
-    },
     "PANW": {
       "entry_date": "2026-07-02",
       "entry_price": 348.05999755859375,
@@ -81,7 +73,7 @@
       "sequence_tags": "PENALTY: first_two_pair=ich\u2192dtf (-0.2; first-2 mean +22.5% (n=211))"
     }
   },
-  "cash": 5796.691856384277,
+  "cash": 13948.471702575684,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-07-13"
+  "last_run_date": "2026-07-14"
 }

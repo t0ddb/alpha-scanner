@@ -764,6 +764,39 @@
       "hold_days": 84,
       "score_at_entry": 9.2,
       "alpaca_order_id": "c33bf60f-4bfb-45c9-a5d4-0d56b0cbcf2a"
+    },
+    {
+      "ticker": "CRWD",
+      "side": "buy",
+      "date": "2026-07-14",
+      "price": 210.775,
+      "qty": 40.0,
+      "cost_basis": 8431.0,
+      "score_at_entry": 9.5,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "6ceda9c3-0754-466b-8760-9bc45e849a42"
+    },
+    {
+      "ticker": "WYFI",
+      "side": "buy",
+      "date": "2026-07-14",
+      "price": 31.11,
+      "qty": 269.0,
+      "cost_basis": 8368.59,
+      "score_at_entry": 9.5,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "f72005e1-e17b-4982-ba0c-a4ed1fc0f0fd"
+    },
+    {
+      "ticker": "SNOW",
+      "side": "buy",
+      "date": "2026-07-14",
+      "price": 276.04,
+      "qty": 31.0,
+      "cost_basis": 8557.24,
+      "score_at_entry": 9.1,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "64231b02-8d3e-422f-a03a-b69b123d1bd6"
     }
   ]
 }

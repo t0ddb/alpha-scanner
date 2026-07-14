@@ -502,5 +502,47 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 8.35,
     "intended_slot_dollars": 9644.411625413513
+  },
+  {
+    "ticker": "HUT",
+    "entry_date": "2026-05-15",
+    "exit_date": "2026-07-14",
+    "entry_price": 102.47000122070312,
+    "exit_price": 98.33000183105469,
+    "shares": 88,
+    "pnl": -364.32,
+    "pnl_pct": -0.0404,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 7.95,
+    "intended_slot_dollars": 9034.7381808918
+  },
+  {
+    "ticker": "NBIS",
+    "entry_date": "2026-05-28",
+    "exit_date": "2026-07-14",
+    "entry_price": 226.33999633789062,
+    "exit_price": 194.08999633789062,
+    "shares": 42,
+    "pnl": -1354.5,
+    "pnl_pct": -0.1425,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 8.85,
+    "intended_slot_dollars": 9612.44766923523
+  },
+  {
+    "ticker": "SMH",
+    "entry_date": "2026-06-16",
+    "exit_date": "2026-07-14",
+    "entry_price": 616.0,
+    "exit_price": 600.3099975585938,
+    "shares": 16,
+    "pnl": -251.04,
+    "pnl_pct": -0.0255,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 7.6,
+    "intended_slot_dollars": 10161.221719033814
   }
 ]

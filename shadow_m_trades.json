@@ -180,5 +180,18 @@
     "exit_reason": "score_exit",
     "entry_score": 9.5,
     "sequence_tags_at_entry": "BONUS: last_two=cmf\u2192rs (+0.4; last-2 mean +72% (n=58))|BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=2 (+0.5; 2-led-Ich mean +76% (n=218))"
+  },
+  {
+    "ticker": "NBIS",
+    "entry_date": "2026-06-10",
+    "exit_date": "2026-07-14",
+    "entry_price": 211.69000244140625,
+    "exit_price": 194.08999633789062,
+    "shares": 42,
+    "pnl": -739.2,
+    "pnl_pct": -0.0831,
+    "exit_reason": "score_exit",
+    "entry_score": 8.75,
+    "sequence_tags_at_entry": "BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))"
   }
 ]
