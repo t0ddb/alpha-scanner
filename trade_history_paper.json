@@ -797,6 +797,39 @@
       "score_at_entry": 9.1,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "64231b02-8d3e-422f-a03a-b69b123d1bd6"
+    },
+    {
+      "ticker": "CRWD",
+      "side": "buy",
+      "date": "2026-07-15",
+      "price": 206.8,
+      "qty": 40.0,
+      "cost_basis": 8272.0,
+      "score_at_entry": 9.5,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "6e7f7c1c-ceaf-491f-9398-832574a73f35"
+    },
+    {
+      "ticker": "SNOW",
+      "side": "buy",
+      "date": "2026-07-15",
+      "price": 271.97,
+      "qty": 31.0,
+      "cost_basis": 8431.07,
+      "score_at_entry": 9.0,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "26d9373b-dccc-4840-9d7e-384029c39329"
+    },
+    {
+      "ticker": "WYFI",
+      "side": "buy",
+      "date": "2026-07-15",
+      "price": 29.195,
+      "qty": 282.0,
+      "cost_basis": 8232.99,
+      "score_at_entry": 9.0,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "64e0d20c-b340-41c9-a77f-26098dfa5b6b"
     }
   ]
 }

@@ -193,5 +193,18 @@
     "exit_reason": "score_exit",
     "entry_score": 8.75,
     "sequence_tags_at_entry": "BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))"
+  },
+  {
+    "ticker": "CRDO",
+    "entry_date": "2026-07-07",
+    "exit_date": "2026-07-15",
+    "entry_price": 246.39999389648438,
+    "exit_price": 226.74000549316406,
+    "shares": 32,
+    "pnl": -629.12,
+    "pnl_pct": -0.0798,
+    "exit_reason": "score_exit",
+    "entry_score": 8.7,
+    "sequence_tags_at_entry": "BONUS: first_two_pair=atr\u2192ich (+0.4; first-2 mean +93% (n=66))|BONUS: last_two=dtf\u2192rs (+0.3; last-2 mean +59% (n=277))|BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
   }
 ]

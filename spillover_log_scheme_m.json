@@ -11882,5 +11882,162 @@
         "unrealized_pnl_pct": -0.1985
       }
     ]
+  },
+  {
+    "date": "2026-07-15",
+    "mode": "scheme_m",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "CRDO",
+        "entry_price": 250.80999755859375,
+        "exit_price": 226.74000549316406,
+        "exit_score": 3.4
+      }
+    ],
+    "stops_fired": [
+      {
+        "ticker": "WYFI",
+        "entry_price": 38.84000015258789,
+        "stop_price": 31.07,
+        "exit_price": 29.18000030517578
+      }
+    ],
+    "skipped_dup": [],
+    "open_positions": 16,
+    "open_value": 152824.88,
+    "open_unrealized_pnl": 2629.37,
+    "realized_cumulative_pnl": -59946.5,
+    "total_pnl": -57317.13,
+    "positions": [
+      {
+        "ticker": "STX",
+        "shares": 10,
+        "entry_price": 766.4400024414062,
+        "current_price": 828.2999877929688,
+        "unrealized_pnl": 618.6,
+        "unrealized_pnl_pct": 0.0807
+      },
+      {
+        "ticker": "WDC",
+        "shares": 17,
+        "entry_price": 463.9100036621094,
+        "current_price": 513.8400268554688,
+        "unrealized_pnl": 848.81,
+        "unrealized_pnl_pct": 0.1076
+      },
+      {
+        "ticker": "MU",
+        "shares": 11,
+        "entry_price": 803.6300048828125,
+        "current_price": 904.280029296875,
+        "unrealized_pnl": 1107.15,
+        "unrealized_pnl_pct": 0.1252
+      },
+      {
+        "ticker": "AMD",
+        "shares": 20,
+        "entry_price": 449.70001220703125,
+        "current_price": 529.1400146484375,
+        "unrealized_pnl": 1588.8,
+        "unrealized_pnl_pct": 0.1767
+      },
+      {
+        "ticker": "OUST",
+        "shares": 227,
+        "entry_price": 42.33000183105469,
+        "current_price": 37.95000076293945,
+        "unrealized_pnl": -994.26,
+        "unrealized_pnl_pct": -0.1035
+      },
+      {
+        "ticker": "INTC",
+        "shares": 82,
+        "entry_price": 114.68000030517578,
+        "current_price": 102.98999786376953,
+        "unrealized_pnl": -958.58,
+        "unrealized_pnl_pct": -0.1019
+      },
+      {
+        "ticker": "LRCX",
+        "shares": 31,
+        "entry_price": 336.4100036621094,
+        "current_price": 335.42999267578125,
+        "unrealized_pnl": -30.38,
+        "unrealized_pnl_pct": -0.0029
+      },
+      {
+        "ticker": "COHU",
+        "shares": 186,
+        "entry_price": 49.810001373291016,
+        "current_price": 55.02000045776367,
+        "unrealized_pnl": 969.06,
+        "unrealized_pnl_pct": 0.1046
+      },
+      {
+        "ticker": "TWST",
+        "shares": 133,
+        "entry_price": 80.79000091552734,
+        "current_price": 92.61000061035156,
+        "unrealized_pnl": 1572.06,
+        "unrealized_pnl_pct": 0.1463
+      },
+      {
+        "ticker": "UCTT",
+        "shares": 92,
+        "entry_price": 109.30999755859375,
+        "current_price": 102.11000061035156,
+        "unrealized_pnl": -662.4,
+        "unrealized_pnl_pct": -0.0659
+      },
+      {
+        "ticker": "KLAC",
+        "shares": 43,
+        "entry_price": 238.72999572753906,
+        "current_price": 224.5,
+        "unrealized_pnl": -611.89,
+        "unrealized_pnl_pct": -0.0596
+      },
+      {
+        "ticker": "ONTO",
+        "shares": 32,
+        "entry_price": 318.9200134277344,
+        "current_price": 304.7300109863281,
+        "unrealized_pnl": -454.08,
+        "unrealized_pnl_pct": -0.0445
+      },
+      {
+        "ticker": "MKSI",
+        "shares": 25,
+        "entry_price": 389.1700134277344,
+        "current_price": 353.79998779296875,
+        "unrealized_pnl": -884.25,
+        "unrealized_pnl_pct": -0.0909
+      },
+      {
+        "ticker": "PANW",
+        "shares": 30,
+        "entry_price": 341.0199890136719,
+        "current_price": 354.0199890136719,
+        "unrealized_pnl": 390.0,
+        "unrealized_pnl_pct": 0.0381
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 43,
+        "entry_price": 199.3800048828125,
+        "current_price": 206.77000427246094,
+        "unrealized_pnl": 317.77,
+        "unrealized_pnl_pct": 0.0371
+      },
+      {
+        "ticker": "AMAT",
+        "shares": 14,
+        "entry_price": 592.7899780273438,
+        "current_price": 579.4299926757812,
+        "unrealized_pnl": -187.04,
+        "unrealized_pnl_pct": -0.0225
+      }
+    ]
   }
 ]
