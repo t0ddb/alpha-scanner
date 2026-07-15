@@ -27,15 +27,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 549.46166
     },
-    "OUST": {
-      "entry_date": "2026-05-29",
-      "entry_price": 46.04999923706055,
-      "shares": 11,
-      "cost_basis": 506.549991607666,
-      "entry_score": 9.6,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 527.5081600000001
-    },
     "CRDO": {
       "entry_date": "2026-06-12",
       "entry_price": 250.80999755859375,
@@ -44,15 +35,6 @@
       "entry_score": 9.8,
       "skip_reason_at_entry": "Cap Hit",
       "intended_slot_dollars": 495.06429
-    },
-    "WYFI": {
-      "entry_date": "2026-06-19",
-      "entry_price": 38.4900016784668,
-      "shares": 14,
-      "cost_basis": 538.8600234985352,
-      "entry_score": 9.5,
-      "skip_reason_at_entry": "Cap Hit",
-      "intended_slot_dollars": 542.0422900000001
     },
     "TWST": {
       "entry_date": "2026-06-19",
@@ -82,6 +64,6 @@
       "intended_slot_dollars": 413.70105000000007
     }
   },
-  "last_run_date": "2026-07-14",
-  "cumulative_pnl": -2156.57
+  "last_run_date": "2026-07-15",
+  "cumulative_pnl": -2376.01
 }

@@ -348,5 +348,33 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.5,
     "intended_slot_dollars": 548.03655
+  },
+  {
+    "ticker": "OUST",
+    "entry_date": "2026-05-29",
+    "exit_date": "2026-07-15",
+    "entry_price": 46.04999923706055,
+    "exit_price": 37.95000076293945,
+    "shares": 11,
+    "pnl": -89.1,
+    "pnl_pct": -0.1759,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.6,
+    "intended_slot_dollars": 527.5081600000001
+  },
+  {
+    "ticker": "WYFI",
+    "entry_date": "2026-06-19",
+    "exit_date": "2026-07-15",
+    "entry_price": 38.4900016784668,
+    "exit_price": 29.18000030517578,
+    "shares": 14,
+    "pnl": -130.34,
+    "pnl_pct": -0.2419,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Cap Hit",
+    "entry_score": 9.5,
+    "intended_slot_dollars": 542.0422900000001
   }
 ]
