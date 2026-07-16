@@ -5,10 +5,25 @@
       "exit_date": "2026-06-29",
       "loss_amount": -750.06
     },
+    "CRDO": {
+      "cooldown_until": "2026-08-15",
+      "exit_date": "2026-07-16",
+      "loss_amount": -1816.21
+    },
+    "MU": {
+      "cooldown_until": "2026-08-15",
+      "exit_date": "2026-07-16",
+      "loss_amount": -1078.16
+    },
     "NBIS": {
       "cooldown_until": "2026-08-05",
       "exit_date": "2026-07-06",
       "loss_amount": -416.1
+    },
+    "SNDK": {
+      "cooldown_until": "2026-08-15",
+      "exit_date": "2026-07-16",
+      "loss_amount": -368.0
     }
   },
   "violations": []

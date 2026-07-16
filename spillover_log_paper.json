@@ -8578,5 +8578,63 @@
         "unrealized_pnl_pct": 0.0577
       }
     ]
+  },
+  {
+    "date": "2026-07-16",
+    "mode": "paper",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "SNDK",
+        "entry_price": 1255.8599853515625,
+        "exit_price": 1411.0799560546875,
+        "exit_score": 3.5
+      },
+      {
+        "ticker": "KEEL",
+        "entry_price": 4.809999942779541,
+        "exit_price": 3.934999942779541,
+        "exit_score": 3.0
+      },
+      {
+        "ticker": "MU",
+        "entry_price": 971.0,
+        "exit_price": 853.2000122070312,
+        "exit_score": 3.0
+      }
+    ],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 3,
+    "open_value": 37895.11,
+    "open_unrealized_pnl": 5075.8,
+    "realized_cumulative_pnl": -53978.01,
+    "total_pnl": -48902.21,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 41,
+        "entry_price": 260.5799865722656,
+        "current_price": 353.989990234375,
+        "unrealized_pnl": 3829.81,
+        "unrealized_pnl_pct": 0.3585
+      },
+      {
+        "ticker": "AMD",
+        "shares": 23,
+        "entry_price": 467.510009765625,
+        "current_price": 500.94000244140625,
+        "unrealized_pnl": 768.89,
+        "unrealized_pnl_pct": 0.0715
+      },
+      {
+        "ticker": "TWST",
+        "shares": 130,
+        "entry_price": 87.55999755859375,
+        "current_price": 91.2300033569336,
+        "unrealized_pnl": 477.1,
+        "unrealized_pnl_pct": 0.0419
+      }
+    ]
   }
 ]

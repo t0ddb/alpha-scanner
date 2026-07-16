@@ -56,14 +56,6 @@
       "cost_basis": 7784.7998046875,
       "sequence_tags": "BONUS: first_three_pat=ich\u2192rs\u2192dtf (+0.5; first-3 mean +115% (n=79))|BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
     },
-    "WYFI": {
-      "entry_date": "2026-07-13",
-      "entry_price": 36.290000915527344,
-      "shares": 217,
-      "entry_score": 7.55,
-      "cost_basis": 7874.930198669434,
-      "sequence_tags": "PENALTY: first_two_pair=ich\u2192dtf (-0.2; first-2 mean +22.5% (n=211))"
-    },
     "ILMN": {
       "entry_date": "2026-07-15",
       "entry_price": 187.14999389648438,
@@ -71,9 +63,25 @@
       "entry_score": 8.15,
       "cost_basis": 7673.149749755859,
       "sequence_tags": "BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))"
+    },
+    "S": {
+      "entry_date": "2026-07-16",
+      "entry_price": 19.6299991607666,
+      "shares": 375,
+      "entry_score": 8.5,
+      "cost_basis": 7361.249685287476,
+      "sequence_tags": ""
+    },
+    "DDOG": {
+      "entry_date": "2026-07-16",
+      "entry_price": 262.32000732421875,
+      "shares": 28,
+      "entry_score": 7.65,
+      "cost_basis": 7344.960205078125,
+      "sequence_tags": "PENALTY: first_two_pair=ich\u2192dtf (-0.2; first-2 mean +22.5% (n=211))"
     }
   },
-  "cash": 13531.002128601074,
+  "cash": 4423.392072677612,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-07-15"
+  "last_run_date": "2026-07-16"
 }

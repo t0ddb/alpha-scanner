@@ -830,6 +830,51 @@
       "score_at_entry": 9.0,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "64e0d20c-b340-41c9-a77f-26098dfa5b6b"
+    },
+    {
+      "ticker": "CRDO",
+      "side": "sell",
+      "date": "2026-07-16",
+      "price": 207.6715,
+      "qty": 42.0,
+      "proceeds": 8722.2,
+      "pnl": -1816.21,
+      "pnl_pct": -17.23,
+      "score_at_exit": 2.4,
+      "reason": "Score exit (score 2.4 < 5.0)",
+      "hold_days": 34,
+      "score_at_entry": 9.8,
+      "alpaca_order_id": "51b62585-d24e-461b-98be-4b05d5a2db33"
+    },
+    {
+      "ticker": "MU",
+      "side": "sell",
+      "date": "2026-07-16",
+      "price": 858.1,
+      "qty": 7.0,
+      "proceeds": 6006.7,
+      "pnl": -1078.16,
+      "pnl_pct": -15.22,
+      "score_at_exit": 3.0,
+      "reason": "Score exit (score 3.0 < 5.0)",
+      "hold_days": 43,
+      "score_at_entry": 9.9,
+      "alpaca_order_id": "bfe98ca3-81be-469a-a515-756f9f81cc80"
+    },
+    {
+      "ticker": "SNDK",
+      "side": "sell",
+      "date": "2026-07-16",
+      "price": 1414.0,
+      "qty": 6.0,
+      "proceeds": 8484.0,
+      "pnl": -368.0,
+      "pnl_pct": -4.16,
+      "score_at_exit": 3.5,
+      "reason": "Score exit (score 3.5 < 5.0)",
+      "hold_days": 66,
+      "score_at_entry": 9.9,
+      "alpaca_order_id": "32b79e9a-1b01-44b0-9196-3b78e59ee2c2"
     }
   ]
 }

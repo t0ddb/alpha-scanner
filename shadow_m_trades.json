@@ -206,5 +206,18 @@
     "exit_reason": "score_exit",
     "entry_score": 8.7,
     "sequence_tags_at_entry": "BONUS: first_two_pair=atr\u2192ich (+0.4; first-2 mean +93% (n=66))|BONUS: last_two=dtf\u2192rs (+0.3; last-2 mean +59% (n=277))|BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
+  },
+  {
+    "ticker": "WYFI",
+    "entry_date": "2026-07-13",
+    "exit_date": "2026-07-16",
+    "entry_price": 36.290000915527344,
+    "exit_price": 25.799999237060547,
+    "shares": 217,
+    "pnl": -2276.33,
+    "pnl_pct": -0.2891,
+    "exit_reason": "stop_loss",
+    "entry_score": 7.55,
+    "sequence_tags_at_entry": "PENALTY: first_two_pair=ich\u2192dtf (-0.2; first-2 mean +22.5% (n=211))"
   }
 ]

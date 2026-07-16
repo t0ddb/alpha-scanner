@@ -1,14 +1,5 @@
 {
   "positions": {
-    "SNDK": {
-      "entry_date": "2026-05-04",
-      "entry_price": 1255.8599853515625,
-      "shares": 7,
-      "cost_basis": 8791.019897460938,
-      "entry_score": 9.9,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9520.58306
-    },
     "PANW": {
       "entry_date": "2026-05-22",
       "entry_price": 260.5799865722656,
@@ -18,15 +9,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 10790.52207
     },
-    "KEEL": {
-      "entry_date": "2026-05-25",
-      "entry_price": 4.809999942779541,
-      "shares": 2244,
-      "cost_basis": 10793.63987159729,
-      "entry_score": 9.8,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 10794.80404
-    },
     "AMD": {
       "entry_date": "2026-05-25",
       "entry_price": 467.510009765625,
@@ -35,15 +17,6 @@
       "entry_score": 9.5,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 10794.80404
-    },
-    "MU": {
-      "entry_date": "2026-05-29",
-      "entry_price": 971.0,
-      "shares": 10,
-      "cost_basis": 9710.0,
-      "entry_score": 9.5,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 10651.69544
     },
     "TWST": {
       "entry_date": "2026-06-19",
@@ -55,6 +28,6 @@
       "intended_slot_dollars": 11417.099030000001
     }
   },
-  "last_run_date": "2026-07-15",
-  "cumulative_pnl": -51923.05
+  "last_run_date": "2026-07-16",
+  "cumulative_pnl": -53978.01
 }

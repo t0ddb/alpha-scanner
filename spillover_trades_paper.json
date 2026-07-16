@@ -488,5 +488,47 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.5,
     "intended_slot_dollars": 11417.099030000001
+  },
+  {
+    "ticker": "SNDK",
+    "entry_date": "2026-05-04",
+    "exit_date": "2026-07-16",
+    "entry_price": 1255.8599853515625,
+    "exit_price": 1411.0799560546875,
+    "shares": 7,
+    "pnl": 1086.54,
+    "pnl_pct": 0.1236,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.9,
+    "intended_slot_dollars": 9520.58306
+  },
+  {
+    "ticker": "KEEL",
+    "entry_date": "2026-05-25",
+    "exit_date": "2026-07-16",
+    "entry_price": 4.809999942779541,
+    "exit_price": 3.934999942779541,
+    "shares": 2244,
+    "pnl": -1963.5,
+    "pnl_pct": -0.1819,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.8,
+    "intended_slot_dollars": 10794.80404
+  },
+  {
+    "ticker": "MU",
+    "entry_date": "2026-05-29",
+    "exit_date": "2026-07-16",
+    "entry_price": 971.0,
+    "exit_price": 853.2000122070312,
+    "shares": 10,
+    "pnl": -1178.0,
+    "pnl_pct": -0.1213,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.5,
+    "intended_slot_dollars": 10651.69544
   }
 ]
