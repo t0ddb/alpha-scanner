@@ -376,5 +376,33 @@
     "skip_reason_at_entry": "Cap Hit",
     "entry_score": 9.5,
     "intended_slot_dollars": 542.0422900000001
+  },
+  {
+    "ticker": "KEEL",
+    "entry_date": "2026-05-25",
+    "exit_date": "2026-07-16",
+    "entry_price": 4.809999942779541,
+    "exit_price": 3.934999942779541,
+    "shares": 114,
+    "pnl": -99.75,
+    "pnl_pct": -0.1819,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.8,
+    "intended_slot_dollars": 549.46166
+  },
+  {
+    "ticker": "CRDO",
+    "entry_date": "2026-06-12",
+    "exit_date": "2026-07-16",
+    "entry_price": 250.80999755859375,
+    "exit_price": 207.97000122070312,
+    "shares": 1,
+    "pnl": -42.84,
+    "pnl_pct": -0.1708,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Cap Hit",
+    "entry_score": 9.8,
+    "intended_slot_dollars": 495.06429
   }
 ]

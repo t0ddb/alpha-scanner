@@ -6691,5 +6691,73 @@
         "unrealized_pnl_pct": 0.0269
       }
     ]
+  },
+  {
+    "date": "2026-07-16",
+    "mode": "live",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "KEEL",
+        "entry_price": 4.809999942779541,
+        "exit_price": 3.934999942779541,
+        "exit_score": 3.0
+      },
+      {
+        "ticker": "CRDO",
+        "entry_price": 250.80999755859375,
+        "exit_price": 207.97000122070312,
+        "exit_score": 2.4
+      }
+    ],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 5,
+    "open_value": 2399.12,
+    "open_unrealized_pnl": 247.15,
+    "realized_cumulative_pnl": -2518.6,
+    "total_pnl": -2271.45,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 2,
+        "entry_price": 260.5799865722656,
+        "current_price": 353.989990234375,
+        "unrealized_pnl": 186.82,
+        "unrealized_pnl_pct": 0.3585
+      },
+      {
+        "ticker": "AMD",
+        "shares": 1,
+        "entry_price": 467.510009765625,
+        "current_price": 500.94000244140625,
+        "unrealized_pnl": 33.43,
+        "unrealized_pnl_pct": 0.0715
+      },
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 91.2300033569336,
+        "unrealized_pnl": 22.02,
+        "unrealized_pnl_pct": 0.0419
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 190.25,
+        "unrealized_pnl": 0.1,
+        "unrealized_pnl_pct": 0.0003
+      },
+      {
+        "ticker": "DDOG",
+        "shares": 1,
+        "entry_price": 257.5400085449219,
+        "current_price": 262.32000732421875,
+        "unrealized_pnl": 4.78,
+        "unrealized_pnl_pct": 0.0186
+      }
+    ]
   }
 ]
