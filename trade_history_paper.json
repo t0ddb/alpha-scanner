@@ -875,6 +875,32 @@
       "hold_days": 66,
       "score_at_entry": 9.9,
       "alpaca_order_id": "32b79e9a-1b01-44b0-9196-3b78e59ee2c2"
+    },
+    {
+      "ticker": "WYFI",
+      "side": "sell",
+      "date": "2026-07-17",
+      "price": 25.25,
+      "qty": 282.0,
+      "proceeds": 7120.5,
+      "pnl": -944.48,
+      "pnl_pct": -11.71,
+      "score_at_exit": 3.0,
+      "reason": "Score exit (score 3.0 < 5.0)",
+      "hold_days": 2,
+      "score_at_entry": 9.0,
+      "alpaca_order_id": "c73ec194-f654-4f29-93f9-28673fb2e8c9"
+    },
+    {
+      "ticker": "S",
+      "side": "buy",
+      "date": "2026-07-17",
+      "price": 19.56,
+      "qty": 399.0,
+      "cost_basis": 7804.44,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "90b86762-fb65-4e85-951b-915b6eb07b69"
     }
   ]
 }

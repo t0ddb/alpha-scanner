@@ -12182,5 +12182,148 @@
         "unrealized_pnl_pct": -0.0537
       }
     ]
+  },
+  {
+    "date": "2026-07-17",
+    "mode": "scheme_m",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 16,
+    "open_value": 144792.38,
+    "open_unrealized_pnl": -5403.13,
+    "realized_cumulative_pnl": -59946.5,
+    "total_pnl": -65349.63,
+    "positions": [
+      {
+        "ticker": "STX",
+        "shares": 10,
+        "entry_price": 766.4400024414062,
+        "current_price": 787.6599731445312,
+        "unrealized_pnl": 212.2,
+        "unrealized_pnl_pct": 0.0277
+      },
+      {
+        "ticker": "WDC",
+        "shares": 17,
+        "entry_price": 463.9100036621094,
+        "current_price": 477.2200012207031,
+        "unrealized_pnl": 226.27,
+        "unrealized_pnl_pct": 0.0287
+      },
+      {
+        "ticker": "MU",
+        "shares": 11,
+        "entry_price": 803.6300048828125,
+        "current_price": 848.9500122070312,
+        "unrealized_pnl": 498.52,
+        "unrealized_pnl_pct": 0.0564
+      },
+      {
+        "ticker": "AMD",
+        "shares": 20,
+        "entry_price": 449.70001220703125,
+        "current_price": 495.760009765625,
+        "unrealized_pnl": 921.2,
+        "unrealized_pnl_pct": 0.1024
+      },
+      {
+        "ticker": "OUST",
+        "shares": 227,
+        "entry_price": 42.33000183105469,
+        "current_price": 37.040000915527344,
+        "unrealized_pnl": -1200.83,
+        "unrealized_pnl_pct": -0.125
+      },
+      {
+        "ticker": "INTC",
+        "shares": 82,
+        "entry_price": 114.68000030517578,
+        "current_price": 95.04000091552734,
+        "unrealized_pnl": -1610.48,
+        "unrealized_pnl_pct": -0.1713
+      },
+      {
+        "ticker": "LRCX",
+        "shares": 31,
+        "entry_price": 336.4100036621094,
+        "current_price": 313.29998779296875,
+        "unrealized_pnl": -716.41,
+        "unrealized_pnl_pct": -0.0687
+      },
+      {
+        "ticker": "COHU",
+        "shares": 186,
+        "entry_price": 49.810001373291016,
+        "current_price": 51.189998626708984,
+        "unrealized_pnl": 256.68,
+        "unrealized_pnl_pct": 0.0277
+      },
+      {
+        "ticker": "TWST",
+        "shares": 133,
+        "entry_price": 80.79000091552734,
+        "current_price": 93.8499984741211,
+        "unrealized_pnl": 1736.98,
+        "unrealized_pnl_pct": 0.1617
+      },
+      {
+        "ticker": "UCTT",
+        "shares": 92,
+        "entry_price": 109.30999755859375,
+        "current_price": 92.43000030517578,
+        "unrealized_pnl": -1552.96,
+        "unrealized_pnl_pct": -0.1544
+      },
+      {
+        "ticker": "KLAC",
+        "shares": 43,
+        "entry_price": 238.72999572753906,
+        "current_price": 212.75,
+        "unrealized_pnl": -1117.14,
+        "unrealized_pnl_pct": -0.1088
+      },
+      {
+        "ticker": "ONTO",
+        "shares": 32,
+        "entry_price": 318.9200134277344,
+        "current_price": 279.8500061035156,
+        "unrealized_pnl": -1250.24,
+        "unrealized_pnl_pct": -0.1225
+      },
+      {
+        "ticker": "MKSI",
+        "shares": 25,
+        "entry_price": 389.1700134277344,
+        "current_price": 324.69000244140625,
+        "unrealized_pnl": -1612.0,
+        "unrealized_pnl_pct": -0.1657
+      },
+      {
+        "ticker": "PANW",
+        "shares": 30,
+        "entry_price": 341.0199890136719,
+        "current_price": 358.67999267578125,
+        "unrealized_pnl": 529.8,
+        "unrealized_pnl_pct": 0.0518
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 43,
+        "entry_price": 199.3800048828125,
+        "current_price": 203.0800018310547,
+        "unrealized_pnl": 159.1,
+        "unrealized_pnl_pct": 0.0186
+      },
+      {
+        "ticker": "AMAT",
+        "shares": 14,
+        "entry_price": 592.7899780273438,
+        "current_price": 529.6599731445312,
+        "unrealized_pnl": -883.82,
+        "unrealized_pnl_pct": -0.1065
+      }
+    ]
   }
 ]
