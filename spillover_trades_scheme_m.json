@@ -572,5 +572,47 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 7.75,
     "intended_slot_dollars": 8433.957702189637
+  },
+  {
+    "ticker": "LRCX",
+    "entry_date": "2026-06-04",
+    "exit_date": "2026-07-20",
+    "entry_price": 336.4100036621094,
+    "exit_price": 306.760009765625,
+    "shares": 31,
+    "pnl": -919.15,
+    "pnl_pct": -0.0881,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 7.9,
+    "intended_slot_dollars": 10596.698987416457
+  },
+  {
+    "ticker": "KLAC",
+    "entry_date": "2026-06-17",
+    "exit_date": "2026-07-20",
+    "entry_price": 238.72999572753906,
+    "exit_price": 207.60000610351562,
+    "shares": 43,
+    "pnl": -1338.59,
+    "pnl_pct": -0.1304,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 8.2,
+    "intended_slot_dollars": 10381.603445822144
+  },
+  {
+    "ticker": "ONTO",
+    "entry_date": "2026-06-17",
+    "exit_date": "2026-07-20",
+    "entry_price": 318.9200134277344,
+    "exit_price": 278.5400085449219,
+    "shares": 32,
+    "pnl": -1292.16,
+    "pnl_pct": -0.1266,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 7.6,
+    "intended_slot_dollars": 10381.603445822144
   }
 ]

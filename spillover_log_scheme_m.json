@@ -12325,5 +12325,143 @@
         "unrealized_pnl_pct": -0.1065
       }
     ]
+  },
+  {
+    "date": "2026-07-20",
+    "mode": "scheme_m",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "LRCX",
+        "entry_price": 336.4100036621094,
+        "exit_price": 306.760009765625,
+        "exit_score": 4.2
+      },
+      {
+        "ticker": "KLAC",
+        "entry_price": 238.72999572753906,
+        "exit_price": 207.60000610351562,
+        "exit_score": 3.9
+      },
+      {
+        "ticker": "ONTO",
+        "entry_price": 318.9200134277344,
+        "exit_price": 278.5400085449219,
+        "exit_score": 3.4
+      }
+    ],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 13,
+    "open_value": 115876.55,
+    "open_unrealized_pnl": -3419.42,
+    "realized_cumulative_pnl": -63496.4,
+    "total_pnl": -66915.82,
+    "positions": [
+      {
+        "ticker": "STX",
+        "shares": 10,
+        "entry_price": 766.4400024414062,
+        "current_price": 802.4500122070312,
+        "unrealized_pnl": 360.1,
+        "unrealized_pnl_pct": 0.047
+      },
+      {
+        "ticker": "WDC",
+        "shares": 17,
+        "entry_price": 463.9100036621094,
+        "current_price": 487.4200134277344,
+        "unrealized_pnl": 399.67,
+        "unrealized_pnl_pct": 0.0507
+      },
+      {
+        "ticker": "MU",
+        "shares": 11,
+        "entry_price": 803.6300048828125,
+        "current_price": 865.4600219726562,
+        "unrealized_pnl": 680.13,
+        "unrealized_pnl_pct": 0.0769
+      },
+      {
+        "ticker": "AMD",
+        "shares": 20,
+        "entry_price": 449.70001220703125,
+        "current_price": 503.57000732421875,
+        "unrealized_pnl": 1077.4,
+        "unrealized_pnl_pct": 0.1198
+      },
+      {
+        "ticker": "OUST",
+        "shares": 227,
+        "entry_price": 42.33000183105469,
+        "current_price": 34.77000045776367,
+        "unrealized_pnl": -1716.12,
+        "unrealized_pnl_pct": -0.1786
+      },
+      {
+        "ticker": "INTC",
+        "shares": 82,
+        "entry_price": 114.68000030517578,
+        "current_price": 97.05999755859375,
+        "unrealized_pnl": -1444.84,
+        "unrealized_pnl_pct": -0.1536
+      },
+      {
+        "ticker": "COHU",
+        "shares": 186,
+        "entry_price": 49.810001373291016,
+        "current_price": 51.54999923706055,
+        "unrealized_pnl": 323.64,
+        "unrealized_pnl_pct": 0.0349
+      },
+      {
+        "ticker": "TWST",
+        "shares": 133,
+        "entry_price": 80.79000091552734,
+        "current_price": 87.44999694824219,
+        "unrealized_pnl": 885.78,
+        "unrealized_pnl_pct": 0.0824
+      },
+      {
+        "ticker": "UCTT",
+        "shares": 92,
+        "entry_price": 109.30999755859375,
+        "current_price": 91.76000213623047,
+        "unrealized_pnl": -1614.6,
+        "unrealized_pnl_pct": -0.1606
+      },
+      {
+        "ticker": "MKSI",
+        "shares": 25,
+        "entry_price": 389.1700134277344,
+        "current_price": 324.2799987792969,
+        "unrealized_pnl": -1622.25,
+        "unrealized_pnl_pct": -0.1667
+      },
+      {
+        "ticker": "PANW",
+        "shares": 30,
+        "entry_price": 341.0199890136719,
+        "current_price": 348.6600036621094,
+        "unrealized_pnl": 229.2,
+        "unrealized_pnl_pct": 0.0224
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 43,
+        "entry_price": 199.3800048828125,
+        "current_price": 198.49000549316406,
+        "unrealized_pnl": -38.27,
+        "unrealized_pnl_pct": -0.0045
+      },
+      {
+        "ticker": "AMAT",
+        "shares": 14,
+        "entry_price": 592.7899780273438,
+        "current_price": 525.7000122070312,
+        "unrealized_pnl": -939.26,
+        "unrealized_pnl_pct": -0.1132
+      }
+    ]
   }
 ]
