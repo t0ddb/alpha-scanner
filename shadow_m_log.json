@@ -10192,5 +10192,104 @@
         "unrealized_pnl_pct": 0.0034
       }
     ]
+  },
+  {
+    "date": "2026-07-21",
+    "entries": [],
+    "exits": [],
+    "skipped": [
+      {
+        "ticker": "SNOW",
+        "score": 8.45,
+        "reason": "persistence failed (priors [8.1, 8.2, 7.0])"
+      },
+      {
+        "ticker": "OII",
+        "score": 8.05,
+        "reason": "persistence failed (priors [7.5, 7.5, 7.2])"
+      },
+      {
+        "ticker": "LASR",
+        "score": 7.55,
+        "reason": "persistence failed (priors [4.0, 4.0, 3.6])"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 0,
+    "equity": 91003.64,
+    "cash": 4423.39,
+    "positions_count": 10,
+    "positions": [
+      {
+        "ticker": "MRVL",
+        "shares": 50,
+        "entry_price": 164.9499969482422,
+        "current_price": 207.9600067138672,
+        "unrealized_pnl_pct": 0.2607
+      },
+      {
+        "ticker": "SNDK",
+        "shares": 7,
+        "entry_price": 1187.0,
+        "current_price": 1589.4000244140625,
+        "unrealized_pnl_pct": 0.339
+      },
+      {
+        "ticker": "STM",
+        "shares": 149,
+        "entry_price": 55.75,
+        "current_price": 65.43000030517578,
+        "unrealized_pnl_pct": 0.1736
+      },
+      {
+        "ticker": "COHU",
+        "shares": 164,
+        "entry_price": 54.9900016784668,
+        "current_price": 56.220001220703125,
+        "unrealized_pnl_pct": 0.0224
+      },
+      {
+        "ticker": "PANW",
+        "shares": 24,
+        "entry_price": 348.05999755859375,
+        "current_price": 342.1499938964844,
+        "unrealized_pnl_pct": -0.017
+      },
+      {
+        "ticker": "TWST",
+        "shares": 85,
+        "entry_price": 99.23999786376953,
+        "current_price": 95.86000061035156,
+        "unrealized_pnl_pct": -0.0341
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 40,
+        "entry_price": 194.6199951171875,
+        "current_price": 191.14999389648438,
+        "unrealized_pnl_pct": -0.0178
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 41,
+        "entry_price": 187.14999389648438,
+        "current_price": 192.52999877929688,
+        "unrealized_pnl_pct": 0.0287
+      },
+      {
+        "ticker": "S",
+        "shares": 375,
+        "entry_price": 19.6299991607666,
+        "current_price": 18.809999465942383,
+        "unrealized_pnl_pct": -0.0418
+      },
+      {
+        "ticker": "DDOG",
+        "shares": 28,
+        "entry_price": 262.32000732421875,
+        "current_price": 254.7899932861328,
+        "unrealized_pnl_pct": -0.0287
+      }
+    ]
   }
 ]
