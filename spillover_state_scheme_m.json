@@ -81,15 +81,6 @@
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 10161.221719033814
     },
-    "MKSI": {
-      "entry_date": "2026-06-23",
-      "entry_price": 389.1700134277344,
-      "shares": 25,
-      "cost_basis": 9729.25033569336,
-      "entry_score": 8.5,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 10090.718176924132
-    },
     "PANW": {
       "entry_date": "2026-06-30",
       "entry_price": 341.0199890136719,
@@ -116,8 +107,17 @@
       "entry_score": 7.95,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 8581.699492139434
+    },
+    "SNOW": {
+      "entry_date": "2026-07-22",
+      "entry_price": 267.79998779296875,
+      "shares": 28,
+      "cost_basis": 7498.399658203125,
+      "entry_score": 8.15,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 7507.0169241424555
     }
   },
-  "last_run_date": "2026-07-21",
-  "cumulative_pnl": -63496.4
+  "last_run_date": "2026-07-22",
+  "cumulative_pnl": -64604.65
 }

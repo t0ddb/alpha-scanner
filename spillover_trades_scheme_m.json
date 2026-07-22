@@ -614,5 +614,19 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 7.6,
     "intended_slot_dollars": 10381.603445822144
+  },
+  {
+    "ticker": "MKSI",
+    "entry_date": "2026-06-23",
+    "exit_date": "2026-07-22",
+    "entry_price": 389.1700134277344,
+    "exit_price": 344.8399963378906,
+    "shares": 25,
+    "pnl": -1108.25,
+    "pnl_pct": -0.1139,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 8.5,
+    "intended_slot_dollars": 10090.718176924132
   }
 ]
