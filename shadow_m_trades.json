@@ -219,5 +219,18 @@
     "exit_reason": "stop_loss",
     "entry_score": 7.55,
     "sequence_tags_at_entry": "PENALTY: first_two_pair=ich\u2192dtf (-0.2; first-2 mean +22.5% (n=211))"
+  },
+  {
+    "ticker": "SNDK",
+    "entry_date": "2026-05-01",
+    "exit_date": "2026-07-23",
+    "entry_price": 1187.0,
+    "exit_price": 1610.3299560546875,
+    "shares": 7,
+    "pnl": 2963.31,
+    "pnl_pct": 0.3566,
+    "exit_reason": "score_exit",
+    "entry_score": 9.15,
+    "sequence_tags_at_entry": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=2 (+0.5; 2-led-Ich mean +76% (n=218))"
   }
 ]

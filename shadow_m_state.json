@@ -8,14 +8,6 @@
       "cost_basis": 8247.49984741211,
       "sequence_tags": "BONUS: first_two_pair=roc\u2192atr (+0.5; first-2 mean +95% (n=116))|BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))"
     },
-    "SNDK": {
-      "entry_date": "2026-05-01",
-      "entry_price": 1187.0,
-      "shares": 7,
-      "entry_score": 9.15,
-      "cost_basis": 8309.0,
-      "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=2 (+0.5; 2-led-Ich mean +76% (n=218))"
-    },
     "STM": {
       "entry_date": "2026-05-01",
       "entry_price": 55.75,
@@ -79,9 +71,17 @@
       "entry_score": 7.65,
       "cost_basis": 7344.960205078125,
       "sequence_tags": "PENALTY: first_two_pair=ich\u2192dtf (-0.2; first-2 mean +22.5% (n=211))"
+    },
+    "SNOW": {
+      "entry_date": "2026-07-23",
+      "entry_price": 265.1300048828125,
+      "shares": 27,
+      "entry_score": 8.45,
+      "cost_basis": 7158.5101318359375,
+      "sequence_tags": "BONUS: first_three_pat=ich\u2192cmf\u2192dtf (+0.4; first-3 mean +75% (n=60))"
     }
   },
-  "cash": 4423.392072677612,
+  "cash": 8537.191633224487,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-07-22"
+  "last_run_date": "2026-07-23"
 }
