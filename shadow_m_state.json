@@ -1,29 +1,5 @@
 {
   "positions": {
-    "MRVL": {
-      "entry_date": "2026-05-01",
-      "entry_price": 164.9499969482422,
-      "shares": 50,
-      "entry_score": 9.2,
-      "cost_basis": 8247.49984741211,
-      "sequence_tags": "BONUS: first_two_pair=roc\u2192atr (+0.5; first-2 mean +95% (n=116))|BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))"
-    },
-    "STM": {
-      "entry_date": "2026-05-01",
-      "entry_price": 55.75,
-      "shares": 149,
-      "entry_score": 8.45,
-      "cost_basis": 8306.75,
-      "sequence_tags": "PENALTY: first_three_pat=ich\u2192roc\u2192cmf (-0.5; first-3 mean -5% (n=64) \u2014 only neg-mean pattern)|PENALTY: last_two=atr\u2192rs (-0.3; last-2 mean +6.4% (n=69))"
-    },
-    "COHU": {
-      "entry_date": "2026-06-09",
-      "entry_price": 54.9900016784668,
-      "shares": 164,
-      "entry_score": 10.6,
-      "cost_basis": 9018.360275268555,
-      "sequence_tags": "BONUS: first_two_pair=atr\u2192ich (+0.4; first-2 mean +93% (n=66))|BONUS: last_two=dtf\u2192roc (+0.5; last-2 mean +118% (n=55))|BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
-    },
     "PANW": {
       "entry_date": "2026-07-02",
       "entry_price": 348.05999755859375,
@@ -79,9 +55,17 @@
       "entry_score": 8.45,
       "cost_basis": 7158.5101318359375,
       "sequence_tags": "BONUS: first_three_pat=ich\u2192cmf\u2192dtf (+0.4; first-3 mean +75% (n=60))"
+    },
+    "OII": {
+      "entry_date": "2026-07-24",
+      "entry_price": 52.72999954223633,
+      "shares": 135,
+      "entry_score": 9.55,
+      "cost_basis": 7118.549938201904,
+      "sequence_tags": "BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
     }
   },
-  "cash": 8537.191633224487,
+  "cash": 27124.40174293518,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-07-23"
+  "last_run_date": "2026-07-24"
 }

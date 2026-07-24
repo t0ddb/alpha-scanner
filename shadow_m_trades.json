@@ -232,5 +232,44 @@
     "exit_reason": "score_exit",
     "entry_score": 9.15,
     "sequence_tags_at_entry": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=2 (+0.5; 2-led-Ich mean +76% (n=218))"
+  },
+  {
+    "ticker": "MRVL",
+    "entry_date": "2026-05-01",
+    "exit_date": "2026-07-24",
+    "entry_price": 164.9499969482422,
+    "exit_price": 194.22999572753906,
+    "shares": 50,
+    "pnl": 1464.0,
+    "pnl_pct": 0.1775,
+    "exit_reason": "score_exit",
+    "entry_score": 9.2,
+    "sequence_tags_at_entry": "BONUS: first_two_pair=roc\u2192atr (+0.5; first-2 mean +95% (n=116))|BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))"
+  },
+  {
+    "ticker": "STM",
+    "entry_date": "2026-05-01",
+    "exit_date": "2026-07-24",
+    "entry_price": 55.75,
+    "exit_price": 51.540000915527344,
+    "shares": 149,
+    "pnl": -627.29,
+    "pnl_pct": -0.0755,
+    "exit_reason": "score_exit",
+    "entry_score": 8.45,
+    "sequence_tags_at_entry": "PENALTY: first_three_pat=ich\u2192roc\u2192cmf (-0.5; first-3 mean -5% (n=64) \u2014 only neg-mean pattern)|PENALTY: last_two=atr\u2192rs (-0.3; last-2 mean +6.4% (n=69))"
+  },
+  {
+    "ticker": "COHU",
+    "entry_date": "2026-06-09",
+    "exit_date": "2026-07-24",
+    "entry_price": 54.9900016784668,
+    "exit_price": 50.70000076293945,
+    "shares": 164,
+    "pnl": -703.56,
+    "pnl_pct": -0.078,
+    "exit_reason": "score_exit",
+    "entry_score": 10.6,
+    "sequence_tags_at_entry": "BONUS: first_two_pair=atr\u2192ich (+0.4; first-2 mean +93% (n=66))|BONUS: last_two=dtf\u2192roc (+0.5; last-2 mean +118% (n=55))|BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
   }
 ]

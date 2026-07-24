@@ -628,5 +628,19 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 8.5,
     "intended_slot_dollars": 10090.718176924132
+  },
+  {
+    "ticker": "COHU",
+    "entry_date": "2026-06-05",
+    "exit_date": "2026-07-24",
+    "entry_price": 49.810001373291016,
+    "exit_price": 50.70000076293945,
+    "shares": 186,
+    "pnl": 165.54,
+    "pnl_pct": 0.0179,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 8.1,
+    "intended_slot_dollars": 9306.35354687767
   }
 ]

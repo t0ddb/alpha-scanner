@@ -54,15 +54,6 @@
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 9450.88574090004
     },
-    "COHU": {
-      "entry_date": "2026-06-05",
-      "entry_price": 49.810001373291016,
-      "shares": 186,
-      "cost_basis": 9264.660255432129,
-      "entry_score": 8.1,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 9306.35354687767
-    },
     "TWST": {
       "entry_date": "2026-06-15",
       "entry_price": 80.79000091552734,
@@ -118,6 +109,6 @@
       "intended_slot_dollars": 7507.0169241424555
     }
   },
-  "last_run_date": "2026-07-23",
-  "cumulative_pnl": -64604.65
+  "last_run_date": "2026-07-24",
+  "cumulative_pnl": -64439.11
 }
