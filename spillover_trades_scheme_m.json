@@ -642,5 +642,33 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 8.1,
     "intended_slot_dollars": 9306.35354687767
+  },
+  {
+    "ticker": "INTC",
+    "entry_date": "2026-05-29",
+    "exit_date": "2026-07-27",
+    "entry_price": 114.68000030517578,
+    "exit_price": 91.66999816894531,
+    "shares": 82,
+    "pnl": -1886.82,
+    "pnl_pct": -0.2006,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 8.6,
+    "intended_slot_dollars": 9450.88574090004
+  },
+  {
+    "ticker": "UCTT",
+    "entry_date": "2026-06-16",
+    "exit_date": "2026-07-27",
+    "entry_price": 109.30999755859375,
+    "exit_price": 86.97000122070312,
+    "shares": 92,
+    "pnl": -2055.28,
+    "pnl_pct": -0.2044,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 8.1,
+    "intended_slot_dollars": 10161.221719033814
   }
 ]

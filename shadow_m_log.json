@@ -10593,5 +10593,80 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-07-27",
+    "entries": [],
+    "exits": [],
+    "skipped": [
+      {
+        "ticker": "AAPL",
+        "score": 8.85,
+        "reason": "persistence failed (priors [7.5, 6.8, 7.1])"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 0,
+    "equity": 85335.02,
+    "cash": 27124.4,
+    "positions_count": 8,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 24,
+        "entry_price": 348.05999755859375,
+        "current_price": 317.32000732421875,
+        "unrealized_pnl_pct": -0.0883
+      },
+      {
+        "ticker": "TWST",
+        "shares": 85,
+        "entry_price": 99.23999786376953,
+        "current_price": 86.54000091552734,
+        "unrealized_pnl_pct": -0.128
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 40,
+        "entry_price": 194.6199951171875,
+        "current_price": 180.11000061035156,
+        "unrealized_pnl_pct": -0.0746
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 41,
+        "entry_price": 187.14999389648438,
+        "current_price": 189.47000122070312,
+        "unrealized_pnl_pct": 0.0124
+      },
+      {
+        "ticker": "S",
+        "shares": 375,
+        "entry_price": 19.6299991607666,
+        "current_price": 18.139999389648438,
+        "unrealized_pnl_pct": -0.0759
+      },
+      {
+        "ticker": "DDOG",
+        "shares": 28,
+        "entry_price": 262.32000732421875,
+        "current_price": 251.86000061035156,
+        "unrealized_pnl_pct": -0.0399
+      },
+      {
+        "ticker": "SNOW",
+        "shares": 27,
+        "entry_price": 265.1300048828125,
+        "current_price": 272.9200134277344,
+        "unrealized_pnl_pct": 0.0294
+      },
+      {
+        "ticker": "OII",
+        "shares": 135,
+        "entry_price": 52.72999954223633,
+        "current_price": 52.16999816894531,
+        "unrealized_pnl_pct": -0.0106
+      }
+    ]
   }
 ]

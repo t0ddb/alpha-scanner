@@ -45,15 +45,6 @@
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 9612.44766923523
     },
-    "INTC": {
-      "entry_date": "2026-05-29",
-      "entry_price": 114.68000030517578,
-      "shares": 82,
-      "cost_basis": 9403.760025024414,
-      "entry_score": 8.6,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 9450.88574090004
-    },
     "TWST": {
       "entry_date": "2026-06-15",
       "entry_price": 80.79000091552734,
@@ -62,15 +53,6 @@
       "entry_score": 7.6,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 10817.159070428084
-    },
-    "UCTT": {
-      "entry_date": "2026-06-16",
-      "entry_price": 109.30999755859375,
-      "shares": 92,
-      "cost_basis": 10056.519775390625,
-      "entry_score": 8.1,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 10161.221719033814
     },
     "PANW": {
       "entry_date": "2026-06-30",
@@ -109,6 +91,6 @@
       "intended_slot_dollars": 7507.0169241424555
     }
   },
-  "last_run_date": "2026-07-24",
-  "cumulative_pnl": -64439.11
+  "last_run_date": "2026-07-27",
+  "cumulative_pnl": -68381.21
 }
