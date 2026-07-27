@@ -7089,5 +7089,60 @@
         "unrealized_pnl_pct": -0.0415
       }
     ]
+  },
+  {
+    "date": "2026-07-27",
+    "mode": "live",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 5,
+    "open_value": 2279.63,
+    "open_unrealized_pnl": 127.66,
+    "realized_cumulative_pnl": -2518.6,
+    "total_pnl": -2390.94,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 2,
+        "entry_price": 260.5799865722656,
+        "current_price": 317.32000732421875,
+        "unrealized_pnl": 113.48,
+        "unrealized_pnl_pct": 0.2177
+      },
+      {
+        "ticker": "AMD",
+        "shares": 1,
+        "entry_price": 467.510009765625,
+        "current_price": 494.95001220703125,
+        "unrealized_pnl": 27.44,
+        "unrealized_pnl_pct": 0.0587
+      },
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 86.54000091552734,
+        "unrealized_pnl": -6.12,
+        "unrealized_pnl_pct": -0.0116
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 189.47000122070312,
+        "unrealized_pnl": -1.46,
+        "unrealized_pnl_pct": -0.0038
+      },
+      {
+        "ticker": "DDOG",
+        "shares": 1,
+        "entry_price": 257.5400085449219,
+        "current_price": 251.86000061035156,
+        "unrealized_pnl": -5.68,
+        "unrealized_pnl_pct": -0.0221
+      }
+    ]
   }
 ]
