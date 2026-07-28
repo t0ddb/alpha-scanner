@@ -670,5 +670,19 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 8.1,
     "intended_slot_dollars": 10161.221719033814
+  },
+  {
+    "ticker": "WDC",
+    "entry_date": "2026-05-07",
+    "exit_date": "2026-07-28",
+    "entry_price": 463.9100036621094,
+    "exit_price": 463.510009765625,
+    "shares": 17,
+    "pnl": -6.8,
+    "pnl_pct": -0.0009,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 8.3,
+    "intended_slot_dollars": 8308.61287053604
   }
 ]

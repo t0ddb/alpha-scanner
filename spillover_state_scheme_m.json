@@ -9,15 +9,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 8308.61287053604
     },
-    "WDC": {
-      "entry_date": "2026-05-07",
-      "entry_price": 463.9100036621094,
-      "shares": 17,
-      "cost_basis": 7886.470062255859,
-      "entry_score": 8.3,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 8308.61287053604
-    },
     "MU": {
       "entry_date": "2026-05-13",
       "entry_price": 803.6300048828125,
@@ -91,6 +82,6 @@
       "intended_slot_dollars": 7507.0169241424555
     }
   },
-  "last_run_date": "2026-07-27",
-  "cumulative_pnl": -68381.21
+  "last_run_date": "2026-07-28",
+  "cumulative_pnl": -68388.01
 }

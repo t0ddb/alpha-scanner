@@ -901,6 +901,17 @@
       "score_at_entry": 9.9,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "90b86762-fb65-4e85-951b-915b6eb07b69"
+    },
+    {
+      "ticker": "OII",
+      "side": "buy",
+      "date": "2026-07-28",
+      "price": 47.98,
+      "qty": 159.0,
+      "cost_basis": 7628.82,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "7d186f21-27ea-4d37-b3cf-413734a04fcb"
     }
   ]
 }
