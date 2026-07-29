@@ -684,5 +684,33 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 8.3,
     "intended_slot_dollars": 8308.61287053604
+  },
+  {
+    "ticker": "OUST",
+    "entry_date": "2026-05-28",
+    "exit_date": "2026-07-29",
+    "entry_price": 42.33000183105469,
+    "exit_price": 31.299999237060547,
+    "shares": 227,
+    "pnl": -2503.81,
+    "pnl_pct": -0.2606,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 8.45,
+    "intended_slot_dollars": 9612.44766923523
+  },
+  {
+    "ticker": "AMAT",
+    "entry_date": "2026-07-06",
+    "exit_date": "2026-07-29",
+    "entry_price": 592.7899780273438,
+    "exit_price": 436.45001220703125,
+    "shares": 14,
+    "pnl": -2188.76,
+    "pnl_pct": -0.2637,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 7.95,
+    "intended_slot_dollars": 8581.699492139434
   }
 ]
