@@ -9,15 +9,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 8308.61287053604
     },
-    "MU": {
-      "entry_date": "2026-05-13",
-      "entry_price": 803.6300048828125,
-      "shares": 11,
-      "cost_basis": 8839.930053710938,
-      "entry_score": 7.95,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9338.316596474457
-    },
     "AMD": {
       "entry_date": "2026-05-14",
       "entry_price": 449.70001220703125,
@@ -64,6 +55,6 @@
       "intended_slot_dollars": 7507.0169241424555
     }
   },
-  "last_run_date": "2026-07-29",
-  "cumulative_pnl": -73080.58
+  "last_run_date": "2026-07-30",
+  "cumulative_pnl": -72299.25
 }

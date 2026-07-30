@@ -8987,5 +8987,43 @@
         "unrealized_pnl_pct": -0.0239
       }
     ]
+  },
+  {
+    "date": "2026-07-30",
+    "mode": "paper",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "AMD",
+        "entry_price": 467.510009765625,
+        "exit_price": 485.3900146484375,
+        "exit_score": 3.5
+      }
+    ],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 2,
+    "open_value": 25225.78,
+    "open_unrealized_pnl": 3159.2,
+    "realized_cumulative_pnl": -53566.77,
+    "total_pnl": -50407.57,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 41,
+        "entry_price": 260.5799865722656,
+        "current_price": 325.67999267578125,
+        "unrealized_pnl": 2669.1,
+        "unrealized_pnl_pct": 0.2498
+      },
+      {
+        "ticker": "TWST",
+        "shares": 130,
+        "entry_price": 87.55999755859375,
+        "current_price": 91.33000183105469,
+        "unrealized_pnl": 490.1,
+        "unrealized_pnl_pct": 0.0431
+      }
+    ]
   }
 ]

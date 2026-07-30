@@ -712,5 +712,19 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 7.95,
     "intended_slot_dollars": 8581.699492139434
+  },
+  {
+    "ticker": "MU",
+    "entry_date": "2026-05-13",
+    "exit_date": "2026-07-30",
+    "entry_price": 803.6300048828125,
+    "exit_price": 874.6599731445312,
+    "shares": 11,
+    "pnl": 781.33,
+    "pnl_pct": 0.0884,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 7.95,
+    "intended_slot_dollars": 9338.316596474457
   }
 ]

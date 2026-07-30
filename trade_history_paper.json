@@ -912,6 +912,17 @@
       "score_at_entry": 9.9,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "7d186f21-27ea-4d37-b3cf-413734a04fcb"
+    },
+    {
+      "ticker": "ESTC",
+      "side": "buy",
+      "date": "2026-07-30",
+      "price": 64.25,
+      "qty": 121.0,
+      "cost_basis": 7774.25,
+      "score_at_entry": 9.0,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "bafb139d-1cdc-48a6-a990-a4e6010271c1"
     }
   ]
 }
