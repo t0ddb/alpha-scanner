@@ -9,15 +9,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 548.03655
     },
-    "AMD": {
-      "entry_date": "2026-05-25",
-      "entry_price": 467.510009765625,
-      "shares": 1,
-      "cost_basis": 467.510009765625,
-      "entry_score": 9.5,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 549.46166
-    },
     "TWST": {
       "entry_date": "2026-06-19",
       "entry_price": 87.55999755859375,
@@ -46,6 +37,6 @@
       "intended_slot_dollars": 413.70105000000007
     }
   },
-  "last_run_date": "2026-07-29",
-  "cumulative_pnl": -2518.6
+  "last_run_date": "2026-07-30",
+  "cumulative_pnl": -2500.72
 }
