@@ -726,5 +726,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 7.95,
     "intended_slot_dollars": 9338.316596474457
+  },
+  {
+    "ticker": "STX",
+    "entry_date": "2026-05-07",
+    "exit_date": "2026-08-03",
+    "entry_price": 766.4400024414062,
+    "exit_price": 831.0599975585938,
+    "shares": 10,
+    "pnl": 646.2,
+    "pnl_pct": 0.0843,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.5,
+    "intended_slot_dollars": 8308.61287053604
   }
 ]

@@ -1,14 +1,5 @@
 {
   "positions": {
-    "STX": {
-      "entry_date": "2026-05-07",
-      "entry_price": 766.4400024414062,
-      "shares": 10,
-      "cost_basis": 7664.4000244140625,
-      "entry_score": 9.5,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 8308.61287053604
-    },
     "AMD": {
       "entry_date": "2026-05-14",
       "entry_price": 449.70001220703125,
@@ -55,6 +46,6 @@
       "intended_slot_dollars": 7507.0169241424555
     }
   },
-  "last_run_date": "2026-07-31",
-  "cumulative_pnl": -72299.25
+  "last_run_date": "2026-08-03",
+  "cumulative_pnl": -71653.05
 }
