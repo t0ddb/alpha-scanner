@@ -11056,5 +11056,87 @@
         "unrealized_pnl_pct": -0.1028
       }
     ]
+  },
+  {
+    "date": "2026-08-04",
+    "entries": [],
+    "exits": [],
+    "skipped": [
+      {
+        "ticker": "BIO",
+        "score": 7.75,
+        "reason": "persistence failed (priors [7.0, 5.7, 6.0])"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 0,
+    "equity": 91833.13,
+    "cash": 20022.41,
+    "positions_count": 9,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 24,
+        "entry_price": 348.05999755859375,
+        "current_price": 366.3399963378906,
+        "unrealized_pnl_pct": 0.0525
+      },
+      {
+        "ticker": "TWST",
+        "shares": 85,
+        "entry_price": 99.23999786376953,
+        "current_price": 99.44499969482422,
+        "unrealized_pnl_pct": 0.0021
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 40,
+        "entry_price": 194.6199951171875,
+        "current_price": 211.22000122070312,
+        "unrealized_pnl_pct": 0.0853
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 41,
+        "entry_price": 187.14999389648438,
+        "current_price": 203.00999450683594,
+        "unrealized_pnl_pct": 0.0847
+      },
+      {
+        "ticker": "S",
+        "shares": 375,
+        "entry_price": 19.6299991607666,
+        "current_price": 20.979999542236328,
+        "unrealized_pnl_pct": 0.0688
+      },
+      {
+        "ticker": "DDOG",
+        "shares": 28,
+        "entry_price": 262.32000732421875,
+        "current_price": 288.1499938964844,
+        "unrealized_pnl_pct": 0.0985
+      },
+      {
+        "ticker": "SNOW",
+        "shares": 27,
+        "entry_price": 265.1300048828125,
+        "current_price": 316.7699890136719,
+        "unrealized_pnl_pct": 0.1948
+      },
+      {
+        "ticker": "OII",
+        "shares": 135,
+        "entry_price": 52.72999954223633,
+        "current_price": 50.43000030517578,
+        "unrealized_pnl_pct": -0.0436
+      },
+      {
+        "ticker": "AAPL",
+        "shares": 21,
+        "entry_price": 338.19000244140625,
+        "current_price": 309.3800048828125,
+        "unrealized_pnl_pct": -0.0852
+      }
+    ]
   }
 ]

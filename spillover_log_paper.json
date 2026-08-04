@@ -9087,5 +9087,36 @@
         "unrealized_pnl_pct": 0.1542
       }
     ]
+  },
+  {
+    "date": "2026-08-04",
+    "mode": "paper",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 2,
+    "open_value": 27947.79,
+    "open_unrealized_pnl": 5881.21,
+    "realized_cumulative_pnl": -53566.77,
+    "total_pnl": -47685.56,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 41,
+        "entry_price": 260.5799865722656,
+        "current_price": 366.3399963378906,
+        "unrealized_pnl": 4336.16,
+        "unrealized_pnl_pct": 0.4059
+      },
+      {
+        "ticker": "TWST",
+        "shares": 130,
+        "entry_price": 87.55999755859375,
+        "current_price": 99.44499969482422,
+        "unrealized_pnl": 1545.05,
+        "unrealized_pnl_pct": 0.1357
+      }
+    ]
   }
 ]
