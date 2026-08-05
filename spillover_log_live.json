@@ -7449,5 +7449,52 @@
         "unrealized_pnl_pct": 0.1189
       }
     ]
+  },
+  {
+    "date": "2026-08-05",
+    "mode": "live",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 4,
+    "open_value": 2098.29,
+    "open_unrealized_pnl": 413.83,
+    "realized_cumulative_pnl": -2500.72,
+    "total_pnl": -2086.89,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 2,
+        "entry_price": 260.5799865722656,
+        "current_price": 362.6600036621094,
+        "unrealized_pnl": 204.16,
+        "unrealized_pnl_pct": 0.3917
+      },
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 115.01000213623047,
+        "unrealized_pnl": 164.7,
+        "unrealized_pnl_pct": 0.3135
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 199.8699951171875,
+        "unrealized_pnl": 19.34,
+        "unrealized_pnl_pct": 0.0508
+      },
+      {
+        "ticker": "DDOG",
+        "shares": 1,
+        "entry_price": 257.5400085449219,
+        "current_price": 283.1700134277344,
+        "unrealized_pnl": 25.63,
+        "unrealized_pnl_pct": 0.0995
+      }
+    ]
   }
 ]
