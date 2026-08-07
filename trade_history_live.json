@@ -705,6 +705,17 @@
       "score_at_entry": 9.0,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "d501a0e8-c909-4eb1-994f-e25faed40467"
+    },
+    {
+      "ticker": "AZTA",
+      "side": "buy",
+      "date": "2026-08-06",
+      "price": 30.74,
+      "qty": 11.0,
+      "cost_basis": 338.14,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "86827a6b-58ed-4850-8f50-555b5763c52b"
     }
   ]
 }
