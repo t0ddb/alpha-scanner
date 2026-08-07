@@ -945,6 +945,21 @@
       "score_at_entry": 9.6,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "27d692f6-38cc-4a36-a620-7a0ac317c80d"
+    },
+    {
+      "ticker": "DDOG",
+      "side": "sell",
+      "date": "2026-08-07",
+      "price": 234.9625,
+      "qty": 12.0,
+      "proceeds": 2819.55,
+      "pnl": -257.83,
+      "pnl_pct": -8.38,
+      "score_at_exit": 2.9,
+      "reason": "Score exit (score 2.9 < 5.0)",
+      "hold_days": 28,
+      "score_at_entry": 9.1,
+      "alpaca_order_id": "793a460e-c867-4d9f-a4d2-191d8904d25d"
     }
   ]
 }

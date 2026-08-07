@@ -5,6 +5,11 @@
       "exit_date": "2026-07-16",
       "loss_amount": -1816.21
     },
+    "DDOG": {
+      "cooldown_until": "2026-09-06",
+      "exit_date": "2026-08-07",
+      "loss_amount": -257.83
+    },
     "MU": {
       "cooldown_until": "2026-08-15",
       "exit_date": "2026-07-16",

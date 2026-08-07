@@ -13600,5 +13600,60 @@
         "unrealized_pnl_pct": 0.1875
       }
     ]
+  },
+  {
+    "date": "2026-08-07",
+    "mode": "scheme_m",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 5,
+    "open_value": 54440.89,
+    "open_unrealized_pnl": 8399.48,
+    "realized_cumulative_pnl": -71653.05,
+    "total_pnl": -63253.57,
+    "positions": [
+      {
+        "ticker": "AMD",
+        "shares": 20,
+        "entry_price": 449.70001220703125,
+        "current_price": 483.3599853515625,
+        "unrealized_pnl": 673.2,
+        "unrealized_pnl_pct": 0.0748
+      },
+      {
+        "ticker": "TWST",
+        "shares": 133,
+        "entry_price": 80.79000091552734,
+        "current_price": 115.66999816894531,
+        "unrealized_pnl": 4639.04,
+        "unrealized_pnl_pct": 0.4317
+      },
+      {
+        "ticker": "PANW",
+        "shares": 30,
+        "entry_price": 341.0199890136719,
+        "current_price": 363.8599853515625,
+        "unrealized_pnl": 685.2,
+        "unrealized_pnl_pct": 0.067
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 43,
+        "entry_price": 199.3800048828125,
+        "current_price": 214.4199981689453,
+        "unrealized_pnl": 646.72,
+        "unrealized_pnl_pct": 0.0754
+      },
+      {
+        "ticker": "SNOW",
+        "shares": 28,
+        "entry_price": 267.79998779296875,
+        "current_price": 330.489990234375,
+        "unrealized_pnl": 1755.32,
+        "unrealized_pnl_pct": 0.2341
+      }
+    ]
   }
 ]
