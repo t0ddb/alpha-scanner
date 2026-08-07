@@ -27,16 +27,16 @@
       "skip_reason_at_entry": "Cap Hit",
       "intended_slot_dollars": 413.70105000000007
     },
-    "DDOG": {
-      "entry_date": "2026-07-10",
-      "entry_price": 257.5400085449219,
+    "BIO": {
+      "entry_date": "2026-08-07",
+      "entry_price": 352.4700012207031,
       "shares": 1,
-      "cost_basis": 257.5400085449219,
-      "entry_score": 9.1,
+      "cost_basis": 352.4700012207031,
+      "entry_score": 9.6,
       "skip_reason_at_entry": "Cap Hit",
-      "intended_slot_dollars": 413.70105000000007
+      "intended_slot_dollars": 423.95819000000006
     }
   },
   "last_run_date": "2026-08-07",
-  "cumulative_pnl": -2500.72
+  "cumulative_pnl": -2524.33
 }

@@ -7548,5 +7548,68 @@
         "unrealized_pnl_pct": -0.1097
       }
     ]
+  },
+  {
+    "date": "2026-08-07",
+    "mode": "live",
+    "entries": [
+      {
+        "ticker": "BIO",
+        "score": 9.6,
+        "entry_price": 352.4700012207031,
+        "shares": 1,
+        "cost": 352.47,
+        "skip_reason": "Cap Hit"
+      }
+    ],
+    "exits": [
+      {
+        "ticker": "DDOG",
+        "entry_price": 257.5400085449219,
+        "exit_price": 233.92999267578125,
+        "exit_score": 2.9
+      }
+    ],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 4,
+    "open_value": 2150.13,
+    "open_unrealized_pnl": 370.74,
+    "realized_cumulative_pnl": -2524.33,
+    "total_pnl": -2153.59,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 2,
+        "entry_price": 260.5799865722656,
+        "current_price": 363.8599853515625,
+        "unrealized_pnl": 206.56,
+        "unrealized_pnl_pct": 0.3963
+      },
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 115.66999816894531,
+        "unrealized_pnl": 168.66,
+        "unrealized_pnl_pct": 0.321
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 187.9600067138672,
+        "unrealized_pnl": -4.48,
+        "unrealized_pnl_pct": -0.0118
+      },
+      {
+        "ticker": "BIO",
+        "shares": 1,
+        "entry_price": 352.4700012207031,
+        "current_price": 352.4700012207031,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]
