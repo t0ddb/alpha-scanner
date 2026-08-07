@@ -923,6 +923,28 @@
       "score_at_entry": 9.0,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "bafb139d-1cdc-48a6-a990-a4e6010271c1"
+    },
+    {
+      "ticker": "AZTA",
+      "side": "buy",
+      "date": "2026-08-06",
+      "price": 30.74,
+      "qty": 268.0,
+      "cost_basis": 8238.32,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "b754c60a-cd8d-4bbb-95e5-a235620c3e95"
+    },
+    {
+      "ticker": "BIO",
+      "side": "buy",
+      "date": "2026-08-06",
+      "price": 343.03,
+      "qty": 24.0,
+      "cost_basis": 8232.72,
+      "score_at_entry": 9.6,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "27d692f6-38cc-4a36-a620-7a0ac317c80d"
     }
   ]
 }
