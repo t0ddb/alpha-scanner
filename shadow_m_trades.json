@@ -271,5 +271,18 @@
     "exit_reason": "score_exit",
     "entry_score": 10.6,
     "sequence_tags_at_entry": "BONUS: first_two_pair=atr\u2192ich (+0.4; first-2 mean +93% (n=66))|BONUS: last_two=dtf\u2192roc (+0.5; last-2 mean +118% (n=55))|BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
+  },
+  {
+    "ticker": "AAPL",
+    "entry_date": "2026-07-29",
+    "exit_date": "2026-08-10",
+    "entry_price": 338.19000244140625,
+    "exit_price": 308.260009765625,
+    "shares": 21,
+    "pnl": -628.53,
+    "pnl_pct": -0.0885,
+    "exit_reason": "score_exit",
+    "entry_score": 8.3,
+    "sequence_tags_at_entry": "BONUS: last_two=dtf\u2192rs (+0.3; last-2 mean +59% (n=277))"
   }
 ]

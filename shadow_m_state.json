@@ -63,17 +63,9 @@
       "entry_score": 9.55,
       "cost_basis": 7118.549938201904,
       "sequence_tags": "BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
-    },
-    "AAPL": {
-      "entry_date": "2026-07-29",
-      "entry_price": 338.19000244140625,
-      "shares": 21,
-      "entry_score": 8.3,
-      "cost_basis": 7101.990051269531,
-      "sequence_tags": "BONUS: last_two=dtf\u2192rs (+0.3; last-2 mean +59% (n=277))"
     }
   },
-  "cash": 20022.41169166565,
+  "cash": 26495.871896743774,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-08-07"
+  "last_run_date": "2026-08-10"
 }

@@ -740,5 +740,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.5,
     "intended_slot_dollars": 8308.61287053604
+  },
+  {
+    "ticker": "AMD",
+    "entry_date": "2026-05-14",
+    "exit_date": "2026-08-10",
+    "entry_price": 449.70001220703125,
+    "exit_price": 469.55999755859375,
+    "shares": 20,
+    "pnl": 397.2,
+    "pnl_pct": 0.0442,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 8.25,
+    "intended_slot_dollars": 9306.43441439209
   }
 ]

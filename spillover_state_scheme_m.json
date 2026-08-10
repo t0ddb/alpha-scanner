@@ -1,14 +1,5 @@
 {
   "positions": {
-    "AMD": {
-      "entry_date": "2026-05-14",
-      "entry_price": 449.70001220703125,
-      "shares": 20,
-      "cost_basis": 8994.000244140625,
-      "entry_score": 8.25,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 9306.43441439209
-    },
     "TWST": {
       "entry_date": "2026-06-15",
       "entry_price": 80.79000091552734,
@@ -46,6 +37,6 @@
       "intended_slot_dollars": 7507.0169241424555
     }
   },
-  "last_run_date": "2026-08-07",
-  "cumulative_pnl": -71653.05
+  "last_run_date": "2026-08-10",
+  "cumulative_pnl": -71255.85
 }
