@@ -7611,5 +7611,57 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-08-10",
+    "mode": "live",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "BIO",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 4,
+    "open_value": 2257.48,
+    "open_unrealized_pnl": 478.09,
+    "realized_cumulative_pnl": -2524.33,
+    "total_pnl": -2046.24,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 2,
+        "entry_price": 260.5799865722656,
+        "current_price": 385.0400085449219,
+        "unrealized_pnl": 248.92,
+        "unrealized_pnl_pct": 0.4776
+      },
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 124.87999725341797,
+        "unrealized_pnl": 223.92,
+        "unrealized_pnl_pct": 0.4262
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 191.7899932861328,
+        "unrealized_pnl": 3.18,
+        "unrealized_pnl_pct": 0.0084
+      },
+      {
+        "ticker": "BIO",
+        "shares": 1,
+        "entry_price": 352.4700012207031,
+        "current_price": 354.5400085449219,
+        "unrealized_pnl": 2.07,
+        "unrealized_pnl_pct": 0.0059
+      }
+    ]
   }
 ]
