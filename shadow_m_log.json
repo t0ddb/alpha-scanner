@@ -11585,5 +11585,110 @@
         "unrealized_pnl_pct": -0.0374
       }
     ]
+  },
+  {
+    "date": "2026-08-12",
+    "entries": [],
+    "exits": [],
+    "skipped": [
+      {
+        "ticker": "AZTA",
+        "score": 7.7,
+        "reason": "persistence failed (priors [7.7, 7.7, 7.4])"
+      },
+      {
+        "ticker": "BIO",
+        "score": 8.55,
+        "reason": "persistence failed (priors [8.2, 7.9, 7.3])"
+      },
+      {
+        "ticker": "ANET",
+        "score": 7.75,
+        "reason": "persistence failed (priors [7.7, 6.0, 6.9])"
+      },
+      {
+        "ticker": "NBIS",
+        "score": 8.3,
+        "reason": "persistence failed (priors [3.9, 3.8, 3.3])"
+      },
+      {
+        "ticker": "CRDO",
+        "score": 8.25,
+        "reason": "persistence failed (priors [4.5, 5.7, 5.5])"
+      },
+      {
+        "ticker": "MDB",
+        "score": 7.95,
+        "reason": "persistence failed (priors [8.0, 7.7, 7.2])"
+      },
+      {
+        "ticker": "TSEM",
+        "score": 7.6,
+        "reason": "persistence failed (priors [5.5, 6.2, 6.2])"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 0,
+    "equity": 94174.17,
+    "cash": 26495.87,
+    "positions_count": 8,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 24,
+        "entry_price": 348.05999755859375,
+        "current_price": 387.010009765625,
+        "unrealized_pnl_pct": 0.1119
+      },
+      {
+        "ticker": "TWST",
+        "shares": 85,
+        "entry_price": 99.23999786376953,
+        "current_price": 125.20999908447266,
+        "unrealized_pnl_pct": 0.2617
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 40,
+        "entry_price": 194.6199951171875,
+        "current_price": 221.77999877929688,
+        "unrealized_pnl_pct": 0.1396
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 41,
+        "entry_price": 187.14999389648438,
+        "current_price": 192.91000366210938,
+        "unrealized_pnl_pct": 0.0308
+      },
+      {
+        "ticker": "S",
+        "shares": 375,
+        "entry_price": 19.6299991607666,
+        "current_price": 22.299999237060547,
+        "unrealized_pnl_pct": 0.136
+      },
+      {
+        "ticker": "DDOG",
+        "shares": 28,
+        "entry_price": 262.32000732421875,
+        "current_price": 240.91000366210938,
+        "unrealized_pnl_pct": -0.0816
+      },
+      {
+        "ticker": "SNOW",
+        "shares": 27,
+        "entry_price": 265.1300048828125,
+        "current_price": 332.260009765625,
+        "unrealized_pnl_pct": 0.2532
+      },
+      {
+        "ticker": "OII",
+        "shares": 135,
+        "entry_price": 52.72999954223633,
+        "current_price": 51.02000045776367,
+        "unrealized_pnl_pct": -0.0324
+      }
+    ]
   }
 ]

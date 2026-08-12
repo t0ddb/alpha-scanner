@@ -960,6 +960,17 @@
       "hold_days": 28,
       "score_at_entry": 9.1,
       "alpaca_order_id": "793a460e-c867-4d9f-a4d2-191d8904d25d"
+    },
+    {
+      "ticker": "PATH",
+      "side": "buy",
+      "date": "2026-08-12",
+      "price": 15.24,
+      "qty": 349.0,
+      "cost_basis": 5318.76,
+      "score_at_entry": 9.1,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "8f608481-f6cf-4fde-a565-924b3734d09f"
     }
   ]
 }
