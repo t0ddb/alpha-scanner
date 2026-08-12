@@ -35,8 +35,17 @@
       "entry_score": 9.6,
       "skip_reason_at_entry": "Cap Hit",
       "intended_slot_dollars": 423.95819000000006
+    },
+    "PATH": {
+      "entry_date": "2026-08-12",
+      "entry_price": 15.260000228881836,
+      "shares": 28,
+      "cost_basis": 427.2800064086914,
+      "entry_score": 9.1,
+      "skip_reason_at_entry": "Cap Hit",
+      "intended_slot_dollars": 438.69401000000005
     }
   },
-  "last_run_date": "2026-08-11",
+  "last_run_date": "2026-08-12",
   "cumulative_pnl": -2524.33
 }
