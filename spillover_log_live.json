@@ -7784,5 +7784,90 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-08-13",
+    "mode": "live",
+    "entries": [
+      {
+        "ticker": "SDGR",
+        "score": 9.1,
+        "entry_price": 18.459999084472656,
+        "shares": 24,
+        "cost": 443.04,
+        "skip_reason": "Cap Hit"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "BIO",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "PATH",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "MDB",
+        "reason": "intended $448 too small for share price $472.29"
+      }
+    ],
+    "open_positions": 6,
+    "open_value": 3200.29,
+    "open_unrealized_pnl": 550.58,
+    "realized_cumulative_pnl": -2524.33,
+    "total_pnl": -1973.75,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 2,
+        "entry_price": 260.5799865722656,
+        "current_price": 396.0,
+        "unrealized_pnl": 270.84,
+        "unrealized_pnl_pct": 0.5197
+      },
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 125.29000091552734,
+        "unrealized_pnl": 226.38,
+        "unrealized_pnl_pct": 0.4309
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 192.63999938964844,
+        "unrealized_pnl": 4.88,
+        "unrealized_pnl_pct": 0.0128
+      },
+      {
+        "ticker": "BIO",
+        "shares": 1,
+        "entry_price": 352.4700012207031,
+        "current_price": 361.19000244140625,
+        "unrealized_pnl": 8.72,
+        "unrealized_pnl_pct": 0.0247
+      },
+      {
+        "ticker": "PATH",
+        "shares": 28,
+        "entry_price": 15.260000228881836,
+        "current_price": 16.68000030517578,
+        "unrealized_pnl": 39.76,
+        "unrealized_pnl_pct": 0.0931
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 24,
+        "entry_price": 18.459999084472656,
+        "current_price": 18.459999084472656,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]

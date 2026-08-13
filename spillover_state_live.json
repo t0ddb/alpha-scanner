@@ -44,8 +44,17 @@
       "entry_score": 9.1,
       "skip_reason_at_entry": "Cap Hit",
       "intended_slot_dollars": 438.69401000000005
+    },
+    "SDGR": {
+      "entry_date": "2026-08-13",
+      "entry_price": 18.459999084472656,
+      "shares": 24,
+      "cost_basis": 443.03997802734375,
+      "entry_score": 9.1,
+      "skip_reason_at_entry": "Cap Hit",
+      "intended_slot_dollars": 448.14605000000006
     }
   },
-  "last_run_date": "2026-08-12",
+  "last_run_date": "2026-08-13",
   "cumulative_pnl": -2524.33
 }
