@@ -63,9 +63,33 @@
       "entry_score": 9.55,
       "cost_basis": 7118.549938201904,
       "sequence_tags": "BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
+    },
+    "MDB": {
+      "entry_date": "2026-08-13",
+      "entry_price": 472.2900085449219,
+      "shares": 16,
+      "entry_score": 8.7,
+      "cost_basis": 7556.64013671875,
+      "sequence_tags": "BONUS: first_firer=rs (+0.3; first-firer mean +59% (n=138))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))"
+    },
+    "AZTA": {
+      "entry_date": "2026-08-13",
+      "entry_price": 33.90999984741211,
+      "shares": 234,
+      "entry_score": 7.85,
+      "cost_basis": 7934.939964294434,
+      "sequence_tags": "BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))|PENALTY: first_two_pair=roc\u2192cmf (-0.3; first-2 mean +10.6% (n=93))|PENALTY: n_led_ich=3 (-0.4; 3-led-Ich mean +20.6% (n=137))"
+    },
+    "BIO": {
+      "entry_date": "2026-08-13",
+      "entry_price": 361.19000244140625,
+      "shares": 22,
+      "entry_score": 7.6,
+      "cost_basis": 7946.1800537109375,
+      "sequence_tags": "PENALTY: last_two=atr\u2192rs (-0.3; last-2 mean +6.4% (n=69))"
     }
   },
-  "cash": 26495.871896743774,
+  "cash": 3058.1117420196533,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-08-12"
+  "last_run_date": "2026-08-13"
 }

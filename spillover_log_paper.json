@@ -9304,5 +9304,53 @@
         "unrealized_pnl_pct": 0.43
       }
     ]
+  },
+  {
+    "date": "2026-08-13",
+    "mode": "paper",
+    "entries": [
+      {
+        "ticker": "SDGR",
+        "score": 9.1,
+        "entry_price": 18.459999084472656,
+        "shares": 483,
+        "cost": 8916.18,
+        "skip_reason": "Full"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 3,
+    "open_value": 41439.88,
+    "open_unrealized_pnl": 10457.12,
+    "realized_cumulative_pnl": -53566.77,
+    "total_pnl": -43109.65,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 41,
+        "entry_price": 260.5799865722656,
+        "current_price": 396.0,
+        "unrealized_pnl": 5552.22,
+        "unrealized_pnl_pct": 0.5197
+      },
+      {
+        "ticker": "TWST",
+        "shares": 130,
+        "entry_price": 87.55999755859375,
+        "current_price": 125.29000091552734,
+        "unrealized_pnl": 4904.9,
+        "unrealized_pnl_pct": 0.4309
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 483,
+        "entry_price": 18.459999084472656,
+        "current_price": 18.459999084472656,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]

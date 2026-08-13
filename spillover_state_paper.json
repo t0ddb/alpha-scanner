@@ -17,8 +17,17 @@
       "entry_score": 9.3,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 11417.099030000001
+    },
+    "SDGR": {
+      "entry_date": "2026-08-13",
+      "entry_price": 18.459999084472656,
+      "shares": 483,
+      "cost_basis": 8916.179557800293,
+      "entry_score": 9.1,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 8926.61431
     }
   },
-  "last_run_date": "2026-08-12",
+  "last_run_date": "2026-08-13",
   "cumulative_pnl": -53566.77
 }

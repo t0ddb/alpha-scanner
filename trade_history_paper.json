@@ -971,6 +971,17 @@
       "score_at_entry": 9.1,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "8f608481-f6cf-4fde-a565-924b3734d09f"
+    },
+    {
+      "ticker": "MDB",
+      "side": "buy",
+      "date": "2026-08-13",
+      "price": 471.6,
+      "qty": 10.0,
+      "cost_basis": 4716.0,
+      "score_at_entry": 9.1,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "caea3381-75b7-4319-af53-7fc94b9185a0"
     }
   ]
 }
