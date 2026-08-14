@@ -53,8 +53,17 @@
       "entry_score": 9.1,
       "skip_reason_at_entry": "Cap Hit",
       "intended_slot_dollars": 448.14605000000006
+    },
+    "ANET": {
+      "entry_date": "2026-08-14",
+      "entry_price": 198.82000732421875,
+      "shares": 2,
+      "cost_basis": 397.6400146484375,
+      "entry_score": 9.6,
+      "skip_reason_at_entry": "Cap Hit",
+      "intended_slot_dollars": 440.41044999999997
     }
   },
-  "last_run_date": "2026-08-13",
+  "last_run_date": "2026-08-14",
   "cumulative_pnl": -2524.33
 }
