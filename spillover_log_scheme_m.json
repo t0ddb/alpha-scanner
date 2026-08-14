@@ -13850,5 +13850,69 @@
         "unrealized_pnl_pct": 0.2598
       }
     ]
+  },
+  {
+    "date": "2026-08-14",
+    "mode": "scheme_m",
+    "entries": [
+      {
+        "ticker": "ANET",
+        "score": 8.3,
+        "entry_price": 198.82000732421875,
+        "shares": 39,
+        "cost": 7753.98,
+        "skip_reason": "No Cash"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 5,
+    "open_value": 53590.5,
+    "open_unrealized_pnl": 8789.11,
+    "realized_cumulative_pnl": -71255.85,
+    "total_pnl": -62466.74,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 133,
+        "entry_price": 80.79000091552734,
+        "current_price": 118.56999969482422,
+        "unrealized_pnl": 5024.74,
+        "unrealized_pnl_pct": 0.4676
+      },
+      {
+        "ticker": "PANW",
+        "shares": 30,
+        "entry_price": 341.0199890136719,
+        "current_price": 384.2699890136719,
+        "unrealized_pnl": 1297.5,
+        "unrealized_pnl_pct": 0.1268
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 43,
+        "entry_price": 199.3800048828125,
+        "current_price": 216.9499969482422,
+        "unrealized_pnl": 755.51,
+        "unrealized_pnl_pct": 0.0881
+      },
+      {
+        "ticker": "SNOW",
+        "shares": 28,
+        "entry_price": 267.79998779296875,
+        "current_price": 328.9200134277344,
+        "unrealized_pnl": 1711.36,
+        "unrealized_pnl_pct": 0.2282
+      },
+      {
+        "ticker": "ANET",
+        "shares": 39,
+        "entry_price": 198.82000732421875,
+        "current_price": 198.82000732421875,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]

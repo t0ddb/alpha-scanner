@@ -26,8 +26,17 @@
       "entry_score": 9.1,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 8926.61431
+    },
+    "ANET": {
+      "entry_date": "2026-08-14",
+      "entry_price": 198.82000732421875,
+      "shares": 44,
+      "cost_basis": 8748.080322265625,
+      "entry_score": 9.6,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 8759.56768
     }
   },
-  "last_run_date": "2026-08-13",
+  "last_run_date": "2026-08-14",
   "cumulative_pnl": -53566.77
 }
