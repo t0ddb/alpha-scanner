@@ -11947,5 +11947,131 @@
         "unrealized_pnl_pct": -0.0136
       }
     ]
+  },
+  {
+    "date": "2026-08-17",
+    "entries": [],
+    "exits": [],
+    "skipped": [
+      {
+        "ticker": "ESTC",
+        "score": 9.1,
+        "reason": "persistence failed (priors [9.1, 8.0, 7.0])"
+      },
+      {
+        "ticker": "PATH",
+        "score": 7.65,
+        "reason": "persistence failed (priors [7.5, 8.2, 6.5])"
+      },
+      {
+        "ticker": "SDGR",
+        "score": 7.5,
+        "reason": "persistence failed (priors [5.5, 7.4, 7.3])"
+      },
+      {
+        "ticker": "ONTO",
+        "score": 7.5,
+        "reason": "persistence failed (priors [6.7, 6.7, 7.0])"
+      },
+      {
+        "ticker": "COHU",
+        "score": 8.25,
+        "reason": "persistence failed (priors [5.6, 5.0, 4.5])"
+      },
+      {
+        "ticker": "CRDO",
+        "score": 8.05,
+        "reason": "insufficient cash ($3058 < $7371)"
+      },
+      {
+        "ticker": "ANET",
+        "score": 7.6,
+        "reason": "insufficient cash ($3058 < $7371)"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 2,
+    "equity": 93143.0,
+    "cash": 3058.11,
+    "positions_count": 11,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 24,
+        "entry_price": 348.05999755859375,
+        "current_price": 375.760009765625,
+        "unrealized_pnl_pct": 0.0796
+      },
+      {
+        "ticker": "TWST",
+        "shares": 85,
+        "entry_price": 99.23999786376953,
+        "current_price": 124.41000366210938,
+        "unrealized_pnl_pct": 0.2536
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 40,
+        "entry_price": 194.6199951171875,
+        "current_price": 213.89999389648438,
+        "unrealized_pnl_pct": 0.0991
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 41,
+        "entry_price": 187.14999389648438,
+        "current_price": 193.13499450683594,
+        "unrealized_pnl_pct": 0.032
+      },
+      {
+        "ticker": "S",
+        "shares": 375,
+        "entry_price": 19.6299991607666,
+        "current_price": 21.81999969482422,
+        "unrealized_pnl_pct": 0.1116
+      },
+      {
+        "ticker": "DDOG",
+        "shares": 28,
+        "entry_price": 262.32000732421875,
+        "current_price": 247.32000732421875,
+        "unrealized_pnl_pct": -0.0572
+      },
+      {
+        "ticker": "SNOW",
+        "shares": 27,
+        "entry_price": 265.1300048828125,
+        "current_price": 330.1099853515625,
+        "unrealized_pnl_pct": 0.2451
+      },
+      {
+        "ticker": "OII",
+        "shares": 135,
+        "entry_price": 52.72999954223633,
+        "current_price": 54.11000061035156,
+        "unrealized_pnl_pct": 0.0262
+      },
+      {
+        "ticker": "MDB",
+        "shares": 16,
+        "entry_price": 472.2900085449219,
+        "current_price": 438.70001220703125,
+        "unrealized_pnl_pct": -0.0711
+      },
+      {
+        "ticker": "AZTA",
+        "shares": 234,
+        "entry_price": 33.90999984741211,
+        "current_price": 33.58000183105469,
+        "unrealized_pnl_pct": -0.0097
+      },
+      {
+        "ticker": "BIO",
+        "shares": 22,
+        "entry_price": 361.19000244140625,
+        "current_price": 355.2300109863281,
+        "unrealized_pnl_pct": -0.0165
+      }
+    ]
   }
 ]

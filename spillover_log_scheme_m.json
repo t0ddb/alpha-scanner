@@ -13914,5 +13914,82 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-08-17",
+    "mode": "scheme_m",
+    "entries": [
+      {
+        "ticker": "CRDO",
+        "score": 8.05,
+        "entry_price": 282.82000732421875,
+        "shares": 27,
+        "cost": 7636.14,
+        "skip_reason": "No Cash"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "ANET",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 6,
+    "open_value": 61766.45,
+    "open_unrealized_pnl": 9328.92,
+    "realized_cumulative_pnl": -71255.85,
+    "total_pnl": -61926.93,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 133,
+        "entry_price": 80.79000091552734,
+        "current_price": 124.41000366210938,
+        "unrealized_pnl": 5801.46,
+        "unrealized_pnl_pct": 0.5399
+      },
+      {
+        "ticker": "PANW",
+        "shares": 30,
+        "entry_price": 341.0199890136719,
+        "current_price": 375.760009765625,
+        "unrealized_pnl": 1042.2,
+        "unrealized_pnl_pct": 0.1019
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 43,
+        "entry_price": 199.3800048828125,
+        "current_price": 213.89999389648438,
+        "unrealized_pnl": 624.36,
+        "unrealized_pnl_pct": 0.0728
+      },
+      {
+        "ticker": "SNOW",
+        "shares": 28,
+        "entry_price": 267.79998779296875,
+        "current_price": 330.1099853515625,
+        "unrealized_pnl": 1744.68,
+        "unrealized_pnl_pct": 0.2327
+      },
+      {
+        "ticker": "ANET",
+        "shares": 39,
+        "entry_price": 198.82000732421875,
+        "current_price": 201.8000030517578,
+        "unrealized_pnl": 116.22,
+        "unrealized_pnl_pct": 0.015
+      },
+      {
+        "ticker": "CRDO",
+        "shares": 27,
+        "entry_price": 282.82000732421875,
+        "current_price": 282.82000732421875,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]
