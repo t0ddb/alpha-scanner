@@ -4,11 +4,6 @@
       "cooldown_until": "2026-09-06",
       "exit_date": "2026-08-07",
       "loss_amount": -20.2
-    },
-    "WYFI": {
-      "cooldown_until": "2026-08-16",
-      "exit_date": "2026-07-17",
-      "loss_amount": -33.0
     }
   },
   "violations": []

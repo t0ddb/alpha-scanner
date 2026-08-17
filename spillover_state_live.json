@@ -62,8 +62,26 @@
       "entry_score": 9.6,
       "skip_reason_at_entry": "Cap Hit",
       "intended_slot_dollars": 440.41044999999997
+    },
+    "MDB": {
+      "entry_date": "2026-08-17",
+      "entry_price": 438.70001220703125,
+      "shares": 1,
+      "cost_basis": 438.70001220703125,
+      "entry_score": 9.2,
+      "skip_reason_at_entry": "Cap Hit",
+      "intended_slot_dollars": 440.96655000000004
+    },
+    "CRDO": {
+      "entry_date": "2026-08-17",
+      "entry_price": 282.82000732421875,
+      "shares": 1,
+      "cost_basis": 282.82000732421875,
+      "entry_score": 9.1,
+      "skip_reason_at_entry": "Cap Hit",
+      "intended_slot_dollars": 440.96655000000004
     }
   },
-  "last_run_date": "2026-08-14",
+  "last_run_date": "2026-08-17",
   "cumulative_pnl": -2524.33
 }
