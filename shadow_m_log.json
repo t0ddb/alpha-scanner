@@ -12073,5 +12073,111 @@
         "unrealized_pnl_pct": -0.0165
       }
     ]
+  },
+  {
+    "date": "2026-08-18",
+    "entries": [],
+    "exits": [],
+    "skipped": [
+      {
+        "ticker": "NBIS",
+        "score": 7.6,
+        "reason": "persistence failed (priors [7.3, 8.2, 8.5])"
+      },
+      {
+        "ticker": "ESTC",
+        "score": 8.75,
+        "reason": "insufficient cash ($3058 < $7268)"
+      },
+      {
+        "ticker": "PATH",
+        "score": 8.15,
+        "reason": "insufficient cash ($3058 < $7268)"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 2,
+    "equity": 91847.24,
+    "cash": 3058.11,
+    "positions_count": 11,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 24,
+        "entry_price": 348.05999755859375,
+        "current_price": 374.1400146484375,
+        "unrealized_pnl_pct": 0.0749
+      },
+      {
+        "ticker": "TWST",
+        "shares": 85,
+        "entry_price": 99.23999786376953,
+        "current_price": 116.0999984741211,
+        "unrealized_pnl_pct": 0.1699
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 40,
+        "entry_price": 194.6199951171875,
+        "current_price": 212.9199981689453,
+        "unrealized_pnl_pct": 0.094
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 41,
+        "entry_price": 187.14999389648438,
+        "current_price": 188.2899932861328,
+        "unrealized_pnl_pct": 0.0061
+      },
+      {
+        "ticker": "S",
+        "shares": 375,
+        "entry_price": 19.6299991607666,
+        "current_price": 22.489999771118164,
+        "unrealized_pnl_pct": 0.1457
+      },
+      {
+        "ticker": "DDOG",
+        "shares": 28,
+        "entry_price": 262.32000732421875,
+        "current_price": 246.0,
+        "unrealized_pnl_pct": -0.0622
+      },
+      {
+        "ticker": "SNOW",
+        "shares": 27,
+        "entry_price": 265.1300048828125,
+        "current_price": 325.3299865722656,
+        "unrealized_pnl_pct": 0.2271
+      },
+      {
+        "ticker": "OII",
+        "shares": 135,
+        "entry_price": 52.72999954223633,
+        "current_price": 53.099998474121094,
+        "unrealized_pnl_pct": 0.007
+      },
+      {
+        "ticker": "MDB",
+        "shares": 16,
+        "entry_price": 472.2900085449219,
+        "current_price": 434.6199951171875,
+        "unrealized_pnl_pct": -0.0798
+      },
+      {
+        "ticker": "AZTA",
+        "shares": 234,
+        "entry_price": 33.90999984741211,
+        "current_price": 32.97999954223633,
+        "unrealized_pnl_pct": -0.0274
+      },
+      {
+        "ticker": "BIO",
+        "shares": 22,
+        "entry_price": 361.19000244140625,
+        "current_price": 352.69000244140625,
+        "unrealized_pnl_pct": -0.0235
+      }
+    ]
   }
 ]

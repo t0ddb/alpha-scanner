@@ -53,8 +53,26 @@
       "entry_score": 8.05,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 7758.8116885278705
+    },
+    "ESTC": {
+      "entry_date": "2026-08-18",
+      "entry_price": 85.01000213623047,
+      "shares": 89,
+      "cost_basis": 7565.890190124512,
+      "entry_score": 8.75,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 7650.875161094666
+    },
+    "PATH": {
+      "entry_date": "2026-08-18",
+      "entry_price": 15.579999923706055,
+      "shares": 491,
+      "cost_basis": 7649.779962539673,
+      "entry_score": 8.15,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 7650.875161094666
     }
   },
-  "last_run_date": "2026-08-17",
+  "last_run_date": "2026-08-18",
   "cumulative_pnl": -71255.85
 }
