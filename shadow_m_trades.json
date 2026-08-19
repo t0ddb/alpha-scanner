@@ -284,5 +284,18 @@
     "exit_reason": "score_exit",
     "entry_score": 8.3,
     "sequence_tags_at_entry": "BONUS: last_two=dtf\u2192rs (+0.3; last-2 mean +59% (n=277))"
+  },
+  {
+    "ticker": "DDOG",
+    "entry_date": "2026-07-16",
+    "exit_date": "2026-08-19",
+    "entry_price": 262.32000732421875,
+    "exit_price": 233.52000427246094,
+    "shares": 28,
+    "pnl": -806.4,
+    "pnl_pct": -0.1098,
+    "exit_reason": "score_exit",
+    "entry_score": 7.65,
+    "sequence_tags_at_entry": "PENALTY: first_two_pair=ich\u2192dtf (-0.2; first-2 mean +22.5% (n=211))"
   }
 ]

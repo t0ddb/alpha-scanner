@@ -9550,5 +9550,69 @@
         "unrealized_pnl_pct": -0.1303
       }
     ]
+  },
+  {
+    "date": "2026-08-19",
+    "mode": "paper",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "SDGR",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "ANET",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 5,
+    "open_value": 58096.81,
+    "open_unrealized_pnl": 9881.37,
+    "realized_cumulative_pnl": -53566.77,
+    "total_pnl": -43685.4,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 41,
+        "entry_price": 260.5799865722656,
+        "current_price": 359.760009765625,
+        "unrealized_pnl": 4066.38,
+        "unrealized_pnl_pct": 0.3806
+      },
+      {
+        "ticker": "TWST",
+        "shares": 130,
+        "entry_price": 87.55999755859375,
+        "current_price": 142.38999938964844,
+        "unrealized_pnl": 7127.9,
+        "unrealized_pnl_pct": 0.6262
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 483,
+        "entry_price": 18.459999084472656,
+        "current_price": 19.850000381469727,
+        "unrealized_pnl": 671.37,
+        "unrealized_pnl_pct": 0.0753
+      },
+      {
+        "ticker": "ANET",
+        "shares": 44,
+        "entry_price": 198.82000732421875,
+        "current_price": 186.4499969482422,
+        "unrealized_pnl": -544.28,
+        "unrealized_pnl_pct": -0.0622
+      },
+      {
+        "ticker": "CRDO",
+        "shares": 30,
+        "entry_price": 282.82000732421875,
+        "current_price": 234.82000732421875,
+        "unrealized_pnl": -1440.0,
+        "unrealized_pnl_pct": -0.1697
+      }
+    ]
   }
 ]
