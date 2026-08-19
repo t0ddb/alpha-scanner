@@ -8183,5 +8183,109 @@
         "unrealized_pnl_pct": -0.1303
       }
     ]
+  },
+  {
+    "date": "2026-08-19",
+    "mode": "live",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "MDB",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "PATH",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "SDGR",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "ANET",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 9,
+    "open_value": 4314.61,
+    "open_unrealized_pnl": 545.74,
+    "realized_cumulative_pnl": -2524.33,
+    "total_pnl": -1978.59,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 2,
+        "entry_price": 260.5799865722656,
+        "current_price": 359.760009765625,
+        "unrealized_pnl": 198.36,
+        "unrealized_pnl_pct": 0.3806
+      },
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 142.38999938964844,
+        "unrealized_pnl": 328.98,
+        "unrealized_pnl_pct": 0.6262
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 205.0,
+        "unrealized_pnl": 29.6,
+        "unrealized_pnl_pct": 0.0778
+      },
+      {
+        "ticker": "BIO",
+        "shares": 1,
+        "entry_price": 352.4700012207031,
+        "current_price": 364.260009765625,
+        "unrealized_pnl": 11.79,
+        "unrealized_pnl_pct": 0.0334
+      },
+      {
+        "ticker": "PATH",
+        "shares": 28,
+        "entry_price": 15.260000228881836,
+        "current_price": 15.779999732971191,
+        "unrealized_pnl": 14.56,
+        "unrealized_pnl_pct": 0.0341
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 24,
+        "entry_price": 18.459999084472656,
+        "current_price": 19.850000381469727,
+        "unrealized_pnl": 33.36,
+        "unrealized_pnl_pct": 0.0753
+      },
+      {
+        "ticker": "ANET",
+        "shares": 2,
+        "entry_price": 198.82000732421875,
+        "current_price": 186.4499969482422,
+        "unrealized_pnl": -24.74,
+        "unrealized_pnl_pct": -0.0622
+      },
+      {
+        "ticker": "MDB",
+        "shares": 1,
+        "entry_price": 438.70001220703125,
+        "current_price": 440.5299987792969,
+        "unrealized_pnl": 1.83,
+        "unrealized_pnl_pct": 0.0042
+      },
+      {
+        "ticker": "CRDO",
+        "shares": 1,
+        "entry_price": 282.82000732421875,
+        "current_price": 234.82000732421875,
+        "unrealized_pnl": -48.0,
+        "unrealized_pnl_pct": -0.1697
+      }
+    ]
   }
 ]
