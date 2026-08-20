@@ -1,5 +1,10 @@
 {
   "cooldowns": {
+    "CRWD": {
+      "cooldown_until": "2026-09-19",
+      "exit_date": "2026-08-20",
+      "loss_amount": -42.8
+    },
     "DDOG": {
       "cooldown_until": "2026-09-06",
       "exit_date": "2026-08-07",
