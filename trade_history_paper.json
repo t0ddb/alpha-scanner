@@ -982,6 +982,32 @@
       "score_at_entry": 9.1,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "caea3381-75b7-4319-af53-7fc94b9185a0"
+    },
+    {
+      "ticker": "CRWD",
+      "side": "sell",
+      "date": "2026-08-20",
+      "price": 191.0,
+      "qty": 40.0,
+      "proceeds": 7640.0,
+      "pnl": -502.56,
+      "pnl_pct": -6.17,
+      "score_at_exit": 2.4,
+      "reason": "Score exit (score 2.4 < 5.0)",
+      "hold_days": 36,
+      "score_at_entry": 9.5,
+      "alpaca_order_id": "da79af1c-2692-42fe-98a9-b65ab1e1e862"
+    },
+    {
+      "ticker": "SDGR",
+      "side": "buy",
+      "date": "2026-08-20",
+      "price": 19.59,
+      "qty": 412.0,
+      "cost_basis": 8071.08,
+      "score_at_entry": 9.2,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "51c34490-ecfa-4d56-942a-1259d3790991"
     }
   ]
 }

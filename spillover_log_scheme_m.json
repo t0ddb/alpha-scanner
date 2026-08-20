@@ -14171,5 +14171,89 @@
         "unrealized_pnl_pct": 0.0128
       }
     ]
+  },
+  {
+    "date": "2026-08-20",
+    "mode": "scheme_m",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "PATH",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 8,
+    "open_value": 74673.95,
+    "open_unrealized_pnl": 7020.75,
+    "realized_cumulative_pnl": -71255.85,
+    "total_pnl": -64235.1,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 133,
+        "entry_price": 80.79000091552734,
+        "current_price": 136.3300018310547,
+        "unrealized_pnl": 7386.82,
+        "unrealized_pnl_pct": 0.6875
+      },
+      {
+        "ticker": "PANW",
+        "shares": 30,
+        "entry_price": 341.0199890136719,
+        "current_price": 349.55999755859375,
+        "unrealized_pnl": 256.2,
+        "unrealized_pnl_pct": 0.025
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 43,
+        "entry_price": 199.3800048828125,
+        "current_price": 190.33999633789062,
+        "unrealized_pnl": -388.72,
+        "unrealized_pnl_pct": -0.0453
+      },
+      {
+        "ticker": "SNOW",
+        "shares": 28,
+        "entry_price": 267.79998779296875,
+        "current_price": 321.2900085449219,
+        "unrealized_pnl": 1497.72,
+        "unrealized_pnl_pct": 0.1997
+      },
+      {
+        "ticker": "ANET",
+        "shares": 39,
+        "entry_price": 198.82000732421875,
+        "current_price": 183.75,
+        "unrealized_pnl": -587.73,
+        "unrealized_pnl_pct": -0.0758
+      },
+      {
+        "ticker": "CRDO",
+        "shares": 27,
+        "entry_price": 282.82000732421875,
+        "current_price": 231.35000610351562,
+        "unrealized_pnl": -1389.69,
+        "unrealized_pnl_pct": -0.182
+      },
+      {
+        "ticker": "ESTC",
+        "shares": 89,
+        "entry_price": 85.01000213623047,
+        "current_price": 85.9000015258789,
+        "unrealized_pnl": 79.21,
+        "unrealized_pnl_pct": 0.0105
+      },
+      {
+        "ticker": "PATH",
+        "shares": 491,
+        "entry_price": 15.579999923706055,
+        "current_price": 15.920000076293945,
+        "unrealized_pnl": 166.94,
+        "unrealized_pnl_pct": 0.0218
+      }
+    ]
   }
 ]
