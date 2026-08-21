@@ -544,5 +544,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.5,
     "intended_slot_dollars": 10794.80404
+  },
+  {
+    "ticker": "CRDO",
+    "entry_date": "2026-08-17",
+    "exit_date": "2026-08-21",
+    "entry_price": 282.82000732421875,
+    "exit_price": 230.57000732421875,
+    "shares": 30,
+    "pnl": -1567.5,
+    "pnl_pct": -0.1847,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.1,
+    "intended_slot_dollars": 8751.495930000001
   }
 ]
