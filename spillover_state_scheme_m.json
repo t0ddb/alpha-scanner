@@ -18,15 +18,6 @@
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 10305.780541067505
     },
-    "CRWD": {
-      "entry_date": "2026-07-06",
-      "entry_price": 199.3800048828125,
-      "shares": 43,
-      "cost_basis": 8573.340209960938,
-      "entry_score": 8.7,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 8581.699492139434
-    },
     "SNOW": {
       "entry_date": "2026-07-22",
       "entry_price": 267.79998779296875,
@@ -44,15 +35,6 @@
       "entry_score": 8.3,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 7798.914389057732
-    },
-    "CRDO": {
-      "entry_date": "2026-08-17",
-      "entry_price": 282.82000732421875,
-      "shares": 27,
-      "cost_basis": 7636.140197753906,
-      "entry_score": 8.05,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 7758.8116885278705
     },
     "ESTC": {
       "entry_date": "2026-08-18",
@@ -73,6 +55,6 @@
       "intended_slot_dollars": 7650.875161094666
     }
   },
-  "last_run_date": "2026-08-21",
-  "cumulative_pnl": -71255.85
+  "last_run_date": "2026-08-24",
+  "cumulative_pnl": -73255.62
 }

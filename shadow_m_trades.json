@@ -297,5 +297,18 @@
     "exit_reason": "score_exit",
     "entry_score": 7.65,
     "sequence_tags_at_entry": "PENALTY: first_two_pair=ich\u2192dtf (-0.2; first-2 mean +22.5% (n=211))"
+  },
+  {
+    "ticker": "CRWD",
+    "entry_date": "2026-07-07",
+    "exit_date": "2026-08-24",
+    "entry_price": 194.6199951171875,
+    "exit_price": 190.67999267578125,
+    "shares": 40,
+    "pnl": -157.6,
+    "pnl_pct": -0.0202,
+    "exit_reason": "score_exit",
+    "entry_score": 8.95,
+    "sequence_tags_at_entry": "BONUS: first_three_pat=ich\u2192rs\u2192dtf (+0.5; first-3 mean +115% (n=79))|BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
   }
 ]

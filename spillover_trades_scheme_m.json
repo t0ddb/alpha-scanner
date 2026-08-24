@@ -754,5 +754,33 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 8.25,
     "intended_slot_dollars": 9306.43441439209
+  },
+  {
+    "ticker": "CRWD",
+    "entry_date": "2026-07-06",
+    "exit_date": "2026-08-24",
+    "entry_price": 199.3800048828125,
+    "exit_price": 190.67999267578125,
+    "shares": 43,
+    "pnl": -374.1,
+    "pnl_pct": -0.0436,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 8.7,
+    "intended_slot_dollars": 8581.699492139434
+  },
+  {
+    "ticker": "CRDO",
+    "entry_date": "2026-08-17",
+    "exit_date": "2026-08-24",
+    "entry_price": 282.82000732421875,
+    "exit_price": 222.61000061035156,
+    "shares": 27,
+    "pnl": -1625.67,
+    "pnl_pct": -0.2129,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 8.05,
+    "intended_slot_dollars": 7758.8116885278705
   }
 ]
