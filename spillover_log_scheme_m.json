@@ -14416,5 +14416,68 @@
         "unrealized_pnl_pct": 0.0635
       }
     ]
+  },
+  {
+    "date": "2026-08-25",
+    "mode": "scheme_m",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 6,
+    "open_value": 61994.74,
+    "open_unrealized_pnl": 10551.02,
+    "realized_cumulative_pnl": -73255.62,
+    "total_pnl": -62704.6,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 133,
+        "entry_price": 80.79000091552734,
+        "current_price": 151.4199981689453,
+        "unrealized_pnl": 9393.79,
+        "unrealized_pnl_pct": 0.8742
+      },
+      {
+        "ticker": "PANW",
+        "shares": 30,
+        "entry_price": 341.0199890136719,
+        "current_price": 339.8999938964844,
+        "unrealized_pnl": -33.6,
+        "unrealized_pnl_pct": -0.0033
+      },
+      {
+        "ticker": "SNOW",
+        "shares": 28,
+        "entry_price": 267.79998779296875,
+        "current_price": 317.0199890136719,
+        "unrealized_pnl": 1378.16,
+        "unrealized_pnl_pct": 0.1838
+      },
+      {
+        "ticker": "ANET",
+        "shares": 39,
+        "entry_price": 198.82000732421875,
+        "current_price": 190.94000244140625,
+        "unrealized_pnl": -307.32,
+        "unrealized_pnl_pct": -0.0396
+      },
+      {
+        "ticker": "ESTC",
+        "shares": 89,
+        "entry_price": 85.01000213623047,
+        "current_price": 80.4000015258789,
+        "unrealized_pnl": -410.29,
+        "unrealized_pnl_pct": -0.0542
+      },
+      {
+        "ticker": "PATH",
+        "shares": 491,
+        "entry_price": 15.579999923706055,
+        "current_price": 16.65999984741211,
+        "unrealized_pnl": 530.28,
+        "unrealized_pnl_pct": 0.0693
+      }
+    ]
   }
 ]
