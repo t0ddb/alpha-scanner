@@ -9827,5 +9827,52 @@
         "unrealized_pnl_pct": -0.0396
       }
     ]
+  },
+  {
+    "date": "2026-08-26",
+    "mode": "paper",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 4,
+    "open_value": 51722.52,
+    "open_unrealized_pnl": 11991.68,
+    "realized_cumulative_pnl": -55134.27,
+    "total_pnl": -43142.59,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 41,
+        "entry_price": 260.5799865722656,
+        "current_price": 339.30999755859375,
+        "unrealized_pnl": 3227.93,
+        "unrealized_pnl_pct": 0.3021
+      },
+      {
+        "ticker": "TWST",
+        "shares": 130,
+        "entry_price": 87.55999755859375,
+        "current_price": 150.05999755859375,
+        "unrealized_pnl": 8125.0,
+        "unrealized_pnl_pct": 0.7138
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 483,
+        "entry_price": 18.459999084472656,
+        "current_price": 19.469999313354492,
+        "unrealized_pnl": 487.83,
+        "unrealized_pnl_pct": 0.0547
+      },
+      {
+        "ticker": "ANET",
+        "shares": 44,
+        "entry_price": 198.82000732421875,
+        "current_price": 202.25,
+        "unrealized_pnl": 150.92,
+        "unrealized_pnl_pct": 0.0173
+      }
+    ]
   }
 ]
