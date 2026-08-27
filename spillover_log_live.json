@@ -8654,5 +8654,89 @@
         "unrealized_pnl_pct": -0.077
       }
     ]
+  },
+  {
+    "date": "2026-08-27",
+    "mode": "live",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "BIO",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 8,
+    "open_value": 4164.47,
+    "open_unrealized_pnl": 678.42,
+    "realized_cumulative_pnl": -2576.58,
+    "total_pnl": -1898.16,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 2,
+        "entry_price": 260.5799865722656,
+        "current_price": 339.30999755859375,
+        "unrealized_pnl": 157.46,
+        "unrealized_pnl_pct": 0.3021
+      },
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 150.05999755859375,
+        "unrealized_pnl": 375.0,
+        "unrealized_pnl_pct": 0.7138
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 224.83999633789062,
+        "unrealized_pnl": 69.28,
+        "unrealized_pnl_pct": 0.1821
+      },
+      {
+        "ticker": "BIO",
+        "shares": 1,
+        "entry_price": 352.4700012207031,
+        "current_price": 388.6400146484375,
+        "unrealized_pnl": 36.17,
+        "unrealized_pnl_pct": 0.1026
+      },
+      {
+        "ticker": "PATH",
+        "shares": 28,
+        "entry_price": 15.260000228881836,
+        "current_price": 16.760000228881836,
+        "unrealized_pnl": 42.0,
+        "unrealized_pnl_pct": 0.0983
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 24,
+        "entry_price": 18.459999084472656,
+        "current_price": 19.469999313354492,
+        "unrealized_pnl": 24.24,
+        "unrealized_pnl_pct": 0.0547
+      },
+      {
+        "ticker": "ANET",
+        "shares": 2,
+        "entry_price": 198.82000732421875,
+        "current_price": 202.25,
+        "unrealized_pnl": 6.86,
+        "unrealized_pnl_pct": 0.0173
+      },
+      {
+        "ticker": "MDB",
+        "shares": 1,
+        "entry_price": 438.70001220703125,
+        "current_price": 406.1099853515625,
+        "unrealized_pnl": -32.59,
+        "unrealized_pnl_pct": -0.0743
+      }
+    ]
   }
 ]
