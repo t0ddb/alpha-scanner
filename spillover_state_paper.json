@@ -35,8 +35,17 @@
       "entry_score": 9.6,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 8759.56768
+    },
+    "WDAY": {
+      "entry_date": "2026-08-28",
+      "entry_price": 193.57000732421875,
+      "shares": 48,
+      "cost_basis": 9291.3603515625,
+      "entry_score": 9.5,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9396.443280000001
     }
   },
-  "last_run_date": "2026-08-26",
+  "last_run_date": "2026-08-28",
   "cumulative_pnl": -55134.27
 }

@@ -9874,5 +9874,69 @@
         "unrealized_pnl_pct": 0.0173
       }
     ]
+  },
+  {
+    "date": "2026-08-28",
+    "mode": "paper",
+    "entries": [
+      {
+        "ticker": "WDAY",
+        "score": 9.5,
+        "entry_price": 193.57000732421875,
+        "shares": 48,
+        "cost": 9291.36,
+        "skip_reason": "Full"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 5,
+    "open_value": 63597.2,
+    "open_unrealized_pnl": 14575.0,
+    "realized_cumulative_pnl": -55134.27,
+    "total_pnl": -40559.27,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 41,
+        "entry_price": 260.5799865722656,
+        "current_price": 382.8500061035156,
+        "unrealized_pnl": 5013.07,
+        "unrealized_pnl_pct": 0.4692
+      },
+      {
+        "ticker": "TWST",
+        "shares": 130,
+        "entry_price": 87.55999755859375,
+        "current_price": 153.10000610351562,
+        "unrealized_pnl": 8520.2,
+        "unrealized_pnl_pct": 0.7485
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 483,
+        "entry_price": 18.459999084472656,
+        "current_price": 20.40999984741211,
+        "unrealized_pnl": 941.85,
+        "unrealized_pnl_pct": 0.1056
+      },
+      {
+        "ticker": "ANET",
+        "shares": 44,
+        "entry_price": 198.82000732421875,
+        "current_price": 201.08999633789062,
+        "unrealized_pnl": 99.88,
+        "unrealized_pnl_pct": 0.0114
+      },
+      {
+        "ticker": "WDAY",
+        "shares": 48,
+        "entry_price": 193.57000732421875,
+        "current_price": 193.57000732421875,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]
