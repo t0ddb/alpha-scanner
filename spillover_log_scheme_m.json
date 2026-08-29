@@ -14638,5 +14638,89 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-08-29",
+    "mode": "scheme_m",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "SDGR",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 8,
+    "open_value": 80753.42,
+    "open_unrealized_pnl": 13290.97,
+    "realized_cumulative_pnl": -73255.62,
+    "total_pnl": -59964.65,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 133,
+        "entry_price": 80.79000091552734,
+        "current_price": 141.3800048828125,
+        "unrealized_pnl": 8058.47,
+        "unrealized_pnl_pct": 0.75
+      },
+      {
+        "ticker": "PANW",
+        "shares": 30,
+        "entry_price": 341.0199890136719,
+        "current_price": 371.5899963378906,
+        "unrealized_pnl": 917.1,
+        "unrealized_pnl_pct": 0.0896
+      },
+      {
+        "ticker": "SNOW",
+        "shares": 28,
+        "entry_price": 267.79998779296875,
+        "current_price": 328.0,
+        "unrealized_pnl": 1685.6,
+        "unrealized_pnl_pct": 0.2248
+      },
+      {
+        "ticker": "ANET",
+        "shares": 39,
+        "entry_price": 198.82000732421875,
+        "current_price": 195.3800048828125,
+        "unrealized_pnl": -134.16,
+        "unrealized_pnl_pct": -0.0173
+      },
+      {
+        "ticker": "ESTC",
+        "shares": 89,
+        "entry_price": 85.01000213623047,
+        "current_price": 99.91000366210938,
+        "unrealized_pnl": 1326.1,
+        "unrealized_pnl_pct": 0.1753
+      },
+      {
+        "ticker": "PATH",
+        "shares": 491,
+        "entry_price": 15.579999923706055,
+        "current_price": 18.149999618530273,
+        "unrealized_pnl": 1261.87,
+        "unrealized_pnl_pct": 0.165
+      },
+      {
+        "ticker": "WDAY",
+        "shares": 41,
+        "entry_price": 193.57000732421875,
+        "current_price": 204.72000122070312,
+        "unrealized_pnl": 457.15,
+        "unrealized_pnl_pct": 0.0576
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 396,
+        "entry_price": 20.40999984741211,
+        "current_price": 19.700000762939453,
+        "unrealized_pnl": -281.16,
+        "unrealized_pnl_pct": -0.0348
+      }
+    ]
   }
 ]
