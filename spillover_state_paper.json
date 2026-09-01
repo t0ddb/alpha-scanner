@@ -27,15 +27,6 @@
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 8926.61431
     },
-    "ANET": {
-      "entry_date": "2026-08-14",
-      "entry_price": 198.82000732421875,
-      "shares": 44,
-      "cost_basis": 8748.080322265625,
-      "entry_score": 9.6,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 8759.56768
-    },
     "WDAY": {
       "entry_date": "2026-08-28",
       "entry_price": 193.57000732421875,
@@ -47,5 +38,5 @@
     }
   },
   "last_run_date": "2026-09-01",
-  "cumulative_pnl": -55134.27
+  "cumulative_pnl": -55554.91
 }
