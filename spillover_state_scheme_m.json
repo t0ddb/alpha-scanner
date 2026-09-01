@@ -71,8 +71,26 @@
       "entry_score": 7.55,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 8085.415514201736
+    },
+    "AVAX-USD": {
+      "entry_date": "2026-09-01",
+      "entry_price": 7.224999904632568,
+      "shares": 1112,
+      "cost_basis": 8034.199893951416,
+      "entry_score": 8.2,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 8035.299806450844
+    },
+    "SOL-USD": {
+      "entry_date": "2026-09-01",
+      "entry_price": 103.01000213623047,
+      "shares": 78,
+      "cost_basis": 8034.780166625977,
+      "entry_score": 7.95,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 8035.299806450844
     }
   },
-  "last_run_date": "2026-08-29",
+  "last_run_date": "2026-09-01",
   "cumulative_pnl": -73255.62
 }
