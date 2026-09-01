@@ -9008,5 +9008,91 @@
         "unrealized_pnl_pct": 0.02
       }
     ]
+  },
+  {
+    "date": "2026-09-01",
+    "mode": "live",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "ANET",
+        "entry_price": 198.82000732421875,
+        "exit_price": 189.25999450683594,
+        "exit_score": 4.4
+      }
+    ],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 8,
+    "open_value": 4150.81,
+    "open_unrealized_pnl": 675.26,
+    "realized_cumulative_pnl": -2595.7,
+    "total_pnl": -1920.44,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 2,
+        "entry_price": 260.5799865722656,
+        "current_price": 362.0899963378906,
+        "unrealized_pnl": 203.02,
+        "unrealized_pnl_pct": 0.3896
+      },
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 132.05999755859375,
+        "unrealized_pnl": 267.0,
+        "unrealized_pnl_pct": 0.5082
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 207.1300048828125,
+        "unrealized_pnl": 33.86,
+        "unrealized_pnl_pct": 0.089
+      },
+      {
+        "ticker": "BIO",
+        "shares": 1,
+        "entry_price": 352.4700012207031,
+        "current_price": 380.9599914550781,
+        "unrealized_pnl": 28.49,
+        "unrealized_pnl_pct": 0.0808
+      },
+      {
+        "ticker": "PATH",
+        "shares": 28,
+        "entry_price": 15.260000228881836,
+        "current_price": 18.139999389648438,
+        "unrealized_pnl": 80.64,
+        "unrealized_pnl_pct": 0.1887
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 24,
+        "entry_price": 18.459999084472656,
+        "current_price": 20.84000015258789,
+        "unrealized_pnl": 57.12,
+        "unrealized_pnl_pct": 0.1289
+      },
+      {
+        "ticker": "MDB",
+        "shares": 1,
+        "entry_price": 438.70001220703125,
+        "current_price": 434.2099914550781,
+        "unrealized_pnl": -4.49,
+        "unrealized_pnl_pct": -0.0102
+      },
+      {
+        "ticker": "WDAY",
+        "shares": 2,
+        "entry_price": 193.57000732421875,
+        "current_price": 198.3800048828125,
+        "unrealized_pnl": 9.62,
+        "unrealized_pnl_pct": 0.0248
+      }
+    ]
   }
 ]
