@@ -768,6 +768,36 @@
       "score_at_entry": 9.2,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "a41b9831-82f5-459e-8aca-c1d56dffb023"
+    },
+    {
+      "ticker": "PANW",
+      "side": "sell",
+      "date": "2026-09-02",
+      "price": 330.5,
+      "qty": 1.0,
+      "proceeds": 330.5,
+      "pnl": 0.21,
+      "pnl_pct": 0.06,
+      "score_at_exit": 2.9,
+      "reason": "Score exit (score 2.9 < 5.0)",
+      "hold_days": 51,
+      "score_at_entry": 9.9,
+      "alpaca_order_id": "3f33e00a-4361-43fb-8073-de6845494f81"
+    },
+    {
+      "ticker": "SNOW",
+      "side": "sell",
+      "date": "2026-09-02",
+      "price": 373.62,
+      "qty": 1.0,
+      "proceeds": 373.62,
+      "pnl": 97.09,
+      "pnl_pct": 35.11,
+      "score_at_exit": 4.4,
+      "reason": "Score exit (score 4.4 < 5.0)",
+      "hold_days": 50,
+      "score_at_entry": 9.1,
+      "alpaca_order_id": "18b13a8a-f829-4f66-8fd2-9b078c513bd0"
     }
   ]
 }

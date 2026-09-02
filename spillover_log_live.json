@@ -9094,5 +9094,81 @@
         "unrealized_pnl_pct": 0.0248
       }
     ]
+  },
+  {
+    "date": "2026-09-02",
+    "mode": "live",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "PANW",
+        "entry_price": 260.5799865722656,
+        "exit_price": 328.4800109863281,
+        "exit_score": 2.9
+      },
+      {
+        "ticker": "MDB",
+        "entry_price": 438.70001220703125,
+        "exit_price": 375.3999938964844,
+        "exit_score": 1.7
+      }
+    ],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 6,
+    "open_value": 3007.59,
+    "open_unrealized_pnl": 491.9,
+    "realized_cumulative_pnl": -2523.2,
+    "total_pnl": -2031.3,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 131.0,
+        "unrealized_pnl": 260.64,
+        "unrealized_pnl_pct": 0.4961
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 213.25,
+        "unrealized_pnl": 46.1,
+        "unrealized_pnl_pct": 0.1212
+      },
+      {
+        "ticker": "BIO",
+        "shares": 1,
+        "entry_price": 352.4700012207031,
+        "current_price": 388.510009765625,
+        "unrealized_pnl": 36.04,
+        "unrealized_pnl_pct": 0.1022
+      },
+      {
+        "ticker": "PATH",
+        "shares": 28,
+        "entry_price": 15.260000228881836,
+        "current_price": 17.989999771118164,
+        "unrealized_pnl": 76.44,
+        "unrealized_pnl_pct": 0.1789
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 24,
+        "entry_price": 18.459999084472656,
+        "current_price": 20.8799991607666,
+        "unrealized_pnl": 58.08,
+        "unrealized_pnl_pct": 0.1311
+      },
+      {
+        "ticker": "WDAY",
+        "shares": 2,
+        "entry_price": 193.57000732421875,
+        "current_price": 200.8699951171875,
+        "unrealized_pnl": 14.6,
+        "unrealized_pnl_pct": 0.0377
+      }
+    ]
   }
 ]

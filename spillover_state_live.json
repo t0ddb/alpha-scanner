@@ -1,14 +1,5 @@
 {
   "positions": {
-    "PANW": {
-      "entry_date": "2026-05-22",
-      "entry_price": 260.5799865722656,
-      "shares": 2,
-      "cost_basis": 521.1599731445312,
-      "entry_score": 9.3,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 548.03655
-    },
     "TWST": {
       "entry_date": "2026-06-19",
       "entry_price": 87.55999755859375,
@@ -54,15 +45,6 @@
       "skip_reason_at_entry": "Cap Hit",
       "intended_slot_dollars": 448.14605000000006
     },
-    "MDB": {
-      "entry_date": "2026-08-17",
-      "entry_price": 438.70001220703125,
-      "shares": 1,
-      "cost_basis": 438.70001220703125,
-      "entry_score": 9.2,
-      "skip_reason_at_entry": "Cap Hit",
-      "intended_slot_dollars": 440.96655000000004
-    },
     "WDAY": {
       "entry_date": "2026-08-28",
       "entry_price": 193.57000732421875,
@@ -73,6 +55,6 @@
       "intended_slot_dollars": 474.17734
     }
   },
-  "last_run_date": "2026-09-01",
-  "cumulative_pnl": -2595.7
+  "last_run_date": "2026-09-02",
+  "cumulative_pnl": -2523.2
 }

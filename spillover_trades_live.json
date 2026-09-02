@@ -460,5 +460,33 @@
     "skip_reason_at_entry": "Cap Hit",
     "entry_score": 9.6,
     "intended_slot_dollars": 440.41044999999997
+  },
+  {
+    "ticker": "PANW",
+    "entry_date": "2026-05-22",
+    "exit_date": "2026-09-02",
+    "entry_price": 260.5799865722656,
+    "exit_price": 328.4800109863281,
+    "shares": 2,
+    "pnl": 135.8,
+    "pnl_pct": 0.2606,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.3,
+    "intended_slot_dollars": 548.03655
+  },
+  {
+    "ticker": "MDB",
+    "entry_date": "2026-08-17",
+    "exit_date": "2026-09-02",
+    "entry_price": 438.70001220703125,
+    "exit_price": 375.3999938964844,
+    "shares": 1,
+    "pnl": -63.3,
+    "pnl_pct": -0.1443,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Cap Hit",
+    "entry_score": 9.2,
+    "intended_slot_dollars": 440.96655000000004
   }
 ]
