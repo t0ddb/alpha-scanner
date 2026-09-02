@@ -10102,5 +10102,51 @@
         "unrealized_pnl_pct": 0.0248
       }
     ]
+  },
+  {
+    "date": "2026-09-02",
+    "mode": "paper",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "PANW",
+        "entry_price": 260.5799865722656,
+        "exit_price": 328.4800109863281,
+        "exit_score": 2.9
+      }
+    ],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 3,
+    "open_value": 36756.8,
+    "open_unrealized_pnl": 7166.46,
+    "realized_cumulative_pnl": -52771.01,
+    "total_pnl": -45604.55,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 130,
+        "entry_price": 87.55999755859375,
+        "current_price": 131.0,
+        "unrealized_pnl": 5647.2,
+        "unrealized_pnl_pct": 0.4961
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 483,
+        "entry_price": 18.459999084472656,
+        "current_price": 20.8799991607666,
+        "unrealized_pnl": 1168.86,
+        "unrealized_pnl_pct": 0.1311
+      },
+      {
+        "ticker": "WDAY",
+        "shares": 48,
+        "entry_price": 193.57000732421875,
+        "current_price": 200.8699951171875,
+        "unrealized_pnl": 350.4,
+        "unrealized_pnl_pct": 0.0377
+      }
+    ]
   }
 ]

@@ -13341,5 +13341,111 @@
         "unrealized_pnl_pct": 0.0947
       }
     ]
+  },
+  {
+    "date": "2026-09-02",
+    "entries": [
+      {
+        "ticker": "SDGR",
+        "score": 8.25,
+        "entry_price": 20.8799991607666,
+        "shares": 360,
+        "cost": 7516.8,
+        "sequence_tags": "PENALTY: first_three_pat=ich\u2192roc\u2192rs (-0.4; first-3 mean +0.3% (n=74))"
+      }
+    ],
+    "exits": [],
+    "skipped": [],
+    "stops_fired": [
+      {
+        "ticker": "MDB",
+        "entry_price": 472.2900085449219,
+        "stop_price": 377.83,
+        "exit_price": 375.3999938964844
+      }
+    ],
+    "candidates_total": 1,
+    "equity": 90428.63,
+    "cash": 268.3,
+    "positions_count": 11,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 24,
+        "entry_price": 348.05999755859375,
+        "current_price": 328.4800109863281,
+        "unrealized_pnl_pct": -0.0563
+      },
+      {
+        "ticker": "TWST",
+        "shares": 85,
+        "entry_price": 99.23999786376953,
+        "current_price": 131.0,
+        "unrealized_pnl_pct": 0.32
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 41,
+        "entry_price": 187.14999389648438,
+        "current_price": 213.25,
+        "unrealized_pnl_pct": 0.1395
+      },
+      {
+        "ticker": "S",
+        "shares": 375,
+        "entry_price": 19.6299991607666,
+        "current_price": 19.68000030517578,
+        "unrealized_pnl_pct": 0.0025
+      },
+      {
+        "ticker": "SNOW",
+        "shares": 27,
+        "entry_price": 265.1300048828125,
+        "current_price": 305.8399963378906,
+        "unrealized_pnl_pct": 0.1535
+      },
+      {
+        "ticker": "OII",
+        "shares": 135,
+        "entry_price": 52.72999954223633,
+        "current_price": 51.630001068115234,
+        "unrealized_pnl_pct": -0.0209
+      },
+      {
+        "ticker": "AZTA",
+        "shares": 234,
+        "entry_price": 33.90999984741211,
+        "current_price": 31.729999542236328,
+        "unrealized_pnl_pct": -0.0643
+      },
+      {
+        "ticker": "BIO",
+        "shares": 22,
+        "entry_price": 361.19000244140625,
+        "current_price": 388.510009765625,
+        "unrealized_pnl_pct": 0.0756
+      },
+      {
+        "ticker": "ESTC",
+        "shares": 89,
+        "entry_price": 87.33999633789062,
+        "current_price": 89.58000183105469,
+        "unrealized_pnl_pct": 0.0256
+      },
+      {
+        "ticker": "PATH",
+        "shares": 463,
+        "entry_price": 16.56999969482422,
+        "current_price": 17.989999771118164,
+        "unrealized_pnl_pct": 0.0857
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 360,
+        "entry_price": 20.8799991607666,
+        "current_price": 20.8799991607666,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]

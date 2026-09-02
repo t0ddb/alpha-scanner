@@ -1023,6 +1023,21 @@
       "hold_days": 19,
       "score_at_entry": 9.1,
       "alpaca_order_id": "3d97c9fe-53f3-4ba5-b1a4-676be8195196"
+    },
+    {
+      "ticker": "PANW",
+      "side": "sell",
+      "date": "2026-09-02",
+      "price": 330.4677,
+      "qty": 8.0,
+      "proceeds": 2643.74,
+      "pnl": -28.26,
+      "pnl_pct": -1.06,
+      "score_at_exit": 2.9,
+      "reason": "Score exit (score 2.9 < 5.0)",
+      "hold_days": 57,
+      "score_at_entry": 9.8,
+      "alpaca_order_id": "7434fed6-5eb4-4f3c-97f9-2a22f70a6a79"
     }
   ]
 }

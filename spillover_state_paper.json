@@ -1,14 +1,5 @@
 {
   "positions": {
-    "PANW": {
-      "entry_date": "2026-05-22",
-      "entry_price": 260.5799865722656,
-      "shares": 41,
-      "cost_basis": 10683.77944946289,
-      "entry_score": 9.3,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 10790.52207
-    },
     "TWST": {
       "entry_date": "2026-06-19",
       "entry_price": 87.55999755859375,
@@ -37,6 +28,6 @@
       "intended_slot_dollars": 9396.443280000001
     }
   },
-  "last_run_date": "2026-09-01",
-  "cumulative_pnl": -55554.91
+  "last_run_date": "2026-09-02",
+  "cumulative_pnl": -52771.01
 }

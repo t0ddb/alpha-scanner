@@ -14943,5 +14943,100 @@
         "unrealized_pnl_pct": -0.0327
       }
     ]
+  },
+  {
+    "date": "2026-09-02",
+    "mode": "scheme_m",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 10,
+    "open_value": 92141.74,
+    "open_unrealized_pnl": 8610.31,
+    "realized_cumulative_pnl": -73255.62,
+    "total_pnl": -64645.31,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 133,
+        "entry_price": 80.79000091552734,
+        "current_price": 131.0,
+        "unrealized_pnl": 6677.93,
+        "unrealized_pnl_pct": 0.6215
+      },
+      {
+        "ticker": "PANW",
+        "shares": 30,
+        "entry_price": 341.0199890136719,
+        "current_price": 328.4800109863281,
+        "unrealized_pnl": -376.2,
+        "unrealized_pnl_pct": -0.0368
+      },
+      {
+        "ticker": "SNOW",
+        "shares": 28,
+        "entry_price": 267.79998779296875,
+        "current_price": 305.8399963378906,
+        "unrealized_pnl": 1065.12,
+        "unrealized_pnl_pct": 0.142
+      },
+      {
+        "ticker": "ANET",
+        "shares": 39,
+        "entry_price": 198.82000732421875,
+        "current_price": 186.10000610351562,
+        "unrealized_pnl": -496.08,
+        "unrealized_pnl_pct": -0.064
+      },
+      {
+        "ticker": "ESTC",
+        "shares": 89,
+        "entry_price": 85.01000213623047,
+        "current_price": 89.58000183105469,
+        "unrealized_pnl": 406.73,
+        "unrealized_pnl_pct": 0.0538
+      },
+      {
+        "ticker": "PATH",
+        "shares": 491,
+        "entry_price": 15.579999923706055,
+        "current_price": 17.989999771118164,
+        "unrealized_pnl": 1183.31,
+        "unrealized_pnl_pct": 0.1547
+      },
+      {
+        "ticker": "WDAY",
+        "shares": 41,
+        "entry_price": 193.57000732421875,
+        "current_price": 200.8699951171875,
+        "unrealized_pnl": 299.3,
+        "unrealized_pnl_pct": 0.0377
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 396,
+        "entry_price": 20.40999984741211,
+        "current_price": 20.8799991607666,
+        "unrealized_pnl": 186.12,
+        "unrealized_pnl_pct": 0.023
+      },
+      {
+        "ticker": "AVAX-USD",
+        "shares": 1112,
+        "entry_price": 7.224999904632568,
+        "current_price": 7.159999847412109,
+        "unrealized_pnl": -72.28,
+        "unrealized_pnl_pct": -0.009
+      },
+      {
+        "ticker": "SOL-USD",
+        "shares": 78,
+        "entry_price": 103.01000213623047,
+        "current_price": 99.62999725341797,
+        "unrealized_pnl": -263.64,
+        "unrealized_pnl_pct": -0.0328
+      }
+    ]
   }
 ]

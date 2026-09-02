@@ -14,6 +14,11 @@
       "cooldown_until": "2026-10-01",
       "exit_date": "2026-09-01",
       "loss_amount": -970.34
+    },
+    "PANW": {
+      "cooldown_until": "2026-10-02",
+      "exit_date": "2026-09-02",
+      "loss_amount": -28.26
     }
   },
   "violations": []

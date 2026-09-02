@@ -310,5 +310,18 @@
     "exit_reason": "score_exit",
     "entry_score": 8.95,
     "sequence_tags_at_entry": "BONUS: first_three_pat=ich\u2192rs\u2192dtf (+0.5; first-3 mean +115% (n=79))|BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
+  },
+  {
+    "ticker": "MDB",
+    "entry_date": "2026-08-13",
+    "exit_date": "2026-09-02",
+    "entry_price": 472.2900085449219,
+    "exit_price": 375.3999938964844,
+    "shares": 16,
+    "pnl": -1550.24,
+    "pnl_pct": -0.2051,
+    "exit_reason": "stop_loss",
+    "entry_score": 8.7,
+    "sequence_tags_at_entry": "BONUS: first_firer=rs (+0.3; first-firer mean +59% (n=138))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))"
   }
 ]
