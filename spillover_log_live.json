@@ -9238,5 +9238,73 @@
         "unrealized_pnl_pct": 0.069
       }
     ]
+  },
+  {
+    "date": "2026-09-04",
+    "mode": "live",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "BIO",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 6,
+    "open_value": 2869.93,
+    "open_unrealized_pnl": 354.24,
+    "realized_cumulative_pnl": -2523.2,
+    "total_pnl": -2168.96,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 124.72000122070312,
+        "unrealized_pnl": 222.96,
+        "unrealized_pnl_pct": 0.4244
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 218.22000122070312,
+        "unrealized_pnl": 56.04,
+        "unrealized_pnl_pct": 0.1473
+      },
+      {
+        "ticker": "BIO",
+        "shares": 1,
+        "entry_price": 352.4700012207031,
+        "current_price": 386.1099853515625,
+        "unrealized_pnl": 33.64,
+        "unrealized_pnl_pct": 0.0954
+      },
+      {
+        "ticker": "PATH",
+        "shares": 28,
+        "entry_price": 15.260000228881836,
+        "current_price": 15.1899995803833,
+        "unrealized_pnl": -1.96,
+        "unrealized_pnl_pct": -0.0046
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 24,
+        "entry_price": 18.459999084472656,
+        "current_price": 20.09000015258789,
+        "unrealized_pnl": 39.12,
+        "unrealized_pnl_pct": 0.0883
+      },
+      {
+        "ticker": "WDAY",
+        "shares": 2,
+        "entry_price": 193.57000732421875,
+        "current_price": 195.7899932861328,
+        "unrealized_pnl": 4.44,
+        "unrealized_pnl_pct": 0.0115
+      }
+    ]
   }
 ]
