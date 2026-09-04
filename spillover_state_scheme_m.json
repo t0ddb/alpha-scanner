@@ -27,15 +27,6 @@
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 7507.0169241424555
     },
-    "ANET": {
-      "entry_date": "2026-08-14",
-      "entry_price": 198.82000732421875,
-      "shares": 39,
-      "cost_basis": 7753.980285644531,
-      "entry_score": 8.3,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 7798.914389057732
-    },
     "ESTC": {
       "entry_date": "2026-08-18",
       "entry_price": 85.01000213623047,
@@ -91,6 +82,6 @@
       "intended_slot_dollars": 8035.299806450844
     }
   },
-  "last_run_date": "2026-09-03",
-  "cumulative_pnl": -73255.62
+  "last_run_date": "2026-09-04",
+  "cumulative_pnl": -73452.18
 }

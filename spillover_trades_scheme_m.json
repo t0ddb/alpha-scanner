@@ -782,5 +782,19 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 8.05,
     "intended_slot_dollars": 7758.8116885278705
+  },
+  {
+    "ticker": "ANET",
+    "entry_date": "2026-08-14",
+    "exit_date": "2026-09-04",
+    "entry_price": 198.82000732421875,
+    "exit_price": 193.77999877929688,
+    "shares": 39,
+    "pnl": -196.56,
+    "pnl_pct": -0.0253,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 8.3,
+    "intended_slot_dollars": 7798.914389057732
   }
 ]
