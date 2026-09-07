@@ -1038,6 +1038,17 @@
       "hold_days": 57,
       "score_at_entry": 9.8,
       "alpaca_order_id": "7434fed6-5eb4-4f3c-97f9-2a22f70a6a79"
+    },
+    {
+      "ticker": "WDAY",
+      "side": "buy",
+      "date": "2026-09-07",
+      "price": 195.73,
+      "qty": 17.0,
+      "cost_basis": 3327.41,
+      "score_at_entry": 9.0,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "1df3aca2-a9b4-4d25-9fc7-50165cb3401d"
     }
   ]
 }
