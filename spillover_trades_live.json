@@ -488,5 +488,19 @@
     "skip_reason_at_entry": "Cap Hit",
     "entry_score": 9.2,
     "intended_slot_dollars": 440.96655000000004
+  },
+  {
+    "ticker": "PATH",
+    "entry_date": "2026-08-12",
+    "exit_date": "2026-09-08",
+    "entry_price": 15.260000228881836,
+    "exit_price": 14.010000228881836,
+    "shares": 28,
+    "pnl": -35.0,
+    "pnl_pct": -0.0819,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Cap Hit",
+    "entry_score": 9.1,
+    "intended_slot_dollars": 438.69401000000005
   }
 ]
