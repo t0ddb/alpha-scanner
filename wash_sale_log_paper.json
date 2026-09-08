@@ -14,6 +14,11 @@
       "cooldown_until": "2026-10-02",
       "exit_date": "2026-09-02",
       "loss_amount": -28.26
+    },
+    "PATH": {
+      "cooldown_until": "2026-10-08",
+      "exit_date": "2026-09-08",
+      "loss_amount": -488.6
     }
   },
   "violations": []

@@ -1049,6 +1049,21 @@
       "score_at_entry": 9.0,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "1df3aca2-a9b4-4d25-9fc7-50165cb3401d"
+    },
+    {
+      "ticker": "PATH",
+      "side": "sell",
+      "date": "2026-09-08",
+      "price": 14.02,
+      "qty": 349.0,
+      "proceeds": 4892.98,
+      "pnl": -488.6,
+      "pnl_pct": -9.08,
+      "score_at_exit": 2.9,
+      "reason": "Score exit (score 2.9 < 5.0)",
+      "hold_days": 27,
+      "score_at_entry": 9.1,
+      "alpaca_order_id": "8da9fcb3-7187-426e-908d-e7ee64b720ce"
     }
   ]
 }
