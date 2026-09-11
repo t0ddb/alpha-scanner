@@ -71,8 +71,17 @@
       "entry_score": 7.95,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 8035.299806450844
+    },
+    "NEAR-USD": {
+      "entry_date": "2026-09-11",
+      "entry_price": 2.4133999347686768,
+      "shares": 2990,
+      "cost_basis": 7216.0658049583435,
+      "entry_score": 7.75,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 7217.7186064538955
     }
   },
-  "last_run_date": "2026-09-10",
+  "last_run_date": "2026-09-11",
   "cumulative_pnl": -73110.8
 }
