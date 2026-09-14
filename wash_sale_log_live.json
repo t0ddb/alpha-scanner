@@ -5,6 +5,11 @@
       "exit_date": "2026-08-20",
       "loss_amount": -42.8
     },
+    "OII": {
+      "cooldown_until": "2026-10-14",
+      "exit_date": "2026-09-14",
+      "loss_amount": -19.52
+    },
     "PATH": {
       "cooldown_until": "2026-10-08",
       "exit_date": "2026-09-08",
