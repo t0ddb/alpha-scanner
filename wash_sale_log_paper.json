@@ -10,6 +10,11 @@
       "exit_date": "2026-09-01",
       "loss_amount": -970.34
     },
+    "OII": {
+      "cooldown_until": "2026-10-14",
+      "exit_date": "2026-09-14",
+      "loss_amount": -445.2
+    },
     "PANW": {
       "cooldown_until": "2026-10-02",
       "exit_date": "2026-09-02",

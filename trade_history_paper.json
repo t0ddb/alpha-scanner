@@ -1064,6 +1064,21 @@
       "hold_days": 27,
       "score_at_entry": 9.1,
       "alpaca_order_id": "8da9fcb3-7187-426e-908d-e7ee64b720ce"
+    },
+    {
+      "ticker": "OII",
+      "side": "sell",
+      "date": "2026-09-14",
+      "price": 46.56,
+      "qty": 159.0,
+      "proceeds": 7403.04,
+      "pnl": -445.2,
+      "pnl_pct": -5.67,
+      "score_at_exit": 4.9,
+      "reason": "Score exit (score 4.9 < 5.0)",
+      "hold_days": 48,
+      "score_at_entry": 9.9,
+      "alpaca_order_id": "b4ea23ce-03ca-4607-b565-8d9ecc3eb54c"
     }
   ]
 }
