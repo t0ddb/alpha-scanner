@@ -9661,5 +9661,60 @@
         "unrealized_pnl_pct": 0.0033
       }
     ]
+  },
+  {
+    "date": "2026-09-15",
+    "mode": "live",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 5,
+    "open_value": 2590.52,
+    "open_unrealized_pnl": 502.11,
+    "realized_cumulative_pnl": -2558.2,
+    "total_pnl": -2056.09,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 138.10000610351562,
+        "unrealized_pnl": 303.24,
+        "unrealized_pnl_pct": 0.5772
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 222.2899932861328,
+        "unrealized_pnl": 64.18,
+        "unrealized_pnl_pct": 0.1687
+      },
+      {
+        "ticker": "BIO",
+        "shares": 1,
+        "entry_price": 352.4700012207031,
+        "current_price": 378.0,
+        "unrealized_pnl": 25.53,
+        "unrealized_pnl_pct": 0.0724
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 24,
+        "entry_price": 18.459999084472656,
+        "current_price": 23.25,
+        "unrealized_pnl": 114.96,
+        "unrealized_pnl_pct": 0.2595
+      },
+      {
+        "ticker": "WDAY",
+        "shares": 2,
+        "entry_price": 193.57000732421875,
+        "current_price": 190.6699981689453,
+        "unrealized_pnl": -5.8,
+        "unrealized_pnl_pct": -0.015
+      }
+    ]
   }
 ]
