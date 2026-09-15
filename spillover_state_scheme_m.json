@@ -45,15 +45,6 @@
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 7650.875161094666
     },
-    "WDAY": {
-      "entry_date": "2026-08-28",
-      "entry_price": 193.57000732421875,
-      "shares": 41,
-      "cost_basis": 7936.370300292969,
-      "entry_score": 7.7,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 8085.415514201736
-    },
     "SDGR": {
       "entry_date": "2026-08-28",
       "entry_price": 20.40999984741211,
@@ -82,6 +73,6 @@
       "intended_slot_dollars": 7217.7186064538955
     }
   },
-  "last_run_date": "2026-09-14",
-  "cumulative_pnl": -73110.8
+  "last_run_date": "2026-09-15",
+  "cumulative_pnl": -73229.7
 }

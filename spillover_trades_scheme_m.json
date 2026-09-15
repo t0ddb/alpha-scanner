@@ -810,5 +810,19 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 8.2,
     "intended_slot_dollars": 8035.299806450844
+  },
+  {
+    "ticker": "WDAY",
+    "entry_date": "2026-08-28",
+    "exit_date": "2026-09-15",
+    "entry_price": 193.57000732421875,
+    "exit_price": 190.6699981689453,
+    "shares": 41,
+    "pnl": -118.9,
+    "pnl_pct": -0.015,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 7.7,
+    "intended_slot_dollars": 8085.415514201736
   }
 ]
