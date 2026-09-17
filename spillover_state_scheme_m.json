@@ -71,8 +71,17 @@
       "entry_score": 7.75,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 7217.7186064538955
+    },
+    "CRWD": {
+      "entry_date": "2026-09-17",
+      "entry_price": 245.6999969482422,
+      "shares": 33,
+      "cost_basis": 8108.099899291992,
+      "entry_score": 10.05,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 8169.443651194191
     }
   },
-  "last_run_date": "2026-09-16",
+  "last_run_date": "2026-09-17",
   "cumulative_pnl": -73229.7
 }
