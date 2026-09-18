@@ -1079,6 +1079,28 @@
       "hold_days": 48,
       "score_at_entry": 9.9,
       "alpaca_order_id": "b4ea23ce-03ca-4607-b565-8d9ecc3eb54c"
+    },
+    {
+      "ticker": "CRWD",
+      "side": "buy",
+      "date": "2026-09-18",
+      "price": 237.61,
+      "qty": 22.0,
+      "cost_basis": 5227.42,
+      "score_at_entry": 9.2,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "1da83773-f749-44f6-9aff-2826f432a85f"
+    },
+    {
+      "ticker": "CRM",
+      "side": "buy",
+      "date": "2026-09-18",
+      "price": 237.91,
+      "qty": 21.0,
+      "cost_basis": 4996.11,
+      "score_at_entry": 9.0,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "db7651bb-cda3-4221-ad87-5743b3deffc2"
     }
   ]
 }

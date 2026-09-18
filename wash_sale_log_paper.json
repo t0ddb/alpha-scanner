@@ -26,5 +26,13 @@
       "loss_amount": -488.6
     }
   },
-  "violations": []
+  "violations": [
+    {
+      "days_between": 29,
+      "loss_amount": -502.56,
+      "loss_exit_date": "2026-08-20",
+      "reentry_date": "2026-09-18",
+      "ticker": "CRWD"
+    }
+  ]
 }
