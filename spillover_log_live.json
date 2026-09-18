@@ -9826,5 +9826,77 @@
         "unrealized_pnl_pct": 0.0295
       }
     ]
+  },
+  {
+    "date": "2026-09-18",
+    "mode": "live",
+    "entries": [
+      {
+        "ticker": "CRM",
+        "score": 9.0,
+        "entry_price": 237.9199981689453,
+        "shares": 2,
+        "cost": 475.84,
+        "skip_reason": "Cap Hit"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 6,
+    "open_value": 3417.65,
+    "open_unrealized_pnl": 853.4,
+    "realized_cumulative_pnl": -2558.2,
+    "total_pnl": -1704.8,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 166.99000549316406,
+        "unrealized_pnl": 476.58,
+        "unrealized_pnl_pct": 0.9071
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 239.6199951171875,
+        "unrealized_pnl": 98.84,
+        "unrealized_pnl_pct": 0.2598
+      },
+      {
+        "ticker": "BIO",
+        "shares": 1,
+        "entry_price": 352.4700012207031,
+        "current_price": 376.4100036621094,
+        "unrealized_pnl": 23.94,
+        "unrealized_pnl_pct": 0.0679
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 24,
+        "entry_price": 18.459999084472656,
+        "current_price": 29.020000457763672,
+        "unrealized_pnl": 253.44,
+        "unrealized_pnl_pct": 0.572
+      },
+      {
+        "ticker": "WDAY",
+        "shares": 2,
+        "entry_price": 193.57000732421875,
+        "current_price": 193.8699951171875,
+        "unrealized_pnl": 0.6,
+        "unrealized_pnl_pct": 0.0015
+      },
+      {
+        "ticker": "CRM",
+        "shares": 2,
+        "entry_price": 237.9199981689453,
+        "current_price": 237.9199981689453,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]

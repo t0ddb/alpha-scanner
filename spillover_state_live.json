@@ -44,8 +44,17 @@
       "entry_score": 9.5,
       "skip_reason_at_entry": "Cap Hit",
       "intended_slot_dollars": 474.17734
+    },
+    "CRM": {
+      "entry_date": "2026-09-18",
+      "entry_price": 237.9199981689453,
+      "shares": 2,
+      "cost_basis": 475.8399963378906,
+      "entry_score": 9.0,
+      "skip_reason_at_entry": "Cap Hit",
+      "intended_slot_dollars": 481.71208000000007
     }
   },
-  "last_run_date": "2026-09-17",
+  "last_run_date": "2026-09-18",
   "cumulative_pnl": -2558.2
 }
