@@ -40,14 +40,6 @@
       "cost_basis": 7158.5101318359375,
       "sequence_tags": "BONUS: first_three_pat=ich\u2192cmf\u2192dtf (+0.4; first-3 mean +75% (n=60))"
     },
-    "OII": {
-      "entry_date": "2026-07-24",
-      "entry_price": 52.72999954223633,
-      "shares": 135,
-      "entry_score": 9.55,
-      "cost_basis": 7118.549938201904,
-      "sequence_tags": "BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
-    },
     "AZTA": {
       "entry_date": "2026-08-13",
       "entry_price": 33.90999984741211,
@@ -89,7 +81,7 @@
       "sequence_tags": "PENALTY: first_three_pat=ich\u2192roc\u2192rs (-0.4; first-3 mean +0.3% (n=74))"
     }
   },
-  "cash": 268.3022403717041,
+  "cash": 6468.852281570435,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-09-18"
+  "last_run_date": "2026-09-21"
 }

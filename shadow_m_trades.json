@@ -323,5 +323,18 @@
     "exit_reason": "stop_loss",
     "entry_score": 8.7,
     "sequence_tags_at_entry": "BONUS: first_firer=rs (+0.3; first-firer mean +59% (n=138))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))"
+  },
+  {
+    "ticker": "OII",
+    "entry_date": "2026-07-24",
+    "exit_date": "2026-09-21",
+    "entry_price": 52.72999954223633,
+    "exit_price": 45.93000030517578,
+    "shares": 135,
+    "pnl": -918.0,
+    "pnl_pct": -0.129,
+    "exit_reason": "score_exit",
+    "entry_score": 9.55,
+    "sequence_tags_at_entry": "BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
   }
 ]
