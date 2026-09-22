@@ -9966,5 +9966,90 @@
         "unrealized_pnl_pct": -0.0063
       }
     ]
+  },
+  {
+    "date": "2026-09-22",
+    "mode": "live",
+    "entries": [
+      {
+        "ticker": "ZS",
+        "score": 9.6,
+        "entry_price": 210.17999267578125,
+        "shares": 2,
+        "cost": 420.36,
+        "skip_reason": "Cap Hit"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "CRM",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 7,
+    "open_value": 3862.27,
+    "open_unrealized_pnl": 877.66,
+    "realized_cumulative_pnl": -2558.2,
+    "total_pnl": -1680.54,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 164.60000610351562,
+        "unrealized_pnl": 462.24,
+        "unrealized_pnl_pct": 0.8799
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 247.4600067138672,
+        "unrealized_pnl": 114.52,
+        "unrealized_pnl_pct": 0.3011
+      },
+      {
+        "ticker": "BIO",
+        "shares": 1,
+        "entry_price": 352.4700012207031,
+        "current_price": 379.57000732421875,
+        "unrealized_pnl": 27.1,
+        "unrealized_pnl_pct": 0.0769
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 24,
+        "entry_price": 18.459999084472656,
+        "current_price": 30.700000762939453,
+        "unrealized_pnl": 293.76,
+        "unrealized_pnl_pct": 0.6631
+      },
+      {
+        "ticker": "WDAY",
+        "shares": 2,
+        "entry_price": 193.57000732421875,
+        "current_price": 188.22999572753906,
+        "unrealized_pnl": -10.68,
+        "unrealized_pnl_pct": -0.0276
+      },
+      {
+        "ticker": "CRM",
+        "shares": 2,
+        "entry_price": 237.9199981689453,
+        "current_price": 233.27999877929688,
+        "unrealized_pnl": -9.28,
+        "unrealized_pnl_pct": -0.0195
+      },
+      {
+        "ticker": "ZS",
+        "shares": 2,
+        "entry_price": 210.17999267578125,
+        "current_price": 210.17999267578125,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]
