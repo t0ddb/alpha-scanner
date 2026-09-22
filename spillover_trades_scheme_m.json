@@ -824,5 +824,19 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 7.7,
     "intended_slot_dollars": 8085.415514201736
+  },
+  {
+    "ticker": "PATH",
+    "entry_date": "2026-08-18",
+    "exit_date": "2026-09-22",
+    "entry_price": 15.579999923706055,
+    "exit_price": 13.25,
+    "shares": 491,
+    "pnl": -1144.03,
+    "pnl_pct": -0.1496,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 8.15,
+    "intended_slot_dollars": 7650.875161094666
   }
 ]

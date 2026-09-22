@@ -64,14 +64,6 @@
       "cost_basis": 7773.259674072266,
       "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))"
     },
-    "PATH": {
-      "entry_date": "2026-08-24",
-      "entry_price": 16.56999969482422,
-      "shares": 463,
-      "entry_score": 8.25,
-      "cost_basis": 7671.909858703613,
-      "sequence_tags": "BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))|PENALTY: first_two_pair=roc\u2192dtf (-0.4; first-2 mean +9.9% (n=85))"
-    },
     "SDGR": {
       "entry_date": "2026-09-02",
       "entry_price": 20.8799991607666,
@@ -79,9 +71,17 @@
       "entry_score": 8.25,
       "cost_basis": 7516.799697875977,
       "sequence_tags": "PENALTY: first_three_pat=ich\u2192roc\u2192rs (-0.4; first-3 mean +0.3% (n=74))"
+    },
+    "CRWD": {
+      "entry_date": "2026-09-22",
+      "entry_price": 250.05999755859375,
+      "shares": 33,
+      "entry_score": 9.4,
+      "cost_basis": 8251.979919433594,
+      "sequence_tags": "BONUS: first_three_pat=ich\u2192cmf\u2192dtf (+0.4; first-3 mean +75% (n=60))"
     }
   },
-  "cash": 6468.852281570435,
+  "cash": 4351.622362136841,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-09-21"
+  "last_run_date": "2026-09-22"
 }

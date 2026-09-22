@@ -36,15 +36,6 @@
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 7650.875161094666
     },
-    "PATH": {
-      "entry_date": "2026-08-18",
-      "entry_price": 15.579999923706055,
-      "shares": 491,
-      "cost_basis": 7649.779962539673,
-      "entry_score": 8.15,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 7650.875161094666
-    },
     "SDGR": {
       "entry_date": "2026-08-28",
       "entry_price": 20.40999984741211,
@@ -82,6 +73,6 @@
       "intended_slot_dollars": 8169.443651194191
     }
   },
-  "last_run_date": "2026-09-21",
-  "cumulative_pnl": -73229.7
+  "last_run_date": "2026-09-22",
+  "cumulative_pnl": -74373.73
 }

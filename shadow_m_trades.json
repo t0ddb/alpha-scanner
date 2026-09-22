@@ -336,5 +336,18 @@
     "exit_reason": "score_exit",
     "entry_score": 9.55,
     "sequence_tags_at_entry": "BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
+  },
+  {
+    "ticker": "PATH",
+    "entry_date": "2026-08-24",
+    "exit_date": "2026-09-22",
+    "entry_price": 16.56999969482422,
+    "exit_price": 13.25,
+    "shares": 463,
+    "pnl": -1537.16,
+    "pnl_pct": -0.2004,
+    "exit_reason": "stop_loss",
+    "entry_score": 8.25,
+    "sequence_tags_at_entry": "BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))|PENALTY: first_two_pair=roc\u2192dtf (-0.4; first-2 mean +9.9% (n=85))"
   }
 ]
