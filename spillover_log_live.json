@@ -10131,5 +10131,85 @@
         "unrealized_pnl_pct": 0.0203
       }
     ]
+  },
+  {
+    "date": "2026-09-24",
+    "mode": "live",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "ZS",
+        "reason": "already held in spillover"
+      },
+      {
+        "ticker": "CRM",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 7,
+    "open_value": 4034.02,
+    "open_unrealized_pnl": 1049.41,
+    "realized_cumulative_pnl": -2558.2,
+    "total_pnl": -1508.79,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 184.02999877929688,
+        "unrealized_pnl": 578.82,
+        "unrealized_pnl_pct": 1.1018
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 273.8999938964844,
+        "unrealized_pnl": 167.4,
+        "unrealized_pnl_pct": 0.4401
+      },
+      {
+        "ticker": "BIO",
+        "shares": 1,
+        "entry_price": 352.4700012207031,
+        "current_price": 387.5400085449219,
+        "unrealized_pnl": 35.07,
+        "unrealized_pnl_pct": 0.0995
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 24,
+        "entry_price": 18.459999084472656,
+        "current_price": 29.450000762939453,
+        "unrealized_pnl": 263.76,
+        "unrealized_pnl_pct": 0.5953
+      },
+      {
+        "ticker": "WDAY",
+        "shares": 2,
+        "entry_price": 193.57000732421875,
+        "current_price": 190.99000549316406,
+        "unrealized_pnl": -5.16,
+        "unrealized_pnl_pct": -0.0133
+      },
+      {
+        "ticker": "CRM",
+        "shares": 2,
+        "entry_price": 237.9199981689453,
+        "current_price": 238.22000122070312,
+        "unrealized_pnl": 0.6,
+        "unrealized_pnl_pct": 0.0013
+      },
+      {
+        "ticker": "ZS",
+        "shares": 2,
+        "entry_price": 210.17999267578125,
+        "current_price": 214.63999938964844,
+        "unrealized_pnl": 8.92,
+        "unrealized_pnl_pct": 0.0212
+      }
+    ]
   }
 ]
