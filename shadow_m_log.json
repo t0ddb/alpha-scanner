@@ -14993,5 +14993,109 @@
         "unrealized_pnl_pct": 0.0497
       }
     ]
+  },
+  {
+    "date": "2026-09-24",
+    "entries": [],
+    "exits": [],
+    "skipped": [
+      {
+        "ticker": "FET-USD",
+        "score": 7.95,
+        "reason": "persistence failed (priors [6.1, 7.2, 6.9])"
+      },
+      {
+        "ticker": "META",
+        "score": 7.8,
+        "reason": "persistence failed (priors [7.7, 5.7, 5.5])"
+      },
+      {
+        "ticker": "ZS",
+        "score": 8.35,
+        "reason": "insufficient cash ($4352 < $8105)"
+      },
+      {
+        "ticker": "NEAR-USD",
+        "score": 8.2,
+        "reason": "insufficient cash ($4352 < $8105)"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 2,
+    "equity": 102416.36,
+    "cash": 4351.62,
+    "positions_count": 10,
+    "positions": [
+      {
+        "ticker": "PANW",
+        "shares": 24,
+        "entry_price": 348.05999755859375,
+        "current_price": 389.9200134277344,
+        "unrealized_pnl_pct": 0.1203
+      },
+      {
+        "ticker": "TWST",
+        "shares": 85,
+        "entry_price": 99.23999786376953,
+        "current_price": 184.02999877929688,
+        "unrealized_pnl_pct": 0.8544
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 41,
+        "entry_price": 187.14999389648438,
+        "current_price": 273.8999938964844,
+        "unrealized_pnl_pct": 0.4635
+      },
+      {
+        "ticker": "S",
+        "shares": 375,
+        "entry_price": 19.6299991607666,
+        "current_price": 23.979999542236328,
+        "unrealized_pnl_pct": 0.2216
+      },
+      {
+        "ticker": "SNOW",
+        "shares": 27,
+        "entry_price": 265.1300048828125,
+        "current_price": 334.0,
+        "unrealized_pnl_pct": 0.2598
+      },
+      {
+        "ticker": "AZTA",
+        "shares": 234,
+        "entry_price": 33.90999984741211,
+        "current_price": 34.20000076293945,
+        "unrealized_pnl_pct": 0.0086
+      },
+      {
+        "ticker": "BIO",
+        "shares": 22,
+        "entry_price": 361.19000244140625,
+        "current_price": 387.5400085449219,
+        "unrealized_pnl_pct": 0.073
+      },
+      {
+        "ticker": "ESTC",
+        "shares": 89,
+        "entry_price": 87.33999633789062,
+        "current_price": 91.27999877929688,
+        "unrealized_pnl_pct": 0.0451
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 360,
+        "entry_price": 20.8799991607666,
+        "current_price": 29.450000762939453,
+        "unrealized_pnl_pct": 0.4104
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 33,
+        "entry_price": 250.05999755859375,
+        "current_price": 259.6700134277344,
+        "unrealized_pnl_pct": 0.0384
+      }
+    ]
   }
 ]

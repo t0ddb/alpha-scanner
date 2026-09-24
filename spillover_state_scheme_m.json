@@ -71,8 +71,17 @@
       "entry_score": 10.05,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 8169.443651194191
+    },
+    "ZS": {
+      "entry_date": "2026-09-24",
+      "entry_price": 214.63999938964844,
+      "shares": 39,
+      "cost_basis": 8370.959976196289,
+      "entry_score": 8.35,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 8531.2830490942
     }
   },
-  "last_run_date": "2026-09-23",
+  "last_run_date": "2026-09-24",
   "cumulative_pnl": -74373.73
 }

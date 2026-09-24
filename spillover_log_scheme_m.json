@@ -16386,5 +16386,106 @@
         "unrealized_pnl_pct": 0.0683
       }
     ]
+  },
+  {
+    "date": "2026-09-24",
+    "mode": "scheme_m",
+    "entries": [
+      {
+        "ticker": "ZS",
+        "score": 8.35,
+        "entry_price": 214.63999938964844,
+        "shares": 39,
+        "cost": 8370.96,
+        "skip_reason": "No Cash"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "NEAR-USD",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 9,
+    "open_value": 105070.1,
+    "open_unrealized_pnl": 29217.87,
+    "realized_cumulative_pnl": -74373.73,
+    "total_pnl": -45155.86,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 133,
+        "entry_price": 80.79000091552734,
+        "current_price": 184.02999877929688,
+        "unrealized_pnl": 13730.92,
+        "unrealized_pnl_pct": 1.2779
+      },
+      {
+        "ticker": "PANW",
+        "shares": 30,
+        "entry_price": 341.0199890136719,
+        "current_price": 389.9200134277344,
+        "unrealized_pnl": 1467.0,
+        "unrealized_pnl_pct": 0.1434
+      },
+      {
+        "ticker": "SNOW",
+        "shares": 28,
+        "entry_price": 267.79998779296875,
+        "current_price": 334.0,
+        "unrealized_pnl": 1853.6,
+        "unrealized_pnl_pct": 0.2472
+      },
+      {
+        "ticker": "ESTC",
+        "shares": 89,
+        "entry_price": 85.01000213623047,
+        "current_price": 91.27999877929688,
+        "unrealized_pnl": 558.03,
+        "unrealized_pnl_pct": 0.0738
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 396,
+        "entry_price": 20.40999984741211,
+        "current_price": 29.450000762939453,
+        "unrealized_pnl": 3579.84,
+        "unrealized_pnl_pct": 0.4429
+      },
+      {
+        "ticker": "SOL-USD",
+        "shares": 78,
+        "entry_price": 103.01000213623047,
+        "current_price": 116.6500015258789,
+        "unrealized_pnl": 1063.92,
+        "unrealized_pnl_pct": 0.1324
+      },
+      {
+        "ticker": "NEAR-USD",
+        "shares": 2990,
+        "entry_price": 2.4133999347686768,
+        "current_price": 4.588500022888184,
+        "unrealized_pnl": 6503.55,
+        "unrealized_pnl_pct": 0.9013
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 33,
+        "entry_price": 245.6999969482422,
+        "current_price": 259.6700134277344,
+        "unrealized_pnl": 461.01,
+        "unrealized_pnl_pct": 0.0569
+      },
+      {
+        "ticker": "ZS",
+        "shares": 39,
+        "entry_price": 214.63999938964844,
+        "current_price": 214.63999938964844,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]
