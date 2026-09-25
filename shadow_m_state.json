@@ -40,22 +40,6 @@
       "cost_basis": 7158.5101318359375,
       "sequence_tags": "BONUS: first_three_pat=ich\u2192cmf\u2192dtf (+0.4; first-3 mean +75% (n=60))"
     },
-    "AZTA": {
-      "entry_date": "2026-08-13",
-      "entry_price": 33.90999984741211,
-      "shares": 234,
-      "entry_score": 7.85,
-      "cost_basis": 7934.939964294434,
-      "sequence_tags": "BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))|PENALTY: first_two_pair=roc\u2192cmf (-0.3; first-2 mean +10.6% (n=93))|PENALTY: n_led_ich=3 (-0.4; 3-led-Ich mean +20.6% (n=137))"
-    },
-    "BIO": {
-      "entry_date": "2026-08-13",
-      "entry_price": 361.19000244140625,
-      "shares": 22,
-      "entry_score": 7.6,
-      "cost_basis": 7946.1800537109375,
-      "sequence_tags": "PENALTY: last_two=atr\u2192rs (-0.3; last-2 mean +6.4% (n=69))"
-    },
     "ESTC": {
       "entry_date": "2026-08-19",
       "entry_price": 87.33999633789062,
@@ -79,9 +63,25 @@
       "entry_score": 9.4,
       "cost_basis": 8251.979919433594,
       "sequence_tags": "BONUS: first_three_pat=ich\u2192cmf\u2192dtf (+0.4; first-3 mean +75% (n=60))"
+    },
+    "ZS": {
+      "entry_date": "2026-09-25",
+      "entry_price": 193.0500030517578,
+      "shares": 43,
+      "entry_score": 8.6,
+      "cost_basis": 8301.150131225586,
+      "sequence_tags": "BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
+    },
+    "NEAR-USD": {
+      "entry_date": "2026-09-25",
+      "entry_price": 4.956099987030029,
+      "shares": 1685,
+      "entry_score": 8.2,
+      "cost_basis": 8351.0284781456,
+      "sequence_tags": "BONUS: first_two_pair=roc\u2192atr (+0.5; first-2 mean +95% (n=116))|BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))|PENALTY: last_two=ich\u2192hl (-0.3; last-2 mean +17.8% (n=53))"
     }
   },
-  "cash": 4351.622362136841,
+  "cash": 4042.1238598823547,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-09-24"
+  "last_run_date": "2026-09-25"
 }

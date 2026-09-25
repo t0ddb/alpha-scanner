@@ -349,5 +349,31 @@
     "exit_reason": "stop_loss",
     "entry_score": 8.25,
     "sequence_tags_at_entry": "BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))|PENALTY: first_two_pair=roc\u2192dtf (-0.4; first-2 mean +9.9% (n=85))"
+  },
+  {
+    "ticker": "AZTA",
+    "entry_date": "2026-08-13",
+    "exit_date": "2026-09-25",
+    "entry_price": 33.90999984741211,
+    "exit_price": 34.02000045776367,
+    "shares": 234,
+    "pnl": 25.74,
+    "pnl_pct": 0.0032,
+    "exit_reason": "score_exit",
+    "entry_score": 7.85,
+    "sequence_tags_at_entry": "BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))|PENALTY: first_two_pair=roc\u2192cmf (-0.3; first-2 mean +10.6% (n=93))|PENALTY: n_led_ich=3 (-0.4; 3-led-Ich mean +20.6% (n=137))"
+  },
+  {
+    "ticker": "BIO",
+    "entry_date": "2026-08-13",
+    "exit_date": "2026-09-25",
+    "entry_price": 361.19000244140625,
+    "exit_price": 381.0,
+    "shares": 22,
+    "pnl": 435.82,
+    "pnl_pct": 0.0548,
+    "exit_reason": "score_exit",
+    "entry_score": 7.6,
+    "sequence_tags_at_entry": "PENALTY: last_two=atr\u2192rs (-0.3; last-2 mean +6.4% (n=69))"
   }
 ]
