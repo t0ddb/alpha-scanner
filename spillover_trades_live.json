@@ -502,5 +502,19 @@
     "skip_reason_at_entry": "Cap Hit",
     "entry_score": 9.1,
     "intended_slot_dollars": 438.69401000000005
+  },
+  {
+    "ticker": "BIO",
+    "entry_date": "2026-08-07",
+    "exit_date": "2026-09-29",
+    "entry_price": 352.4700012207031,
+    "exit_price": 379.54998779296875,
+    "shares": 1,
+    "pnl": 27.08,
+    "pnl_pct": 0.0768,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Cap Hit",
+    "entry_score": 9.6,
+    "intended_slot_dollars": 423.95819000000006
   }
 ]

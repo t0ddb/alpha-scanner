@@ -18,15 +18,6 @@
       "skip_reason_at_entry": "Cap Hit",
       "intended_slot_dollars": 413.70105000000007
     },
-    "BIO": {
-      "entry_date": "2026-08-07",
-      "entry_price": 352.4700012207031,
-      "shares": 1,
-      "cost_basis": 352.4700012207031,
-      "entry_score": 9.6,
-      "skip_reason_at_entry": "Cap Hit",
-      "intended_slot_dollars": 423.95819000000006
-    },
     "SDGR": {
       "entry_date": "2026-08-13",
       "entry_price": 18.459999084472656,
@@ -65,5 +56,5 @@
     }
   },
   "last_run_date": "2026-09-29",
-  "cumulative_pnl": -2558.2
+  "cumulative_pnl": -2531.12
 }
