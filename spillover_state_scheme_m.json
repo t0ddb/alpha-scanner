@@ -80,8 +80,17 @@
       "entry_score": 8.35,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 8531.2830490942
+    },
+    "META": {
+      "entry_date": "2026-09-29",
+      "entry_price": 751.6599731445312,
+      "shares": 11,
+      "cost_basis": 8268.259704589844,
+      "entry_score": 7.65,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 8336.505846134902
     }
   },
-  "last_run_date": "2026-09-25",
+  "last_run_date": "2026-09-29",
   "cumulative_pnl": -74373.73
 }
