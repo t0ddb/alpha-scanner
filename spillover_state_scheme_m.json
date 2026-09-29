@@ -27,15 +27,6 @@
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 7507.0169241424555
     },
-    "ESTC": {
-      "entry_date": "2026-08-18",
-      "entry_price": 85.01000213623047,
-      "shares": 89,
-      "cost_basis": 7565.890190124512,
-      "entry_score": 8.75,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 7650.875161094666
-    },
     "SDGR": {
       "entry_date": "2026-08-28",
       "entry_price": 20.40999984741211,
@@ -92,5 +83,5 @@
     }
   },
   "last_run_date": "2026-09-29",
-  "cumulative_pnl": -74373.73
+  "cumulative_pnl": -74036.42
 }

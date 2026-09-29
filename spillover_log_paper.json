@@ -10850,5 +10850,44 @@
         "unrealized_pnl_pct": -0.0213
       }
     ]
+  },
+  {
+    "date": "2026-09-29",
+    "mode": "paper",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 3,
+    "open_value": 47926.45,
+    "open_unrealized_pnl": 18336.11,
+    "realized_cumulative_pnl": -52771.01,
+    "total_pnl": -34434.9,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 130,
+        "entry_price": 87.55999755859375,
+        "current_price": 186.1300048828125,
+        "unrealized_pnl": 12814.1,
+        "unrealized_pnl_pct": 1.1257
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 483,
+        "entry_price": 18.459999084472656,
+        "current_price": 30.329999923706055,
+        "unrealized_pnl": 5733.21,
+        "unrealized_pnl_pct": 0.643
+      },
+      {
+        "ticker": "WDAY",
+        "shares": 48,
+        "entry_price": 193.57000732421875,
+        "current_price": 189.1699981689453,
+        "unrealized_pnl": -211.2,
+        "unrealized_pnl_pct": -0.0227
+      }
+    ]
   }
 ]

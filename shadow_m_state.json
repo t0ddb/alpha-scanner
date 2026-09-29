@@ -40,14 +40,6 @@
       "cost_basis": 7158.5101318359375,
       "sequence_tags": "BONUS: first_three_pat=ich\u2192cmf\u2192dtf (+0.4; first-3 mean +75% (n=60))"
     },
-    "ESTC": {
-      "entry_date": "2026-08-19",
-      "entry_price": 87.33999633789062,
-      "shares": 89,
-      "entry_score": 9.25,
-      "cost_basis": 7773.259674072266,
-      "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))"
-    },
     "SDGR": {
       "entry_date": "2026-09-02",
       "entry_price": 20.8799991607666,
@@ -81,7 +73,7 @@
       "sequence_tags": "BONUS: first_two_pair=roc\u2192atr (+0.5; first-2 mean +95% (n=116))|BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))|PENALTY: last_two=ich\u2192hl (-0.3; last-2 mean +17.8% (n=53))"
     }
   },
-  "cash": 4042.1238598823547,
+  "cash": 11945.3241314888,
   "starting_equity": 100000.0,
   "last_run_date": "2026-09-29"
 }

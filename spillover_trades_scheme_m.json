@@ -838,5 +838,19 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 8.15,
     "intended_slot_dollars": 7650.875161094666
+  },
+  {
+    "ticker": "ESTC",
+    "entry_date": "2026-08-18",
+    "exit_date": "2026-09-29",
+    "entry_price": 85.01000213623047,
+    "exit_price": 88.80000305175781,
+    "shares": 89,
+    "pnl": 337.31,
+    "pnl_pct": 0.0446,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 8.75,
+    "intended_slot_dollars": 7650.875161094666
   }
 ]
