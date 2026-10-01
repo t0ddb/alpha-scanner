@@ -1408,10 +1408,30 @@ def _get_benchmark_return_since(
     Two extra yfinance calls per email run (SPY + SMH) — negligible
     cost. Falls back to raw price_data if the auto-adjust fetch fails.
 
-    Returns None if the ticker is unavailable or doesn't cover the range.
+    Returns None if the ticker is unavailable or doesn't cover the range,
+    or if the Close values are missing/non-finite (NaN). Drops rows with
+    missing Close before picking start/end so a blank last-row from
+    yfinance doesn't produce NaN output (the 2026-09-30 "nan%" email
+    regression — see DECISIONS.md).
     """
+    import math
     import pandas as pd
     import yfinance as yf
+
+    def _warn(msg: str) -> None:
+        """One-line warning; shows up in Actions logs for forensics."""
+        print(f"  [benchmark/{ticker}] {msg}")
+
+    def _clean(frame):
+        """Drop rows where Close is missing. Returns None if that empties the frame."""
+        if frame is None or "Close" not in frame.columns:
+            return None
+        before = len(frame)
+        cleaned = frame[frame["Close"].notna()]
+        dropped = before - len(cleaned)
+        if dropped > 0:
+            _warn(f"dropped {dropped} row(s) with blank Close")
+        return cleaned if not cleaned.empty else None
 
     # Try auto-adjusted fetch first (true total return).
     df = None
@@ -1422,16 +1442,20 @@ def _get_benchmark_return_since(
             auto_adjust=True,
         )
         if adj is not None and not adj.empty and "Close" in adj.columns:
-            df = adj
-    except Exception:
+            df = _clean(adj)  # None if cleaning emptied the frame → falls through
+    except Exception as e:
+        _warn(f"auto-adjust fetch failed: {e}")
         df = None
 
-    # Fallback to whatever's in price_data if the live re-fetch failed
-    # (network blip, ticker delisted, etc.). Note: this falls back to
-    # raw-close behavior, which slightly understates true total return.
+    # Fallback to whatever's in price_data if the live re-fetch failed OR
+    # was emptied by the NaN-drop (network blip, ticker delisted, data
+    # provider glitch, etc.). Fallback uses raw close, which slightly
+    # understates true total return.
     if df is None:
-        df = price_data.get(ticker) if price_data else None
+        raw = price_data.get(ticker) if price_data else None
+        df = _clean(raw)
     if df is None or df.empty:
+        _warn("no usable Close data after cleaning — returning None")
         return None
 
     # Work in a naive index for comparison but use positional access on
@@ -1441,6 +1465,7 @@ def _get_benchmark_return_since(
 
     mask = idx_naive >= target
     if not mask.any():
+        _warn(f"no rows at/after start_date {start_date} — returning None")
         return None
 
     pos_start = int(mask.argmax())  # first True position
@@ -1449,12 +1474,24 @@ def _get_benchmark_return_since(
     try:
         start_price = float(df.iloc[pos_start]["Close"])
         end_price = float(df.iloc[pos_end]["Close"])
-    except (KeyError, ValueError, IndexError):
+    except (KeyError, ValueError, IndexError) as e:
+        _warn(f"Close extraction failed: {e} — returning None")
         return None
 
-    if start_price <= 0:
+    # Guard against NaN / inf — _clean() should have handled this, but
+    # belt-and-suspenders in case a non-NaN-but-non-finite slips through.
+    if not (math.isfinite(start_price) and math.isfinite(end_price)):
+        _warn(f"non-finite prices (start={start_price}, end={end_price}) — returning None")
         return None
-    return (end_price / start_price - 1.0) * 100.0
+    if start_price <= 0:
+        _warn(f"non-positive start_price ({start_price}) — returning None")
+        return None
+
+    result = (end_price / start_price - 1.0) * 100.0
+    if not math.isfinite(result):
+        _warn(f"non-finite result ({result}) — returning None")
+        return None
+    return result
 
 
 _SPILLOVER_TRIGGER_CATEGORIES = {
@@ -1677,12 +1714,17 @@ def _build_trade_digest_html(
     # in the P&L card. SPY is the broad-market reference; SMH (semis ETF)
     # is a closer proxy for our AI/Tech tilt.
     def _vs_benchmark(bench_ticker: str) -> tuple[float | None, float | None]:
+        import math
         if not (price_data and account_created):
             return None, None
         bench_ret = _get_benchmark_return_since(
             price_data, bench_ticker, account_created,
         )
-        if bench_ret is None:
+        # Treat non-finite (NaN/inf) the same as None — belt-and-suspenders.
+        # _get_benchmark_return_since should never return a non-finite float
+        # after the 2026-09-30 hardening, but if it does we don't want
+        # "nan%" rendering in the P&L card again.
+        if bench_ret is None or not math.isfinite(bench_ret):
             return None, None
         delta_pct = alltime_pnl_pct - bench_ret
         return delta_pct, delta_pct / 100 * starting_equity
