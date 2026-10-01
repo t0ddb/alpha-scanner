@@ -65,9 +65,14 @@ jobs:
       ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
       # Live-account-specific overrides:
       #   $5k starting capital + 12-position cap × 8.3% = $415/slot, just
-      #   below the $500 default min. Lowering MIN_POSITION_SIZE to $300
-      #   keeps 12-position diversification feasible at this capital level.
-      MIN_POSITION_SIZE: '300'
+      #   below the $500 default min. MIN_POSITION_SIZE lowered further to
+      #   $250 (2026-09-30) because the 5% cash-floor's per-slot-cap formula
+      #   (floor_budget / remaining_slots) was blocking valid entries when
+      #   several slots were open — splitting a modest remaining budget
+      #   evenly across 3-4 slots was producing $266-ish per slot, below
+      #   the prior $300 min. $250 clears those near-miss cases while
+      #   still keeping positions large enough to matter.
+      MIN_POSITION_SIZE: '250'
       # Starting-equity baseline for All-Time P&L + vs-SPY-total in the email
       # digest. UPDATE THIS when capital is added to the live account so the
       # historical performance numbers stay accurate.
