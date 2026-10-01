@@ -1142,6 +1142,17 @@
       "hold_days": 76,
       "score_at_entry": 9.0,
       "alpaca_order_id": "380f0977-d231-45d6-b509-cf7b55f5e78f"
+    },
+    {
+      "ticker": "SMCI",
+      "side": "buy",
+      "date": "2026-09-30",
+      "price": 41.07,
+      "qty": 231.0,
+      "cost_basis": 9487.17,
+      "score_at_entry": 9.0,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "beb549e3-638f-4e93-82e1-f4bb85120ed0"
     }
   ]
 }
