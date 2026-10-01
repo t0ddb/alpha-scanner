@@ -53,8 +53,17 @@
       "entry_score": 9.6,
       "skip_reason_at_entry": "Cap Hit",
       "intended_slot_dollars": 489.54562000000004
+    },
+    "SMCI": {
+      "entry_date": "2026-10-01",
+      "entry_price": 41.02000045776367,
+      "shares": 12,
+      "cost_basis": 492.24000549316406,
+      "entry_score": 9.0,
+      "skip_reason_at_entry": "Cap Hit",
+      "intended_slot_dollars": 518.9616500000001
     }
   },
-  "last_run_date": "2026-09-29",
+  "last_run_date": "2026-10-01",
   "cumulative_pnl": -2531.12
 }

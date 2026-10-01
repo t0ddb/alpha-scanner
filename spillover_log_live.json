@@ -10446,5 +10446,90 @@
         "unrealized_pnl_pct": -0.0563
       }
     ]
+  },
+  {
+    "date": "2026-10-01",
+    "mode": "live",
+    "entries": [
+      {
+        "ticker": "SMCI",
+        "score": 9.0,
+        "entry_price": 41.02000045776367,
+        "shares": 12,
+        "cost": 492.24,
+        "skip_reason": "Cap Hit"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "ZS",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 7,
+    "open_value": 4106.61,
+    "open_unrealized_pnl": 982.23,
+    "realized_cumulative_pnl": -2531.12,
+    "total_pnl": -1548.89,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 186.1300048828125,
+        "unrealized_pnl": 591.42,
+        "unrealized_pnl_pct": 1.1257
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 272.0,
+        "unrealized_pnl": 163.6,
+        "unrealized_pnl_pct": 0.4301
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 24,
+        "entry_price": 18.459999084472656,
+        "current_price": 30.329999923706055,
+        "unrealized_pnl": 284.88,
+        "unrealized_pnl_pct": 0.643
+      },
+      {
+        "ticker": "WDAY",
+        "shares": 2,
+        "entry_price": 193.57000732421875,
+        "current_price": 189.1699981689453,
+        "unrealized_pnl": -8.8,
+        "unrealized_pnl_pct": -0.0227
+      },
+      {
+        "ticker": "CRM",
+        "shares": 2,
+        "entry_price": 237.9199981689453,
+        "current_price": 225.30999755859375,
+        "unrealized_pnl": -25.22,
+        "unrealized_pnl_pct": -0.053
+      },
+      {
+        "ticker": "ZS",
+        "shares": 2,
+        "entry_price": 210.17999267578125,
+        "current_price": 198.35499572753906,
+        "unrealized_pnl": -23.65,
+        "unrealized_pnl_pct": -0.0563
+      },
+      {
+        "ticker": "SMCI",
+        "shares": 12,
+        "entry_price": 41.02000045776367,
+        "current_price": 41.02000045776367,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]
