@@ -1153,6 +1153,21 @@
       "score_at_entry": 9.0,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "beb549e3-638f-4e93-82e1-f4bb85120ed0"
+    },
+    {
+      "ticker": "WDAY",
+      "side": "sell",
+      "date": "2026-10-02",
+      "price": 186.23,
+      "qty": 17.0,
+      "proceeds": 3165.91,
+      "pnl": -90.61,
+      "pnl_pct": -2.78,
+      "score_at_exit": 4.9,
+      "reason": "Score exit (score 4.9 < 5.0)",
+      "hold_days": 25,
+      "score_at_entry": 9.0,
+      "alpaca_order_id": "2d7773b3-fded-4454-bf10-b62955cee401"
     }
   ]
 }

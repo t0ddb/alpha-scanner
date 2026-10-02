@@ -1,10 +1,5 @@
 {
   "cooldowns": {
-    "MDB": {
-      "cooldown_until": "2026-10-01",
-      "exit_date": "2026-09-01",
-      "loss_amount": -970.34
-    },
     "OII": {
       "cooldown_until": "2026-10-14",
       "exit_date": "2026-09-14",
@@ -19,6 +14,11 @@
       "cooldown_until": "2026-10-08",
       "exit_date": "2026-09-08",
       "loss_amount": -488.6
+    },
+    "WDAY": {
+      "cooldown_until": "2026-11-01",
+      "exit_date": "2026-10-02",
+      "loss_amount": -90.61
     }
   },
   "violations": [

@@ -16963,5 +16963,105 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-10-02",
+    "mode": "scheme_m",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "AKT-USD",
+        "reason": "already held in spillover"
+      }
+    ],
+    "open_positions": 10,
+    "open_value": 115328.72,
+    "open_unrealized_pnl": 30128.84,
+    "realized_cumulative_pnl": -74036.42,
+    "total_pnl": -43907.58,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 133,
+        "entry_price": 80.79000091552734,
+        "current_price": 188.6699981689453,
+        "unrealized_pnl": 14348.04,
+        "unrealized_pnl_pct": 1.3353
+      },
+      {
+        "ticker": "PANW",
+        "shares": 30,
+        "entry_price": 341.0199890136719,
+        "current_price": 403.239990234375,
+        "unrealized_pnl": 1866.6,
+        "unrealized_pnl_pct": 0.1825
+      },
+      {
+        "ticker": "SNOW",
+        "shares": 28,
+        "entry_price": 267.79998779296875,
+        "current_price": 341.0400085449219,
+        "unrealized_pnl": 2050.72,
+        "unrealized_pnl_pct": 0.2735
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 396,
+        "entry_price": 20.40999984741211,
+        "current_price": 30.309999465942383,
+        "unrealized_pnl": 3920.4,
+        "unrealized_pnl_pct": 0.4851
+      },
+      {
+        "ticker": "SOL-USD",
+        "shares": 78,
+        "entry_price": 103.01000213623047,
+        "current_price": 118.58000183105469,
+        "unrealized_pnl": 1214.46,
+        "unrealized_pnl_pct": 0.1512
+      },
+      {
+        "ticker": "NEAR-USD",
+        "shares": 2990,
+        "entry_price": 2.4133999347686768,
+        "current_price": 4.690100193023682,
+        "unrealized_pnl": 6807.33,
+        "unrealized_pnl_pct": 0.9434
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 33,
+        "entry_price": 245.6999969482422,
+        "current_price": 270.0400085449219,
+        "unrealized_pnl": 803.22,
+        "unrealized_pnl_pct": 0.0991
+      },
+      {
+        "ticker": "ZS",
+        "shares": 39,
+        "entry_price": 214.63999938964844,
+        "current_price": 196.60000610351562,
+        "unrealized_pnl": -703.56,
+        "unrealized_pnl_pct": -0.084
+      },
+      {
+        "ticker": "META",
+        "shares": 11,
+        "entry_price": 751.6599731445312,
+        "current_price": 728.0800170898438,
+        "unrealized_pnl": -259.38,
+        "unrealized_pnl_pct": -0.0314
+      },
+      {
+        "ticker": "AKT-USD",
+        "shares": 13280,
+        "entry_price": 0.6510000228881836,
+        "current_price": 0.6571000218391418,
+        "unrealized_pnl": 81.01,
+        "unrealized_pnl_pct": 0.0094
+      }
+    ]
   }
 ]
