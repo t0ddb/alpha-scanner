@@ -850,6 +850,17 @@
       "score_at_entry": 9.2,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "b4b279f9-09aa-4320-bcdb-38723d3d1a0f"
+    },
+    {
+      "ticker": "ZS",
+      "side": "buy",
+      "date": "2026-10-01",
+      "price": 198.88,
+      "qty": 2.0,
+      "cost_basis": 397.76,
+      "score_at_entry": 9.5,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "a35709f8-03bf-4e65-b8f0-0a5f9bb802a8"
     }
   ]
 }
