@@ -80,8 +80,17 @@
       "entry_score": 7.65,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 8336.505846134902
+    },
+    "AKT-USD": {
+      "entry_date": "2026-10-02",
+      "entry_price": 0.6510000228881836,
+      "shares": 13280,
+      "cost_basis": 8645.280303955078,
+      "entry_score": 8.05,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 8645.584902530241
     }
   },
-  "last_run_date": "2026-10-01",
+  "last_run_date": "2026-10-02",
   "cumulative_pnl": -74036.42
 }

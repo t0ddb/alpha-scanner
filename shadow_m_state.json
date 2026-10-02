@@ -71,9 +71,17 @@
       "entry_score": 8.2,
       "cost_basis": 8351.0284781456,
       "sequence_tags": "BONUS: first_two_pair=roc\u2192atr (+0.5; first-2 mean +95% (n=116))|BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))|PENALTY: last_two=ich\u2192hl (-0.3; last-2 mean +17.8% (n=53))"
+    },
+    "SOL-USD": {
+      "entry_date": "2026-10-02",
+      "entry_price": 118.3499984741211,
+      "shares": 73,
+      "entry_score": 8.2,
+      "cost_basis": 8639.54988861084,
+      "sequence_tags": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
     }
   },
-  "cash": 11945.3241314888,
+  "cash": 3305.77424287796,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-10-01"
+  "last_run_date": "2026-10-02"
 }
