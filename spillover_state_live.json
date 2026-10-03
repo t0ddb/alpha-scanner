@@ -27,15 +27,6 @@
       "skip_reason_at_entry": "Cap Hit",
       "intended_slot_dollars": 448.14605000000006
     },
-    "WDAY": {
-      "entry_date": "2026-08-28",
-      "entry_price": 193.57000732421875,
-      "shares": 2,
-      "cost_basis": 387.1400146484375,
-      "entry_score": 9.5,
-      "skip_reason_at_entry": "Cap Hit",
-      "intended_slot_dollars": 474.17734
-    },
     "CRM": {
       "entry_date": "2026-09-18",
       "entry_price": 237.9199981689453,
@@ -65,5 +56,5 @@
     }
   },
   "last_run_date": "2026-10-02",
-  "cumulative_pnl": -2531.12
+  "cumulative_pnl": -2545.98
 }
