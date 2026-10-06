@@ -10757,5 +10757,68 @@
         "unrealized_pnl_pct": 0.0651
       }
     ]
+  },
+  {
+    "date": "2026-10-06",
+    "mode": "live",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 6,
+    "open_value": 3792.4,
+    "open_unrealized_pnl": 1055.16,
+    "realized_cumulative_pnl": -2545.98,
+    "total_pnl": -1490.82,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 188.6699981689453,
+        "unrealized_pnl": 606.66,
+        "unrealized_pnl_pct": 1.1548
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 273.0400085449219,
+        "unrealized_pnl": 165.68,
+        "unrealized_pnl_pct": 0.4355
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 24,
+        "entry_price": 18.459999084472656,
+        "current_price": 30.309999465942383,
+        "unrealized_pnl": 284.4,
+        "unrealized_pnl_pct": 0.6419
+      },
+      {
+        "ticker": "CRM",
+        "shares": 2,
+        "entry_price": 237.9199981689453,
+        "current_price": 234.69000244140625,
+        "unrealized_pnl": -6.46,
+        "unrealized_pnl_pct": -0.0136
+      },
+      {
+        "ticker": "ZS",
+        "shares": 2,
+        "entry_price": 210.17999267578125,
+        "current_price": 196.60000610351562,
+        "unrealized_pnl": -27.16,
+        "unrealized_pnl_pct": -0.0646
+      },
+      {
+        "ticker": "SMCI",
+        "shares": 12,
+        "entry_price": 41.02000045776367,
+        "current_price": 43.689998626708984,
+        "unrealized_pnl": 32.04,
+        "unrealized_pnl_pct": 0.0651
+      }
+    ]
   }
 ]
