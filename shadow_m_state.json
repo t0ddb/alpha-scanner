@@ -32,14 +32,6 @@
       "cost_basis": 7361.249685287476,
       "sequence_tags": ""
     },
-    "SNOW": {
-      "entry_date": "2026-07-23",
-      "entry_price": 265.1300048828125,
-      "shares": 27,
-      "entry_score": 8.45,
-      "cost_basis": 7158.5101318359375,
-      "sequence_tags": "BONUS: first_three_pat=ich\u2192cmf\u2192dtf (+0.4; first-3 mean +75% (n=60))"
-    },
     "SDGR": {
       "entry_date": "2026-09-02",
       "entry_price": 20.8799991607666,
@@ -79,9 +71,17 @@
       "entry_score": 8.2,
       "cost_basis": 8639.54988861084,
       "sequence_tags": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
+    },
+    "AKT-USD": {
+      "entry_date": "2026-10-06",
+      "entry_price": 0.7597000002861023,
+      "shares": 11361,
+      "entry_score": 8.55,
+      "cost_basis": 8630.951703250408,
+      "sequence_tags": "BONUS: first_three_pat=roc\u2192atr\u2192ich (+0.5; first-3 mean +140% (n=67))|BONUS: first_two_pair=roc\u2192atr (+0.5; first-2 mean +95% (n=116))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))|BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))"
     }
   },
-  "cash": 3305.77424287796,
+  "cash": 3745.472869217396,
   "starting_equity": 100000.0,
   "last_run_date": "2026-10-06"
 }

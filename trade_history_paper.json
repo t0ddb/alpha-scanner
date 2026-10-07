@@ -1168,6 +1168,21 @@
       "hold_days": 25,
       "score_at_entry": 9.0,
       "alpaca_order_id": "2d7773b3-fded-4454-bf10-b62955cee401"
+    },
+    {
+      "ticker": "CRM",
+      "side": "sell",
+      "date": "2026-10-06",
+      "price": 224.8489,
+      "qty": 21.0,
+      "proceeds": 4721.83,
+      "pnl": -331.91,
+      "pnl_pct": -6.57,
+      "score_at_exit": 4.4,
+      "reason": "Score exit (score 4.4 < 5.0)",
+      "hold_days": 18,
+      "score_at_entry": 9.0,
+      "alpaca_order_id": "cb363716-1deb-46a2-b81e-abe1651a0988"
     }
   ]
 }

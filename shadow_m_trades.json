@@ -388,5 +388,18 @@
     "exit_reason": "score_exit",
     "entry_score": 9.25,
     "sequence_tags_at_entry": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))"
+  },
+  {
+    "ticker": "SNOW",
+    "entry_date": "2026-07-23",
+    "exit_date": "2026-10-06",
+    "entry_price": 265.1300048828125,
+    "exit_price": 335.95001220703125,
+    "shares": 27,
+    "pnl": 1912.14,
+    "pnl_pct": 0.2671,
+    "exit_reason": "score_exit",
+    "entry_score": 8.45,
+    "sequence_tags_at_entry": "BONUS: first_three_pat=ich\u2192cmf\u2192dtf (+0.4; first-3 mean +75% (n=60))"
   }
 ]
