@@ -852,5 +852,19 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 8.75,
     "intended_slot_dollars": 7650.875161094666
+  },
+  {
+    "ticker": "SNOW",
+    "entry_date": "2026-07-22",
+    "exit_date": "2026-10-08",
+    "entry_price": 267.79998779296875,
+    "exit_price": 335.95001220703125,
+    "shares": 28,
+    "pnl": 1908.2,
+    "pnl_pct": 0.2545,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 8.15,
+    "intended_slot_dollars": 7507.0169241424555
   }
 ]

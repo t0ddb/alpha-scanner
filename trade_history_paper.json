@@ -1183,6 +1183,17 @@
       "hold_days": 18,
       "score_at_entry": 9.0,
       "alpaca_order_id": "cb363716-1deb-46a2-b81e-abe1651a0988"
+    },
+    {
+      "ticker": "LITE",
+      "side": "buy",
+      "date": "2026-10-07",
+      "price": 1111.32,
+      "qty": 6.0,
+      "cost_basis": 6667.92,
+      "score_at_entry": 9.4,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "b6977e35-e337-41e9-b822-e57f9c8e92db"
     }
   ]
 }
