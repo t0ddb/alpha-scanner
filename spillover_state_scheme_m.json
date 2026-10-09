@@ -89,8 +89,26 @@
       "entry_score": 7.5,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 8733.151178654289
+    },
+    "PLTR": {
+      "entry_date": "2026-10-09",
+      "entry_price": 194.1199951171875,
+      "shares": 42,
+      "cost_basis": 8153.039794921875,
+      "entry_score": 8.0,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 8227.743958043015
+    },
+    "AVAX-USD": {
+      "entry_date": "2026-10-09",
+      "entry_price": 10.064000129699707,
+      "shares": 817,
+      "cost_basis": 8222.28810596466,
+      "entry_score": 7.75,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 8227.743958043015
     }
   },
-  "last_run_date": "2026-10-08",
+  "last_run_date": "2026-10-09",
   "cumulative_pnl": -72128.22
 }

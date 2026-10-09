@@ -17385,5 +17385,133 @@
         "unrealized_pnl_pct": -0.003
       }
     ]
+  },
+  {
+    "date": "2026-10-09",
+    "mode": "scheme_m",
+    "entries": [
+      {
+        "ticker": "PLTR",
+        "score": 8.0,
+        "entry_price": 194.1199951171875,
+        "shares": 42,
+        "cost": 8153.04,
+        "skip_reason": "No Cash"
+      },
+      {
+        "ticker": "AVAX-USD",
+        "score": 7.75,
+        "entry_price": 10.064000129699707,
+        "shares": 817,
+        "cost": 8222.29,
+        "skip_reason": "No Cash"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 12,
+    "open_value": 124544.36,
+    "open_unrealized_pnl": 21735.07,
+    "realized_cumulative_pnl": -72128.22,
+    "total_pnl": -50393.15,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 133,
+        "entry_price": 80.79000091552734,
+        "current_price": 155.64999389648438,
+        "unrealized_pnl": 9956.38,
+        "unrealized_pnl_pct": 0.9266
+      },
+      {
+        "ticker": "PANW",
+        "shares": 30,
+        "entry_price": 341.0199890136719,
+        "current_price": 405.57000732421875,
+        "unrealized_pnl": 1936.5,
+        "unrealized_pnl_pct": 0.1893
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 396,
+        "entry_price": 20.40999984741211,
+        "current_price": 27.290000915527344,
+        "unrealized_pnl": 2724.48,
+        "unrealized_pnl_pct": 0.3371
+      },
+      {
+        "ticker": "SOL-USD",
+        "shares": 78,
+        "entry_price": 103.01000213623047,
+        "current_price": 109.19999694824219,
+        "unrealized_pnl": 482.82,
+        "unrealized_pnl_pct": 0.0601
+      },
+      {
+        "ticker": "NEAR-USD",
+        "shares": 2990,
+        "entry_price": 2.4133999347686768,
+        "current_price": 4.499000072479248,
+        "unrealized_pnl": 6235.94,
+        "unrealized_pnl_pct": 0.8642
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 33,
+        "entry_price": 245.6999969482422,
+        "current_price": 265.44000244140625,
+        "unrealized_pnl": 651.42,
+        "unrealized_pnl_pct": 0.0803
+      },
+      {
+        "ticker": "ZS",
+        "shares": 39,
+        "entry_price": 214.63999938964844,
+        "current_price": 213.5500030517578,
+        "unrealized_pnl": -42.51,
+        "unrealized_pnl_pct": -0.0051
+      },
+      {
+        "ticker": "META",
+        "shares": 11,
+        "entry_price": 751.6599731445312,
+        "current_price": 721.3099975585938,
+        "unrealized_pnl": -333.85,
+        "unrealized_pnl_pct": -0.0404
+      },
+      {
+        "ticker": "AKT-USD",
+        "shares": 13280,
+        "entry_price": 0.6510000228881836,
+        "current_price": 0.7287999987602234,
+        "unrealized_pnl": 1033.18,
+        "unrealized_pnl_pct": 0.1195
+      },
+      {
+        "ticker": "RENDER-USD",
+        "shares": 4271,
+        "entry_price": 2.044600009918213,
+        "current_price": 1.8316999673843384,
+        "unrealized_pnl": -909.3,
+        "unrealized_pnl_pct": -0.1041
+      },
+      {
+        "ticker": "PLTR",
+        "shares": 42,
+        "entry_price": 194.1199951171875,
+        "current_price": 194.1199951171875,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      },
+      {
+        "ticker": "AVAX-USD",
+        "shares": 817,
+        "entry_price": 10.064000129699707,
+        "current_price": 10.064000129699707,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]
