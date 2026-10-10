@@ -10,11 +10,6 @@
       "exit_date": "2026-09-14",
       "loss_amount": -445.2
     },
-    "PATH": {
-      "cooldown_until": "2026-10-08",
-      "exit_date": "2026-09-08",
-      "loss_amount": -488.6
-    },
     "WDAY": {
       "cooldown_until": "2026-11-01",
       "exit_date": "2026-10-02",

@@ -866,5 +866,19 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 8.15,
     "intended_slot_dollars": 7507.0169241424555
+  },
+  {
+    "ticker": "META",
+    "entry_date": "2026-09-29",
+    "exit_date": "2026-10-10",
+    "entry_price": 751.6599731445312,
+    "exit_price": 720.8900146484375,
+    "shares": 11,
+    "pnl": -338.47,
+    "pnl_pct": -0.0409,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 7.65,
+    "intended_slot_dollars": 8336.505846134902
   }
 ]

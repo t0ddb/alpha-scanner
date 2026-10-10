@@ -63,15 +63,6 @@
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 8531.2830490942
     },
-    "META": {
-      "entry_date": "2026-09-29",
-      "entry_price": 751.6599731445312,
-      "shares": 11,
-      "cost_basis": 8268.259704589844,
-      "entry_score": 7.65,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 8336.505846134902
-    },
     "AKT-USD": {
       "entry_date": "2026-10-02",
       "entry_price": 0.6510000228881836,
@@ -109,6 +100,6 @@
       "intended_slot_dollars": 8227.743958043015
     }
   },
-  "last_run_date": "2026-10-09",
-  "cumulative_pnl": -72128.22
+  "last_run_date": "2026-10-10",
+  "cumulative_pnl": -72466.69
 }
