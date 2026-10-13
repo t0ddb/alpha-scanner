@@ -887,6 +887,17 @@
       "score_at_entry": 9.1,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "9b1d878f-eba2-45b5-925e-1ea3574ce0d1"
+    },
+    {
+      "ticker": "PLTR",
+      "side": "buy",
+      "date": "2026-10-13",
+      "price": 208.63,
+      "qty": 2.0,
+      "cost_basis": 417.26,
+      "score_at_entry": 9.4,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "d95fd9f3-ad69-44d0-ab5b-ace38c68943f"
     }
   ]
 }

@@ -11145,5 +11145,90 @@
         "unrealized_pnl_pct": -0.0254
       }
     ]
+  },
+  {
+    "date": "2026-10-13",
+    "mode": "live",
+    "entries": [
+      {
+        "ticker": "PSIX",
+        "score": 9.0,
+        "entry_price": 53.13999938964844,
+        "shares": 9,
+        "cost": 478.26,
+        "skip_reason": "Cap Hit"
+      }
+    ],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "MSFT",
+        "reason": "intended_slot_dollars <= 0"
+      }
+    ],
+    "open_positions": 7,
+    "open_value": 3952.13,
+    "open_unrealized_pnl": 736.63,
+    "realized_cumulative_pnl": -2545.98,
+    "total_pnl": -1809.35,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 151.3300018310547,
+        "unrealized_pnl": 382.62,
+        "unrealized_pnl_pct": 0.7283
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 271.17498779296875,
+        "unrealized_pnl": 161.95,
+        "unrealized_pnl_pct": 0.4257
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 24,
+        "entry_price": 18.459999084472656,
+        "current_price": 25.889999389648438,
+        "unrealized_pnl": 178.32,
+        "unrealized_pnl_pct": 0.4025
+      },
+      {
+        "ticker": "CRM",
+        "shares": 2,
+        "entry_price": 237.9199981689453,
+        "current_price": 238.00999450683594,
+        "unrealized_pnl": 0.18,
+        "unrealized_pnl_pct": 0.0004
+      },
+      {
+        "ticker": "ZS",
+        "shares": 2,
+        "entry_price": 210.17999267578125,
+        "current_price": 228.66000366210938,
+        "unrealized_pnl": 36.96,
+        "unrealized_pnl_pct": 0.0879
+      },
+      {
+        "ticker": "SMCI",
+        "shares": 12,
+        "entry_price": 41.02000045776367,
+        "current_price": 39.06999969482422,
+        "unrealized_pnl": -23.4,
+        "unrealized_pnl_pct": -0.0475
+      },
+      {
+        "ticker": "PSIX",
+        "shares": 9,
+        "entry_price": 53.13999938964844,
+        "current_price": 53.13999938964844,
+        "unrealized_pnl": 0.0,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]
