@@ -17,6 +17,15 @@
       "entry_score": 9.1,
       "skip_reason_at_entry": "Full",
       "intended_slot_dollars": 8926.61431
+    },
+    "PSIX": {
+      "entry_date": "2026-10-13",
+      "entry_price": 53.13999938964844,
+      "shares": 176,
+      "cost_basis": 9352.639892578125,
+      "entry_score": 9.0,
+      "skip_reason_at_entry": "Full",
+      "intended_slot_dollars": 9401.46644
     }
   },
   "last_run_date": "2026-10-13",

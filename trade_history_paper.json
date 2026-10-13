@@ -1194,6 +1194,28 @@
       "score_at_entry": 9.4,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "b6977e35-e337-41e9-b822-e57f9c8e92db"
+    },
+    {
+      "ticker": "MSFT",
+      "side": "buy",
+      "date": "2026-10-13",
+      "price": 543.51,
+      "qty": 11.0,
+      "cost_basis": 5978.61,
+      "score_at_entry": 9.4,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "9b10d16b-ab2a-4174-80b0-fec20a333acc"
+    },
+    {
+      "ticker": "PLTR",
+      "side": "buy",
+      "date": "2026-10-13",
+      "price": 208.63,
+      "qty": 25.0,
+      "cost_basis": 5215.75,
+      "score_at_entry": 9.4,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "fb39fbca-bb51-4150-ba78-45aece07a9ad"
     }
   ]
 }
