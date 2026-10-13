@@ -1925,11 +1925,33 @@ def _build_trade_digest_html(
             (today - datetime.strptime(buy_date, "%Y-%m-%d").date()).days
             if buy_date else 0
         )
+
+        # Day % — close-over-close day move computed from yfinance OHLC.
+        # We DON'T use Alpaca's position.change_today because that field is
+        # calculated against position.lastday_price, which Alpaca rolls to
+        # TODAY's close as soon as the market closes at 4:00 PM ET. The
+        # trade_executor runs at 4:35 PM ET, so by then change_today is
+        # effectively after-hours-only (~35 minutes), not the full day's
+        # move — breaking the user-intuitive comparison with the P&L card's
+        # "Today" row (which uses account.last_equity = Friday close for a
+        # Monday query, giving a Friday-close-to-Monday-current window).
+        # See 2026-10-12 investigation. _compute_recent_return(..., lookback=1)
+        # gives close-over-close which matches what a human reads as "today's
+        # move." Fall back to Alpaca's value if yfinance data is unavailable.
+        day_pct_computed = _compute_recent_return(price_data, ticker, lookback=1)
+        if day_pct_computed is not None:
+            day_pct = day_pct_computed * 100
+        else:
+            day_pct = pos.get("change_today_pct", 0.0)
+            print(f"  [day_pct/{ticker}] fell back to Alpaca change_today "
+                  f"(no yfinance data) — may understate day move if run "
+                  f"post-close.")
+
         pos_records.append({
             "ticker": ticker,
             "hold_days": hold_days,
             "current_price": pos["current_price"],
-            "day_pct": pos.get("change_today_pct", 0.0),
+            "day_pct": day_pct,
             "pnl_pct": pos["unrealized_pnl_pct"],
             "pnl_dollar": pos["unrealized_pnl"],
             "score": score_val,
