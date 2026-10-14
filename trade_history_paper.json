@@ -1216,6 +1216,47 @@
       "score_at_entry": 9.4,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "fb39fbca-bb51-4150-ba78-45aece07a9ad"
+    },
+    {
+      "ticker": "CRWD",
+      "side": "sell",
+      "date": "2026-10-14",
+      "price": 246.78,
+      "qty": 22.0,
+      "proceeds": 5429.16,
+      "pnl": 265.69,
+      "pnl_pct": 5.15,
+      "score_at_exit": 4.4,
+      "reason": "Score exit (score 4.4 < 5.0)",
+      "hold_days": 26,
+      "score_at_entry": 9.2,
+      "alpaca_order_id": "37eb9809-7699-47ce-9a34-3c97bc50bf76"
+    },
+    {
+      "ticker": "S",
+      "side": "sell",
+      "date": "2026-10-14",
+      "price": 22.586,
+      "qty": 399.0,
+      "proceeds": 9011.81,
+      "pnl": 1287.17,
+      "pnl_pct": 16.66,
+      "score_at_exit": 3.8,
+      "reason": "Score exit (score 3.8 < 5.0)",
+      "hold_days": 89,
+      "score_at_entry": 9.9,
+      "alpaca_order_id": "f8e58e8f-7a97-4979-b8e4-d5b4f389f783"
+    },
+    {
+      "ticker": "PSIX",
+      "side": "buy",
+      "date": "2026-10-14",
+      "price": 46.5,
+      "qty": 161.0,
+      "cost_basis": 7486.5,
+      "score_at_entry": 9.5,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "80609b6c-33f2-465b-bc52-2b8c14fe35c7"
     }
   ]
 }

@@ -98,8 +98,17 @@
       "entry_score": 7.75,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 8227.743958043015
+    },
+    "AZTA": {
+      "entry_date": "2026-10-14",
+      "entry_price": 37.18000030517578,
+      "shares": 213,
+      "cost_basis": 7919.340065002441,
+      "entry_score": 8.15,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 7945.697303449547
     }
   },
-  "last_run_date": "2026-10-13",
+  "last_run_date": "2026-10-14",
   "cumulative_pnl": -72466.69
 }
