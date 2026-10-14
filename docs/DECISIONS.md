@@ -401,6 +401,35 @@ shared path-dep helper.
 
 ---
 
+## 2026-05-13 — Exit/stop ordering bug fix + phantom-sell cleanup
+
+**Decision:** Reorder `execute_exits` to cancel the position's GTC stop
+BEFORE submitting the market sell (with a 2-second sleep so the async
+cancel propagates). Guard `log_sell` and
+`wash_sale_tracker.record_loss_exit` on actual order acceptance.
+
+**Rationale:** The FORM live sell failed on two consecutive daily runs
+with Alpaca `insufficient qty ... held_for_orders` — the live GTC stop
+holds the shares, so the sell is rejected. Because logging happened
+regardless of order outcome, phantom sell records accumulated and the
+wash-sale tracker fired on exits that never happened. Latent since the
+2026-04-28 live launch; FORM was the first score-based exit in live.
+
+**Evidence:**
+  - Live workflow run 25764401497 log (the `held_for_orders` rejection).
+  - Pre-fix `trade_history_live.json` had 2 phantom FORM sells;
+    `trade_history_paper.json` had 5 phantom sells (COHU × 3, FORM × 2).
+
+**Cleanup:** 7 phantom sells scrubbed from `trade_history_{live,paper}.json`.
+Live FORM wash-sale cooldown removed (it would have blocked re-entry
+through 2026-06-12 for a sell that never happened).
+
+**Commit:** `61d3e87`
+
+**Status:** Active.
+
+---
+
 ## 2026-05-19 — Backfill: don't overwrite trade-exec scores; drop tickers missing target-date data
 
 **Decision:** `backfill_subsector.py` now:
@@ -471,3 +500,27 @@ artifact rather than acted on.
 (`--dates 2026-05-15,2026-05-14` skipped both as already-scored).
 
 **Status:** Active. No live config change.
+
+---
+
+## 2026-09-30 — Live MIN_POSITION_SIZE lowered 300 → 250
+
+**Decision:** `.github/workflows/daily-trade-execution-live.yml`
+`MIN_POSITION_SIZE` env override reduced from `'300'` to `'250'`.
+YAML default (`500`) and paper are unchanged.
+
+**Rationale:** The 5% cash-floor's per-slot cap
+(`per_slot_cap = floor_budget / remaining_slots`) was blocking valid
+high-score entries when several slots were open. With 8/12 held and
+4 open slots, the per-slot cap landed at $266 — below the $300 min —
+so ZS (9.5) and SMCI (9.1) both skipped with "Cap Hit" despite $1,378
+cash and $1,065 of remaining under-floor budget. $250 clears those
+near-miss cases without touching the backtest-validated 5% cash floor
+or the 8.3% max-position cap.
+
+**Trade-off:** Smaller minimum position, but ~4% of equity at the
+floor is still a meaningful allocation on a ~$6k account.
+
+**Commit:** `74651f3`
+
+**Status:** Active.
