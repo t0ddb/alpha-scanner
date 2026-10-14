@@ -11230,5 +11230,81 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-10-14",
+    "mode": "live",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [
+      {
+        "ticker": "MSFT",
+        "reason": "intended_slot_dollars <= 0"
+      }
+    ],
+    "open_positions": 7,
+    "open_value": 3795.96,
+    "open_unrealized_pnl": 580.47,
+    "realized_cumulative_pnl": -2545.98,
+    "total_pnl": -1965.51,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 6,
+        "entry_price": 87.55999755859375,
+        "current_price": 148.16000366210938,
+        "unrealized_pnl": 363.6,
+        "unrealized_pnl_pct": 0.6921
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 271.760009765625,
+        "unrealized_pnl": 163.12,
+        "unrealized_pnl_pct": 0.4288
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 24,
+        "entry_price": 18.459999084472656,
+        "current_price": 25.049999237060547,
+        "unrealized_pnl": 158.16,
+        "unrealized_pnl_pct": 0.357
+      },
+      {
+        "ticker": "CRM",
+        "shares": 2,
+        "entry_price": 237.9199981689453,
+        "current_price": 235.9499969482422,
+        "unrealized_pnl": -3.94,
+        "unrealized_pnl_pct": -0.0083
+      },
+      {
+        "ticker": "ZS",
+        "shares": 2,
+        "entry_price": 210.17999267578125,
+        "current_price": 220.7899932861328,
+        "unrealized_pnl": 21.22,
+        "unrealized_pnl_pct": 0.0505
+      },
+      {
+        "ticker": "SMCI",
+        "shares": 12,
+        "entry_price": 41.02000045776367,
+        "current_price": 35.779998779296875,
+        "unrealized_pnl": -62.88,
+        "unrealized_pnl_pct": -0.1277
+      },
+      {
+        "ticker": "PSIX",
+        "shares": 9,
+        "entry_price": 53.13999938964844,
+        "current_price": 46.60499954223633,
+        "unrealized_pnl": -58.81,
+        "unrealized_pnl_pct": -0.123
+      }
+    ]
   }
 ]
