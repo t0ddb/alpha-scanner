@@ -939,6 +939,17 @@
       "score_at_entry": 9.5,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "eb096d60-654f-40d0-b71e-3c9d3b8d2611"
+    },
+    {
+      "ticker": "AI",
+      "side": "buy",
+      "date": "2026-10-15",
+      "price": 12.13,
+      "qty": 25.0,
+      "cost_basis": 303.25,
+      "score_at_entry": 9.6,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "fb62e0fe-812d-494a-a204-458e46cebb7b"
     }
   ]
 }
