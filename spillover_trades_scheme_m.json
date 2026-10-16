@@ -880,5 +880,19 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 7.65,
     "intended_slot_dollars": 8336.505846134902
+  },
+  {
+    "ticker": "PANW",
+    "entry_date": "2026-06-30",
+    "exit_date": "2026-10-16",
+    "entry_price": 341.0199890136719,
+    "exit_price": 342.0,
+    "shares": 30,
+    "pnl": 29.4,
+    "pnl_pct": 0.0029,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 7.8,
+    "intended_slot_dollars": 10305.780541067505
   }
 ]

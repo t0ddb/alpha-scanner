@@ -9,15 +9,6 @@
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 10817.159070428084
     },
-    "PANW": {
-      "entry_date": "2026-06-30",
-      "entry_price": 341.0199890136719,
-      "shares": 30,
-      "cost_basis": 10230.599670410156,
-      "entry_score": 7.8,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 10305.780541067505
-    },
     "SDGR": {
       "entry_date": "2026-08-28",
       "entry_price": 20.40999984741211,
@@ -109,6 +100,6 @@
       "intended_slot_dollars": 7945.697303449547
     }
   },
-  "last_run_date": "2026-10-15",
-  "cumulative_pnl": -72466.69
+  "last_run_date": "2026-10-16",
+  "cumulative_pnl": -72437.29
 }

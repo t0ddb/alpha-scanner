@@ -600,5 +600,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.5,
     "intended_slot_dollars": 9396.443280000001
+  },
+  {
+    "ticker": "TWST",
+    "entry_date": "2026-06-19",
+    "exit_date": "2026-10-16",
+    "entry_price": 87.55999755859375,
+    "exit_price": 132.75,
+    "shares": 130,
+    "pnl": 5874.7,
+    "pnl_pct": 0.5161,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.3,
+    "intended_slot_dollars": 11417.099030000001
   }
 ]

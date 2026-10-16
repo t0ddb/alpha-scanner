@@ -1,14 +1,5 @@
 {
   "positions": {
-    "TWST": {
-      "entry_date": "2026-06-19",
-      "entry_price": 87.55999755859375,
-      "shares": 130,
-      "cost_basis": 11382.799682617188,
-      "entry_score": 9.3,
-      "skip_reason_at_entry": "Full",
-      "intended_slot_dollars": 11417.099030000001
-    },
     "SDGR": {
       "entry_date": "2026-08-13",
       "entry_price": 18.459999084472656,
@@ -28,6 +19,6 @@
       "intended_slot_dollars": 9401.46644
     }
   },
-  "last_run_date": "2026-10-15",
-  "cumulative_pnl": -53127.65
+  "last_run_date": "2026-10-16",
+  "cumulative_pnl": -47252.95
 }

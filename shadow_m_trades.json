@@ -401,5 +401,18 @@
     "exit_reason": "score_exit",
     "entry_score": 8.45,
     "sequence_tags_at_entry": "BONUS: first_three_pat=ich\u2192cmf\u2192dtf (+0.4; first-3 mean +75% (n=60))"
+  },
+  {
+    "ticker": "PANW",
+    "entry_date": "2026-07-02",
+    "exit_date": "2026-10-16",
+    "entry_price": 348.05999755859375,
+    "exit_price": 342.0,
+    "shares": 24,
+    "pnl": -145.44,
+    "pnl_pct": -0.0174,
+    "exit_reason": "score_exit",
+    "entry_score": 9.25,
+    "sequence_tags_at_entry": "BONUS: n_led_ich=2 (+0.5; 2-led-Ich mean +76% (n=218))"
   }
 ]

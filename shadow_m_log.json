@@ -16800,5 +16800,94 @@
         "unrealized_pnl_pct": -0.0912
       }
     ]
+  },
+  {
+    "date": "2026-10-16",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "PANW",
+        "entry_price": 348.05999755859375,
+        "exit_price": 342.0,
+        "exit_score": 3.65
+      }
+    ],
+    "skipped": [
+      {
+        "ticker": "DNA",
+        "score": 7.55,
+        "reason": "persistence failed (priors [6.8, 7.4, 6.0])"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 0,
+    "equity": 90782.27,
+    "cash": 11953.47,
+    "positions_count": 9,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 85,
+        "entry_price": 99.23999786376953,
+        "current_price": 132.75,
+        "unrealized_pnl_pct": 0.3377
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 41,
+        "entry_price": 187.14999389648438,
+        "current_price": 262.5400085449219,
+        "unrealized_pnl_pct": 0.4028
+      },
+      {
+        "ticker": "S",
+        "shares": 375,
+        "entry_price": 19.6299991607666,
+        "current_price": 21.579999923706055,
+        "unrealized_pnl_pct": 0.0993
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 360,
+        "entry_price": 20.8799991607666,
+        "current_price": 22.600000381469727,
+        "unrealized_pnl_pct": 0.0824
+      },
+      {
+        "ticker": "CRWD",
+        "shares": 33,
+        "entry_price": 250.05999755859375,
+        "current_price": 227.38999938964844,
+        "unrealized_pnl_pct": -0.0907
+      },
+      {
+        "ticker": "ZS",
+        "shares": 43,
+        "entry_price": 193.0500030517578,
+        "current_price": 207.3800048828125,
+        "unrealized_pnl_pct": 0.0742
+      },
+      {
+        "ticker": "NEAR-USD",
+        "shares": 1685,
+        "entry_price": 4.956099987030029,
+        "current_price": 5.084000110626221,
+        "unrealized_pnl_pct": 0.0258
+      },
+      {
+        "ticker": "SOL-USD",
+        "shares": 73,
+        "entry_price": 118.3499984741211,
+        "current_price": 104.31999969482422,
+        "unrealized_pnl_pct": -0.1185
+      },
+      {
+        "ticker": "AKT-USD",
+        "shares": 11361,
+        "entry_price": 0.7597000002861023,
+        "current_price": 0.6996999979019165,
+        "unrealized_pnl_pct": -0.079
+      }
+    ]
   }
 ]
