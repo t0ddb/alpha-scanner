@@ -950,6 +950,21 @@
       "score_at_entry": 9.6,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "fb62e0fe-812d-494a-a204-458e46cebb7b"
+    },
+    {
+      "ticker": "TWST",
+      "side": "sell",
+      "date": "2026-10-16",
+      "price": 132.1816,
+      "qty": 8.0,
+      "proceeds": 1057.45,
+      "pnl": 285.93,
+      "pnl_pct": 37.06,
+      "score_at_exit": 3.5,
+      "reason": "Score exit (score 3.5 < 5.0)",
+      "hold_days": 105,
+      "score_at_entry": 9.9,
+      "alpaca_order_id": "9767a7fd-b708-4766-aa05-aee22430e156"
     }
   ]
 }

@@ -1,14 +1,5 @@
 {
   "positions": {
-    "TWST": {
-      "entry_date": "2026-06-19",
-      "entry_price": 87.55999755859375,
-      "shares": 6,
-      "cost_basis": 525.3599853515625,
-      "entry_score": 9.3,
-      "skip_reason_at_entry": "Cap Hit",
-      "intended_slot_dollars": 542.0422900000001
-    },
     "ILMN": {
       "entry_date": "2026-07-10",
       "entry_price": 190.1999969482422,
@@ -45,15 +36,6 @@
       "skip_reason_at_entry": "Cap Hit",
       "intended_slot_dollars": 489.54562000000004
     },
-    "SMCI": {
-      "entry_date": "2026-10-01",
-      "entry_price": 41.02000045776367,
-      "shares": 12,
-      "cost_basis": 492.24000549316406,
-      "entry_score": 9.0,
-      "skip_reason_at_entry": "Cap Hit",
-      "intended_slot_dollars": 518.9616500000001
-    },
     "PSIX": {
       "entry_date": "2026-10-13",
       "entry_price": 53.13999938964844,
@@ -64,6 +46,6 @@
       "intended_slot_dollars": 487.96447000000006
     }
   },
-  "last_run_date": "2026-10-15",
-  "cumulative_pnl": -2545.98
+  "last_run_date": "2026-10-16",
+  "cumulative_pnl": -2387.52
 }

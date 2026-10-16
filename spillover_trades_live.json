@@ -530,5 +530,33 @@
     "skip_reason_at_entry": "Cap Hit",
     "entry_score": 9.5,
     "intended_slot_dollars": 474.17734
+  },
+  {
+    "ticker": "TWST",
+    "entry_date": "2026-06-19",
+    "exit_date": "2026-10-16",
+    "entry_price": 87.55999755859375,
+    "exit_price": 132.75,
+    "shares": 6,
+    "pnl": 271.14,
+    "pnl_pct": 0.5161,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "Cap Hit",
+    "entry_score": 9.3,
+    "intended_slot_dollars": 542.0422900000001
+  },
+  {
+    "ticker": "SMCI",
+    "entry_date": "2026-10-01",
+    "exit_date": "2026-10-16",
+    "entry_price": 41.02000045776367,
+    "exit_price": 31.6299991607666,
+    "shares": 12,
+    "pnl": -112.68,
+    "pnl_pct": -0.2289,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Cap Hit",
+    "entry_score": 9.0,
+    "intended_slot_dollars": 518.9616500000001
   }
 ]
