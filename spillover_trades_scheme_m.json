@@ -894,5 +894,47 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 7.8,
     "intended_slot_dollars": 10305.780541067505
+  },
+  {
+    "ticker": "CRWD",
+    "entry_date": "2026-09-17",
+    "exit_date": "2026-10-19",
+    "entry_price": 245.6999969482422,
+    "exit_price": 228.10000610351562,
+    "shares": 33,
+    "pnl": -580.8,
+    "pnl_pct": -0.0716,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 10.05,
+    "intended_slot_dollars": 8169.443651194191
+  },
+  {
+    "ticker": "AKT-USD",
+    "entry_date": "2026-10-02",
+    "exit_date": "2026-10-19",
+    "entry_price": 0.6510000228881836,
+    "exit_price": 0.6947000026702881,
+    "shares": 13280,
+    "pnl": 580.34,
+    "pnl_pct": 0.0671,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 8.05,
+    "intended_slot_dollars": 8645.584902530241
+  },
+  {
+    "ticker": "AVAX-USD",
+    "entry_date": "2026-10-09",
+    "exit_date": "2026-10-19",
+    "entry_price": 10.064000129699707,
+    "exit_price": 9.595000267028809,
+    "shares": 817,
+    "pnl": -383.17,
+    "pnl_pct": -0.0466,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 7.75,
+    "intended_slot_dollars": 8227.743958043015
   }
 ]

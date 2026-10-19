@@ -16889,5 +16889,91 @@
         "unrealized_pnl_pct": -0.079
       }
     ]
+  },
+  {
+    "date": "2026-10-19",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "CRWD",
+        "entry_price": 250.05999755859375,
+        "exit_price": 228.10000610351562,
+        "exit_score": 4.35
+      },
+      {
+        "ticker": "AKT-USD",
+        "entry_price": 0.7597000002861023,
+        "exit_price": 0.6949999928474426,
+        "exit_score": 3.95
+      }
+    ],
+    "skipped": [
+      {
+        "ticker": "MSFT",
+        "score": 7.5,
+        "reason": "persistence failed (priors [6.5, 7.1, 7.0])"
+      },
+      {
+        "ticker": "ESTC",
+        "score": 7.8,
+        "reason": "persistence failed (priors [6.7, 7.7, 7.3])"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 0,
+    "equity": 91552.32,
+    "cash": 27376.67,
+    "positions_count": 7,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 85,
+        "entry_price": 99.23999786376953,
+        "current_price": 139.77000427246094,
+        "unrealized_pnl_pct": 0.4084
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 41,
+        "entry_price": 187.14999389648438,
+        "current_price": 262.6600036621094,
+        "unrealized_pnl_pct": 0.4035
+      },
+      {
+        "ticker": "S",
+        "shares": 375,
+        "entry_price": 19.6299991607666,
+        "current_price": 21.709999084472656,
+        "unrealized_pnl_pct": 0.106
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 360,
+        "entry_price": 20.8799991607666,
+        "current_price": 23.1200008392334,
+        "unrealized_pnl_pct": 0.1073
+      },
+      {
+        "ticker": "ZS",
+        "shares": 43,
+        "entry_price": 193.0500030517578,
+        "current_price": 212.52999877929688,
+        "unrealized_pnl_pct": 0.1009
+      },
+      {
+        "ticker": "NEAR-USD",
+        "shares": 1685,
+        "entry_price": 4.956099987030029,
+        "current_price": 4.904300212860107,
+        "unrealized_pnl_pct": -0.0105
+      },
+      {
+        "ticker": "SOL-USD",
+        "shares": 73,
+        "entry_price": 118.3499984741211,
+        "current_price": 104.91999816894531,
+        "unrealized_pnl_pct": -0.1135
+      }
+    ]
   }
 ]

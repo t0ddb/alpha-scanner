@@ -36,15 +36,6 @@
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 7217.7186064538955
     },
-    "CRWD": {
-      "entry_date": "2026-09-17",
-      "entry_price": 245.6999969482422,
-      "shares": 33,
-      "cost_basis": 8108.099899291992,
-      "entry_score": 10.05,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 8169.443651194191
-    },
     "ZS": {
       "entry_date": "2026-09-24",
       "entry_price": 214.63999938964844,
@@ -53,15 +44,6 @@
       "entry_score": 8.35,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 8531.2830490942
-    },
-    "AKT-USD": {
-      "entry_date": "2026-10-02",
-      "entry_price": 0.6510000228881836,
-      "shares": 13280,
-      "cost_basis": 8645.280303955078,
-      "entry_score": 8.05,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 8645.584902530241
     },
     "RENDER-USD": {
       "entry_date": "2026-10-06",
@@ -81,15 +63,6 @@
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 8227.743958043015
     },
-    "AVAX-USD": {
-      "entry_date": "2026-10-09",
-      "entry_price": 10.064000129699707,
-      "shares": 817,
-      "cost_basis": 8222.28810596466,
-      "entry_score": 7.75,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 8227.743958043015
-    },
     "AZTA": {
       "entry_date": "2026-10-14",
       "entry_price": 37.18000030517578,
@@ -100,6 +73,6 @@
       "intended_slot_dollars": 7945.697303449547
     }
   },
-  "last_run_date": "2026-10-16",
-  "cumulative_pnl": -72437.29
+  "last_run_date": "2026-10-19",
+  "cumulative_pnl": -72820.92
 }
