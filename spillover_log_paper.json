@@ -11386,5 +11386,36 @@
         "unrealized_pnl_pct": -0.0773
       }
     ]
+  },
+  {
+    "date": "2026-10-20",
+    "mode": "paper",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 2,
+    "open_value": 19825.88,
+    "open_unrealized_pnl": 1557.06,
+    "realized_cumulative_pnl": -47252.95,
+    "total_pnl": -45695.89,
+    "positions": [
+      {
+        "ticker": "SDGR",
+        "shares": 483,
+        "entry_price": 18.459999084472656,
+        "current_price": 23.399999618530273,
+        "unrealized_pnl": 2386.02,
+        "unrealized_pnl_pct": 0.2676
+      },
+      {
+        "ticker": "PSIX",
+        "shares": 176,
+        "entry_price": 53.13999938964844,
+        "current_price": 48.43000030517578,
+        "unrealized_pnl": -828.96,
+        "unrealized_pnl_pct": -0.0886
+      }
+    ]
   }
 ]

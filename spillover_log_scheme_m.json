@@ -18309,5 +18309,84 @@
         "unrealized_pnl_pct": -0.0629
       }
     ]
+  },
+  {
+    "date": "2026-10-20",
+    "mode": "scheme_m",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 8,
+    "open_value": 83167.84,
+    "open_unrealized_pnl": 15913.74,
+    "realized_cumulative_pnl": -72820.92,
+    "total_pnl": -56907.18,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 133,
+        "entry_price": 80.79000091552734,
+        "current_price": 142.6999969482422,
+        "unrealized_pnl": 8234.03,
+        "unrealized_pnl_pct": 0.7663
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 396,
+        "entry_price": 20.40999984741211,
+        "current_price": 23.399999618530273,
+        "unrealized_pnl": 1184.04,
+        "unrealized_pnl_pct": 0.1465
+      },
+      {
+        "ticker": "SOL-USD",
+        "shares": 78,
+        "entry_price": 103.01000213623047,
+        "current_price": 106.4000015258789,
+        "unrealized_pnl": 264.42,
+        "unrealized_pnl_pct": 0.0329
+      },
+      {
+        "ticker": "NEAR-USD",
+        "shares": 2990,
+        "entry_price": 2.4133999347686768,
+        "current_price": 4.896599769592285,
+        "unrealized_pnl": 7424.77,
+        "unrealized_pnl_pct": 1.0289
+      },
+      {
+        "ticker": "ZS",
+        "shares": 39,
+        "entry_price": 214.63999938964844,
+        "current_price": 214.50999450683594,
+        "unrealized_pnl": -5.07,
+        "unrealized_pnl_pct": -0.0006
+      },
+      {
+        "ticker": "RENDER-USD",
+        "shares": 4271,
+        "entry_price": 2.044600009918213,
+        "current_price": 1.853600025177002,
+        "unrealized_pnl": -815.76,
+        "unrealized_pnl_pct": -0.0934
+      },
+      {
+        "ticker": "PLTR",
+        "shares": 42,
+        "entry_price": 194.1199951171875,
+        "current_price": 192.60000610351562,
+        "unrealized_pnl": -63.84,
+        "unrealized_pnl_pct": -0.0078
+      },
+      {
+        "ticker": "AZTA",
+        "shares": 213,
+        "entry_price": 37.18000030517578,
+        "current_price": 35.72999954223633,
+        "unrealized_pnl": -308.85,
+        "unrealized_pnl_pct": -0.039
+      }
+    ]
   }
 ]
