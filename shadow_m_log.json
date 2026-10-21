@@ -17048,5 +17048,73 @@
         "unrealized_pnl_pct": -0.1005
       }
     ]
+  },
+  {
+    "date": "2026-10-21",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "SOL-USD",
+        "entry_price": 118.3499984741211,
+        "exit_price": 107.0,
+        "exit_score": 4.3
+      }
+    ],
+    "skipped": [
+      {
+        "ticker": "ESTC",
+        "score": 7.95,
+        "reason": "persistence failed (priors [7.2, 7.8, 6.7])"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 0,
+    "equity": 95395.48,
+    "cash": 35187.67,
+    "positions_count": 6,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 85,
+        "entry_price": 99.23999786376953,
+        "current_price": 149.1300048828125,
+        "unrealized_pnl_pct": 0.5027
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 41,
+        "entry_price": 187.14999389648438,
+        "current_price": 282.8599853515625,
+        "unrealized_pnl_pct": 0.5114
+      },
+      {
+        "ticker": "S",
+        "shares": 375,
+        "entry_price": 19.6299991607666,
+        "current_price": 22.770000457763672,
+        "unrealized_pnl_pct": 0.16
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 360,
+        "entry_price": 20.8799991607666,
+        "current_price": 23.899999618530273,
+        "unrealized_pnl_pct": 0.1446
+      },
+      {
+        "ticker": "ZS",
+        "shares": 43,
+        "entry_price": 193.0500030517578,
+        "current_price": 231.3300018310547,
+        "unrealized_pnl_pct": 0.1983
+      },
+      {
+        "ticker": "NEAR-USD",
+        "shares": 1685,
+        "entry_price": 4.956099987030029,
+        "current_price": 5.249000072479248,
+        "unrealized_pnl_pct": 0.0591
+      }
+    ]
   }
 ]

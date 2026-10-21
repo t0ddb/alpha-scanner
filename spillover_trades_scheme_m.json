@@ -936,5 +936,19 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 7.75,
     "intended_slot_dollars": 8227.743958043015
+  },
+  {
+    "ticker": "SOL-USD",
+    "entry_date": "2026-09-01",
+    "exit_date": "2026-10-21",
+    "entry_price": 103.01000213623047,
+    "exit_price": 106.98999786376953,
+    "shares": 78,
+    "pnl": 310.44,
+    "pnl_pct": 0.0386,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 7.95,
+    "intended_slot_dollars": 8035.299806450844
   }
 ]
