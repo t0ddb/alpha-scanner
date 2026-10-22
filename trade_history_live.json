@@ -965,6 +965,17 @@
       "hold_days": 105,
       "score_at_entry": 9.9,
       "alpaca_order_id": "9767a7fd-b708-4766-aa05-aee22430e156"
+    },
+    {
+      "ticker": "NOW",
+      "side": "buy",
+      "date": "2026-10-22",
+      "price": 157.01,
+      "qty": 3.0,
+      "cost_basis": 471.03,
+      "score_at_entry": 9.2,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "c05b33e8-1b6d-4a9f-99ba-fd63dc924514"
     }
   ]
 }
