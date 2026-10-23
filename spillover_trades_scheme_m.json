@@ -950,5 +950,19 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 7.95,
     "intended_slot_dollars": 8035.299806450844
+  },
+  {
+    "ticker": "RENDER-USD",
+    "entry_date": "2026-10-06",
+    "exit_date": "2026-10-23",
+    "entry_price": 2.044600009918213,
+    "exit_price": 1.7280000448226929,
+    "shares": 4271,
+    "pnl": -1352.2,
+    "pnl_pct": -0.1548,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 7.5,
+    "intended_slot_dollars": 8733.151178654289
   }
 ]
