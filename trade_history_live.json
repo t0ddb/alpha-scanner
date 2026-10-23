@@ -976,6 +976,17 @@
       "score_at_entry": 9.2,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "c05b33e8-1b6d-4a9f-99ba-fd63dc924514"
+    },
+    {
+      "ticker": "WDAY",
+      "side": "buy",
+      "date": "2026-10-23",
+      "price": 209.965,
+      "qty": 2.0,
+      "cost_basis": 419.93,
+      "score_at_entry": 9.2,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "a92f76a9-1bc9-4433-ad42-8a7c0f0103c0"
     }
   ]
 }

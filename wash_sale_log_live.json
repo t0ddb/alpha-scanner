@@ -13,6 +13,13 @@
       "loss_exit_date": "2026-08-20",
       "reentry_date": "2026-09-18",
       "ticker": "CRWD"
+    },
+    {
+      "days_between": 21,
+      "loss_amount": -11.48,
+      "loss_exit_date": "2026-10-02",
+      "reentry_date": "2026-10-23",
+      "ticker": "WDAY"
     }
   ]
 }
