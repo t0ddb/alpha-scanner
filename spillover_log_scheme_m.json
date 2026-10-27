@@ -18607,5 +18607,68 @@
         "unrealized_pnl_pct": -0.0183
       }
     ]
+  },
+  {
+    "date": "2026-10-27",
+    "mode": "scheme_m",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 6,
+    "open_value": 67484.29,
+    "open_unrealized_pnl": 16997.45,
+    "realized_cumulative_pnl": -73862.68,
+    "total_pnl": -56865.23,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 133,
+        "entry_price": 80.79000091552734,
+        "current_price": 139.9199981689453,
+        "unrealized_pnl": 7864.29,
+        "unrealized_pnl_pct": 0.7319
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 396,
+        "entry_price": 20.40999984741211,
+        "current_price": 23.799999237060547,
+        "unrealized_pnl": 1342.44,
+        "unrealized_pnl_pct": 0.1661
+      },
+      {
+        "ticker": "NEAR-USD",
+        "shares": 2990,
+        "entry_price": 2.4133999347686768,
+        "current_price": 4.502099990844727,
+        "unrealized_pnl": 6245.21,
+        "unrealized_pnl_pct": 0.8655
+      },
+      {
+        "ticker": "ZS",
+        "shares": 39,
+        "entry_price": 214.63999938964844,
+        "current_price": 255.14999389648438,
+        "unrealized_pnl": 1579.89,
+        "unrealized_pnl_pct": 0.1887
+      },
+      {
+        "ticker": "PLTR",
+        "shares": 42,
+        "entry_price": 194.1199951171875,
+        "current_price": 196.75,
+        "unrealized_pnl": 110.46,
+        "unrealized_pnl_pct": 0.0135
+      },
+      {
+        "ticker": "AZTA",
+        "shares": 213,
+        "entry_price": 37.18000030517578,
+        "current_price": 36.5,
+        "unrealized_pnl": -144.84,
+        "unrealized_pnl_pct": -0.0183
+      }
+    ]
   }
 ]

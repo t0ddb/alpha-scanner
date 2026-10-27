@@ -17283,5 +17283,97 @@
         "unrealized_pnl_pct": -0.0612
       }
     ]
+  },
+  {
+    "date": "2026-10-27",
+    "entries": [
+      {
+        "ticker": "ESTC",
+        "score": 8.05,
+        "entry_price": 102.43000030517578,
+        "shares": 76,
+        "cost": 7784.68,
+        "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))"
+      }
+    ],
+    "exits": [],
+    "skipped": [
+      {
+        "ticker": "AI",
+        "score": 8.3,
+        "reason": "persistence failed (priors [8.3, 7.7, 7.3])"
+      },
+      {
+        "ticker": "MDT",
+        "score": 8.3,
+        "reason": "persistence failed (priors [8.3, 8.3, 7.0])"
+      },
+      {
+        "ticker": "WDAY",
+        "score": 8.45,
+        "reason": "persistence failed (priors [8.4, 7.7, 7.5])"
+      },
+      {
+        "ticker": "PLTR",
+        "score": 7.6,
+        "reason": "persistence failed (priors [7.6, 8.0, 7.4])"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 1,
+    "equity": 94244.15,
+    "cash": 27402.99,
+    "positions_count": 7,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 85,
+        "entry_price": 99.23999786376953,
+        "current_price": 139.9199981689453,
+        "unrealized_pnl_pct": 0.4099
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 41,
+        "entry_price": 187.14999389648438,
+        "current_price": 269.4200134277344,
+        "unrealized_pnl_pct": 0.4396
+      },
+      {
+        "ticker": "S",
+        "shares": 375,
+        "entry_price": 19.6299991607666,
+        "current_price": 24.0,
+        "unrealized_pnl_pct": 0.2226
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 360,
+        "entry_price": 20.8799991607666,
+        "current_price": 23.799999237060547,
+        "unrealized_pnl_pct": 0.1398
+      },
+      {
+        "ticker": "ZS",
+        "shares": 43,
+        "entry_price": 193.0500030517578,
+        "current_price": 255.14999389648438,
+        "unrealized_pnl_pct": 0.3217
+      },
+      {
+        "ticker": "NEAR-USD",
+        "shares": 1685,
+        "entry_price": 4.956099987030029,
+        "current_price": 4.497099876403809,
+        "unrealized_pnl_pct": -0.0926
+      },
+      {
+        "ticker": "ESTC",
+        "shares": 76,
+        "entry_price": 102.43000030517578,
+        "current_price": 102.43000030517578,
+        "unrealized_pnl_pct": 0.0
+      }
+    ]
   }
 ]
