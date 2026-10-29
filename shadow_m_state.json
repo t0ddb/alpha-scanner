@@ -55,9 +55,25 @@
       "entry_score": 8.05,
       "cost_basis": 7784.680023193359,
       "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))"
+    },
+    "AI": {
+      "entry_date": "2026-10-29",
+      "entry_price": 12.289999961853027,
+      "shares": 669,
+      "entry_score": 8.2,
+      "cost_basis": 8222.009974479675,
+      "sequence_tags": "PENALTY: last_two=atr\u2192rs (-0.3; last-2 mean +6.4% (n=69))"
+    },
+    "WDAY": {
+      "entry_date": "2026-10-29",
+      "entry_price": 205.4600067138672,
+      "shares": 40,
+      "entry_score": 7.8,
+      "cost_basis": 8218.400268554688,
+      "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))"
     }
   },
-  "cash": 27402.987966179848,
+  "cash": 10962.577723145485,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-10-27"
+  "last_run_date": "2026-10-29"
 }
