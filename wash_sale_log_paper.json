@@ -5,6 +5,11 @@
       "exit_date": "2026-10-06",
       "loss_amount": -331.91
     },
+    "NOW": {
+      "cooldown_until": "2026-11-28",
+      "exit_date": "2026-10-29",
+      "loss_amount": -2776.92
+    },
     "WDAY": {
       "cooldown_until": "2026-11-01",
       "exit_date": "2026-10-02",
