@@ -987,6 +987,21 @@
       "score_at_entry": 9.2,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "a92f76a9-1bc9-4433-ad42-8a7c0f0103c0"
+    },
+    {
+      "ticker": "NOW",
+      "side": "sell",
+      "date": "2026-10-29",
+      "price": 108.52,
+      "qty": 3.0,
+      "proceeds": 325.56,
+      "pnl": -142.44,
+      "pnl_pct": -30.44,
+      "score_at_exit": 9.4,
+      "reason": "Stop loss hit (20%)",
+      "hold_days": 7,
+      "score_at_entry": 9.2,
+      "alpaca_order_id": "876f7814-99c4-4190-86e8-38fd6c161bfc"
     }
   ]
 }
