@@ -17654,5 +17654,97 @@
         "unrealized_pnl_pct": -0.0054
       }
     ]
+  },
+  {
+    "date": "2026-10-30",
+    "entries": [],
+    "exits": [],
+    "skipped": [
+      {
+        "ticker": "TSLA",
+        "score": 8.45,
+        "reason": "persistence failed (priors [8.6, 8.6, 7.0])"
+      },
+      {
+        "ticker": "LDOS",
+        "score": 9.25,
+        "reason": "persistence failed (priors [7.0, 7.0, 7.5])"
+      },
+      {
+        "ticker": "AMT",
+        "score": 7.55,
+        "reason": "persistence failed (priors [6.0, 6.0, 7.5])"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 0,
+    "equity": 93518.05,
+    "cash": 10962.58,
+    "positions_count": 9,
+    "positions": [
+      {
+        "ticker": "TWST",
+        "shares": 85,
+        "entry_price": 99.23999786376953,
+        "current_price": 152.77999877929688,
+        "unrealized_pnl_pct": 0.5395
+      },
+      {
+        "ticker": "ILMN",
+        "shares": 41,
+        "entry_price": 187.14999389648438,
+        "current_price": 235.99000549316406,
+        "unrealized_pnl_pct": 0.261
+      },
+      {
+        "ticker": "S",
+        "shares": 375,
+        "entry_price": 19.6299991607666,
+        "current_price": 25.149999618530273,
+        "unrealized_pnl_pct": 0.2812
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 360,
+        "entry_price": 20.8799991607666,
+        "current_price": 27.139999389648438,
+        "unrealized_pnl_pct": 0.2998
+      },
+      {
+        "ticker": "ZS",
+        "shares": 43,
+        "entry_price": 193.0500030517578,
+        "current_price": 237.8300018310547,
+        "unrealized_pnl_pct": 0.232
+      },
+      {
+        "ticker": "NEAR-USD",
+        "shares": 1685,
+        "entry_price": 4.956099987030029,
+        "current_price": 4.2916998863220215,
+        "unrealized_pnl_pct": -0.1341
+      },
+      {
+        "ticker": "ESTC",
+        "shares": 76,
+        "entry_price": 102.43000030517578,
+        "current_price": 97.27999877929688,
+        "unrealized_pnl_pct": -0.0503
+      },
+      {
+        "ticker": "AI",
+        "shares": 669,
+        "entry_price": 12.289999961853027,
+        "current_price": 11.850000381469727,
+        "unrealized_pnl_pct": -0.0358
+      },
+      {
+        "ticker": "WDAY",
+        "shares": 40,
+        "entry_price": 205.4600067138672,
+        "current_price": 197.82000732421875,
+        "unrealized_pnl_pct": -0.0372
+      }
+    ]
   }
 ]

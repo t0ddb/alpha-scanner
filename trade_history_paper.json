@@ -1320,6 +1320,21 @@
       "hold_days": 7,
       "score_at_entry": 9.2,
       "alpaca_order_id": "34d17030-84ae-479c-b6e6-9484b5c67bd9"
+    },
+    {
+      "ticker": "ILMN",
+      "side": "sell",
+      "date": "2026-10-30",
+      "price": 236.54,
+      "qty": 19.0,
+      "proceeds": 4494.26,
+      "pnl": 917.8,
+      "pnl_pct": 25.66,
+      "score_at_exit": 2.9,
+      "reason": "Score exit (score 2.9 < 5.0)",
+      "hold_days": 112,
+      "score_at_entry": 9.3,
+      "alpaca_order_id": "7c7cff52-eadf-47e1-a1b2-577f28400a49"
     }
   ]
 }
