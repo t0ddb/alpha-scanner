@@ -40,14 +40,6 @@
       "cost_basis": 8301.150131225586,
       "sequence_tags": "BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
     },
-    "NEAR-USD": {
-      "entry_date": "2026-09-25",
-      "entry_price": 4.956099987030029,
-      "shares": 1685,
-      "entry_score": 8.2,
-      "cost_basis": 8351.0284781456,
-      "sequence_tags": "BONUS: first_two_pair=roc\u2192atr (+0.5; first-2 mean +95% (n=116))|BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))|PENALTY: last_two=ich\u2192hl (-0.3; last-2 mean +17.8% (n=53))"
-    },
     "ESTC": {
       "entry_date": "2026-10-27",
       "entry_price": 102.43000030517578,
@@ -71,9 +63,17 @@
       "entry_score": 7.8,
       "cost_basis": 8218.400268554688,
       "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))"
+    },
+    "TSLA": {
+      "entry_date": "2026-11-03",
+      "entry_price": 403.82000732421875,
+      "shares": 18,
+      "entry_score": 7.6,
+      "cost_basis": 7268.7601318359375,
+      "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))"
     }
   },
-  "cash": 10962.577723145485,
+  "cash": 10170.957761645317,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-10-30"
+  "last_run_date": "2026-11-03"
 }

@@ -453,5 +453,18 @@
     "exit_reason": "score_exit",
     "entry_score": 8.2,
     "sequence_tags_at_entry": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
+  },
+  {
+    "ticker": "NEAR-USD",
+    "entry_date": "2026-09-25",
+    "exit_date": "2026-11-03",
+    "entry_price": 4.956099987030029,
+    "exit_price": 3.8440001010894775,
+    "shares": 1685,
+    "pnl": -1873.89,
+    "pnl_pct": -0.2244,
+    "exit_reason": "stop_loss",
+    "entry_score": 8.2,
+    "sequence_tags_at_entry": "BONUS: first_two_pair=roc\u2192atr (+0.5; first-2 mean +95% (n=116))|BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))|PENALTY: last_two=ich\u2192hl (-0.3; last-2 mean +17.8% (n=53))"
   }
 ]
