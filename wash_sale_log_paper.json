@@ -9,6 +9,11 @@
       "cooldown_until": "2026-11-28",
       "exit_date": "2026-10-29",
       "loss_amount": -2776.92
+    },
+    "PLTR": {
+      "cooldown_until": "2026-12-03",
+      "exit_date": "2026-11-03",
+      "loss_amount": -818.4
     }
   },
   "violations": [
