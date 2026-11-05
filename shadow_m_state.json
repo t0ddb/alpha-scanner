@@ -71,9 +71,17 @@
       "entry_score": 7.6,
       "cost_basis": 7268.7601318359375,
       "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))"
+    },
+    "LDOS": {
+      "entry_date": "2026-11-05",
+      "entry_price": 134.72000122070312,
+      "shares": 55,
+      "entry_score": 8.6,
+      "cost_basis": 7409.600067138672,
+      "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))|BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))"
     }
   },
-  "cash": 10170.957761645317,
+  "cash": 2761.357694506645,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-11-04"
+  "last_run_date": "2026-11-05"
 }
