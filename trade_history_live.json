@@ -1028,6 +1028,17 @@
       "hold_days": 113,
       "score_at_entry": 9.3,
       "alpaca_order_id": "a12dbd8a-a019-44ee-bd28-95f76c11611d"
+    },
+    {
+      "ticker": "TSLA",
+      "side": "buy",
+      "date": "2026-11-04",
+      "price": 383.97,
+      "qty": 1.0,
+      "cost_basis": 383.97,
+      "score_at_entry": 9.6,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "2dd24a95-bdc6-4674-ade7-9f0a956b4360"
     }
   ]
 }
