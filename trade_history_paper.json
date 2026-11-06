@@ -1350,6 +1350,58 @@
       "hold_days": 21,
       "score_at_entry": 9.4,
       "alpaca_order_id": "3c20f325-2f13-40af-b90d-4c5c3acb1710"
+    },
+    {
+      "ticker": "ESTC",
+      "side": "sell",
+      "date": "2026-11-05",
+      "price": 84.2,
+      "qty": 121.0,
+      "proceeds": 10188.2,
+      "pnl": 2393.74,
+      "pnl_pct": 30.71,
+      "score_at_exit": 3.0,
+      "reason": "Score exit (score 3.0 < 5.0)",
+      "hold_days": 98,
+      "score_at_entry": 9.0,
+      "alpaca_order_id": "17a027ee-0a0e-41e5-9655-c17138bc5d1c"
+    },
+    {
+      "ticker": "PSIX",
+      "side": "sell",
+      "date": "2026-11-05",
+      "price": 37.0,
+      "qty": 161.0,
+      "proceeds": 5957.0,
+      "pnl": -1425.94,
+      "pnl_pct": -19.31,
+      "score_at_exit": 3.5,
+      "reason": "Score exit (score 3.5 < 5.0)",
+      "hold_days": 22,
+      "score_at_entry": 9.5,
+      "alpaca_order_id": "39f92f81-5a21-4fe8-933f-b302ed0dceab"
+    },
+    {
+      "ticker": "MDT",
+      "side": "buy",
+      "date": "2026-11-05",
+      "price": 104.83,
+      "qty": 76.0,
+      "cost_basis": 7967.08,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "fc31e714-5367-48ee-b35f-d052c5c3c113"
+    },
+    {
+      "ticker": "ISRG",
+      "side": "buy",
+      "date": "2026-11-05",
+      "price": 468.54,
+      "qty": 17.0,
+      "cost_basis": 7965.18,
+      "score_at_entry": 9.6,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "45cc5996-f965-4b28-bd07-ed7e6ade1e6a"
     }
   ]
 }

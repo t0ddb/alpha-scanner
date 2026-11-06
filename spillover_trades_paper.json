@@ -614,5 +614,19 @@
     "skip_reason_at_entry": "Full",
     "entry_score": 9.3,
     "intended_slot_dollars": 11417.099030000001
+  },
+  {
+    "ticker": "PSIX",
+    "entry_date": "2026-10-13",
+    "exit_date": "2026-11-06",
+    "entry_price": 53.13999938964844,
+    "exit_price": 39.66999816894531,
+    "shares": 176,
+    "pnl": -2370.72,
+    "pnl_pct": -0.2535,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Full",
+    "entry_score": 9.0,
+    "intended_slot_dollars": 9401.46644
   }
 ]

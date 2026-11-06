@@ -53,8 +53,17 @@
       "entry_score": 8.15,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 7945.697303449547
+    },
+    "MDT": {
+      "entry_date": "2026-11-06",
+      "entry_price": 104.95999908447266,
+      "shares": 71,
+      "cost_basis": 7452.159934997559,
+      "entry_score": 8.4,
+      "skip_reason_at_entry": "No Cash",
+      "intended_slot_dollars": 7512.161208270347
     }
   },
-  "last_run_date": "2026-11-05",
+  "last_run_date": "2026-11-06",
   "cumulative_pnl": -73862.68
 }

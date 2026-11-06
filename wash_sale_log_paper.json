@@ -14,6 +14,11 @@
       "cooldown_until": "2026-12-03",
       "exit_date": "2026-11-03",
       "loss_amount": -818.4
+    },
+    "PSIX": {
+      "cooldown_until": "2026-12-05",
+      "exit_date": "2026-11-05",
+      "loss_amount": -1425.94
     }
   },
   "violations": [
