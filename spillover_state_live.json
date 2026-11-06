@@ -35,17 +35,8 @@
       "entry_score": 9.6,
       "skip_reason_at_entry": "Cap Hit",
       "intended_slot_dollars": 489.54562000000004
-    },
-    "PSIX": {
-      "entry_date": "2026-10-13",
-      "entry_price": 53.13999938964844,
-      "shares": 9,
-      "cost_basis": 478.25999450683594,
-      "entry_score": 9.0,
-      "skip_reason_at_entry": "Cap Hit",
-      "intended_slot_dollars": 487.96447000000006
     }
   },
-  "last_run_date": "2026-11-05",
-  "cumulative_pnl": -2387.52
+  "last_run_date": "2026-11-06",
+  "cumulative_pnl": -2508.75
 }

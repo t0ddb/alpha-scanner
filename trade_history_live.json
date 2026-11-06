@@ -1039,6 +1039,17 @@
       "score_at_entry": 9.6,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "2dd24a95-bdc6-4674-ade7-9f0a956b4360"
+    },
+    {
+      "ticker": "MDT",
+      "side": "buy",
+      "date": "2026-11-05",
+      "price": 104.83,
+      "qty": 4.0,
+      "cost_basis": 419.32,
+      "score_at_entry": 9.9,
+      "reason": "Score \u2265 9.0 + 3d persist",
+      "alpaca_order_id": "ec775a8f-c759-40e8-8357-3ae6a201d485"
     }
   ]
 }
