@@ -4,6 +4,21 @@
       "cooldown_until": "2026-11-28",
       "exit_date": "2026-10-29",
       "loss_amount": -142.44
+    },
+    "S": {
+      "cooldown_until": "2026-12-06",
+      "exit_date": "2026-11-06",
+      "loss_amount": -58.5
+    },
+    "TSLA": {
+      "cooldown_until": "2026-12-06",
+      "exit_date": "2026-11-06",
+      "loss_amount": -14.59
+    },
+    "WDAY": {
+      "cooldown_until": "2026-12-06",
+      "exit_date": "2026-11-06",
+      "loss_amount": -34.18
     }
   },
   "violations": [

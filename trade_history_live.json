@@ -1050,6 +1050,66 @@
       "score_at_entry": 9.9,
       "reason": "Score \u2265 9.0 + 3d persist",
       "alpaca_order_id": "ec775a8f-c759-40e8-8357-3ae6a201d485"
+    },
+    {
+      "ticker": "ESTC",
+      "side": "sell",
+      "date": "2026-11-06",
+      "price": 86.08,
+      "qty": 6.0,
+      "proceeds": 516.48,
+      "pnl": 134.64,
+      "pnl_pct": 35.26,
+      "score_at_exit": 3.0,
+      "reason": "Score exit (score 3.0 < 5.0)",
+      "hold_days": 99,
+      "score_at_entry": 9.0,
+      "alpaca_order_id": "f711caa1-08f3-4c50-b054-3b297635abb7"
+    },
+    {
+      "ticker": "S",
+      "side": "sell",
+      "date": "2026-11-06",
+      "price": 21.77,
+      "qty": 18.0,
+      "proceeds": 391.86,
+      "pnl": -58.5,
+      "pnl_pct": -12.99,
+      "score_at_exit": 2.9,
+      "reason": "Score exit (score 2.9 < 5.0)",
+      "hold_days": 7,
+      "score_at_entry": 9.5,
+      "alpaca_order_id": "330263f6-104a-4a80-bcb9-ca628156068d"
+    },
+    {
+      "ticker": "TSLA",
+      "side": "sell",
+      "date": "2026-11-06",
+      "price": 358.86,
+      "qty": 1.0,
+      "proceeds": 358.86,
+      "pnl": -14.59,
+      "pnl_pct": -3.91,
+      "score_at_exit": 3.5,
+      "reason": "Score exit (score 3.5 < 5.0)",
+      "hold_days": 2,
+      "score_at_entry": 9.6,
+      "alpaca_order_id": "25b1a465-0a45-4405-a887-6e55b1b7ccd2"
+    },
+    {
+      "ticker": "WDAY",
+      "side": "sell",
+      "date": "2026-11-06",
+      "price": 192.9,
+      "qty": 2.0,
+      "proceeds": 385.8,
+      "pnl": -34.18,
+      "pnl_pct": -8.14,
+      "score_at_exit": 4.9,
+      "reason": "Score exit (score 4.9 < 5.0)",
+      "hold_days": 14,
+      "score_at_entry": 9.2,
+      "alpaca_order_id": "87130d9e-cc4b-409e-bda8-4aef2072cca9"
     }
   ]
 }
