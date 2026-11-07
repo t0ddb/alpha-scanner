@@ -1,10 +1,5 @@
 {
   "cooldowns": {
-    "CRM": {
-      "cooldown_until": "2026-11-05",
-      "exit_date": "2026-10-06",
-      "loss_amount": -331.91
-    },
     "NOW": {
       "cooldown_until": "2026-11-28",
       "exit_date": "2026-10-29",
@@ -19,6 +14,11 @@
       "cooldown_until": "2026-12-05",
       "exit_date": "2026-11-05",
       "loss_amount": -1425.94
+    },
+    "WDAY": {
+      "cooldown_until": "2026-12-06",
+      "exit_date": "2026-11-06",
+      "loss_amount": -739.91
     }
   },
   "violations": [
