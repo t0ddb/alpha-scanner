@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-18",
+  "experiments": [
+    {
+      "command": "python3 -B -m research.scheme_c.run --output research/scheme_c/results/baseline_v1",
+      "id": "baseline_v1",
+      "purpose": "First complete corrected baseline and execution assumptions",
+      "status": "preserved; final metadata/source capture is baseline_v2"
+    },
+    {
+      "command": "python3 -B -m research.scheme_c.run --output research/scheme_c/results/baseline_v2",
+      "id": "baseline_v2",
+      "purpose": "Final source and explicit daily-bar availability clock; reproduce numeric v1 outputs",
+      "status": "complete; 278 quantitative artifacts byte-identical to v1"
+    },
+    {
+      "command": "python3 -B -m research.scheme_c.attribution --output research/scheme_c/results/attribution_v1",
+      "id": "attribution_v1",
+      "mean_path_return_original_scores_full_execution": 939.4946888397578,
+      "purpose": "User-requested attribution: complete original-scores/full-execution cell using frozen settings and archived bars; no parameter selection",
+      "score_execution_interaction_pp": -623.9621183517717,
+      "score_rebuild_effect_full_execution_pp": -326.5418217982784,
+      "status": "complete; 24 additional runs; rebuilt-score fixed-window control matches baseline exactly"
+    },
+    {
+      "command": "python3 -B -m research.scheme_c.allocation --output research/scheme_c/results/allocation_v1",
+      "date": "2026-10-24",
+      "id": "allocation_v1",
+      "purpose": "User-requested single-change budget allocation comparison at $5k and $100k",
+      "status": "Incomplete capture: 112 simulations finished; summary serialization failed on a NumPy count before verification. Preserved."
+    },
+    {
+      "change": "Remove only the remaining-slot divisor from the investment budget; keep all strategy parameters, funding and execution assumptions fixed",
+      "command": "python3 -B -m research.scheme_c.allocation --output research/scheme_c/results/allocation_v2",
+      "date": "2026-10-24",
+      "id": "allocation_v2",
+      "outcome_100k": {
+        "baseline_mean_return": 612.9528670414794,
+        "baseline_mean_sharpe": 1.4249759895532166,
+        "sequential_mean_return": 673.7998795632126,
+        "sequential_mean_sharpe": 1.4115089437098012
+      },
+      "outcome_5k": {
+        "baseline_mean_return": 588.8990416364292,
+        "baseline_mean_sharpe": 1.4025764442779787,
+        "sequential_mean_return": 738.584237847201,
+        "sequential_mean_sharpe": 1.4462808547078896
+      },
+      "production_change": false,
+      "purpose": "Complete the same predeclared experiment after native-integer summary export repair; no rule or input changes",
+      "risk": "Drawdown deepens in all 28 paired windows at each account size",
+      "status": "Complete; 115 quantitative artifacts identical to v1; 56 exact control-ledger reproductions; all 112 ledgers independently reconciled"
+    }
+  ],
+  "final_checks": {
+    "fills": 105670,
+    "protected_files_unchanged": 148,
+    "reconciled_runs": 224,
+    "regression_tests": 37,
+    "snapshots": 141772
+  },
+  "objective": "Frozen-parameter correction, not strategy optimization",
+  "original_review_reproduction": "144 compared metrics required to match before corrected runs proceed",
+  "preexisting_review": "inputs/review_rerun.json",
+  "selection": "No parameter or universe selection based on these returns. Report every predeclared scenario and window.",
+  "v1_source_capture_note": "Final test suite and follow-up audit timezone/label checks stored separately in results/verification; these do not enter baseline.py returns."
+}

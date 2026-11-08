@@ -1,0 +1,40 @@
+{
+  "caution": "Conditional effects on this selected sample, not isolated causal estimates of individual rules; the package includes raw share denominations, dividends, tradeability and sizing/funding constraints.",
+  "control_reproduction": "First fixed-window baseline metrics match exactly",
+  "execution_package_effect_old_scores_pp": -340.3362631504144,
+  "execution_package_effect_rebuilt_scores_pp": -964.2983815021861,
+  "original_scores_full_execution": {
+    "count": 20,
+    "max_return": 1052.1683652262034,
+    "mean_return": 939.4946888397578,
+    "mean_sharpe": 1.6101898452949395,
+    "min_return": 794.4852576259292,
+    "starts": [
+      "2023-05-30",
+      "2023-06-06",
+      "2023-06-13",
+      "2023-06-20",
+      "2023-06-27",
+      "2023-07-05",
+      "2023-07-12",
+      "2023-07-19",
+      "2023-07-26",
+      "2023-08-02",
+      "2023-08-09",
+      "2023-08-16",
+      "2023-08-23",
+      "2023-08-30",
+      "2023-09-06",
+      "2023-09-13",
+      "2023-09-20",
+      "2023-09-27",
+      "2023-10-04",
+      "2023-10-11"
+    ],
+    "std_return_pp": 62.45008290433354,
+    "worst_drawdown": -48.208445391674616
+  },
+  "score_effect_fractional_market_pp": 297.42029655349324,
+  "score_effect_full_execution_pp": -326.5418217982784,
+  "score_execution_interaction_pp": -623.9621183517717
+}

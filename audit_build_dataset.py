@@ -106,20 +106,40 @@ WARMUP_DAYS = 260  # enough for 200-day SMA + 30d slope + buffer
 OUTPUT_PATH = "backtest_results/audit_dataset.parquet"
 
 
+def _session_frame(frame: pd.DataFrame) -> pd.DataFrame:
+    """Compare vendor session labels, not midnight instants in different zones."""
+    result = frame.copy(deep=False)
+    result.index = pd.DatetimeIndex(frame.index).tz_localize(None).normalize()
+    if result.index.has_duplicates or not result.index.is_monotonic_increasing:
+        raise ValueError("Session dates must be unique and increasing")
+    return result
+
+
 # ─────────────────────────────────────────────────────────────
 # RS percentile pre-pass across all tickers per date
 # ─────────────────────────────────────────────────────────────
 def _raw_rs_by_period(data: dict, bench_df: pd.DataFrame, idx: int, periods: list[int]) -> dict:
-    """Return {period: {ticker: raw_rs_value}} for all tickers at `idx`."""
+    """Return causal peer returns on the benchmark's exact session dates.
+
+    A benchmark row number is never a ticker row number. Missing endpoints or
+    sessions make that ticker ineligible for that horizon, including IPOs.
+    """
     out = {p: {} for p in periods}
+    bench_df = _session_frame(bench_df)
     bench_slice = bench_df.iloc[: idx + 1]
     for ticker, full_df in data.items():
-        df = full_df.iloc[: idx + 1]
+        full_df = _session_frame(full_df)
         for p in periods:
-            if len(df) < p + 1 or len(bench_slice) < p + 1:
+            if len(bench_slice) < p + 1:
                 continue
-            sr = df["Close"].iloc[-1] / df["Close"].iloc[-p - 1] - 1
-            br = bench_slice["Close"].iloc[-1] / bench_slice["Close"].iloc[-p - 1] - 1
+            sessions = bench_slice.index[-p - 1:]
+            stock = full_df["Close"].reindex(sessions)
+            bench = bench_slice["Close"].reindex(sessions)
+            if (not np.isfinite(stock).all() or not np.isfinite(bench).all()
+                    or (stock <= 0).any() or (bench <= 0).any()):
+                continue
+            sr = stock.iloc[-1] / stock.iloc[0] - 1
+            br = bench.iloc[-1] / bench.iloc[0] - 1
             out[p][ticker] = (sr / br if br > 0 else sr - br) if br != 0 else 0
     return out
 
@@ -139,7 +159,7 @@ def _forward_return(full_df: pd.DataFrame, idx: int, w: int) -> float | None:
         return None
     entry = full_df["Close"].iloc[idx]
     future = full_df["Close"].iloc[idx + w]
-    if entry <= 0:
+    if not np.isfinite(entry) or not np.isfinite(future) or entry <= 0 or future <= 0:
         return None
     return float((future - entry) / entry)
 
@@ -165,12 +185,20 @@ def build_row(
 ) -> dict | None:
     """Build a single (ticker, date) row. Returns None if insufficient data."""
     # Align ticker's idx to bench date
+    full_df = _session_frame(full_df)
+    bench_df = _session_frame(bench_df)
     target_date = bench_df.index[bench_idx]
-    ticker_idx = full_df.index.get_indexer([target_date], method="nearest")[0]
+    ticker_idx = full_df.index.get_indexer([target_date])[0]
     if ticker_idx < WARMUP_DAYS:
         return None
 
-    df = full_df.iloc[: ticker_idx + 1]
+    # Reindex to the benchmark clock; no nearest or future bar substitution.
+    df = full_df.reindex(bench_df.index[: bench_idx + 1])
+    if df["Close"].notna().sum() < WARMUP_DAYS + 1:
+        return None
+    required = df[["Open", "High", "Low", "Close", "Volume"]].tail(127)
+    if len(required) < 127 or not np.isfinite(required.to_numpy()).all():
+        return None
 
     # Core 7 scored indicators + display-only (MA, near-52w)
     try:
@@ -198,7 +226,9 @@ def build_row(
     score_res = _score_from_indicators(inds)
 
     # Forward returns (raw + SPY-adjusted)
-    fwd_raw = {w: _forward_return(full_df, ticker_idx, w) for w in FORWARD_WINDOWS}
+    # Labels use the same benchmark sessions as features, with exact endpoints.
+    aligned_full = full_df.reindex(bench_df.index)
+    fwd_raw = {w: _forward_return(aligned_full, bench_idx, w) for w in FORWARD_WINDOWS}
     fwd_spy = {w: _bench_forward_return(bench_df, bench_idx, w) for w in FORWARD_WINDOWS}
 
     rs = inds.get("relative_strength", {})

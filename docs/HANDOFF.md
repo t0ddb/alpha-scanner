@@ -2,6 +2,31 @@
 
 Last updated: 2026-10-13 (catch-up refresh covering 2026-05-02 → 2026-10-13)
 
+**Research publication, 2026-11-07:** The user authorized publishing the completed
+research on a separate branch for review. Code, tests, reports, and selected
+summaries are in Git; frozen inputs and complete historical ledgers are preserved
+in a versioned release archive. Follow the
+[research setup instructions](../research/scheme_c/README.md) to restore and
+verify the bundle. The publication preserves newer production state and does not
+change live trading. The earlier no-commit statements below describe the original
+study sessions. Portable integrity checks and archive restoration bring the suite
+to 51 tests; publication reruns reproduce the recorded quantitative results.
+
+**Research addendum, 2026-10-18:** The corrected, research-only Scheme C
+baseline is implemented and rerun; see [SCHEME_C_RESEARCH_BASELINE.md](SCHEME_C_RESEARCH_BASELINE.md).
+Use `research/scheme_c/run.py` for the corrected frozen-parameter baseline.
+The old generic simulators and the historical performance claims below are
+legacy evidence, qualified by that report and `REVIEW_GPT-6.md`. No live rules,
+workflows, configuration, or production state changed. Universe/survivorship
+bias remains unresolved; 3y/20 starts alone is not validation.
+
+**Research follow-up, 2026-10-24:** The one-change cash-allocation comparison is
+complete at $5k/$100k; see [SCHEME_C_CASH_ALLOCATION.md](SCHEME_C_CASH_ALLOCATION.md).
+Mean path returns rise from 588.9% to 738.6% and 613.0% to 673.8%, respectively,
+but every paired window has a deeper drawdown; $100k mean Sharpe declines.
+All 56 controls reproduce exactly. The variant remains research only; no live
+rules, configuration, workflows or state changed, and no commit/push was made.
+
 This doc exists so a fresh Claude Code thread can pick up where the
 last one left off. Read it first, then read the code. Anything a
 careful code reader could figure out is **not** here — only

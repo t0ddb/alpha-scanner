@@ -1,0 +1,15 @@
+{
+  "audit_build_dataset.py": "a1642e4ee854ae632666452b527ecf6c22670d923a39895ca57477d5532dd58a",
+  "baseline.py": "9ae8e806d91697e6b93ca7f602546b5bdfe209d0381d5b6811992de89d5c05f1",
+  "concentration.json": "2d1ae1d60bbe23ea108da5d108cc6eee91792fade5c10847f3eccea9d806e101",
+  "fetch_inputs.py": "7d33a6dd5f6b58ad339e43843da487ccfeb13fe43e882da63349e1844c1f927e",
+  "final_ledger_checks.json": "91bc4349ea2ea08ad493e4823498d6251dbd5b3387cbc2077d74cec582687ddc",
+  "ledger_checks.json": "91bc4349ea2ea08ad493e4823498d6251dbd5b3387cbc2077d74cec582687ddc",
+  "reproduction_checks.json": "8bcd939ffa7a734add95a616d42b44b87f7b6c99fc0d00cca714ee5127097f18",
+  "requirements.txt": "0470d1cbef18a4fe9e6aa0ec96e1b386c629d50405df8cb43eb8baf801c7a00f",
+  "run.py": "5f4006aca2feb2d2586ce2da33d94081a7871d82cbfa4148a01257f663de4367",
+  "sizing_comparison_backtest.py": "11512f3317aae166904d91ce52e51f5f3b26d13607dd1c287c82e5f5b72af0ca",
+  "test_scheme_c_research.py": "97439e789898d0b013b8ab685c9b48a16026f8eae81771cd5f3bf3acd1029e62",
+  "tests.log": "a6e77d073d672f405e97f45e7cefe2487571fd3dc35f29c9a6160906dd04cd78",
+  "verify.py": "94a6f75d985a6d525ffc4a88dae7753a92e52b3b12d5bb2690ffceab0dd4faa8"
+}
