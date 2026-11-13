@@ -1,0 +1,14 @@
+{
+  "original_rows": 127290,
+  "original_rows_without_rebuilt_score": 743,
+  "paired_entry_gate_changed": 1898,
+  "paired_exit_gate_changed": 4204,
+  "paired_rows": 126547,
+  "paired_score_changed": 57989,
+  "rebuilt_rows": 151294,
+  "rebuilt_tickers": 175,
+  "rounding_alone_changed_rebuilt_score": 48540,
+  "unscorable_tickers": [
+    "SSNLF"
+  ]
+}

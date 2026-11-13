@@ -524,3 +524,91 @@ floor is still a meaningful allocation on a ~$6k account.
 **Commit:** `74651f3`
 
 **Status:** Active.
+
+---
+
+## 2026-10-18 — Establish corrected Scheme C research baseline; keep production unchanged
+
+**Decision:** Implement an isolated, offline Scheme C research engine with exact
+as-of scoring, distinct-observation persistence, and separate signal/order/fill/
+valuation events. Freeze current strategy parameters and explicitly model current
+live sizing/execution constraints. Retain the old simulator as a labeled legacy
+control rather than generalizing untested trim/swap/trailing variants.
+
+**Rationale:** The October 13 review identified feature look-ahead, future-price
+fallback, fabricated persistence, and incorrect transaction/stop chronology.
+More starts or parameter sweeps do not repair those defects. Preserve original
+inputs, source snapshots, exact settings, every run ledger, and hashes so changes
+can be measured without writing production state.
+
+**Evidence:** [SCHEME_C_RESEARCH_BASELINE.md](SCHEME_C_RESEARCH_BASELINE.md);
+`research/scheme_c/results/baseline_v2/`. All 144 prior-review metrics reproduce
+exactly. The same 20 starts now average +613.0% / Sharpe 1.425 at $100k and
++588.9% / 1.403 at $5k, versus legacy +1320.5% / 1.712. These are descriptive
+retrospective results with unresolved universe/survivorship bias, not validation
+of alpha or parameter optimality. Thirty-seven regression tests and independent
+reconciliation of 224 corrected runs pass. Protected production file hashes
+are unchanged.
+
+**Commit:** None; user explicitly requested no commit or push.
+
+**Status:** Research baseline complete. Production strategy, configuration,
+workflows, and state unchanged. Prior decision entries remain historical records;
+their numerical claims are qualified by the corrected report.
+
+---
+
+## 2026-10-24 — Test sequential cash allocation; keep live behavior unchanged
+
+**Decision:** Complete the user-requested research comparison at $5k and $100k.
+Remove only the remaining-slot divisor from the estimate-time investment budget;
+retain all other strategy settings, minimums, flex, cash reservations, execution
+assumptions, inputs and dates. No live adoption is made.
+
+**Rationale:** The existing allocator can spread cash across empty slots until
+each estimated order falls below the minimum. Test that specific mechanism with
+the corrected engine rather than changing several rules or optimizing thresholds.
+
+**Evidence:** [SCHEME_C_CASH_ALLOCATION.md](SCHEME_C_CASH_ALLOCATION.md) and
+`research/scheme_c/results/allocation_v2/`. Mean 20-path returns increase from
+588.9% to 738.6% at $5k and 613.0% to 673.8% at $100k. Mean Sharpes change from
+1.403 to 1.446 and 1.425 to 1.412. Every paired window has a deeper drawdown.
+The earliest calendar year worsens at both sizes; $100k shorter-window results
+are mixed. All 56 control ledgers reproduce exactly; 45 tests and independent
+reconciliation of all 112 runs pass. Universe/survivorship bias and daily-bar
+limitations remain unresolved.
+
+**Commit:** None; user explicitly requested no commit or push.
+
+**Status:** Research complete. Production strategy, configuration, workflows
+and state unchanged. This is a return/exposure/risk tradeoff, not a validated
+live improvement. Inputs, both run attempts and results are retained.
+
+---
+
+## 2026-11-07 — Publish research separately from live trading
+
+**Decision:** With the user's authorization, commit and push the completed
+Scheme C research on `research/scheme-c-corrected-baseline` for pull-request
+review. Preserve newer upstream production state. Track code, tests, reports,
+frozen source/configuration and selected summaries; publish the complete frozen
+inputs and historical captures as a versioned research prerelease archive.
+
+**Rationale:** The complete evidence should remain reproducible without putting
+hundreds of compressed ledgers and binary inputs into ordinary Git history.
+Neither the corrected baseline nor the allocation experiment authorizes a live
+strategy change. Historical no-commit entries above describe their original
+sessions and are superseded only for publication by this instruction.
+
+**Evidence:** [Research setup and archive](../research/scheme_c/README.md),
+`bundle.json` and `publication_validation.json`. The restoration command checks
+archive and member hashes and refuses to replace conflicting files. Integrity
+checks now compare the files present before and after each run, allowing a fresh
+checkout with newer production state. No scoring or simulation rule changes in
+this packaging step. All 51 tests pass; repeated baseline/allocation quantitative
+artifacts are byte-identical and independent ledger checks pass again.
+
+**Commit:** This research publication branch; no merge to `main` is authorized.
+
+**Status:** Research publication only. Live rules, workflows, configuration and
+production state are unchanged. Universe/survivorship bias remains unresolved.

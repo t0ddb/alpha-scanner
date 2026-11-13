@@ -1,0 +1,53 @@
+{
+  "repo_head": "c149bc9522eae1b6bb6d148dd9ab660933c254b6",
+  "sources": {
+    "review_prices.pkl": {
+      "source": "/Users/toddbruschwein/Documents/Codex/2026-10-13/read-docs-handoff-md-and-docs/work/review/prices.pkl",
+      "sha256": "8641b6feaab0c3595f13b01843e2d3b5e223962e316597ef1277b1967365aa7a"
+    },
+    "review_rerun.json": {
+      "source": "/Users/toddbruschwein/Documents/Codex/2026-10-13/read-docs-handoff-md-and-docs/work/review/rerun.json",
+      "sha256": "ea4c09f2c8050e17fbb05b43f4633a973431bdaa5d16c03431255b68e90eff95"
+    },
+    "review_rerun.py": {
+      "source": "/Users/toddbruschwein/Documents/Codex/2026-10-13/read-docs-handoff-md-and-docs/work/review/rerun.py",
+      "sha256": "016c74bf56b132df679ffd5c8b11c3168171a3614130a7809616af74532adbce"
+    },
+    "review_price_manifest.json": {
+      "source": "/Users/toddbruschwein/Documents/Codex/2026-10-13/read-docs-handoff-md-and-docs/work/review/price_manifest.json",
+      "sha256": "fe53ae6990a4d52e96edb5805645feb10280d1301fc737ade0882d400f52f771"
+    },
+    "original_scores.parquet": {
+      "source": "/Users/toddbruschwein/Claude-Workspace/breakout-tracker/backtest_results/scheme_c_variant_base.parquet",
+      "sha256": "111b21b634491e6a33b49d83db5f5886211085e2f7e289136e0342a6e2258fbe"
+    },
+    "original_audit.parquet": {
+      "source": "/Users/toddbruschwein/Claude-Workspace/breakout-tracker/backtest_results/audit_dataset.parquet",
+      "sha256": "872c791618b27de94f86e5418307f79776fb6d7f1478ed6af08b938355b88066"
+    },
+    "ticker_config.yaml": {
+      "source": "/Users/toddbruschwein/Claude-Workspace/breakout-tracker/ticker_config.yaml",
+      "sha256": "a2c496f1cd81277eb565cfea24f7d634cb0b4251eb2c7c75763a89913abd3a39"
+    },
+    "legacy_simulator.py": {
+      "source": "/Users/toddbruschwein/Claude-Workspace/breakout-tracker/sizing_comparison_backtest.py",
+      "sha256": "25836a371593b69d574d3144ed67f9a9ab5a82a5347c7b8730232acd7077b8b7"
+    },
+    "legacy_audit_builder.py": {
+      "source": "/Users/toddbruschwein/Claude-Workspace/breakout-tracker/audit_build_dataset.py",
+      "sha256": "b800f17579901f719f95b4a55a940d88f56ac4238a709d84a0863cf31047fb10"
+    },
+    "indicators.py": {
+      "source": "/Users/toddbruschwein/Claude-Workspace/breakout-tracker/indicators.py",
+      "sha256": "607e027908d7607bd06880af5cdcf3a668d7a8324b25138f63f83cf721865f6c"
+    },
+    "config.py": {
+      "source": "/Users/toddbruschwein/Claude-Workspace/breakout-tracker/config.py",
+      "sha256": "c7f5c474d5e4e6138a93f97d0d08a210abd3940e11b740c81c6a5213761c4dae"
+    },
+    "data_fetcher.py": {
+      "source": "/Users/toddbruschwein/Claude-Workspace/breakout-tracker/data_fetcher.py",
+      "sha256": "1ba2fcf6e8d29a2c38e8af2251fa0d67502470dd4f3c508b6ca1df7c3dda2a9b"
+    }
+  }
+}
