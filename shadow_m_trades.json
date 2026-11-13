@@ -466,5 +466,18 @@
     "exit_reason": "stop_loss",
     "entry_score": 8.2,
     "sequence_tags_at_entry": "BONUS: first_two_pair=roc\u2192atr (+0.5; first-2 mean +95% (n=116))|BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))|PENALTY: last_two=ich\u2192hl (-0.3; last-2 mean +17.8% (n=53))"
+  },
+  {
+    "ticker": "WDAY",
+    "entry_date": "2026-10-29",
+    "exit_date": "2026-11-13",
+    "entry_price": 205.4600067138672,
+    "exit_price": 191.16000366210938,
+    "shares": 40,
+    "pnl": -572.0,
+    "pnl_pct": -0.0696,
+    "exit_reason": "score_exit",
+    "entry_score": 7.8,
+    "sequence_tags_at_entry": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))"
   }
 ]

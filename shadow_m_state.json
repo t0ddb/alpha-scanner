@@ -56,14 +56,6 @@
       "cost_basis": 8222.009974479675,
       "sequence_tags": "PENALTY: last_two=atr\u2192rs (-0.3; last-2 mean +6.4% (n=69))"
     },
-    "WDAY": {
-      "entry_date": "2026-10-29",
-      "entry_price": 205.4600067138672,
-      "shares": 40,
-      "entry_score": 7.8,
-      "cost_basis": 8218.400268554688,
-      "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))"
-    },
     "TSLA": {
       "entry_date": "2026-11-03",
       "entry_price": 403.82000732421875,
@@ -79,9 +71,17 @@
       "entry_score": 8.6,
       "cost_basis": 7409.600067138672,
       "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))|BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))"
+    },
+    "BIO": {
+      "entry_date": "2026-11-13",
+      "entry_price": 386.0,
+      "shares": 18,
+      "entry_score": 8.8,
+      "cost_basis": 6948.0,
+      "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=2 (+0.5; 2-led-Ich mean +76% (n=218))|BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))"
     }
   },
-  "cash": 2761.357694506645,
+  "cash": 3459.75784099102,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-11-12"
+  "last_run_date": "2026-11-13"
 }
