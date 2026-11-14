@@ -11903,5 +11903,28 @@
         "unrealized_pnl_pct": 0.7075
       }
     ]
+  },
+  {
+    "date": "2026-11-14",
+    "mode": "paper",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 1,
+    "open_value": 14900.55,
+    "open_unrealized_pnl": 5984.37,
+    "realized_cumulative_pnl": -49623.67,
+    "total_pnl": -43639.3,
+    "positions": [
+      {
+        "ticker": "SDGR",
+        "shares": 483,
+        "entry_price": 18.459999084472656,
+        "current_price": 30.850000381469727,
+        "unrealized_pnl": 5984.37,
+        "unrealized_pnl_pct": 0.6712
+      }
+    ]
   }
 ]
