@@ -1110,6 +1110,21 @@
       "hold_days": 14,
       "score_at_entry": 9.2,
       "alpaca_order_id": "87130d9e-cc4b-409e-bda8-4aef2072cca9"
+    },
+    {
+      "ticker": "ZS",
+      "side": "sell",
+      "date": "2026-11-13",
+      "price": 194.02,
+      "qty": 2.0,
+      "proceeds": 388.04,
+      "pnl": -14.32,
+      "pnl_pct": -3.56,
+      "score_at_exit": 4.9,
+      "reason": "Score exit (score 4.9 < 5.0)",
+      "hold_days": 43,
+      "score_at_entry": 9.5,
+      "alpaca_order_id": "b2598d75-70d5-42f1-ab6f-5f148a4eac8a"
     }
   ]
 }

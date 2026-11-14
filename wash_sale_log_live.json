@@ -19,6 +19,11 @@
       "cooldown_until": "2026-12-06",
       "exit_date": "2026-11-06",
       "loss_amount": -34.18
+    },
+    "ZS": {
+      "cooldown_until": "2026-12-13",
+      "exit_date": "2026-11-13",
+      "loss_amount": -14.32
     }
   },
   "violations": [
