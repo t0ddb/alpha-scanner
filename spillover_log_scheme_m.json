@@ -19789,5 +19789,91 @@
         "unrealized_pnl_pct": -0.0551
       }
     ]
+  },
+  {
+    "date": "2026-11-18",
+    "mode": "scheme_m",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "TWST",
+        "entry_price": 80.79000091552734,
+        "exit_price": 112.0,
+        "exit_score": 4.15
+      }
+    ],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 8,
+    "open_value": 64442.6,
+    "open_unrealized_pnl": 2994.27,
+    "realized_cumulative_pnl": -69711.75,
+    "total_pnl": -66717.48,
+    "positions": [
+      {
+        "ticker": "SDGR",
+        "shares": 396,
+        "entry_price": 20.40999984741211,
+        "current_price": 25.65999984741211,
+        "unrealized_pnl": 2079.0,
+        "unrealized_pnl_pct": 0.2572
+      },
+      {
+        "ticker": "NEAR-USD",
+        "shares": 2990,
+        "entry_price": 2.4133999347686768,
+        "current_price": 3.3684000968933105,
+        "unrealized_pnl": 2855.45,
+        "unrealized_pnl_pct": 0.3957
+      },
+      {
+        "ticker": "ZS",
+        "shares": 39,
+        "entry_price": 214.63999938964844,
+        "current_price": 185.19000244140625,
+        "unrealized_pnl": -1148.55,
+        "unrealized_pnl_pct": -0.1372
+      },
+      {
+        "ticker": "PLTR",
+        "shares": 42,
+        "entry_price": 194.1199951171875,
+        "current_price": 156.55999755859375,
+        "unrealized_pnl": -1577.52,
+        "unrealized_pnl_pct": -0.1935
+      },
+      {
+        "ticker": "AZTA",
+        "shares": 213,
+        "entry_price": 37.18000030517578,
+        "current_price": 45.810001373291016,
+        "unrealized_pnl": 1838.19,
+        "unrealized_pnl_pct": 0.2321
+      },
+      {
+        "ticker": "MDT",
+        "shares": 71,
+        "entry_price": 104.95999908447266,
+        "current_price": 102.31999969482422,
+        "unrealized_pnl": -187.44,
+        "unrealized_pnl_pct": -0.0252
+      },
+      {
+        "ticker": "BIO",
+        "shares": 18,
+        "entry_price": 386.4800109863281,
+        "current_price": 358.19000244140625,
+        "unrealized_pnl": -509.22,
+        "unrealized_pnl_pct": -0.0732
+      },
+      {
+        "ticker": "ZBH",
+        "shares": 68,
+        "entry_price": 107.31999969482422,
+        "current_price": 102.08999633789062,
+        "unrealized_pnl": -355.64,
+        "unrealized_pnl_pct": -0.0487
+      }
+    ]
   }
 ]

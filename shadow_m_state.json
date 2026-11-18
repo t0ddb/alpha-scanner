@@ -1,13 +1,5 @@
 {
   "positions": {
-    "TWST": {
-      "entry_date": "2026-07-02",
-      "entry_price": 99.23999786376953,
-      "shares": 85,
-      "entry_score": 8.95,
-      "cost_basis": 8435.39981842041,
-      "sequence_tags": ""
-    },
     "ILMN": {
       "entry_date": "2026-07-15",
       "entry_price": 187.14999389648438,
@@ -71,9 +63,17 @@
       "entry_score": 8.8,
       "cost_basis": 6948.0,
       "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=2 (+0.5; 2-led-Ich mean +76% (n=218))|BONUS: first_two_types_str=MOMENTUM\u2192VOL (+0.3; type mean +58% (n=255))"
+    },
+    "AZTA": {
+      "entry_date": "2026-11-18",
+      "entry_price": 45.810001373291016,
+      "shares": 148,
+      "entry_score": 9.15,
+      "cost_basis": 6779.88020324707,
+      "sequence_tags": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
     }
   },
-  "cash": 10610.858075976372,
+  "cash": 13350.977872729301,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-11-17"
+  "last_run_date": "2026-11-18"
 }
