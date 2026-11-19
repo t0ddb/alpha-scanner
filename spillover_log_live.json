@@ -12626,5 +12626,52 @@
         "unrealized_pnl_pct": -0.1189
       }
     ]
+  },
+  {
+    "date": "2026-11-19",
+    "mode": "live",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 4,
+    "open_value": 1780.48,
+    "open_unrealized_pnl": 60.84,
+    "realized_cumulative_pnl": -2508.75,
+    "total_pnl": -2447.91,
+    "positions": [
+      {
+        "ticker": "ILMN",
+        "shares": 2,
+        "entry_price": 190.1999969482422,
+        "current_price": 202.61000061035156,
+        "unrealized_pnl": 24.82,
+        "unrealized_pnl_pct": 0.0652
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 24,
+        "entry_price": 18.459999084472656,
+        "current_price": 25.65999984741211,
+        "unrealized_pnl": 172.8,
+        "unrealized_pnl_pct": 0.39
+      },
+      {
+        "ticker": "CRM",
+        "shares": 2,
+        "entry_price": 237.9199981689453,
+        "current_price": 194.52000427246094,
+        "unrealized_pnl": -86.8,
+        "unrealized_pnl_pct": -0.1824
+      },
+      {
+        "ticker": "ZS",
+        "shares": 2,
+        "entry_price": 210.17999267578125,
+        "current_price": 185.19000244140625,
+        "unrealized_pnl": -49.98,
+        "unrealized_pnl_pct": -0.1189
+      }
+    ]
   }
 ]

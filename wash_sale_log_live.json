@@ -1,5 +1,10 @@
 {
   "cooldowns": {
+    "AI": {
+      "cooldown_until": "2026-12-18",
+      "exit_date": "2026-11-18",
+      "loss_amount": -53.0
+    },
     "NOW": {
       "cooldown_until": "2026-11-28",
       "exit_date": "2026-10-29",
