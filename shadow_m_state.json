@@ -32,14 +32,6 @@
       "cost_basis": 8301.150131225586,
       "sequence_tags": "BONUS: first_firer=atr (+0.4; first-firer mean +78% (n=126))|BONUS: first_two_types_str=VOL\u2192TREND (+0.3; type mean +64% (n=124))"
     },
-    "ESTC": {
-      "entry_date": "2026-10-27",
-      "entry_price": 102.43000030517578,
-      "shares": 76,
-      "entry_score": 8.05,
-      "cost_basis": 7784.680023193359,
-      "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))"
-    },
     "AI": {
       "entry_date": "2026-10-29",
       "entry_price": 12.289999961853027,
@@ -73,7 +65,7 @@
       "sequence_tags": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
     }
   },
-  "cash": 13350.977872729301,
+  "cash": 19460.617826342583,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-11-18"
+  "last_run_date": "2026-11-19"
 }

@@ -505,5 +505,18 @@
     "exit_reason": "score_exit",
     "entry_score": 8.95,
     "sequence_tags_at_entry": ""
+  },
+  {
+    "ticker": "ESTC",
+    "entry_date": "2026-10-27",
+    "exit_date": "2026-11-19",
+    "entry_price": 102.43000030517578,
+    "exit_price": 80.38999938964844,
+    "shares": 76,
+    "pnl": -1675.04,
+    "pnl_pct": -0.2152,
+    "exit_reason": "stop_loss",
+    "entry_score": 8.05,
+    "sequence_tags_at_entry": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))"
   }
 ]
