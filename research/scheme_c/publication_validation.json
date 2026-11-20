@@ -1,0 +1,73 @@
+{
+  "allocation_reproduction": {
+    "artifacts_compared": 115,
+    "byte_identical": 115,
+    "differences": [],
+    "independent_reconciliation": {
+      "artifact_hashes_verified": 129,
+      "baseline_full_ledger_matches": 56,
+      "daily_snapshots_reconciled": 65704,
+      "fills_reconciled": 47910,
+      "ledgers_reconciled": 112,
+      "marks_on_exact_valuation_date": true,
+      "negative_cash_days": 0,
+      "position_cap_violations": 0,
+      "queued_fills_strictly_after_signal": true,
+      "submission_reservations_and_limits_checked": 25400
+    },
+    "production_integrity": {
+      "changed_files": [],
+      "checked_files": 116,
+      "git_head_unchanged": true
+    }
+  },
+  "archive": {
+    "empty_directory_restore": {
+      "existing_identical_files_preserved": 0,
+      "files_restored": 913,
+      "files_verified": 913
+    },
+    "file_count": 913,
+    "git_only_checkout_restore": {
+      "existing_identical_files_preserved": 67,
+      "files_restored": 846,
+      "files_verified": 913
+    },
+    "repeat_restore": {
+      "existing_identical_files_preserved": 913,
+      "files_restored": 0,
+      "files_verified": 913
+    },
+    "sha256": "4189d381489c64502812680ded14597741012686e061d04ce196fa5ae40cd401",
+    "size": 171575158
+  },
+  "baseline_reproduction": {
+    "artifacts_compared": 278,
+    "byte_identical": 278,
+    "differences": [],
+    "independent_reconciliation": {
+      "artifact_hashes_verified": 292,
+      "daily_snapshots_reconciled": 141772,
+      "fills_reconciled": 105670,
+      "ledgers_reconciled": 224,
+      "marks_on_exact_valuation_date": true,
+      "negative_cash_days": 0,
+      "position_cap_violations": 0,
+      "queued_fills_strictly_after_signal": true
+    },
+    "production_integrity": {
+      "basis": "Current checkout immediately before/after this run",
+      "changed": [],
+      "checked_files": 116
+    }
+  },
+  "date": "2026-11-07",
+  "note": "Original captured evidence remains unchanged in the archive. Publication rerun metadata differs in paths, source captures and current-checkout integrity records.",
+  "purpose": "Verify portable publication packaging; scoring, simulation and strategy parameters unchanged.",
+  "tests": {
+    "command": "python3 -B -m unittest discover -s tests -v",
+    "git_only_checkout_passed": 51,
+    "passed": 51
+  },
+  "upstream_base": "d18972f8a2e272bfe181f4738af592d6c21f9104"
+}

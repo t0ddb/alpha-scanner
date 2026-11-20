@@ -1,0 +1,12 @@
+{
+  "artifact_hashes_verified": 29,
+  "ledgers_reconciled": 24,
+  "daily_snapshots_reconciled": 15560,
+  "fills_reconciled": 11256,
+  "negative_cash_days": 0,
+  "position_cap_violations": 0,
+  "marks_on_exact_valuation_date": true,
+  "queued_fills_strictly_after_signal": true,
+  "original_attribution_artifact_hashes_verified": 28,
+  "study": "attribution_v1"
+}

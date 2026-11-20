@@ -68,3 +68,8 @@ portfolio_trade_log.csv
 # for reference but not part of repo history (HANDOFF.md is canonical).
 .handoffs/
 CONTEXT_HANDOFF*.md
+
+# Scheme C research inputs and complete run ledgers live in the versioned
+# release archive. Selected small summaries/source snapshots are tracked.
+/research/scheme_c/inputs/
+/research/scheme_c/results/

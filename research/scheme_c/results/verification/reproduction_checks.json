@@ -1,0 +1,6 @@
+{
+  "artifacts_compared": 278,
+  "byte_identical": 278,
+  "differences": [],
+  "note": "v2 clarifies event-clock metadata and captures final source/tests; all quantitative outputs identical"
+}

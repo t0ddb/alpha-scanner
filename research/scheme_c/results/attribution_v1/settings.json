@@ -1,0 +1,155 @@
+{
+  "baseline_code_sha256": "9ae8e806d91697e6b93ca7f602546b5bdfe209d0381d5b6811992de89d5c05f1",
+  "baseline_study": "/Users/toddbruschwein/Claude-Workspace/breakout-tracker/research/scheme_c/results/baseline_v2",
+  "capital": 100000.0,
+  "event_clock": {
+    "daily_bar_availability": "Assume all same-label equity/crypto/futures bars final by batch time",
+    "execution": "Next benchmark session; existing stops act within each session",
+    "live_schedule_limit": "Not a reconstruction of unfinished non-equity bars at a 16:35 live run",
+    "signal_batch": "23:59 America/New_York on each benchmark session date",
+    "sizing_and_valuation": "Regular-session equity Close proxy; no extended-hours tape"
+  },
+  "execution_prices_sha256": "5dde6edb113f0152e1b25f7b054d75db3ce20eec71ee9e4c8548f64e73149633",
+  "original_scores_sha256": "111b21b634491e6a33b49d83db5f5886211085e2f7e289136e0342a6e2258fbe",
+  "purpose": "Measure score-rebuild effect conditional on full execution constraints",
+  "settings": {
+    "cash_floor": 0.05,
+    "daily_loss_halt": 0.1,
+    "entry_threshold": 9.0,
+    "execution_constraints": true,
+    "exit_threshold": 5.0,
+    "flex_pct": 0.012,
+    "friction_bps": 5.0,
+    "funding": "cash_at_submission",
+    "limit_buffer": 0.03,
+    "limit_model": "touch",
+    "max_entries_per_day": 4,
+    "max_positions": 12,
+    "min_position": 250.0,
+    "persistence": 3,
+    "position_pct": 0.083,
+    "stop_pct": 0.2
+  },
+  "windows": [
+    [
+      "fixed_2023-05-15",
+      "2023-05-15",
+      "2026-04-30"
+    ],
+    [
+      "fixed_2024-05-01",
+      "2024-05-01",
+      "2026-04-30"
+    ],
+    [
+      "fixed_2025-01-02",
+      "2025-01-02",
+      "2026-04-30"
+    ],
+    [
+      "fixed_2025-05-01",
+      "2025-05-01",
+      "2026-04-30"
+    ],
+    [
+      "path_00",
+      "2023-05-30",
+      "2026-04-30"
+    ],
+    [
+      "path_01",
+      "2023-06-06",
+      "2026-04-30"
+    ],
+    [
+      "path_02",
+      "2023-06-13",
+      "2026-04-30"
+    ],
+    [
+      "path_03",
+      "2023-06-20",
+      "2026-04-30"
+    ],
+    [
+      "path_04",
+      "2023-06-27",
+      "2026-04-30"
+    ],
+    [
+      "path_05",
+      "2023-07-05",
+      "2026-04-30"
+    ],
+    [
+      "path_06",
+      "2023-07-12",
+      "2026-04-30"
+    ],
+    [
+      "path_07",
+      "2023-07-19",
+      "2026-04-30"
+    ],
+    [
+      "path_08",
+      "2023-07-26",
+      "2026-04-30"
+    ],
+    [
+      "path_09",
+      "2023-08-02",
+      "2026-04-30"
+    ],
+    [
+      "path_10",
+      "2023-08-09",
+      "2026-04-30"
+    ],
+    [
+      "path_11",
+      "2023-08-16",
+      "2026-04-30"
+    ],
+    [
+      "path_12",
+      "2023-08-23",
+      "2026-04-30"
+    ],
+    [
+      "path_13",
+      "2023-08-30",
+      "2026-04-30"
+    ],
+    [
+      "path_14",
+      "2023-09-06",
+      "2026-04-30"
+    ],
+    [
+      "path_15",
+      "2023-09-13",
+      "2026-04-30"
+    ],
+    [
+      "path_16",
+      "2023-09-20",
+      "2026-04-30"
+    ],
+    [
+      "path_17",
+      "2023-09-27",
+      "2026-04-30"
+    ],
+    [
+      "path_18",
+      "2023-10-04",
+      "2026-04-30"
+    ],
+    [
+      "path_19",
+      "2023-10-11",
+      "2026-04-30"
+    ]
+  ]
+}
