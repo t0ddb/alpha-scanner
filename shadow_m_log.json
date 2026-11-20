@@ -19077,5 +19077,85 @@
         "unrealized_pnl_pct": 0.0
       }
     ]
+  },
+  {
+    "date": "2026-11-20",
+    "entries": [],
+    "exits": [],
+    "skipped": [
+      {
+        "ticker": "MDT",
+        "score": 7.6,
+        "reason": "persistence failed (priors [7.2, 7.9, 6.8])"
+      },
+      {
+        "ticker": "EMR",
+        "score": 7.7,
+        "reason": "persistence failed (priors [7.7, 6.3, 7.2])"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 0,
+    "equity": 82601.74,
+    "cash": 19460.62,
+    "positions_count": 8,
+    "positions": [
+      {
+        "ticker": "ILMN",
+        "shares": 41,
+        "entry_price": 187.14999389648438,
+        "current_price": 210.00999450683594,
+        "unrealized_pnl_pct": 0.1221
+      },
+      {
+        "ticker": "S",
+        "shares": 375,
+        "entry_price": 19.6299991607666,
+        "current_price": 23.34000015258789,
+        "unrealized_pnl_pct": 0.189
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 360,
+        "entry_price": 20.8799991607666,
+        "current_price": 27.200000762939453,
+        "unrealized_pnl_pct": 0.3027
+      },
+      {
+        "ticker": "ZS",
+        "shares": 43,
+        "entry_price": 193.0500030517578,
+        "current_price": 197.8300018310547,
+        "unrealized_pnl_pct": 0.0248
+      },
+      {
+        "ticker": "AI",
+        "shares": 669,
+        "entry_price": 12.289999961853027,
+        "current_price": 10.020000457763672,
+        "unrealized_pnl_pct": -0.1847
+      },
+      {
+        "ticker": "TSLA",
+        "shares": 18,
+        "entry_price": 403.82000732421875,
+        "current_price": 383.7200012207031,
+        "unrealized_pnl_pct": -0.0498
+      },
+      {
+        "ticker": "BIO",
+        "shares": 18,
+        "entry_price": 386.0,
+        "current_price": 370.1700134277344,
+        "unrealized_pnl_pct": -0.041
+      },
+      {
+        "ticker": "AZTA",
+        "shares": 148,
+        "entry_price": 45.810001373291016,
+        "current_price": 48.689998626708984,
+        "unrealized_pnl_pct": 0.0629
+      }
+    ]
   }
 ]
