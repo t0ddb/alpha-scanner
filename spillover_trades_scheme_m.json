@@ -978,5 +978,33 @@
     "skip_reason_at_entry": "No Cash",
     "entry_score": 7.6,
     "intended_slot_dollars": 10817.159070428084
+  },
+  {
+    "ticker": "NEAR-USD",
+    "entry_date": "2026-09-11",
+    "exit_date": "2026-11-21",
+    "entry_price": 2.4133999347686768,
+    "exit_price": 2.7864999771118164,
+    "shares": 2990,
+    "pnl": 1115.57,
+    "pnl_pct": 0.1546,
+    "exit_reason": "score_exit",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 7.75,
+    "intended_slot_dollars": 7217.7186064538955
+  },
+  {
+    "ticker": "PLTR",
+    "entry_date": "2026-10-09",
+    "exit_date": "2026-11-21",
+    "entry_price": 194.1199951171875,
+    "exit_price": 153.67999267578125,
+    "shares": 42,
+    "pnl": -1698.48,
+    "pnl_pct": -0.2083,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "No Cash",
+    "entry_score": 8.0,
+    "intended_slot_dollars": 8227.743958043015
   }
 ]

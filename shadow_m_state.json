@@ -1,13 +1,5 @@
 {
   "positions": {
-    "ILMN": {
-      "entry_date": "2026-07-15",
-      "entry_price": 187.14999389648438,
-      "shares": 41,
-      "entry_score": 8.15,
-      "cost_basis": 7673.149749755859,
-      "sequence_tags": "BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))"
-    },
     "S": {
       "entry_date": "2026-07-16",
       "entry_price": 19.6299991607666,
@@ -65,7 +57,7 @@
       "sequence_tags": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
     }
   },
-  "cash": 19460.617826342583,
+  "cash": 27687.677976489067,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-11-20"
+  "last_run_date": "2026-11-21"
 }

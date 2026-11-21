@@ -19157,5 +19157,80 @@
         "unrealized_pnl_pct": 0.0629
       }
     ]
+  },
+  {
+    "date": "2026-11-21",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "ILMN",
+        "entry_price": 187.14999389648438,
+        "exit_price": 200.66000366210938,
+        "exit_score": 4.3
+      }
+    ],
+    "skipped": [
+      {
+        "ticker": "EMR",
+        "score": 7.85,
+        "reason": "persistence failed (priors [7.7, 7.7, 6.3])"
+      }
+    ],
+    "stops_fired": [],
+    "candidates_total": 0,
+    "equity": 82059.82,
+    "cash": 27687.68,
+    "positions_count": 7,
+    "positions": [
+      {
+        "ticker": "S",
+        "shares": 375,
+        "entry_price": 19.6299991607666,
+        "current_price": 24.010000228881836,
+        "unrealized_pnl_pct": 0.2231
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 360,
+        "entry_price": 20.8799991607666,
+        "current_price": 26.34000015258789,
+        "unrealized_pnl_pct": 0.2615
+      },
+      {
+        "ticker": "ZS",
+        "shares": 43,
+        "entry_price": 193.0500030517578,
+        "current_price": 205.7100067138672,
+        "unrealized_pnl_pct": 0.0656
+      },
+      {
+        "ticker": "AI",
+        "shares": 669,
+        "entry_price": 12.289999961853027,
+        "current_price": 10.039999961853027,
+        "unrealized_pnl_pct": -0.1831
+      },
+      {
+        "ticker": "TSLA",
+        "shares": 18,
+        "entry_price": 403.82000732421875,
+        "current_price": 374.4100036621094,
+        "unrealized_pnl_pct": -0.0728
+      },
+      {
+        "ticker": "BIO",
+        "shares": 18,
+        "entry_price": 386.0,
+        "current_price": 367.5,
+        "unrealized_pnl_pct": -0.0479
+      },
+      {
+        "ticker": "AZTA",
+        "shares": 148,
+        "entry_price": 45.810001373291016,
+        "current_price": 47.09000015258789,
+        "unrealized_pnl_pct": 0.0279
+      }
+    ]
   }
 ]

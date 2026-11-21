@@ -20033,5 +20033,82 @@
         "unrealized_pnl_pct": -0.0373
       }
     ]
+  },
+  {
+    "date": "2026-11-21",
+    "mode": "scheme_m",
+    "entries": [],
+    "exits": [
+      {
+        "ticker": "NEAR-USD",
+        "entry_price": 2.4133999347686768,
+        "exit_price": 2.7864999771118164,
+        "exit_score": 3.05
+      }
+    ],
+    "stops_fired": [
+      {
+        "ticker": "PLTR",
+        "entry_price": 194.1199951171875,
+        "stop_price": 155.3,
+        "exit_price": 153.67999267578125
+      }
+    ],
+    "skipped_dup": [],
+    "open_positions": 6,
+    "open_value": 49141.77,
+    "open_unrealized_pnl": 3062.55,
+    "realized_cumulative_pnl": -70294.66,
+    "total_pnl": -67232.11,
+    "positions": [
+      {
+        "ticker": "SDGR",
+        "shares": 396,
+        "entry_price": 20.40999984741211,
+        "current_price": 26.34000015258789,
+        "unrealized_pnl": 2348.28,
+        "unrealized_pnl_pct": 0.2905
+      },
+      {
+        "ticker": "ZS",
+        "shares": 39,
+        "entry_price": 214.63999938964844,
+        "current_price": 205.7100067138672,
+        "unrealized_pnl": -348.27,
+        "unrealized_pnl_pct": -0.0416
+      },
+      {
+        "ticker": "AZTA",
+        "shares": 213,
+        "entry_price": 37.18000030517578,
+        "current_price": 47.09000015258789,
+        "unrealized_pnl": 2110.83,
+        "unrealized_pnl_pct": 0.2665
+      },
+      {
+        "ticker": "MDT",
+        "shares": 71,
+        "entry_price": 104.95999908447266,
+        "current_price": 100.61000061035156,
+        "unrealized_pnl": -308.85,
+        "unrealized_pnl_pct": -0.0414
+      },
+      {
+        "ticker": "BIO",
+        "shares": 18,
+        "entry_price": 386.4800109863281,
+        "current_price": 367.5,
+        "unrealized_pnl": -341.64,
+        "unrealized_pnl_pct": -0.0491
+      },
+      {
+        "ticker": "ZBH",
+        "shares": 68,
+        "entry_price": 107.31999969482422,
+        "current_price": 101.47000122070312,
+        "unrealized_pnl": -397.8,
+        "unrealized_pnl_pct": -0.0545
+      }
+    ]
   }
 ]

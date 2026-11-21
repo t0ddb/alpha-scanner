@@ -9,15 +9,6 @@
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 8085.415514201736
     },
-    "NEAR-USD": {
-      "entry_date": "2026-09-11",
-      "entry_price": 2.4133999347686768,
-      "shares": 2990,
-      "cost_basis": 7216.0658049583435,
-      "entry_score": 7.75,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 7217.7186064538955
-    },
     "ZS": {
       "entry_date": "2026-09-24",
       "entry_price": 214.63999938964844,
@@ -26,15 +17,6 @@
       "entry_score": 8.35,
       "skip_reason_at_entry": "No Cash",
       "intended_slot_dollars": 8531.2830490942
-    },
-    "PLTR": {
-      "entry_date": "2026-10-09",
-      "entry_price": 194.1199951171875,
-      "shares": 42,
-      "cost_basis": 8153.039794921875,
-      "entry_score": 8.0,
-      "skip_reason_at_entry": "No Cash",
-      "intended_slot_dollars": 8227.743958043015
     },
     "AZTA": {
       "entry_date": "2026-10-14",
@@ -73,6 +55,6 @@
       "intended_slot_dollars": 7341.306352237118
     }
   },
-  "last_run_date": "2026-11-20",
-  "cumulative_pnl": -69711.75
+  "last_run_date": "2026-11-21",
+  "cumulative_pnl": -70294.66
 }

@@ -518,5 +518,18 @@
     "exit_reason": "stop_loss",
     "entry_score": 8.05,
     "sequence_tags_at_entry": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))"
+  },
+  {
+    "ticker": "ILMN",
+    "entry_date": "2026-07-15",
+    "exit_date": "2026-11-21",
+    "entry_price": 187.14999389648438,
+    "exit_price": 200.66000366210938,
+    "shares": 41,
+    "pnl": 553.91,
+    "pnl_pct": 0.0722,
+    "exit_reason": "score_exit",
+    "entry_score": 8.15,
+    "sequence_tags_at_entry": "BONUS: n_led_ich=1 (+0.3; 1-led-Ich mean +50% (n=546))"
   }
 ]
