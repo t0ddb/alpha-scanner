@@ -572,5 +572,19 @@
     "skip_reason_at_entry": "Cap Hit",
     "entry_score": 9.0,
     "intended_slot_dollars": 487.96447000000006
+  },
+  {
+    "ticker": "CRM",
+    "entry_date": "2026-09-18",
+    "exit_date": "2026-11-21",
+    "entry_price": 237.9199981689453,
+    "exit_price": 183.30999755859375,
+    "shares": 2,
+    "pnl": -109.22,
+    "pnl_pct": -0.2295,
+    "exit_reason": "stop_loss",
+    "skip_reason_at_entry": "Cap Hit",
+    "entry_score": 9.0,
+    "intended_slot_dollars": 481.71208000000007
   }
 ]
