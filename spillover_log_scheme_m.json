@@ -20110,5 +20110,68 @@
         "unrealized_pnl_pct": -0.0545
       }
     ]
+  },
+  {
+    "date": "2026-11-24",
+    "mode": "scheme_m",
+    "entries": [],
+    "exits": [],
+    "stops_fired": [],
+    "skipped_dup": [],
+    "open_positions": 6,
+    "open_value": 49817.28,
+    "open_unrealized_pnl": 3738.06,
+    "realized_cumulative_pnl": -70294.66,
+    "total_pnl": -66556.6,
+    "positions": [
+      {
+        "ticker": "SDGR",
+        "shares": 396,
+        "entry_price": 20.40999984741211,
+        "current_price": 24.399999618530273,
+        "unrealized_pnl": 1580.04,
+        "unrealized_pnl_pct": 0.1955
+      },
+      {
+        "ticker": "ZS",
+        "shares": 39,
+        "entry_price": 214.63999938964844,
+        "current_price": 229.24000549316406,
+        "unrealized_pnl": 569.4,
+        "unrealized_pnl_pct": 0.068
+      },
+      {
+        "ticker": "AZTA",
+        "shares": 213,
+        "entry_price": 37.18000030517578,
+        "current_price": 47.779998779296875,
+        "unrealized_pnl": 2257.8,
+        "unrealized_pnl_pct": 0.2851
+      },
+      {
+        "ticker": "MDT",
+        "shares": 71,
+        "entry_price": 104.95999908447266,
+        "current_price": 100.72000122070312,
+        "unrealized_pnl": -301.04,
+        "unrealized_pnl_pct": -0.0404
+      },
+      {
+        "ticker": "BIO",
+        "shares": 18,
+        "entry_price": 386.4800109863281,
+        "current_price": 371.0899963378906,
+        "unrealized_pnl": -277.02,
+        "unrealized_pnl_pct": -0.0398
+      },
+      {
+        "ticker": "ZBH",
+        "shares": 68,
+        "entry_price": 107.31999969482422,
+        "current_price": 105.9800033569336,
+        "unrealized_pnl": -91.12,
+        "unrealized_pnl_pct": -0.0125
+      }
+    ]
   }
 ]

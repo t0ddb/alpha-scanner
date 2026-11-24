@@ -19232,5 +19232,67 @@
         "unrealized_pnl_pct": 0.0279
       }
     ]
+  },
+  {
+    "date": "2026-11-24",
+    "entries": [],
+    "exits": [],
+    "skipped": [],
+    "stops_fired": [],
+    "candidates_total": 0,
+    "equity": 82865.33,
+    "cash": 27687.68,
+    "positions_count": 7,
+    "positions": [
+      {
+        "ticker": "S",
+        "shares": 375,
+        "entry_price": 19.6299991607666,
+        "current_price": 24.489999771118164,
+        "unrealized_pnl_pct": 0.2476
+      },
+      {
+        "ticker": "SDGR",
+        "shares": 360,
+        "entry_price": 20.8799991607666,
+        "current_price": 24.399999618530273,
+        "unrealized_pnl_pct": 0.1686
+      },
+      {
+        "ticker": "ZS",
+        "shares": 43,
+        "entry_price": 193.0500030517578,
+        "current_price": 229.24000549316406,
+        "unrealized_pnl_pct": 0.1875
+      },
+      {
+        "ticker": "AI",
+        "shares": 669,
+        "entry_price": 12.289999961853027,
+        "current_price": 9.960000038146973,
+        "unrealized_pnl_pct": -0.1896
+      },
+      {
+        "ticker": "TSLA",
+        "shares": 18,
+        "entry_price": 403.82000732421875,
+        "current_price": 385.4599914550781,
+        "unrealized_pnl_pct": -0.0455
+      },
+      {
+        "ticker": "BIO",
+        "shares": 18,
+        "entry_price": 386.0,
+        "current_price": 371.0899963378906,
+        "unrealized_pnl_pct": -0.0386
+      },
+      {
+        "ticker": "AZTA",
+        "shares": 148,
+        "entry_price": 45.810001373291016,
+        "current_price": 47.779998779296875,
+        "unrealized_pnl_pct": 0.043
+      }
+    ]
   }
 ]
