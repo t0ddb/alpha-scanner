@@ -1,0 +1,21 @@
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.neon'. Detail: [errno 1] Operation not permitted
+baseline_5k {'count': 20, 'starts': ['2023-05-30', '2023-06-06', '2023-06-13', '2023-06-20', '2023-06-27', '2023-07-05', '2023-07-12', '2023-07-19', '2023-07-26', '2023-08-02', '2023-08-09', '2023-08-16', '2023-08-23', '2023-08-30', '2023-09-06', '2023-09-13', '2023-09-20', '2023-09-27', '2023-10-04', '2023-10-11'], 'mean_return': 588.8990416364292, 'std_return_pp': 45.30058336666419, 'min_return': np.float64(490.86386490045896), 'max_return': np.float64(663.5449634687367), 'mean_sharpe': 1.4025764442779787, 'worst_drawdown': -55.37677511149369}
+sequential_5k {'count': 20, 'starts': ['2023-05-30', '2023-06-06', '2023-06-13', '2023-06-20', '2023-06-27', '2023-07-05', '2023-07-12', '2023-07-19', '2023-07-26', '2023-08-02', '2023-08-09', '2023-08-16', '2023-08-23', '2023-08-30', '2023-09-06', '2023-09-13', '2023-09-20', '2023-09-27', '2023-10-04', '2023-10-11'], 'mean_return': 738.584237847201, 'std_return_pp': 66.7016012726776, 'min_return': np.float64(592.6113685292996), 'max_return': np.float64(879.4831663095898), 'mean_sharpe': 1.4462808547078896, 'worst_drawdown': -57.43231535647993}
+baseline_100k {'count': 20, 'starts': ['2023-05-30', '2023-06-06', '2023-06-13', '2023-06-20', '2023-06-27', '2023-07-05', '2023-07-12', '2023-07-19', '2023-07-26', '2023-08-02', '2023-08-09', '2023-08-16', '2023-08-23', '2023-08-30', '2023-09-06', '2023-09-13', '2023-09-20', '2023-09-27', '2023-10-04', '2023-10-11'], 'mean_return': 612.9528670414794, 'std_return_pp': 44.74901167191133, 'min_return': np.float64(527.2858157210096), 'max_return': np.float64(682.3418164018467), 'mean_sharpe': 1.4249759895532166, 'worst_drawdown': -49.300913326232}
+sequential_100k {'count': 20, 'starts': ['2023-05-30', '2023-06-06', '2023-06-13', '2023-06-20', '2023-06-27', '2023-07-05', '2023-07-12', '2023-07-19', '2023-07-26', '2023-08-02', '2023-08-09', '2023-08-16', '2023-08-23', '2023-08-30', '2023-09-06', '2023-09-13', '2023-09-20', '2023-09-27', '2023-10-04', '2023-10-11'], 'mean_return': 673.7998795632126, 'std_return_pp': 56.97037415820651, 'min_return': np.float64(551.1141861157748), 'max_return': np.float64(765.6894419731724), 'mean_sharpe': 1.4115089437098012, 'worst_drawdown': -54.78169658120182}
+Reconciling all 112 ledgers independently...
+{
+  "artifact_hashes_verified": 128,
+  "ledgers_reconciled": 112,
+  "daily_snapshots_reconciled": 65704,
+  "fills_reconciled": 47910,
+  "negative_cash_days": 0,
+  "position_cap_violations": 0,
+  "marks_on_exact_valuation_date": true,
+  "queued_fills_strictly_after_signal": true,
+  "submission_reservations_and_limits_checked": 25400,
+  "baseline_full_ledger_matches": 56
+}

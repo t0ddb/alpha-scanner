@@ -10,6 +10,9 @@
 | `DECISIONS.md` | Append-only chronological log of major decisions + rationale + commit references. | When you need to know *why* something is the way it is. |
 | `ALPHA_SCANNER_DOCUMENTATION.md` | Technical deep-dive on architecture, scoring engine, state machine. | When you need to understand internals beyond what HANDOFF.md covers. |
 | `SCHEME_M_SCORING.md` | Spec for the Scheme M shadow scoring scheme (Layer 1 indicator buckets + Layer 2 sequence overlay). | When working on `shadow_m.py`, `sequence_overlay.py`, or `compute_scheme_m_scores.py`. |
+| [SCHEME_C_RESEARCH_BASELINE.md](SCHEME_C_RESEARCH_BASELINE.md) | Corrected offline Scheme C baseline, matched reruns, execution assumptions, reproduction record, and unresolved bias. | Before relying on historical performance or running new Scheme C research. |
+| [SCHEME_C_CASH_ALLOCATION.md](SCHEME_C_CASH_ALLOCATION.md) | Frozen-input $5k/$100k allocation experiment; return, exposure and drawdown tradeoffs. | Before interpreting or changing the empty-slot budget division. |
+| [REVIEW_GPT-6.md](REVIEW_GPT-6.md) | October 13 skeptical review identifying defects in the original evidence. | For the motivation and historical control comparisons. |
 
 ## Specs (reference; updated when their module changes)
 

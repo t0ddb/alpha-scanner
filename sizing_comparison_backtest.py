@@ -2,6 +2,10 @@
 sizing_comparison_backtest.py — Head-to-head comparison of four portfolio
 sizing strategies on identical historical data.
 
+LEGACY RESEARCH ENGINE: its transaction/stop chronology is not a corrected
+Scheme C baseline. Use research/scheme_c/run.py and the research baseline doc.
+The original engine is retained for historical experiments, not validation.
+
 Built from scratch (does NOT reuse portfolio_backtest.py simulation logic,
 which was found to have static-sizing and no-position-cap bugs).
 
@@ -168,7 +172,7 @@ def load_score_data(source: str = "sqlite") -> pd.DataFrame:
         df["date"] = pd.to_datetime(df["date"])
         return df.sort_values(["date", "ticker"]).reset_index(drop=True)
 
-    conn = sqlite3.connect(str(DB_PATH))
+    conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
     df = pd.read_sql_query(
         "SELECT date, ticker, score FROM ticker_scores ORDER BY date, ticker",
         conn,
@@ -193,19 +197,14 @@ def build_daily_scores(
     score_df: pd.DataFrame,
     trading_days: list[pd.Timestamp],
 ) -> dict[str, dict[str, float]]:
-    """Build daily score lookup with carry-forward for gaps."""
+    """Exact observed rows only. A missing observation is never persistence.
+
+    Correct distinct-row persistence and missing-score exit semantics live in
+    research/scheme_c/baseline.py; this legacy engine is not production parity.
+    """
     score_lookup = build_score_lookup(score_df)
-    daily: dict[str, dict[str, float]] = {}
-    current_scores: dict[str, float] = {}
-
-    for day in trading_days:
-        day_str = day.strftime("%Y-%m-%d")
-        snap = score_lookup.get(day_str)
-        if snap:
-            current_scores.update(snap)
-        daily[day_str] = dict(current_scores)
-
-    return daily
+    return {day.strftime("%Y-%m-%d"): dict(score_lookup.get(day.strftime("%Y-%m-%d"), {}))
+            for day in trading_days}
 
 
 def get_trading_days(price_data: dict) -> list[pd.Timestamp]:
@@ -224,7 +223,7 @@ def get_trading_days(price_data: dict) -> list[pd.Timestamp]:
 def get_price(
     price_data: dict, ticker: str, date_val, col: str = "Open",
 ) -> float | None:
-    """Price for ticker on date. Falls back to nearest within 3 days."""
+    """Exact-date positive finite price, or None. Never use a future bar."""
     df = price_data.get(ticker)
     if df is None or df.empty:
         return None
@@ -234,12 +233,8 @@ def get_price(
 
     matches = idx[idx == target]
     if len(matches) > 0:
-        return float(df.loc[df.index[idx == target][0], col])
-
-    diffs = abs(idx - target)
-    min_i = diffs.argmin()
-    if diffs[min_i] <= timedelta(days=3):
-        return float(df.iloc[min_i][col])
+        value = float(df.loc[df.index[idx == target][0], col])
+        return value if math.isfinite(value) and value > 0 else None
     return None
 
 
@@ -1873,6 +1868,8 @@ def print_exit_persistence_sweep(
 # ============================================================
 
 def main():
+    print("LEGACY research engine: chronology/stops remain unsuitable for Scheme C validation. "
+          "Use python3 -B -m research.scheme_c.run --output <new-research-directory>.", file=sys.stderr)
     parser = argparse.ArgumentParser(
         description="Compare portfolio sizing strategies (Fixed/5, Fixed/10, Dynamic/Trim, Fixed/10+Swap)"
     )

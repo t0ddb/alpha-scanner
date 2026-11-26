@@ -1,0 +1,8 @@
+{
+  "changed": [],
+  "checked_files": 148,
+  "research_exemptions": [
+    "audit_build_dataset.py",
+    "sizing_comparison_backtest.py"
+  ]
+}
