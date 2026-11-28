@@ -55,9 +55,17 @@
       "entry_score": 9.15,
       "cost_basis": 6779.88020324707,
       "sequence_tags": "BONUS: first_two_pair=ich\u2192rs (+0.5; first-2 mean +88% (n=144))"
+    },
+    "GSAT": {
+      "entry_date": "2026-11-28",
+      "entry_price": 86.61000061035156,
+      "shares": 80,
+      "entry_score": 8.2,
+      "cost_basis": 6928.800048828125,
+      "sequence_tags": "BONUS: first_firer=dtf (+0.4; first-firer mean +61%, 95% win (n=77))|BONUS: n_led_ich=2 (+0.5; 2-led-Ich mean +76% (n=218))"
     }
   },
-  "cash": 27687.677976489067,
+  "cash": 20758.877927660942,
   "starting_equity": 100000.0,
-  "last_run_date": "2026-11-27"
+  "last_run_date": "2026-11-28"
 }
